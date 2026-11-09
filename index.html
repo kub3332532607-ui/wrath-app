@@ -33,7 +33,7 @@ img{display:block;max-width:100%}
 .nav .hm[aria-current="true"]{background:radial-gradient(circle at 35% 28%,#8fb2ff,#2545d6 55%,#0b1a78)}
 .nav .hm svg{width:34px;height:34px}
 body.full .nav,body.full .fab{display:none}
-@media (max-width:899px){.nav{left:14px;right:14px;bottom:calc(10px + env(safe-area-inset-bottom,0px));justify-content:space-around;border:1px solid rgba(217,184,101,.5);border-radius:99px;padding:3px 8px;box-shadow:0 8px 24px rgba(5,5,40,.45)}.nav button{flex:0 1 48px}.nav .hm{flex:none;margin-block:-14px}main{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}body.full main{padding-bottom:0}}
+@media (max-width:899.98px){.nav{left:14px;right:14px;bottom:calc(10px + env(safe-area-inset-bottom,0px));justify-content:space-around;border:1px solid rgba(217,184,101,.5);border-radius:99px;padding:3px 8px;box-shadow:0 8px 24px rgba(5,5,40,.45)}.nav button{flex:0 1 48px}.nav .hm{flex:none;margin-block:-14px}main{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}body.full main{padding-bottom:0}}
 @media (min-width:900px){.nav{left:0;top:0;bottom:0;width:80px;flex-direction:column;gap:10px;border-right:1px solid var(--line)}main{margin-left:80px}body.full main{margin-left:0}}
 /* opening screen */
 .sp{position:relative;overflow:hidden;height:calc(100dvh - 68px - env(safe-area-inset-bottom,0px));min-height:620px;display:grid;grid-template-columns:minmax(0,1fr) 60px;grid-template-rows:minmax(0,1fr) auto minmax(0,1fr);grid-template-areas:"e t" "m t" "w w"}
@@ -308,7 +308,7 @@ html:not([data-mode=light]) .dayo{display:none}
  .nav::after{content:"";position:absolute;left:100%;top:-50vh;bottom:-50vh;width:22px;background:linear-gradient(transparent 38%,var(--acc),transparent 62%) left/2px 100% no-repeat;opacity:.4}
  main,body.full main{margin-left:0}
 }
-@media (max-width:899px){
+@media (max-width:899.98px){
  .nav{left:50%;right:auto;width:max-content;gap:4px;justify-content:center;padding:1px 8px;background:var(--navp);border:1px solid var(--line);box-shadow:none;transform:translateX(-50%);transition:transform .25s ease}
  .nav.hid{transform:translate(-50%,calc(100% + 34px))}
  .nav button{width:44px;height:44px;flex:none}.nav svg{width:21px;height:21px}.nav button[data-v=home] svg{width:28px;height:28px}
@@ -348,7 +348,7 @@ html:not([data-mode=light]) .dayo{display:none}
 .md{width:56px;height:56px;overflow:visible;filter:drop-shadow(0 2px 4px rgba(20,15,90,.4))}
 .dwn{display:grid;place-items:center}.dwn svg.prl{width:26px;height:26px;overflow:visible}
 body.dwo{overflow:hidden}
-@media (max-width:899px){.nav{display:none!important}main{padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))}.fab{bottom:calc(22px + env(safe-area-inset-bottom,0px))}.pg>.hd{padding-left:50px}}
+@media (max-width:899.98px){.nav{display:none!important}main{padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))}.fab{bottom:calc(22px + env(safe-area-inset-bottom,0px))}.pg>.hd{padding-left:50px}}
 @media (min-width:900px){.fav{display:none}
  .nav::after{left:100%;width:46px;background:none;opacity:1}
  .nh{position:absolute;left:calc(100% + 7px);top:50%;width:36px;height:36px;transform:translateY(-50%);opacity:.85;pointer-events:none;transition:opacity .2s}.nh svg{width:36px;height:36px;overflow:visible;filter:drop-shadow(0 0 5px rgba(150,160,255,.7))}
@@ -368,7 +368,7 @@ html[data-mode=light] body::before{content:"";position:fixed;inset:0;z-index:-1;
 .dwi{display:grid;min-width:0}.dwi b{font-family:var(--t);font-weight:400;font-size:1.4rem;line-height:1.25;overflow-wrap:anywhere}.dwi small{color:var(--mute);font-size:.88rem;line-height:1.4;overflow-wrap:anywhere}
 .dwr{font-size:1.26rem;min-height:62px}
 .md{overflow:visible}
-@media (max-width:899px){.pfh{display:block}.pfh .pav{float:left;margin:6px 14px 6px 2px}.pfh .bio{margin-top:0}.pfh::after{content:"";display:block;clear:both}}
+@media (max-width:899.98px){.pfh{display:block}.pfh .pav{float:left;margin:6px 14px 6px 2px}.pfh .bio{margin-top:0}.pfh::after{content:"";display:block;clear:both}}
 @media (min-width:900px){:root{--sb:clamp(170px,15vw,196px)}
  .nav,body.full .nav{display:block;left:0;top:0;bottom:0;width:var(--sb);height:auto;margin:0;padding:20px 10px 16px;transform:none;transition:none;overflow-y:auto;border:0;border-right:1px solid var(--line);border-radius:0;box-shadow:none;background:var(--nav)}
  .nav:hover,.nav:focus-within{transform:none;box-shadow:none}.nav::after{display:none}
@@ -447,7 +447,7 @@ select.edi[hidden]{display:none}
 .sr-reader-heading>span{font-size:.95rem}.sr-reader-tabs button{font-size:.95rem}.sr-page-running{font-size:.85rem;letter-spacing:.05em}.sr-rightpage h2{font-size:1.5rem}.sr-item{font-size:1rem;padding:12px 0;line-height:1.7}.sr-item small{font-size:.85rem}.sr-item-number{font-size:.85rem}.sr-page-intro,.sr-calcs>div,.sr-kuji-dates{font-size:1rem;line-height:1.9}.sr-kuji-number span{font-size:1rem}.sr-page-note{font-size:.9rem;line-height:1.9}.sr-photo-nav,.sr-left-caption,.sr-photo-nav span:last-child{font-size:.85rem}.sr-page-total small{font-size:1rem}.sr-page-total strong span{font-size:.9rem}.sr-book-controls{font-size:1rem}.sr-other-volumes button{font-size:.85rem}.sr-page-bottom{font-size:.85rem}.sr-book{min-height:590px}.sr-leftpage,.sr-rightpage{padding-inline:30px}
 .sr-summary-row>span>small{font-size:.9rem}.sr-summary-row strong small{font-size:.85rem}.sr-summary .sr-page-note{font-size:.9rem}
 .sr-zoom{padding:0;border:0;border-radius:3px;background:transparent;overflow:visible;outline:none}.sr-zoom img{max-height:90vh;max-width:90vw;display:block;filter:drop-shadow(0 12px 35px #0006)}.sr-zoom::backdrop{background:#07051de3;cursor:zoom-out}
-@media(max-width:899px){.sr-backnav .sr-mobile-menu{display:flex}.sr-backnav{padding-inline:5%}}
+@media(max-width:899.98px){.sr-backnav .sr-mobile-menu{display:flex}.sr-backnav{padding-inline:5%}}
 @media(max-width:700px){.sr-room{padding-bottom:100px}.sr-heading p{font-size:.92rem}.sr-heading h1{font-size:1.9rem;letter-spacing:.07em}.sr-floor{height:220px}.sr-floor>.fl{width:220px;height:auto;opacity:.55}.sr-cover>small{font-size:.6rem}.sr-cover b{font-size:.9rem}.sr-cover em{font-size:.65rem}.sr-open{font-size:.65rem}.sr-total-note{font-size:.8rem;padding-right:0}.sr-ledger-link{padding:16px 5px}.sr-ledger-link small,.sr-ledger-link button{font-size:.9rem}.sr-reader-heading>span{font-size:.85rem}.sr-reader-tabs button{font-size:.85rem;padding:8px 10px}.sr-leftpage,.sr-rightpage{padding-inline:20px}.sr-page-running{font-size:.8rem}.sr-item{font-size:.96rem;grid-template-columns:16px minmax(0,1fr) auto;gap:6px}.sr-item small{font-size:.84rem}.sr-rightpage h2{font-size:1.25rem}.sr-page-intro,.sr-calcs>div,.sr-kuji-dates{font-size:.96rem}.sr-page-note{font-size:.85rem}.sr-photo-nav,.sr-photo-nav span:last-child{font-size:.78rem}.sr-other-volumes button{font-size:.8rem}.sr-summary-row>span>small{font-size:.85rem}.sr-book{min-height:0}}
 
 /* Volume-inspired translucent flowers, pearl trails and embroidered foliage. */
@@ -474,7 +474,7 @@ select.edi[hidden]{display:none}
 [data-mode=dark] .sr-garden{--sr-petal:#827dac;--sr-facet:#827dac;--sr-outline:#aaa1c0;--sr-vein:transparent;--sr-leaf:#81799433;--sr-gold:#a99b79}
 
 /* Phone report: reserve the avatar's space and give Emperor his own row. */
-@media(max-width:899px){
+@media(max-width:899.98px){
  .sr-backnav{padding-left:74px;padding-right:18px;min-height:66px;padding-top:calc(10px + env(safe-area-inset-top,0px))}
  .sr-backnav .sr-mobile-menu{display:none}
  .sr-room .sr-heading{padding-top:8px;padding-bottom:8px}
@@ -652,7 +652,7 @@ const hy=h=>h.replace(/src="(img\/[^"]+)"/g,(_,p)=>URLS.has(p)?`src="${URLS.get(
 const slot=()=>_act<6?(_act++,Promise.resolve()):new Promise(ok=>_wq.push(ok)),free=()=>{const n=_wq.shift();n?n():_act--};
 function loadImg(p){if(URLS.has(p))return Promise.resolve(URLS.get(p));if(INF.has(p))return INF.get(p);const w=(async()=>{let b=await dbGet('img:'+p);if(!b){await slot();try{const r=await rawGet(p);if(!r.ok)throw r;b=await r.blob();b=new Blob([b],{type:p.endsWith('.png')?'image/png':'image/jpeg'});dbSet('img:'+p,b)}finally{free()}}const u=URL.createObjectURL(b);URLS.set(p,u);return u})().catch(()=>null).finally(()=>INF.delete(p));INF.set(p,w);return w}
 const IO=new IntersectionObserver(es=>es.forEach(x=>{if(!x.isIntersecting)return;IO.unobserve(x.target);const el=x.target,p=el.dataset.p||el.dataset.bg;loadImg(p).then(u=>{if(!u)return;if(el.dataset.p){el.src=u;delete el.dataset.p}else{el.style.backgroundImage=`url(${u})`;delete el.dataset.bg}})}),{rootMargin:'800px'});
-function hydrate(){attachStudyEntrance();$$('[data-p],[data-bg]').forEach(el=>IO.observe(el))}
+function hydrate(){attachStudyEntrance();attachStudyTea();$$('[data-p],[data-bg]').forEach(el=>IO.observe(el))}
 /* adding pictures: phone photos shrink to 1600px, name comes from the content so re-adding never doubles */
 async function shrink(f){const u=URL.createObjectURL(f);try{const im=await new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=no;i.src=u}),k=Math.min(1,1600/Math.max(im.naturalWidth,im.naturalHeight)),c=document.createElement('canvas');c.width=Math.round(im.naturalWidth*k);c.height=Math.round(im.naturalHeight*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);return await new Promise(ok=>c.toBlob(ok,'image/jpeg',.84))}finally{URL.revokeObjectURL(u)}}
 async function storeImg(b){const h=[...new Uint8Array(await crypto.subtle.digest('SHA-256',await b.arrayBuffer()))].slice(0,8).map(x=>x.toString(16).padStart(2,'0')).join(''),p=`img/u-${h}.jpg`;await dbSet('img:'+p,b);URLS.set(p,URL.createObjectURL(b));if(!upq.includes(p))upq.push(p);return p}
@@ -727,10 +727,12 @@ function vPrize(i){const p=G.prizes[i],prev=i>0,next=i<G.prizes.length-1;return 
 function vSlides(){return simpleBar('選圖評價','goods')+`<div class="pg" style="max-width:980px">${G.slides.map(s=>`<img class="round" src="${s}" alt="我整理的週邊選圖與評價">`).join('')}</div>`}
 
 let studyEntranceURL=null;
-async function attachStudyEntrance(){const frame=document.querySelector('.sr-entry');if(!frame||frame.dataset.loading)return;frame.dataset.loading='1';try{if(!studyEntranceURL)studyEntranceURL=(async()=>{const r=await rawGet('data/study-entrance-f6f2efdb0979.html');if(!r.ok)throw Error('讀取失敗');let t=(await r.text()).split('__FONTS__').join(new URL('fonts',location.href).href);const ps=[...new Set(t.match(/img\/[0-9a-f]{16}\.(?:jpg|png)/g)||[])];const m=new Map(await Promise.all(ps.map(async p=>[p,await loadImg(p)])));t=t.replace(/img\/[0-9a-f]{16}\.(?:jpg|png)/g,p=>m.get(p));return URL.createObjectURL(new Blob([t],{type:'text/html'}))})();const url=await studyEntranceURL;if(frame.isConnected)frame.src=url}catch(e){studyEntranceURL=null;if(frame.isConnected){const p=document.createElement('p');p.className='pg';p.textContent='展覽載入失敗，請重新整理後再試。';frame.replaceWith(p)}}}
+async function attachStudyEntrance(){const frame=document.querySelector('.sr-entry:not(.sr-tea)');if(!frame||frame.dataset.loading)return;frame.dataset.loading='1';try{if(!studyEntranceURL)studyEntranceURL=(async()=>{const r=await rawGet('data/study-entrance-ab228aec4a2f.html');if(!r.ok)throw Error('讀取失敗');let t=(await r.text()).split('__FONTS__').join(new URL('fonts',location.href).href);const ps=[...new Set(t.match(/img\/[0-9a-f]{16}\.(?:jpg|png)/g)||[])];const m=new Map(await Promise.all(ps.map(async p=>[p,await loadImg(p)])));t=t.replace(/img\/[0-9a-f]{16}\.(?:jpg|png)/g,p=>m.get(p));return URL.createObjectURL(new Blob([t],{type:'text/html'}))})();const url=await studyEntranceURL;if(frame.isConnected)frame.src=url}catch(e){studyEntranceURL=null;if(frame.isConnected){const p=document.createElement('p');p.className='pg';p.textContent='展覽載入失敗，請重新整理後再試。';frame.replaceWith(p)}}}
+let studyTeaURL=null;
+async function attachStudyTea(){const frame=document.querySelector('.sr-tea');if(!frame||frame.dataset.loading)return;frame.dataset.loading='1';try{if(!studyTeaURL)studyTeaURL=(async()=>{const r=await rawGet('data/study-tea.html');if(!r.ok)throw Error('讀取失敗');return URL.createObjectURL(new Blob([await r.text()],{type:'text/html'}))})();const url=await studyTeaURL;if(frame.isConnected)frame.src=url}catch(e){studyTeaURL=null;if(frame.isConnected){const p=document.createElement('p');p.className='pg';p.textContent='溫室載入失敗，請重新整理後再試。';frame.replaceWith(p)}}}
 function sizeEntrance(){const frame=document.querySelector('.sr-entry');if(frame&&frame.contentWindow)frame.contentWindow.postMessage({studyPreview:'viewport',height:Math.max(500,innerHeight-Math.max(0,frame.getBoundingClientRect().top))},location.origin)}
 addEventListener('resize',sizeEntrance);
-addEventListener('message',e=>{const frame=document.querySelector('.sr-entry');if(!frame||e.source!==frame.contentWindow||e.origin!==location.origin)return;const k=e.data?.studyPreview;if(k==='open')go('study');else if(k==='height')frame.style.height=Math.min(5000,Math.max(500,Number(e.data.height)||500))+'px';else if(k==='ready')frame.contentWindow.postMessage({studyPreview:'theme',mode:document.documentElement.dataset.mode},location.origin);else if(k==='viewport-request')sizeEntrance()});
+addEventListener('message',e=>{const frame=document.querySelector('.sr-entry');if(!frame||e.source!==frame.contentWindow||e.origin!==location.origin)return;const k=e.data?.studyPreview;if(k==='open')go('study');else if(k==='tea')go('tea');else if(k==='back')go('goods');else if(k==='height')frame.style.height=Math.min(5000,Math.max(500,Number(e.data.height)||500))+'px';else if(k==='ready')frame.contentWindow.postMessage({studyPreview:'theme',mode:document.documentElement.dataset.mode},location.origin);else if(k==='viewport-request')sizeEntrance()});
 /* Book-room views. Uses the main application's data, floral artwork and navigation. */
 const STUDY_NAMES=['空島浪漫譚','ピッコマくじ','Romance Fantasy'];
 const STUDY_SUB=['SORAJIMA 展 2026','四月的抽賞收藏','Festival · 秋日紀事'];
@@ -794,7 +796,7 @@ let _ly=0;addEventListener('scroll',()=>{const y=scrollY,f=$('#fav');if(f){if(y>
 function nav(){$('#nav').innerHTML=hy(menu());closeDw();$('#fav').innerHTML=hy(avSmall());$('#fav').classList.remove('dim');setTimeout(favSync,0)}
 function render(keep){rebuild();const h=location.hash.slice(1)||'home',m=$('#m'),[r,a]=h.split('-');const n=+a;let full=false,html;
  if(r==='ep'&&n===D.eps.length)D.eps.push(blankEp(n));
- if(r==='study'){cur='goods';html=a==='summary'?vStudySummary():G.events[n]&&a!==undefined?vStudyBook(n,+h.split('-')[2]||0):vStudy();full=true}else if(r==='ep'&&D.eps[n]){html=vEp(n);full=true;cur='eps'}else if(r==='event'&&G.events[n]){html=vEvent(n);full=true;cur='goods'}else if(r==='prize'&&G.prizes[n]){html=vPrize(n);full=true;cur='goods'}else if(r==='slides'){html=vSlides();full=true;cur='goods'}else if(r==='person'&&D.ppl[n]){html=vPerson(n);full=true;cur='world'}else if(r==='nation'&&D.nations[n]){html=vNation(n);full=true;cur='world'}
+ if(r==='tea'){cur='goods';html='<iframe class="sr-entry sr-tea" title="溫室茶會"></iframe>';full=true}else if(r==='study'){cur='goods';html=a==='summary'?vStudySummary():G.events[n]&&a!==undefined?vStudyBook(n,+h.split('-')[2]||0):vStudy();full=true}else if(r==='ep'&&D.eps[n]){html=vEp(n);full=true;cur='eps'}else if(r==='event'&&G.events[n]){html=vEvent(n);full=true;cur='goods'}else if(r==='prize'&&G.prizes[n]){html=vPrize(n);full=true;cur='goods'}else if(r==='slides'){html=vSlides();full=true;cur='goods'}else if(r==='person'&&D.ppl[n]){html=vPerson(n);full=true;cur='world'}else if(r==='nation'&&D.nations[n]){html=vNation(n);full=true;cur='world'}
  else{cur=TABS.some(t=>t[0]===h)?h:'home';html={home:vHome,wall:vWall,line:vLine,goods:vGoods,world:vWorld}[cur]()}
  const wide=cur==='home'||r==='ep';m.innerHTML=hy((cur==='home'&&!full?hero():'')+(wide?`<div class="shell"><div class="mainc">${html}</div>${side()}</div>`:html));document.body.classList.toggle('full',full);nav();hydrate();if(!keep)window.scrollTo(0,0);
  if(r==='ep'&&full)bindEp(n);else if(!full)({home:bindHome,wall:bindWall,line:bindLine})[cur]?.()}
