@@ -472,6 +472,19 @@ select.edi[hidden]{display:none}
 /* Keep the muted night palette on the garden only, not the cover jewels. */
 [data-mode=dark] .sr-room{--sr-petal:#b3b7f166;--sr-facet:#dddfff80;--sr-outline:#c4baf0;--sr-vein:#f0eeff;--sr-leaf:#9e95cb33;--sr-gold:#d3bd86}
 [data-mode=dark] .sr-garden{--sr-petal:#827dac;--sr-facet:#827dac;--sr-outline:#aaa1c0;--sr-vein:transparent;--sr-leaf:#81799433;--sr-gold:#a99b79}
+
+/* Phone report: reserve the avatar's space and give Emperor his own row. */
+@media(max-width:899px){
+ .sr-backnav{padding-left:74px;padding-right:18px;min-height:66px;padding-top:calc(10px + env(safe-area-inset-top,0px))}
+ .sr-backnav .sr-mobile-menu{display:none}
+ .sr-room .sr-heading{padding-top:8px;padding-bottom:8px}
+ .sr-library{display:flex;flex-direction:column;align-items:stretch;min-height:0;padding-top:8px;margin-top:0}
+ .sr-portrait{position:relative;left:auto;bottom:auto;align-self:flex-start;width:clamp(155px,42vw,215px);margin:0 0 10px -12px;opacity:1;z-index:1;order:0}
+ .sr-portrait>img{width:100%;height:190px;max-height:none;object-fit:contain;object-position:left bottom;mask-image:linear-gradient(#000 88%,transparent)}
+ .sr-portrait>.sr-garden,.sr-portrait>.fl{display:none}
+ .sr-volumes{order:1;width:100%;padding-top:12px;isolation:isolate}
+ .sr-room .sr-ledger-link{margin-left:0}.sr-room .sr-total-note{margin-left:0}
+}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <radialGradient id="pg" cx="50%" cy="100%" r="100%"><stop offset="0" stop-color="#3f47c9"/><stop offset=".38" stop-color="#7763ea"/><stop offset=".72" stop-color="#c3cbff"/><stop offset="1" stop-color="#fff"/></radialGradient>
@@ -720,7 +733,7 @@ addEventListener('message',e=>{const frame=document.querySelector('.sr-entry');i
 const STUDY_NAMES=['空島浪漫譚','ピッコマくじ','Romance Fantasy'];
 const STUDY_SUB=['SORAJIMA 展 2026','四月的抽賞收藏','Festival · 秋日紀事'];
 const STUDY_EMPEROR='img/a8425e1fd74109a4.png';
-function studyTop(label,back='study'){return `<nav class="sr-backnav" aria-label="返回導覽"><button onclick="go('${back}')">‹ <span>${back==='goods'?'返回展覽':'返回書房'}</span></button><button class="sr-mobile-menu" onclick="studyMenu()" aria-label="開啟主選單">選單</button></nav>`}
+function studyTop(label,back='study'){return `<nav class="sr-backnav" aria-label="返回導覽"><button onclick="go('${back}')">‹ <span>${back==='goods'?'返回展覽':'返回書房'}</span></button></nav>`}
 window.studyMenu=()=>openDw();
 // Original vector ornaments inspired by volume 5's translucent petals and
 // volume 7's embroidered foliage. Scoped to the study, not the shared app art.
