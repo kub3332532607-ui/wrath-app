@@ -475,14 +475,14 @@ select.edi[hidden]{display:none}
 
 /* Phone report: reserve the avatar's space and give Emperor his own row. */
 @media(max-width:899.98px){
- .sr-backnav{padding-left:74px;padding-right:18px;min-height:66px;padding-top:calc(10px + env(safe-area-inset-top,0px))}
+ .sr-backnav{padding-left:74px;padding-right:18px;min-height:56px;padding-top:calc(10px + env(safe-area-inset-top,0px))}
  .sr-backnav .sr-mobile-menu{display:none}
- .sr-room .sr-heading{padding-top:8px;padding-bottom:8px}
- .sr-library{display:flex;flex-direction:column;align-items:stretch;min-height:0;padding-top:8px;margin-top:0}
- .sr-portrait{position:relative;left:auto;bottom:auto;align-self:flex-start;width:clamp(155px,42vw,215px);margin:0 0 10px -12px;opacity:1;z-index:1;order:0}
- .sr-portrait>img{width:100%;height:190px;max-height:none;object-fit:contain;object-position:left bottom;mask-image:linear-gradient(#000 88%,transparent)}
+ .sr-room .sr-heading{padding-top:0;padding-bottom:0}.sr-room .sr-heading h1{margin:0 0 2px}.sr-room .sr-heading p{margin:0}
+ .sr-library{display:flex;flex-direction:column;align-items:stretch;min-height:0;padding-top:0;margin-top:-6px}
+ .sr-portrait{position:relative;left:auto;bottom:auto;align-self:flex-start;width:clamp(155px,42vw,215px);margin:0 0 2px -12px;opacity:1;z-index:1;order:0}
+ .sr-portrait>img{width:100%;height:auto;max-height:none;object-fit:contain;object-position:left bottom;mask-image:linear-gradient(#000 88%,transparent)}
  .sr-portrait>.sr-garden,.sr-portrait>.fl{display:none}
- .sr-volumes{order:1;width:100%;padding-top:12px;isolation:isolate}
+ .sr-volumes{order:1;width:100%;padding-top:10px;padding-bottom:14px;isolation:isolate}.sr-cover b{word-break:keep-all;overflow-wrap:normal}
  .sr-room .sr-ledger-link{margin-left:0}.sr-room .sr-total-note{margin-left:0}
 }
 </style></head><body>
@@ -727,7 +727,7 @@ function vPrize(i){const p=G.prizes[i],prev=i>0,next=i<G.prizes.length-1;return 
 function vSlides(){return simpleBar('選圖評價','goods')+`<div class="pg" style="max-width:980px">${G.slides.map(s=>`<img class="round" src="${s}" alt="我整理的週邊選圖與評價">`).join('')}</div>`}
 
 let studyEntranceURL=null;
-async function attachStudyEntrance(){const frame=document.querySelector('.sr-entry:not(.sr-tea)');if(!frame||frame.dataset.loading)return;frame.dataset.loading='1';try{if(!studyEntranceURL)studyEntranceURL=(async()=>{const r=await rawGet('data/study-entrance-ab228aec4a2f.html');if(!r.ok)throw Error('讀取失敗');let t=(await r.text()).split('__FONTS__').join(new URL('fonts',location.href).href);const ps=[...new Set(t.match(/img\/[0-9a-f]{16}\.(?:jpg|png)/g)||[])];const m=new Map(await Promise.all(ps.map(async p=>[p,await loadImg(p)])));t=t.replace(/img\/[0-9a-f]{16}\.(?:jpg|png)/g,p=>m.get(p));return URL.createObjectURL(new Blob([t],{type:'text/html'}))})();const url=await studyEntranceURL;if(frame.isConnected)frame.src=url}catch(e){studyEntranceURL=null;if(frame.isConnected){const p=document.createElement('p');p.className='pg';p.textContent='展覽載入失敗，請重新整理後再試。';frame.replaceWith(p)}}}
+async function attachStudyEntrance(){const frame=document.querySelector('.sr-entry:not(.sr-tea)');if(!frame||frame.dataset.loading)return;frame.dataset.loading='1';try{if(!studyEntranceURL)studyEntranceURL=(async()=>{const r=await rawGet('data/study-entrance-85af0f702187.html');if(!r.ok)throw Error('讀取失敗');let t=(await r.text()).split('__FONTS__').join(new URL('fonts',location.href).href);const ps=[...new Set(t.match(/img\/[0-9a-f]{16}\.(?:jpg|png)/g)||[])];const m=new Map(await Promise.all(ps.map(async p=>[p,await loadImg(p)])));t=t.replace(/img\/[0-9a-f]{16}\.(?:jpg|png)/g,p=>m.get(p));return URL.createObjectURL(new Blob([t],{type:'text/html'}))})();const url=await studyEntranceURL;if(frame.isConnected)frame.src=url}catch(e){studyEntranceURL=null;if(frame.isConnected){const p=document.createElement('p');p.className='pg';p.textContent='展覽載入失敗，請重新整理後再試。';frame.replaceWith(p)}}}
 let studyTeaURL=null;
 async function attachStudyTea(){const frame=document.querySelector('.sr-tea');if(!frame||frame.dataset.loading)return;frame.dataset.loading='1';try{if(!studyTeaURL)studyTeaURL=(async()=>{const r=await rawGet('data/study-tea.html');if(!r.ok)throw Error('讀取失敗');return URL.createObjectURL(new Blob([await r.text()],{type:'text/html'}))})();const url=await studyTeaURL;if(frame.isConnected)frame.src=url}catch(e){studyTeaURL=null;if(frame.isConnected){const p=document.createElement('p');p.className='pg';p.textContent='溫室載入失敗，請重新整理後再試。';frame.replaceWith(p)}}}
 function sizeEntrance(){const frame=document.querySelector('.sr-entry');if(frame&&frame.contentWindow)frame.contentWindow.postMessage({studyPreview:'viewport',height:Math.max(500,innerHeight-Math.max(0,frame.getBoundingClientRect().top))},location.origin)}
