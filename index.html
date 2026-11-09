@@ -3,7 +3,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>和皇帝一起墮落</title>
 <meta name="robots" content="noindex,nofollow"><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="theme-color" content="#141245">
-<script>try{document.documentElement.dataset.mode=localStorage.getItem('mode')||'dark'}catch(e){document.documentElement.dataset.mode='dark'}</script>
+<script>try{document.documentElement.dataset.mode=localStorage.getItem('mode')||'dark'}catch(e){document.documentElement.dataset.mode='dark'}
+function setBar(m){document.querySelector('meta[name=theme-color]').content=m==='light'?'#fbf6ee':'#141245'}setBar(document.documentElement.dataset.mode);</script>
 <style>
 @font-face{font-family:"GW";src:url(fonts/body.woff2) format("woff2");font-display:swap}
 @font-face{font-family:"JP";src:url(fonts/jp.woff2) format("woff2");font-display:swap}
@@ -675,7 +676,7 @@ function lilyIcon(){let s='';for(let i=0;i<6;i++)s+=`<path transform="rotate(${i
 const ICON=D.icons;
 const TABS=[['wall','圖片牆'],['line','藤蔓劇情線'],['home','主頁'],['goods','展覽'],['world','人物與王國']];
 let cur='home';
-function toggleMode(){const m=document.documentElement.dataset.mode==='light'?'dark':'light';document.documentElement.dataset.mode=m;try{localStorage.setItem('mode',m)}catch(_){}const y=scrollY;render();scrollTo(0,y)}
+function toggleMode(){const m=document.documentElement.dataset.mode==='light'?'dark':'light';document.documentElement.dataset.mode=m;window.setBar(m);try{localStorage.setItem('mode',m)}catch(_){}const y=scrollY;render();scrollTo(0,y)}
 /* side drawer opened from the avatar; icons are bracelet settings */
 const MC=['#eeeaff','#9a97e0','#c9cdfb','#7f7bd6','#b7b3ee','#8a86dc','#dcdcff','#736fce','#c1bde6','#8f8be0','#d4d6fd','#7c78d2'];
 const GEMS={
