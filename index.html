@@ -2,7 +2,7 @@
 <html lang="zh-Hant"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>和皇帝一起墮落</title>
-<meta name="robots" content="noindex,nofollow"><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="theme-color" content="#141245">
+<meta name="robots" content="noindex,nofollow"><link rel="manifest" href="manifest.json"><link rel="icon" href="favicon.ico?v=14" sizes="48x48"><link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=14"><link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png?v=14"><link rel="apple-touch-icon" href="icon-180.png?v=14"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="theme-color" content="#141245">
 <script>try{document.documentElement.dataset.mode=localStorage.getItem('mode')||'dark'}catch(e){document.documentElement.dataset.mode='dark'}
 function setBar(m){document.querySelector('meta[name=theme-color]').content=m==='light'?'#fbf6ee':'#141245'}setBar(document.documentElement.dataset.mode);</script>
 <style>@font-face{font-family:"GW";src:url(fonts/body.woff2) format("woff2");font-display:swap}
@@ -23,6 +23,20 @@ img{display:block;max-width:100%}
 .turn{transition:transform .7s cubic-bezier(.3,1.4,.5,1);transform-origin:50% 50%}
 .view{display:none;min-width:0}
 .view.on{display:block}
+.cfg .cfg-c{display:grid;gap:8px;max-width:640px}
+.cfg h3{margin:0;font-family:var(--t);font-size:1.05rem}
+.cfg .cfg-c p{margin:0;color:var(--mute);font-size:.92rem}
+.cfg-l{display:flex;align-items:center;gap:14px;cursor:pointer}
+.cfg-t{flex:1;display:grid;gap:2px}.cfg-t small{color:var(--mute);font-size:.84rem;line-height:1.6}
+.cfg-l input{position:absolute;opacity:0;width:1px;height:1px}
+.cfg-s{flex:none;position:relative;width:52px;height:30px;border-radius:99px;background:var(--glass2);border:1px solid var(--line);transition:background .2s}
+.cfg-s::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#ece8f6 55%,#a9a3c6);box-shadow:0 1px 3px rgba(20,10,80,.4);transition:transform .2s}
+.cfg-l input:checked+.cfg-s{background:var(--acc)}.cfg-l input:checked+.cfg-s::after{transform:translateX(22px)}
+.cfg-l input:focus-visible+.cfg-s{outline:2px solid var(--acc);outline-offset:2px}
+.cfg-b{display:flex;flex-wrap:wrap;align-items:center;gap:10px}.cfg-b small{color:var(--mute)}
+.cfg-v{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;margin:0;font-size:.92rem}.cfg-v dt{color:var(--mute)}.cfg-v dd{margin:0;word-break:break-all}
+.brace input:disabled{cursor:default}
+@media (prefers-reduced-motion:reduce){.cfg-s,.cfg-s::after{transition:none}}
 /* nav: icons only, home in the middle */
 .nav{position:fixed;z-index:20;background:var(--nav);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center}
 .nav button{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;color:var(--mute)}
@@ -956,7 +970,7 @@ async function dbGet(k){try{const d=await db();return await new Promise((ok,no)=
 async function dbSet(k,v){try{const d=await db();await new Promise((ok,no)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error)})}catch(e){}}
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
 /* private repo: this page holds no notes or pictures, they are read with the device's key */
-const BASE='data/base-2a2703d33f01.json';
+const BASE='data/base-2a2703d33f01.json',VER='2026.11.10 23:15 · 6fef8ba';
 let CFG=null,TK=lsGet('tk');
 const api=(p,o={})=>fetch(`${CFG.api??'https://api.github.com'}/repos/${CFG.owner}/${CFG.repo}/contents/${p}`,{cache:'no-store',...o,headers:{Authorization:`Bearer ${TK}`,...o.headers}});
 const rawGet=p=>api(p,{headers:{Accept:'application/vnd.github.raw+json'}});
@@ -1007,7 +1021,8 @@ const bracelet=(()=>{const C=['#eeeaff','#9a97e0','#c9cdfb','#7f7bd6','#b7b3ee',
 (()=>{const P=(y0,y1,k)=>{let d='';for(let y=y0;y<=y1+.01;y+=1){d+=`${d?'L':'M'}${(7+k*3.4*Math.sin(Math.PI*y/14)).toFixed(2)} ${y}`}return d},draw=d=>`<path d="${d}" fill="none" stroke="#565a7e" stroke-width="3.2" stroke-linecap="round"/><path d="${d}" fill="none" stroke="#d6d9ea" stroke-width="2.1" stroke-linecap="round"/><path d="${d}" fill="none" stroke="#fff" stroke-width=".7" stroke-linecap="round"/>`,u=[[-7,7,-1],[7,21,1],[21,35,-1]].map(a=>draw(P(...a))).join(''),o=[[-7,7,1],[7,21,-1],[21,35,1]].map(a=>draw(P(...a))).join('');document.documentElement.style.setProperty('--chain',`url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="14" height="28" viewBox="0 0 14 28">${u}${o}</svg>`)}")`);document.documentElement.style.setProperty('--chainh',`url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="28" height="14" viewBox="0 0 28 14"><g transform="translate(0 14) rotate(-90)">${u}${o}</g></svg>`)}")`)})();
 const PRL=`<svg class="prl" viewBox="-11 -11 22 22" aria-hidden="true"><circle cy="1.2" r="9" fill="#34265f" opacity=".42"/><circle r="8.5" fill="url(#pearl)" stroke="#8d88ab" stroke-width=".35"/><circle cx="-2.8" cy="-3.1" r="2.2" fill="#fff"/><path d="M-5.3 3.9Q0 7.5 5.6 3.2" fill="none" stroke="#f3b9dd" stroke-width="1"/></svg>`;
 const nm=n=>n===0?'序章':n>204?`幕間 第${n-204}話`:`第${n}話`;
-const rdl=()=>S.read>=205?'全部讀完':S.read?`讀到第${S.read}話`:'讀到序章';
+let LOCK=lsGet('readLock')==='1';
+const rdl=()=>LOCK?'固定在最新話':S.read>=205?'全部讀完':S.read?`讀到第${S.read}話`:'讀到序章';
 const hidden=n=>n>S.read;
 function go(h){location.hash=h}
 window.go=go;
@@ -1047,7 +1062,7 @@ function vHome(){const vis=D.eps.filter(e=>e.st!=='todo'&&!hidden(e.n)).reverse(
  <p class="bio">${esc(D.synopsis)}</p></div>
  <p class="fo"><span><b>204</b> 話第一部　<b>${D.eps.length-205}</b> 話幕間　<b>${D.noted}</b> 話已寫</span><button class="mode" id="mode" aria-label="切換成${document.documentElement.dataset.mode==='light'?'夜':'日'}版" title="切換成${document.documentElement.dataset.mode==='light'?'夜':'日'}版"><svg viewBox="0 0 256 256" fill="currentColor">${document.documentElement.dataset.mode==='light'?ICON.moon:ICON.sun}</svg></button></p></div>
  ${aboutBlock()}
- <div class="brace"><span id="bw">${bracelet(Math.min(S.read,204)/204)}</span><input id="rd" type="range" min="0" max="${D.eps.length-1}" value="${Math.min(S.read,D.eps.length-1)}" aria-label="我目前讀到第幾話"></div><div class="rl" id="rl">${rdl()}</div></div>
+ <div class="brace"><span id="bw">${bracelet(Math.min(S.read,204)/204)}</span><input id="rd" type="range" min="0" max="${D.eps.length-1}" value="${Math.min(S.read,D.eps.length-1)}" aria-label="我目前讀到第幾話"${LOCK?' disabled title="已固定在最新話，可到設定解除"':''}></div><div class="rl" id="rl">${rdl()}</div></div>
  <div class="tl">
  ${hid?`<div class="spo">防劇透：${hid} 話已收起</div>`:''}${rows}${vis.length>S.shown?`<button class="pillb more" id="mr">再看 30 話</button>`:''}</div></div>`}
 function bindHome(){$('#mode').onclick=toggleMode;$('#rd').oninput=e=>{setRead(+e.target.value);$('#bw').innerHTML=bracelet(Math.min(S.read,204)/204);$('#rl').textContent=rdl();clearTimeout(window._t);window._t=setTimeout(()=>{const y=scrollY;render(true);scrollTo(0,y)},350)};
@@ -1097,7 +1112,7 @@ function rebuild(){const len=Math.max(BE.length,...Object.keys(E.eps).map(k=>+k+
  D.eps=Array.from({length:len},(_,n)=>{const b=BE[n]||blankEp(n),x=E.eps[n];if(!x)return{...b,tg:b.ar};if(x.av)S.av[n]=x.av;const e={...b,...x};e.tg=e.ar||[];e.st=e.rx.length?'has_reactions':e.pl.length||e.su||e.im.length||e.lb?'plot_only':'todo';return e});
  D.wall=D.eps.flatMap(e=>allIm(e).map(src=>({n:e.n,src})));D.noted=D.eps.filter(e=>e.st!=='todo').length;
  arcsBuild(len);
- if(E.read)S.read=E.read.v}
+ if(E.read)S.read=E.read.v;if(LOCK)S.read=9999}
 /* story arcs. Base list from the notes, then edits on top. An edited arc is stored whole as E.kinds['@arc:'+id] —
    kinds is the one part of edits.json that older versions of this app keep as-is when they sync, so nothing is lost on a device that has not reloaded yet.
    id = the arc's original name (base arcs, and arcs typed on an episode) or 'u…' for arcs added on the timeline page; renaming keeps the id.
@@ -1132,7 +1147,7 @@ function arcLeave(n,id){const a=arcBy(id);if(!a)return false;const s=a.start_ep,
  const x=epEdit(n);x.ar=x.ar.filter(v=>v!==id);x.t=Date.now();touch();persist();rebuild();return true}
 function persist(){lsSet('edits',JSON.stringify(E));lsSet('dirty',JSON.stringify(dirty));lsSet('upq',JSON.stringify(upq))}
 function touch(){dirty=true;gen++;clearTimeout(_ps);_ps=setTimeout(persist,300);sync('存在這台，等待上傳…');clearTimeout(_pt);_pt=setTimeout(push,4000)}
-function setRead(v){S.read=v;E.read={v,t:Date.now()};touch()}
+function setRead(v){if(LOCK)return;S.read=v;E.read={v,t:Date.now()};touch()}
 /* arc edits (kinds['@arc:…']) go by time like episodes; any other field this version doesn't know is kept */
 function merge(r,l){if(!r)return l;const eps={...r.eps};for(const k in l.eps)if(!eps[k]||(l.eps[k].t||0)>=(eps[k].t||0))eps[k]=l.eps[k];const rk=r.kinds||{},lk=l.kinds||{},kinds={...rk,...lk};for(const k in rk)if(k.startsWith(AK)&&lk[k]&&((rk[k]&&rk[k].t)||0)>((lk[k]&&lk[k].t)||0))kinds[k]=rk[k];return{...r,...l,eps,kinds,read:!r.read||(l.read&&l.read.t>=r.read.t)?l.read:r.read}}
 /* status line */
@@ -1451,10 +1466,17 @@ function medal(k,on){if(!GEMS[k])return pearlMd(on);const G=GEMS[k],N=16,pts=(r,
  if(on)for(let i=0;i<4;i++)leaf+=`<path transform="rotate(${i*90})" d="M-8 -21Q-3 -24 0 -30Q3 -24 8 -21Q0 -23 -8 -21Z" fill="url(#silver)" stroke="#565a7e" stroke-width=".6"/>`;
  const pr=[2,6,10,14].map(i=>at(i)).map(p=>`<circle cx="${(p[0]*1.08).toFixed(2)}" cy="${(p[1]*1.08).toFixed(2)}" r="1.8" fill="#fff" stroke="#565a7e" stroke-width=".5"/>`).join('');
  return `<svg class="md" viewBox="-30 -30 60 60" aria-hidden="true">${leaf}<g transform="rotate(${G.rot})"><polygon points="${bez.join(' ')}" fill="url(#silver)" stroke="#565a7e" stroke-width=".7" stroke-linejoin="round"/>${f}<polygon points="${line.join(' ')}" fill="${G.tint}" fill-opacity=".2" stroke="#3a3690" stroke-width=".6" stroke-linejoin="round"/><path d="M-8 -5Q-3 -10 4 -8.5Q-2 -6.5 -5 -2Z" fill="#fff" opacity=".88"/>${pr}</g></svg>`}
+/* settings: version, reading lock (this device only), notes backup */
+function vSettings(){const pend=dirty||upq.length;return `<div class="pg cfg"><div class="hd"><h2 class="logo">設定</h2>${spray(110,70,43,'right:-6px;top:-10px')}</div>
+<section class="card cfg-c"><h3>閱讀進度</h3><label class="cfg-l"><span class="cfg-t"><b>固定在最新話</b><small>打開後主頁的手鐲不能拖，每週新話一出就算讀到，不會再誤滑。只影響這台裝置。</small></span><input type="checkbox" id="stLock" role="switch"${LOCK?' checked':''}><i class="cfg-s" aria-hidden="true"></i></label></section>
+<section class="card cfg-c"><h3>備份</h3><p>把這台裝置上的筆記與修改（edits.json）存成一個檔案，放在手機或電腦裡備用。</p><div class="cfg-b"><button class="chip" id="stBk">下載筆記備份</button><small id="stBm" role="status">${pend?'這台還有修改等待上傳；備份會包含它們。':''}</small></div></section>
+<section class="card cfg-c"><h3>版本</h3><dl class="cfg-v"><dt>程式</dt><dd>${esc(VER)}</dd><dt>資料</dt><dd>${esc(BASE.replace(/^data\/base-|\.json$/g,''))}</dd><dt>這台的筆記</dt><dd>${pend?'有修改等待上傳':'已和雲端一致'}</dd></dl></section></div>`}
+function bindSettings(){$('#stLock').onchange=e=>{LOCK=e.target.checked;if(LOCK)lsSet('readLock','1');else lsDel('readLock');S.read=E.read?E.read.v:(+lsGet('read')||9999);if(LOCK)S.read=9999};
+ $('#stBk').onclick=()=>{persist();const d=new Date(),p=x=>String(x).padStart(2,'0'),f=`和皇帝一起墮落_筆記備份_${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}.json`,u=URL.createObjectURL(new Blob([JSON.stringify(E,null,1)],{type:'application/json'})),a=document.createElement('a');a.href=u;a.download=f;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);$('#stBm').textContent=`已下載 ${f}`}}
 const DM=[['home','主頁'],['line','藤蔓劇情線'],['wall','圖片牆'],['goods','展覽'],['world','人物與王國']];
 function avSmall(){const a=latestAv();return a?`<img src="${a}" alt="">`:`<svg viewBox="-20 -20 40 40" aria-hidden="true">${lily(0,0,18)}</svg>`}
 function reportItem(){let len=D.eps.length;while(len>BE.length&&D.eps[len-1].st==='todo')len--;const t=D.eps.slice(0,len).filter(e=>e.st==='todo');return `<button class="dwr dwrp" aria-expanded="false">${pearlMd(false)}<span>向陛下報告</span></button><div class="dwsub" hidden>${t.length?`<button class="dwj" data-v="ep-${t[0].n}">補${nm(t[0].n)}<small>還有 ${t.length} 話待補</small></button>`:''}<button class="dwj" data-v="ep-${len}">＋ 新增${nm(len)}</button></div>`}
-function menu(){const light=document.documentElement.dataset.mode==='light';return `<button class="dwh" data-v="home" aria-label="回主頁"><span class="dwa">${avSmall()}</span><span class="dwi"><b>${ME.name}</b><small>${ME.id}</small></span></button><div class="dwl">${DM.map(([k,l])=>`<button class="dwr" data-v="${k}" ${k===cur?'aria-current="page"':''}>${medal(k,k===cur)}<span>${l}</span></button>`).join('')}${reportItem()}<button class="dwr dwm">${medal('mode',false)}<span>切換成${light?'夜':'日'}版</span></button></div>`}
+function menu(){const light=document.documentElement.dataset.mode==='light';return `<button class="dwh" data-v="home" aria-label="回主頁"><span class="dwa">${avSmall()}</span><span class="dwi"><b>${ME.name}</b><small>${ME.id}</small></span></button><div class="dwl">${DM.map(([k,l])=>`<button class="dwr" data-v="${k}" ${k===cur?'aria-current="page"':''}>${medal(k,k===cur)}<span>${l}</span></button>`).join('')}${reportItem()}<button class="dwr dwm">${medal('mode',false)}<span>切換成${light?'夜':'日'}版</span></button><button class="dwr" data-v="settings" ${cur==='settings'?'aria-current="page"':''}>${pearlMd(cur==='settings')}<span>設定</span></button></div>`}
 let _back=null;
 function openDw(){const d=$('#dw');_back=document.activeElement;d.innerHTML=hy(`<div class="dws" id="dws"></div><aside class="dwp" role="dialog" aria-modal="true" aria-label="選單">${menu()}</aside>`);hydrate();d.classList.add('open');document.body.classList.add('dwo');$('#dws').onclick=closeDw;const on=$('#dw [aria-current]');if(on)on.focus()}
 function closeDw(){const d=$('#dw');if(!d.classList.contains('open'))return;d.classList.remove('open');document.body.classList.remove('dwo');if(_back&&_back.focus&&document.contains(_back))_back.focus()}
@@ -1466,9 +1488,9 @@ let _ly=0;addEventListener('scroll',()=>{const y=scrollY,f=$('#fav');if(f){if(y>
 function nav(){$('#nav').innerHTML=hy(menu());closeDw();$('#fav').innerHTML=hy(avSmall());$('#fav').classList.remove('dim');setTimeout(favSync,0)}
 function render(keep){rebuild();const h=location.hash.slice(1)||'home',m=$('#m'),[r,a]=h.split('-');const n=+a;let full=false,html;
  if(r==='ep'&&n===D.eps.length)D.eps.push(blankEp(n));
- if(r==='tea'){cur='goods';html='<iframe class="sr-entry sr-tea" title="溫室茶會"></iframe><div class="sr-tea-floor" aria-hidden="true"><div class="sr-floor">'+srGarden('left:-45px;bottom:-25px')+srGarden('right:-45px;bottom:-25px;transform:scaleX(-1)')+'</div></div>';full=true}else if(r==='study'){cur='goods';html=a==='summary'?vStudySummary():G.events[n]&&a!==undefined?vStudyBook(n,+h.split('-')[2]||0):vStudy();full=true}else if(r==='ep'&&D.eps[n]){html=vEp(n);full=true;cur='eps'}else if(r==='event'&&G.events[n]){html=vEvent(n);full=true;cur='goods'}else if(r==='prize'&&G.prizes[n]){html=vPrize(n);full=true;cur='goods'}else if(r==='slides'){html=vSlides();full=true;cur='goods'}else if(r==='person'&&D.ppl[n]){html=vPerson(n);full=true;cur='world'}else if(r==='nation'&&D.nations[n]){html=vNation(n);full=true;cur='world'}
+ if(r==='tea'){cur='goods';html='<iframe class="sr-entry sr-tea" title="溫室茶會"></iframe><div class="sr-tea-floor" aria-hidden="true"><div class="sr-floor">'+srGarden('left:-45px;bottom:-25px')+srGarden('right:-45px;bottom:-25px;transform:scaleX(-1)')+'</div></div>';full=true}else if(r==='study'){cur='goods';html=a==='summary'?vStudySummary():G.events[n]&&a!==undefined?vStudyBook(n,+h.split('-')[2]||0):vStudy();full=true}else if(r==='ep'&&D.eps[n]){html=vEp(n);full=true;cur='eps'}else if(r==='event'&&G.events[n]){html=vEvent(n);full=true;cur='goods'}else if(r==='prize'&&G.prizes[n]){html=vPrize(n);full=true;cur='goods'}else if(r==='slides'){html=vSlides();full=true;cur='goods'}else if(r==='settings'){html=vSettings();cur='settings'}else if(r==='person'&&D.ppl[n]){html=vPerson(n);full=true;cur='world'}else if(r==='nation'&&D.nations[n]){html=vNation(n);full=true;cur='world'}
  else{cur=TABS.some(t=>t[0]===h)?h:'home';html={home:vHome,wall:vWall,line:vLine,goods:vGoods,world:vWorld}[cur]()}
  const wide=cur==='home'||r==='ep';m.innerHTML=hy((cur==='home'&&!full?hero():'')+(wide?`<div class="shell"><div class="mainc">${html}</div>${side()}</div>`:html));document.body.classList.toggle('full',full);nav();hydrate();if(!keep)window.scrollTo(0,0);
- if(r==='ep'&&full)bindEp(n);else if(!full)({home:bindHome,wall:bindWall,line:bindLine})[cur]?.()}
+ if(r==='ep'&&full)bindEp(n);else if(!full)({home:bindHome,wall:bindWall,line:bindLine,settings:bindSettings})[cur]?.()}
 addEventListener('hashchange',()=>{S.edit=null;if(location.hash!=='#line')S.lnEdit=false;persist();render()});if(!lsGet('edits'))await pull();render();startSync();
 </script></body></html>
