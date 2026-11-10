@@ -741,7 +741,7 @@ select.edi[hidden]{display:none}
 .sr-unpictured p{font-size:.65rem;margin:0}
 .sr-unpictured small{font-size:.6rem}
 .sr-other-volumes{gap:6px 15px}
-.sr-summary{padding:0 5% 35px}
+.sr-summary{padding:0 5% 35px;overflow-x:hidden;overflow-x:clip}/* heading flower pokes 5px past a 390 screen; clip instead of letting the page sway */
 .sr-summary .sr-heading>.fl{width:90px;height:auto;right:-25px!important;top:20px!important}
 .sr-summary-paper{padding:20px}
 .sr-summary-row{grid-template-columns:36px 1fr;gap:12px;padding:18px 0}
@@ -970,7 +970,7 @@ async function dbGet(k){try{const d=await db();return await new Promise((ok,no)=
 async function dbSet(k,v){try{const d=await db();await new Promise((ok,no)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error)})}catch(e){}}
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
 /* private repo: this page holds no notes or pictures, they are read with the device's key */
-const BASE='data/base-2a2703d33f01.json',VER='2026.11.10 23:15 · 6fef8ba';
+const BASE='data/base-6008fc55328f.json',VER='2026.11.11 00:21 · a7c6081';
 let CFG=null,TK=lsGet('tk');
 const api=(p,o={})=>fetch(`${CFG.api??'https://api.github.com'}/repos/${CFG.owner}/${CFG.repo}/contents/${p}`,{cache:'no-store',...o,headers:{Authorization:`Bearer ${TK}`,...o.headers}});
 const rawGet=p=>api(p,{headers:{Accept:'application/vnd.github.raw+json'}});
@@ -1062,10 +1062,12 @@ function vHome(){const vis=D.eps.filter(e=>e.st!=='todo'&&!hidden(e.n)).reverse(
  <p class="bio">${esc(D.synopsis)}</p></div>
  <p class="fo"><span><b>204</b> 話第一部　<b>${D.eps.length-205}</b> 話幕間　<b>${D.noted}</b> 話已寫</span><button class="mode" id="mode" aria-label="切換成${document.documentElement.dataset.mode==='light'?'夜':'日'}版" title="切換成${document.documentElement.dataset.mode==='light'?'夜':'日'}版"><svg viewBox="0 0 256 256" fill="currentColor">${document.documentElement.dataset.mode==='light'?ICON.moon:ICON.sun}</svg></button></p></div>
  ${aboutBlock()}
- <div class="brace"><span id="bw">${bracelet(Math.min(S.read,204)/204)}</span><input id="rd" type="range" min="0" max="${D.eps.length-1}" value="${Math.min(S.read,D.eps.length-1)}" aria-label="我目前讀到第幾話"${LOCK?' disabled title="已固定在最新話，可到設定解除"':''}></div><div class="rl" id="rl">${rdl()}</div></div>
+ <div class="brace"><span id="bw">${bracelet(braceFull())}</span><input id="rd" type="range" min="0" max="${D.eps.length-1}" value="${Math.min(S.read,D.eps.length-1)}" aria-label="我目前讀到第幾話"${LOCK?' disabled title="已固定在最新話，可到設定解除"':''}></div><div class="rl" id="rl">${rdl()}</div></div>
  <div class="tl">
  ${hid?`<div class="spo">防劇透：${hid} 話已收起</div>`:''}${rows}${vis.length>S.shown?`<button class="pillb more" id="mr">再看 30 話</button>`:''}</div></div>`}
-function bindHome(){$('#mode').onclick=toggleMode;$('#rd').oninput=e=>{setRead(+e.target.value);$('#bw').innerHTML=bracelet(Math.min(S.read,204)/204);$('#rl').textContent=rdl();clearTimeout(window._t);window._t=setTimeout(()=>{const y=scrollY;render(true);scrollTo(0,y)},350)};
+// bracelet is full when the reader reaches the newest episode in the data (incl. interludes), per user 2026-11-11
+function braceFull(){const last=Math.max(1,D.eps.length-1);return Math.min(S.read,last)/last}
+function bindHome(){$('#mode').onclick=toggleMode;$('#rd').oninput=e=>{setRead(+e.target.value);$('#bw').innerHTML=bracelet(braceFull());$('#rl').textContent=rdl();clearTimeout(window._t);window._t=setTimeout(()=>{const y=scrollY;render(true);scrollTo(0,y)},350)};
  $$('.po,.prev,.todo,.eg-go').forEach(x=>{x.onclick=()=>go('ep-'+x.dataset.n);x.onkeydown=e=>{if(e.key==='Enter')go('ep-'+x.dataset.n)}});const m=$('#mr');if(m)m.onclick=()=>{const y=scrollY;S.shown+=30;render();scrollTo(0,y)}}
 function vEp(n){const e=D.eps[n],hide=hidden(n)&&e.st!=='todo',edit=!hide&&(S.edit===n||e.st==='todo'),pics=(edit&&(S.edit=n),e.im),r=e.rx,u=hide?null:avOf(n),fl=c=>`<svg id="epf" class="${c} turn" viewBox="-20 -20 40 40" style="transform:rotate(${S.pa}deg)" aria-hidden="true">${lily(0,0,18)}</svg>`;
  const ava=hide?fl('ehf'):`<button class="avbtn ehav" id="avb" title="換這話的頭像" aria-label="換這話的頭像">${u?`<img class="ehi" src="${u}" alt="">${fl('ehb')}`:fl('ehf')}</button>`;
