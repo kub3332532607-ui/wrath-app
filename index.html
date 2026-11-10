@@ -863,6 +863,59 @@ select.edi[hidden]{display:none}
 .sr-tea-floor{position:relative;flex:1 0 130px;margin-top:-1px;pointer-events:none;overflow:hidden;--sr-petal:#b3b7f166;--sr-facet:#dddfff80;--sr-outline:#c4baf0;--sr-vein:#f0eeff;--sr-leaf:#9e95cb33;--sr-gold:#d3bd86}
 [data-mode=light] .sr-tea-floor{--sr-petal:#fffaf0c9;--sr-facet:#e2d9f080;--sr-outline:#ba9c65;--sr-vein:#fff;--sr-leaf:#c4b48d33;--sr-gold:#b49250}
 .sr-tea-floor>.sr-floor{height:100%;min-height:130px}
+/* ---- picture viewer, cropper, avatar picker, wall views (2026-11-10) ---- */
+.lbx,.crx{position:fixed;inset:0;padding:0;border:0;margin:0;max-width:none;max-height:none;width:100%;height:100%;background:#07051d;color:#eef0ff;overflow:hidden;font-family:var(--b)}
+.lbx::backdrop,.crx::backdrop{background:#07051d}
+html:has(dialog.lbx[open],dialog.crx[open]){overflow:hidden}
+.lbx[open],.crx[open]{display:grid;grid-template-rows:auto minmax(0,1fr) auto}
+.lb-top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:calc(8px + env(safe-area-inset-top,0px)) 10px 6px 18px;font-size:.88rem;color:#b1b6e4;min-height:58px}
+.lb-x{flex:none;display:grid;place-items:center;width:46px;height:46px;border-radius:50%;font-size:1.3rem;line-height:1;color:#eef0ff;background:rgba(170,182,255,.14);border:1px solid rgba(205,214,255,.26)}
+.lb-st,.cr-st{position:relative;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+.lb-im{position:absolute;left:50%;top:50%;max-width:100%;max-height:100%;transform:translate(-50%,-50%);transform-origin:50% 50%;-webkit-user-drag:none;will-change:transform}
+.lb-im.ease{transition:transform .22s ease,opacity .22s ease}
+.lb-a{position:absolute;top:50%;margin-top:-26px;width:52px;height:52px;border-radius:50%;font-size:1.9rem;line-height:1;color:#eef0ff;background:rgba(7,5,29,.55);border:1px solid rgba(205,214,255,.26);display:none;place-items:center}
+.lb-p{left:14px}.lb-n{right:14px}
+@media (hover:hover) and (pointer:fine){.lb-a{display:grid}.lb-a[disabled]{opacity:.25}}
+.lb-bar,.cr-bar{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;padding:10px 14px calc(14px + env(safe-area-inset-bottom,0px));min-height:20px}
+.lbx .chip,.crx .chip{color:#c9d8ff;background:rgba(170,182,255,.14);border-color:rgba(205,214,255,.3);min-height:42px;padding:0 18px}
+.crx .chip.cr-ok{color:#07051d;background:#eef0ff;border-color:#eef0ff}
+.crx .seg2{background:rgba(170,182,255,.12);border-color:rgba(205,214,255,.26)}
+.crx .seg2 button{color:#b1b6e4}.crx .seg2 button.on{background:#eef0ff;color:#11103c}
+.cr-im{position:absolute;left:50%;top:50%;max-width:none;max-height:none;transform-origin:50% 50%;-webkit-user-drag:none;will-change:transform}
+.cr-f{position:absolute;pointer-events:none;box-shadow:0 0 0 9999px rgba(7,5,29,.66);outline:1.5px solid #eef0ff;border-radius:2px}
+.cr-f::before,.cr-f::after{content:"";position:absolute;inset:33.33% 0;border-block:1px solid rgba(238,240,255,.35)}
+.cr-f::after{inset:0 33.33%;border-block:0;border-inline:1px solid rgba(238,240,255,.35)}
+.cr-tip{width:100%;text-align:center;font-size:.78rem;color:#b1b6e4}
+.ehav{border-radius:50%}
+.avx{width:min(560px,100%);max-width:100%;max-height:86vh;margin:auto auto 0;padding:0 0 calc(14px + env(safe-area-inset-bottom,0px));border:1px solid var(--line);border-bottom:0;border-radius:26px 26px 0 0;background:var(--solid);color:var(--fg);overflow:auto}
+@media (min-width:700px){.avx{margin:auto;border-radius:26px;border-bottom:1px solid var(--line)}}
+.avx::backdrop{background:rgba(7,5,29,.6)}
+.avx h3{margin:0;padding:18px 20px 4px;font-family:var(--t);font-weight:400;font-size:1.2rem}
+.avx p{margin:0;padding:0 20px 10px;color:var(--mute);font-size:.84rem}
+.av-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;padding:4px 16px 12px}
+.av-g button{aspect-ratio:1;border-radius:12px;overflow:hidden;background:var(--glass)}
+.av-g img{width:100%;height:100%;object-fit:cover;object-position:50% 14%;display:block}
+.av-b{display:flex;flex-wrap:wrap;gap:10px;padding:4px 16px 0}
+.av-b label{position:relative;cursor:pointer}
+.av-b input{position:absolute;inset:0;opacity:0;width:100%;cursor:pointer}
+.eg-photo img,.tw-c img{cursor:zoom-in}
+.wtool{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;margin:0 0 14px}
+.wall.v-grid{columns:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(108px,1fr));gap:6px}
+.wall.v-grid .tile{margin:0;aspect-ratio:1;border-radius:12px}
+.wall.v-grid .tile img{height:100%;object-fit:cover;object-position:50% 14%}
+.wall.v-grid .tile em{font-size:1.05rem;left:7px;top:1px}
+.wall.v-fall{columns:auto;display:flex;gap:10px;align-items:flex-start}.wall.v-fall>div{flex:1;min-width:0}
+.wgp .tile em{display:none}
+.wall.v-big{columns:auto;max-width:680px;margin-inline:auto}
+.wall.v-big .tile{margin:0 0 14px}
+.wl-gem{position:absolute;right:0;top:50%;transform:translateY(-50%);width:62px;height:62px;display:grid;place-items:center}
+.wl-gem svg.md{width:62px;height:62px;overflow:visible}
+.fab.wl-pearl{background:none;box-shadow:none;width:64px;height:64px;display:grid;place-items:center;filter:drop-shadow(0 6px 14px rgba(10,10,60,.55))}
+.fab.wl-pearl svg.md{width:104px;height:104px;margin:-20px;filter:none}
+@media (min-width:900px){.fab.wl-pearl{right:18px}}
+.wgh{display:flex;align-items:baseline;gap:10px;margin:18px 0 8px;font-weight:400}
+.wgh button{font-family:var(--t);font-size:1.12rem;color:var(--fg)}
+.wgh span{font-size:.8rem;color:var(--mute)}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <radialGradient id="pg" cx="50%" cy="100%" r="100%"><stop offset="0" stop-color="#3f47c9"/><stop offset=".38" stop-color="#7763ea"/><stop offset=".72" stop-color="#c3cbff"/><stop offset="1" stop-color="#fff"/></radialGradient>
@@ -978,7 +1031,7 @@ function vHome(){const vis=D.eps.filter(e=>e.st!=='todo'&&!hidden(e.n)).reverse(
 function bindHome(){$('#mode').onclick=toggleMode;$('#rd').oninput=e=>{setRead(+e.target.value);$('#bw').innerHTML=bracelet(Math.min(S.read,204)/204);$('#rl').textContent=rdl();clearTimeout(window._t);window._t=setTimeout(()=>{const y=scrollY;render(true);scrollTo(0,y)},350)};
  $$('.po,.prev,.todo,.eg-go').forEach(x=>{x.onclick=()=>go('ep-'+x.dataset.n);x.onkeydown=e=>{if(e.key==='Enter')go('ep-'+x.dataset.n)}});const m=$('#mr');if(m)m.onclick=()=>{const y=scrollY;S.shown+=30;render();scrollTo(0,y)}}
 function vEp(n){const e=D.eps[n],hide=hidden(n)&&e.st!=='todo',edit=!hide&&(S.edit===n||e.st==='todo'),pics=(edit&&(S.edit=n),e.im),r=e.rx,u=hide?null:avOf(n),fl=c=>`<svg id="epf" class="${c} turn" viewBox="-20 -20 40 40" style="transform:rotate(${S.pa}deg)" aria-hidden="true">${lily(0,0,18)}</svg>`;
- const ava=hide?fl('ehf'):`<label class="avbtn ehav" title="換這話的頭像">${u?`<img class="ehi" src="${u}" alt="">${fl('ehb')}`:fl('ehf')}<input id="avf" type="file" accept="image/*" aria-label="換這話的頭像"></label>`;
+ const ava=hide?fl('ehf'):`<button class="avbtn ehav" id="avb" title="換這話的頭像" aria-label="換這話的頭像">${u?`<img class="ehi" src="${u}" alt="">${fl('ehb')}`:fl('ehf')}</button>`;
  const sub=hide?'':`${e.lb?`<p class="ehlb">${esc(e.lb)}</p>`:''}${tail(e)?`<span class="hn">${esc(tail(e))}</span>`:''}${S.av[n]?'<button class="rs" id="avr">改回預設</button>':''}`;
  const head=`<header class="ehd"><div class="ehl"><button class="ib" onclick="go('home')" aria-label="回主頁">←</button><button class="ib" id="ep" aria-label="上一話" ${n?'':'disabled'}>‹</button></div><div class="ehc">${ava}<b class="ehn">${nm(n)}</b></div><div class="ehr"><button class="ib" id="en" aria-label="下一話" ${n<D.eps.length-1?'':'disabled'}>›</button>${hide?'':`<button class="edb" id="edt">${edit?'完成':'編輯'}</button>`}</div>${sub?`<div class="ehs">${sub}</div>`:''}</header>`;
  if(hide)return `<div class="col">${head}<div class="spo" style="margin-top:20px">防劇透：這話在你的手鐲進度之後。</div></div>`;
@@ -1012,9 +1065,8 @@ function egStop(){cancelAnimationFrame(EG.raf);EG.ro?.disconnect();EG.ro=null;EG
 function egStart(){egStop();const th=$('#egth');if(!th)return;EG.th=th;egMeasure();EG.ro=new ResizeObserver(egMeasure);EG.ro.observe(th);document.fonts?.ready.then(()=>EG.th===th&&egMeasure());
  th.onclick=e=>{if(e.target.closest('.eg-pearl'))EG.nudge=EG.clock};EG.prev=performance.now();EG.raf=requestAnimationFrame(egTick)}
 egRM.addEventListener?.('change',()=>EG.th&&egPaint());
-function cropSquare(file,cb){const u=URL.createObjectURL(file),im=new Image();im.onload=()=>{const z=Math.min(im.width,im.height),c=document.createElement('canvas');c.width=c.height=320;c.getContext('2d').drawImage(im,(im.width-z)/2,Math.max(0,(im.height-z)*.12),z,z,0,0,320,320);URL.revokeObjectURL(u);c.toBlob(cb,'image/jpeg',.86)};im.src=u}
 function bindEp(n){const t=d=>{S.pa=S.ang;S.ang+=d*120;go('ep-'+(n+d))};$('#ep').onclick=()=>t(-1);$('#en').onclick=()=>t(1);const f=$('#epf');f.getBoundingClientRect();f.style.transform=`rotate(${S.ang}deg)`;S.pa=S.ang;
- const a=$('#avf');if(a)a.onchange=()=>{if(a.files[0])cropSquare(a.files[0],u=>setAv(n,u))};const r=$('#avr');if(r)r.onclick=()=>setAv(n,null);bindEdit(n);egStart()}
+ const a=$('#avb');if(a)a.onclick=()=>openAvPick(n);const th=$('#egth');if(th){const L=epPics(n);th.querySelectorAll('.eg-photo img,.tw-c img').forEach((im,k)=>{im.onclick=()=>openLB(L,k,{crop:true})})}const r=$('#avr');if(r)r.onclick=()=>setAv(n,null);bindEdit(n);egStart()}
 /* ---- edits: everything the user adds lives in edits.json in the private repo ---- */
 const BE=D.eps,BA=D.arcs,ls=(k,d)=>{try{return JSON.parse(lsGet(k))??d}catch(e){return d}};
 let E=ls('edits',{eps:{},kinds:{},read:null}),dirty=ls('dirty',false),upq=ls('upq',[]),SHA=null,gen=0,_pt=0,_ps=0,pushing=false;
@@ -1095,17 +1147,101 @@ function bindEdit(n){const t=$('#edt');if(t)t.onclick=()=>{const on=$('.edm');if
  r.addEventListener('click',e=>{const d=e.target.closest('.tw-del'),xb=e.target.closest('.tw-x');
   if(d){const i=idx(d),el=d.closest('.re');if((el.querySelector('.rxi').value.trim()||el.querySelector('.tw-c'))&&!confirm('刪掉這則吐槽和它的圖？'))return;el.remove();again(Math.max(0,i-1))}
   if(xb){const i=idx(xb),j=+xb.dataset.x;again(i,x=>{const rr=x.rx[i];if(rr&&rr.im){rr.im.splice(j,1);if(!rr.im.length)delete rr.im}})}});
- r.addEventListener('change',async e=>{const f=e.target;if(f.type!=='file'||!f.files.length)return;const i=idx(f),fs=[...f.files].slice(0,4);collect(n,true);let fail=0,ps=[];for(const fl of fs){try{ps.push(await storeImg(await shrink(fl)))}catch(_){fail++}}
+ r.addEventListener('change',async e=>{const f=e.target;if(f.type!=='file'||!f.files.length)return;const i=idx(f),fs=await cropSeq([...f.files].slice(0,4));f.value='';if(!fs.length)return;collect(n,true);let fail=0,ps=[];for(const fl of fs){try{ps.push(await storeImg(await shrink(fl)))}catch(_){fail++}}
   again(i,x=>{while(x.rx.length<=i)x.rx.push({x:'',l:false});const rr=x.rx[i];rr.im=[...(rr.im||[]),...ps.filter(p=>!(rr.im||[]).includes(p))].slice(0,4)});if(n>S.read)setRead(n);if(fail)sync(`有 ${fail} 張圖讀不出來，換成 JPG 或 PNG 再試`,true)});
- const f=$('#edf');f.onchange=async()=>{const fs=[...f.files];if(!fs.length)return;collect(n,true);await addImages(n,fs);const y=scrollY;render(true);scrollTo(0,y)};
+ const f=$('#edf');f.onchange=async()=>{const fs=await cropSeq([...f.files]);f.value='';if(!fs.length)return;collect(n,true);await addImages(n,fs);const y=scrollY;render(true);scrollTo(0,y)};
  $$('[data-rm]').forEach(b=>b.onclick=()=>{collect(n,true);const x=epEdit(n);x.im.splice(+b.dataset.rm,1);x.t=Date.now();touch();persist();const y=scrollY;render(true);scrollTo(0,y)})}
 /* right column on computers */
 function side(){const pics=D.wall.filter(w=>!hidden(w.n)).slice(-6).reverse(),todo=D.eps.find(e=>e.st==='todo')||{n:D.eps.length};return `<aside class="side"><section class="sc"><h3>作品資料</h3><p class="hdl2">${D.titles.map(esc).join('<br>')}<br>原作：天壱　制作：SORAJIMA</p></section>
  <section class="sc"><h3>下一話要寫</h3><button class="next" onclick="go('ep-${todo.n}')">${nm(todo.n)}</button><p class="src">${D.eps.filter(e=>e.st==='todo').length} 話待補，${D.eps.filter(e=>e.st==='plot_only').length} 話只有劇情</p></section>
  <section class="sc"><h3>最近的圖</h3><div class="minis">${pics.map(w=>`<button onclick="go('ep-${w.n}')" aria-label="${nm(w.n)}"><img src="${w.src}" alt="" loading="lazy"></button>`).join('')}</div></section></aside>`}
 /* wall */
-function vWall(){const all=D.wall.filter(w=>!hidden(w.n));return `<div class="pg"><div class="hd"><h2 class="logo">圖片牆</h2><span>${all.length} 張</span></div>${S.addOpen?`<div class="addf"><label>選圖<input id="af" type="file" accept="image/*" multiple></label><label>這張是第幾話<input id="an" type="number" min="0" max="${D.eps.length}" inputmode="numeric" value="${lastWritten()}"></label><div class="chips"><button class="chip" id="ag">加到圖片牆</button><button class="chip" id="ac">取消</button></div></div>`:''}<div class="wall">${all.map(w=>`<button class="tile" data-n="${w.n}"><img src="${w.src}" alt="${nm(w.n)}的圖" loading="lazy"><em>${w.n}</em></button>`).join('')}</div></div><button class="fab" id="add" aria-label="加一張圖">＋</button>`}
-function bindWall(){$$('.tile').forEach(b=>b.onclick=()=>go('ep-'+b.dataset.n));$('#add').onclick=()=>{S.addOpen=true;render()};const g=$('#ag');if(g){g.onclick=async()=>{const f=[...$('#af').files];if(!f.length)return;const n=Math.min(+$('#an').value||0,D.eps.length);S.addOpen=false;await addImages(n,f);render(true)};$('#ac').onclick=()=>{S.addOpen=false;render()}}}
+/* ---- pictures: viewer, cropper, avatar picker (2026-11-10) ---- */
+const picURL=p=>/^img\//.test(p)?loadImg(p):Promise.resolve(p);
+const clampN=(v,a,b)=>Math.max(a,Math.min(b,v));
+/* full-screen dialogs take one history step, so the phone's back button closes them instead of leaving the page */
+let LB=null,OV=[];
+function ovOpen(d,close){d.addEventListener('cancel',e=>{e.preventDefault();ovBack()});document.body.append(d);d.showModal();history.pushState({ov:OV.length+1},'');OV.push({d,close})}
+function ovBack(){if(OV.length)history.back()}
+addEventListener('popstate',()=>{const o=OV.pop();if(o){o.d.close();o.d.remove();o.close&&o.close()}});
+/* list: [{p:path,n:episode}] ; o.go: show "go to this episode", o.crop: allow cropping in place */
+function openLB(list,i,o={}){if(!list.length)return;
+ const d=document.createElement('dialog');d.className='lbx';d.setAttribute('aria-label','圖片放大檢視，左右滑換張，按 ✕ 關閉');
+ d.innerHTML=`<div class="lb-top"><span class="lb-c" aria-live="polite"></span><button class="lb-x" aria-label="關閉">✕</button></div><div class="lb-st"><img class="lb-im" alt="" draggable="false"><button class="lb-a lb-p" aria-label="上一張">‹</button><button class="lb-a lb-n" aria-label="下一張">›</button></div><div class="lb-bar">${o.go?'<button class="chip lb-go"></button>':''}${o.crop?'<button class="chip lb-cr">裁切</button>':''}</div>`;
+ const L=LB={d,list,i,s:1,x:0,y:0,after:null},st=d.querySelector('.lb-st'),im=d.querySelector('.lb-im'),q=s=>d.querySelector(s);
+ const put=(ease)=>{im.classList.toggle('ease',!!ease);im.style.transform=`translate(calc(-50% + ${L.x}px),calc(-50% + ${L.y}px)) scale(${L.s})`};
+ const show=()=>{const it=L.list[L.i];L.s=1;L.x=L.y=0;put();im.style.opacity=0;q('.lb-c').textContent=`${nm(it.n)}　${L.i+1} / ${L.list.length}`;q('.lb-p').disabled=L.i===0;q('.lb-n').disabled=L.i===L.list.length-1;if(q('.lb-go'))q('.lb-go').textContent=`去${nm(it.n)}`;
+  const k=L.i;picURL(it.p).then(u=>{if(L.i!==k||!u)return;im.src=u;im.alt=`${nm(it.n)}的圖，第 ${k+1} 張`;im.classList.add('ease');im.style.opacity=1});
+  [k-1,k+1].forEach(j=>L.list[j]&&picURL(L.list[j].p))};
+ const step=dv=>{const j=L.i+dv;if(j<0||j>=L.list.length){L.x=0;put(true);return}L.x=-dv*innerWidth;put(true);setTimeout(()=>{L.i=j;show()},180)};
+ q('.lb-x').onclick=ovBack;q('.lb-p').onclick=()=>step(-1);q('.lb-n').onclick=()=>step(1);
+ if(q('.lb-go'))q('.lb-go').onclick=()=>{const n=L.list[L.i].n;L.after=()=>go('ep-'+n);ovBack()};
+ if(q('.lb-cr'))q('.lb-cr').onclick=async()=>{const it=L.list[L.i],u=await picURL(it.p);if(!u)return;const b=await openCrop(u,{title:'裁切這張圖'});if(!b||b==='skip')return;
+  const np=await storeImg(b),x=epEdit(it.n),sw=a=>a&&a.map(p=>p===it.p?np:p);x.im=sw(x.im);x.rx.forEach(r=>{if(r.im)r.im=sw(r.im)});x.t=Date.now();touch();persist();
+  L.list.forEach(z=>{if(z.p===it.p)z.p=np});show();const y=scrollY;render(true);scrollTo(0,y)};
+ d.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')step(-1);if(e.key==='ArrowRight')step(1)});
+ st.addEventListener('wheel',e=>{e.preventDefault();L.s=clampN(L.s*(e.deltaY<0?1.15:1/1.15),1,5);if(L.s===1)L.x=L.y=0;put()},{passive:false});
+ const P=new Map();let g=null,lastTap=0;
+ st.onpointerdown=e=>{if(e.target.closest('button'))return;st.setPointerCapture(e.pointerId);P.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(P.size===1)g={m:1,x0:e.clientX,y0:e.clientY,sx:L.x,sy:L.y,t:Date.now(),moved:false,bg:e.target===st};
+  else if(P.size===2){const[a,b]=[...P.values()];g={m:2,d0:Math.hypot(a.x-b.x,a.y-b.y)||1,s0:L.s,sx:L.x,sy:L.y}}};
+ st.onpointermove=e=>{if(!P.has(e.pointerId)||!g)return;P.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(g.m===2&&P.size>=2){const[a,b]=[...P.values()];L.s=clampN(g.s0*Math.hypot(a.x-b.x,a.y-b.y)/g.d0,1,5);L.x=g.sx;L.y=g.sy;put();return}
+  if(g.m!==1)return;const dx=e.clientX-g.x0,dy=e.clientY-g.y0;if(Math.abs(dx)+Math.abs(dy)>8)g.moved=true;
+  if(L.s>1){L.x=g.sx+dx;L.y=g.sy+dy}else{L.x=dx;L.y=0}put()};
+ const up=e=>{if(!P.has(e.pointerId))return;P.delete(e.pointerId);if(!g)return;
+  if(g.m===2){if(!P.size){if(L.s<1.05){L.s=1;L.x=L.y=0;put(true)}g=null}return}
+  const dx=e.clientX-g.x0,dy=e.clientY-g.y0;
+  if(!g.moved&&Date.now()-g.t<300){const now=Date.now();if(now-lastTap<320){L.s=L.s>1?1:2.5;L.x=L.y=0;put(true);lastTap=0}else{lastTap=now;if(g.bg)setTimeout(()=>{if(lastTap===now)ovBack()},330)}}
+  else if(L.s===1){if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy))step(dx<0?1:-1);else{L.x=0;put(true)}}
+  g=null};
+ st.onpointerup=up;st.onpointercancel=up;
+ ovOpen(d,()=>{LB=null;const a=L.after;if(a)setTimeout(a,0)});show();q('.lb-x').focus()}
+/* cropper: the frame stays still, the picture moves under it (drag, pinch, wheel). Resolves to a JPEG blob, 'skip', or null */
+const RAT={'1:1':1,'16:9':16/9,'9:16':9/16,'3:4':3/4,'4:3':4/3};
+function openCrop(url,o={}){return new Promise(res=>{const R=o.ratios||Object.keys(RAT);let done=false;const fin=v=>{if(done)return;done=true;res(v)};
+ const d=document.createElement('dialog');d.className='crx';d.setAttribute('aria-label',o.title||'裁切圖片');
+ d.innerHTML=`<div class="lb-top"><span>${esc(o.title||'裁切')}</span><button class="lb-x" aria-label="取消，不裁">✕</button></div><div class="cr-st"><img class="cr-im" alt="要裁切的圖" draggable="false"><div class="cr-f"></div></div><div class="cr-bar"><span class="cr-tip">拖曳移動，雙指或滾輪縮放</span>${R.length>1?`<div class="seg2 cr-r" role="group" aria-label="比例">${R.map((r,k)=>`<button data-r="${r}" class="${k?'':'on'}" aria-pressed="${!k}">${r}</button>`).join('')}</div>`:''}<div class="chips">${o.skip?`<button class="chip cr-skip">${esc(o.skip)}</button>`:''}<button class="chip cr-ok">完成</button></div></div>`;
+ const q=s=>d.querySelector(s),st=q('.cr-st'),im=q('.cr-im'),fr=q('.cr-f');let r=RAT[R[0]],iw=0,ih=0,fw=0,fh=0,s=1,smin=1,x=0,y=0;
+ const clamp=()=>{s=clampN(s,smin,smin*6);const mx=Math.max(0,(iw*s-fw)/2),my=Math.max(0,(ih*s-fh)/2);x=clampN(x,-mx,mx);y=clampN(y,-my,my)};
+ const put=()=>{clamp();im.style.transform=`translate(calc(-50% + ${x}px),calc(-50% + ${y}px)) scale(${s})`};
+ const lay=()=>{if(!iw)return;const W=st.clientWidth-28,H=st.clientHeight-28;if(W/H>r){fh=H;fw=H*r}else{fw=W;fh=W/r}Object.assign(fr.style,{width:fw+'px',height:fh+'px',left:(st.clientWidth-fw)/2+'px',top:(st.clientHeight-fh)/2+'px'});const k=s/smin;smin=Math.max(fw/iw,fh/ih);s=smin*(k||1);put()};
+ im.onload=()=>{iw=im.naturalWidth;ih=im.naturalHeight;im.style.width=iw+'px';im.style.height=ih+'px';s=0;smin=1;lay();s=smin;y=(ih*s-fh)/2*.72;put()};im.src=url;
+ const ro=new ResizeObserver(lay);ro.observe(st);
+ if(q('.cr-r'))q('.cr-r').onclick=e=>{const b=e.target.closest('button');if(!b)return;q('.cr-r').querySelectorAll('button').forEach(z=>{z.classList.toggle('on',z===b);z.setAttribute('aria-pressed',z===b)});r=RAT[b.dataset.r];lay()};
+ st.addEventListener('wheel',e=>{e.preventDefault();s*=e.deltaY<0?1.1:1/1.1;put()},{passive:false});
+ const P=new Map();let g=null;
+ st.onpointerdown=e=>{st.setPointerCapture(e.pointerId);P.set(e.pointerId,{x:e.clientX,y:e.clientY});const v=[...P.values()];g=P.size===1?{m:1,x0:e.clientX,y0:e.clientY,sx:x,sy:y}:{m:2,d0:Math.hypot(v[0].x-v[1].x,v[0].y-v[1].y)||1,s0:s}};
+ st.onpointermove=e=>{if(!P.has(e.pointerId)||!g)return;P.set(e.pointerId,{x:e.clientX,y:e.clientY});const v=[...P.values()];if(g.m===2&&v.length>=2)s=g.s0*Math.hypot(v[0].x-v[1].x,v[0].y-v[1].y)/g.d0;else if(g.m===1){x=g.sx+e.clientX-g.x0;y=g.sy+e.clientY-g.y0}put()};
+ st.onpointerup=st.onpointercancel=e=>{P.delete(e.pointerId);const v=[...P.values()];g=v.length===1?{m:1,x0:v[0].x,y0:v[0].y,sx:x,sy:y}:null};
+ const out=()=>{const sw=fw/s,sh=fh/s,sx=iw/2-x/s-sw/2,sy=ih/2-y/s-sh/2,mx=o.max||1600,k=Math.min(1,mx/Math.max(sw,sh)),c=document.createElement('canvas');c.width=Math.round(sw*k);c.height=Math.round(sh*k);c.getContext('2d').drawImage(im,sx,sy,sw,sh,0,0,c.width,c.height);c.toBlob(b=>{fin(b);ovBack()},'image/jpeg',.88)};
+ q('.lb-x').onclick=ovBack;q('.cr-ok').onclick=()=>{if(iw)out()};if(q('.cr-skip'))q('.cr-skip').onclick=()=>{fin('skip');ovBack()};
+ ovOpen(d,()=>{ro.disconnect();fin(null)})})}
+/* phone photos picked to add: crop each one first (or keep it whole); ✕ leaves that one out */
+async function cropSeq(files){const out=[];for(let k=0;k<files.length;k++){const f=files[k],u=URL.createObjectURL(f);try{const b=await openCrop(u,{title:files.length>1?`裁切（${k+1} / ${files.length}）`:'裁切',skip:'不裁，用原圖'});if(b==='skip')out.push(f);else if(b)out.push(b)}finally{URL.revokeObjectURL(u)}}return out}
+/* episode avatar: pick from this episode's pictures (or the phone), then choose the square */
+function openAvPick(n){const ims=allIm(D.eps[n]),d=document.createElement('dialog');d.className='avx';d.setAttribute('aria-label','換這話的頭像');
+ d.innerHTML=hy(`<h3>換${nm(n)}的頭像</h3><p>${ims.length?'點一張這話的圖，再框出要的正方形':'這話還沒有圖，可以從手機選'}</p>${ims.length?`<div class="av-g">${ims.map((p,k)=>`<button data-k="${k}" aria-label="用第 ${k+1} 張"><img src="${p}" alt="" loading="lazy"></button>`).join('')}</div>`:''}<div class="av-b"><label class="chip">從手機選<input type="file" accept="image/*" aria-label="從手機選頭像"></label>${S.av[n]?'<button class="chip av-r">改回預設</button>':''}<button class="chip av-c">取消</button></div>`);
+ let next=null;const pick=async u=>{const b=await openCrop(u,{ratios:['1:1'],title:'框出頭像',max:320});if(b&&b!=='skip')setAv(n,b)};
+ d.onclick=e=>{if(e.target===d){ovBack();return}const b=e.target.closest('.av-g button');if(b){const p=ims[+b.dataset.k];next=async()=>{const u=await picURL(p);if(u)pick(u)};ovBack()}};
+ d.querySelector('.av-c').onclick=ovBack;const rb=d.querySelector('.av-r');if(rb)rb.onclick=()=>{next=()=>setAv(n,null);ovBack()};
+ d.querySelector('input').onchange=e=>{const f=e.target.files[0];if(!f)return;next=async()=>{const u=URL.createObjectURL(f);try{await pick(u)}finally{URL.revokeObjectURL(u)}};ovBack()};
+ ovOpen(d,()=>{if(next)setTimeout(next,0)});hydrate()}
+/* the episode thread: same order as on screen */
+function epPics(n){const e=D.eps[n],r=e.rx;return [...((r[0]&&r[0].im)||[]),...e.im,...r.slice(1).flatMap(x=>x.im||[])].map(p=>({p,n}))}
+/* wall: order, grouping and view are remembered on this device only */
+const WV={o:'old',v:'fall',g:0};try{Object.assign(WV,JSON.parse(lsGet('wallv')||'{}'))}catch(e){}
+const WNM=matchMedia('(max-width:599px)');WNM.addEventListener('change',()=>{if(cur==='wall'&&!document.querySelector('dialog[open]')){const y=scrollY;render(true);scrollTo(0,y)}});
+const wallBox=t=>{if(WV.v!=='fall')return `<div class="wall v-${WV.v}">${t.join('')}</div>`;const c=WNM.matches?2:3,cols=Array.from({length:c},()=>[]);t.forEach((x,k)=>cols[k%c].push(x));return `<div class="wall v-fall">${cols.map(z=>`<div>${z.join('')}</div>`).join('')}</div>`};
+function wallList(){const all=D.wall.filter(w=>!hidden(w.n));return WV.o==='new'?all.slice().sort((a,b)=>b.n-a.n):all}
+function vWall(){const all=wallList(),seg=(k,opts)=>`<div class="seg2" role="group">${opts.map(([v,t])=>`<button data-wk="${k}" data-wv="${v}" class="${WV[k]===v?'on':''}" aria-pressed="${WV[k]===v}">${t}</button>`).join('')}</div>`,
+ tile=(w,k)=>`<button class="tile" data-k="${k}" aria-label="放大${nm(w.n)}的圖"><img src="${w.src}" alt="${nm(w.n)}的圖" loading="lazy"><em>${w.n}</em></button>`;
+ let body;if(WV.g){const gs=[];all.forEach((w,k)=>{const l=gs[gs.length-1];if(l&&l.n===w.n)l.t.push(tile(w,k));else gs.push({n:w.n,t:[tile(w,k)]})});body=gs.map(x=>`<section class="wgp"><h3 class="wgh"><button data-go="${x.n}">${nm(x.n)}</button><span>${x.t.length} 張</span></h3>${wallBox(x.t)}</section>`).join('')}
+ else body=wallBox(all.map(tile));
+ return `<div class="pg"><div class="hd"><h2 class="logo">圖片牆</h2><span>${all.length} 張</span><button class="wl-gem" id="wvt" aria-label="排序與瀏覽方式" aria-expanded="${!!S.wtOpen}">${medal('wall',!!S.wtOpen)}</button></div>${S.addOpen?`<div class="addf"><label>選圖<input id="af" type="file" accept="image/*" multiple></label><label>這張是第幾話<input id="an" type="number" min="0" max="${D.eps.length}" inputmode="numeric" value="${lastWritten()}"></label><div class="chips"><button class="chip" id="ag">加到圖片牆</button><button class="chip" id="ac">取消</button></div></div>`:''}${S.wtOpen?`<div class="wtool">${seg('o',[['old','舊話在前'],['new','新話在前']])}${seg('v',[['grid','方格'],['fall','瀑布'],['big','大圖']])}${seg('g',[[0,'不分組'],[1,'按話分組']])}</div>`:''}${body}</div><button class="fab wl-pearl" id="add" aria-label="加一張圖" title="加一張圖">${pearlMd(false)}</button>`}
+function bindWall(){const L=wallList().map(w=>({p:w.src,n:w.n}));$$('.tile').forEach(b=>b.onclick=()=>openLB(L,+b.dataset.k,{go:true,crop:true}));$$('[data-go]').forEach(b=>b.onclick=()=>go('ep-'+b.dataset.go));
+ $$('[data-wk]').forEach(b=>b.onclick=()=>{const k=b.dataset.wk,v=b.dataset.wv;WV[k]=k==='g'?+v:v;lsSet('wallv',JSON.stringify(WV));const y=scrollY;render(true);scrollTo(0,y)});
+ $('#wvt').onclick=()=>{S.wtOpen=!S.wtOpen;const y=scrollY;render(true);scrollTo(0,y)};$('#add').onclick=()=>{S.addOpen=true;render()};const g=$('#ag');if(g){g.onclick=async()=>{const f=await cropSeq([...$('#af').files]);if(!f.length)return;const n=Math.min(+$('#an').value||0,D.eps.length);S.addOpen=false;await addImages(n,f);render(true)};$('#ac').onclick=()=>{S.addOpen=false;render()}}}
 /* timeline */
 function statsBar(){const sel=D.stats.find(t=>t.k===S.stat),say=sel&&!/^第|：/.test(sel.note)?sel.note:'';return `<div class="stb"><div class="stg">${D.stats.map(t=>`<button class="st ${t.k===S.stat?'on':''}" data-st="${t.k}" aria-pressed="${t.k===S.stat}"><b>${t.eps.filter(n=>!hidden(n)).length}</b><span>${t.k}</span></button>`).join('')}</div>${sel?(say?`<p class="stn">${esc(say)}</p>`:''):'<p class="stn">點一個，那幾話會開在藤蔓上。</p>'}</div>`}
 function vLine(){const sel=D.stats.find(t=>t.k===S.stat),say={};if(sel)for(const m of sel.note.matchAll(/([\d、]+)：([^。]+)。/g))m[1].split('、').forEach(n=>say[n]=m[2]);
