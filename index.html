@@ -465,6 +465,70 @@ select.edi[hidden]{display:none}
 .edim{margin-top:12px;display:grid;justify-items:start;gap:6px}
 .edadd{margin-top:12px;cursor:pointer;position:relative;overflow:hidden}
 .edadd input{position:absolute;inset:0;opacity:0;font-size:0;cursor:pointer}
+/* ---- glass cards on a pearl chain: episode page and home posts (design v16m, 2026-11-10) ---- */
+:root{--eg-glass:rgba(170,182,255,.13);--eg-glass2:linear-gradient(150deg,rgba(186,178,255,.16),rgba(150,140,240,.08));--eg-edge:rgba(185,166,122,.5);--eg-shine:rgba(224,224,255,.28);--eg-shadow:rgba(5,6,21,.3)}
+[data-mode=light]{--eg-glass:rgba(255,255,255,.6);--eg-glass2:linear-gradient(150deg,rgba(255,255,255,.78),rgba(243,238,255,.62));--eg-edge:rgba(183,143,60,.42);--eg-shine:rgba(255,255,255,.96);--eg-shadow:rgba(120,100,130,.16)}
+.eg-glass{position:relative;border:1px solid var(--eg-edge);border-top-color:var(--eg-shine);background:linear-gradient(125deg,var(--eg-shine),transparent 8% 67%,#ffffff0d 78%,transparent 90%),var(--eg-glass);border-radius:16px;box-shadow:inset 0 0 0 1px #ffffff14,0 10px 28px var(--eg-shadow);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+[data-mode=light] .eg-glass{box-shadow:inset 0 0 0 1px rgba(255,255,255,.7),inset 0 -18px 30px -24px rgba(154,151,208,.35),0 10px 28px var(--eg-shadow)}
+.eg-corner{position:absolute;left:5px;top:5px;width:38px;height:38px;color:var(--gold);opacity:.85;pointer-events:none}.eg-corner.eg-bottom{inset:auto 5px 5px auto;transform:rotate(180deg)}
+.eg-summary{margin:14px 12px 0;padding:28px 30px 28px;font-size:17px;line-height:1.95}
+.eg-summary .bd2.full{font-size:inherit;line-height:inherit;margin:0 0 10px}.eg-summary .bd2.full:last-of-type{margin-bottom:0}
+.eg-summary .src{display:block;margin-top:6px}.eg-summary .nt{margin-top:12px}
+.eg-thread{position:relative;margin:0 8px 0 34px;padding-top:34px;padding-bottom:58px}
+.eg-bail{position:absolute;left:3px;top:-17px;width:28px;height:26px;z-index:4;pointer-events:none}
+.eg-chain{position:absolute;inset:0;pointer-events:none}
+.eg-link{position:absolute;left:10px;width:14px;background:var(--chain) center top/14px 28px repeat-y;transform-origin:7px 0;will-change:transform}
+.eg-node{position:relative;display:grid;grid-template-columns:38px minmax(0,1fr);column-gap:16px;padding:0 0 32px}
+.eg-pearl{position:relative;z-index:3;align-self:start;width:34px;height:34px;margin-top:18px;display:block;cursor:pointer}
+.eg-pearl svg.md{display:block;width:48px;height:48px;margin:-7px;filter:none}
+.eg-joint{position:absolute;left:24px;top:28px;width:34px;height:14px;background:var(--chainh) left center/28px 14px repeat-x;z-index:1}
+.eg-pendant{min-width:0;position:relative;z-index:2;transform-origin:-37px 35px;will-change:transform}
+.eg-note{display:block;width:100%;text-align:left;padding:22px 27px 24px;font-size:17px;line-height:1.95;color:var(--mute);background:linear-gradient(125deg,var(--eg-shine),transparent 9% 70%,transparent),var(--eg-glass2)}
+.eg-note p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.eg-photo{width:min(100%,390px);padding:10px;margin:0}.eg-photo img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;object-position:50% 14%;border-radius:9px}
+.eg-photo figcaption{font-size:12px;line-height:1.7;padding:9px 6px 3px;color:var(--mute)}
+.eg-tail{position:absolute;left:-7px;width:48px;height:48px;will-change:transform;z-index:3}.eg-tail svg{width:48px;height:48px;display:block;filter:none}
+.eg-post{position:relative;margin:0 12px 40px}
+.eg-pcard{padding:22px 24px 22px;cursor:pointer}
+.eg-ph{display:flex;align-items:center;gap:12px;margin:0 0 10px}
+.eg-av{flex:none;width:46px;height:46px}.eg-av .ava{width:46px;height:46px}
+.eg-ph b{font-family:var(--t);font-weight:400;font-size:20px;letter-spacing:.08em}.eg-ph span{color:var(--mute);font-size:14px}
+.eg-psum{margin:0;font-size:15.5px;line-height:1.85;white-space:pre-line;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.eg-pimg{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;object-position:50% 14%;border-radius:12px;margin-top:14px;border:1px solid var(--eg-edge)}
+.eg-hang{position:relative;margin:0 0 0 26px;padding-top:24px}
+.eg-hchain{position:absolute;left:10px;top:0;width:14px;height:56px;background:var(--chain) center top/14px 28px repeat-y}
+.eg-hang .eg-node{padding-bottom:0}.eg-hang .eg-pearl{cursor:default}
+.eg-hang .eg-note{padding:15px 20px 16px;font-size:15px;line-height:1.85;cursor:pointer;font:inherit;font-size:15px}
+.eg-hang .eg-note p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:normal}
+.eg-more{display:inline-block;margin:10px 0 0 76px;font-size:13px;color:var(--mute);letter-spacing:.08em;border-bottom:1px solid var(--eg-edge);padding-bottom:2px;cursor:pointer}
+@media(prefers-reduced-motion:reduce){.eg-pendant,.eg-link,.eg-tail{will-change:auto}}
+@media(max-width:600px){.eg-summary{margin:12px 10px 0;font-size:16px;padding:27px 22px}
+ .eg-thread{margin-left:26px;margin-right:4px;padding-top:28px}.eg-node{grid-template-columns:30px minmax(0,1fr);column-gap:10px;padding-bottom:27px}.eg-link{left:8px}.eg-bail{left:1px}
+ .eg-pearl svg.md{width:44px;height:44px}.eg-pearl{width:30px;height:30px;margin-top:20px}.eg-joint{left:22px;top:28px;width:22px}
+ .eg-note{padding:20px 17px 22px;font-size:15px;line-height:1.9}.eg-pendant{transform-origin:-25px 35px}.eg-tail{left:-7px;width:44px;height:44px}.eg-tail svg{width:44px;height:44px}.eg-photo{padding:7px}.eg-photo figcaption{font-size:11px}
+ .eg-post{margin:0 8px 36px}.eg-pcard{padding:18px}.eg-hang{margin:0 0 0 20px}.eg-hchain{left:8px}.eg-hang .eg-bail{left:1px}.eg-more{margin-left:60px}}
+/* reactions as a thread of posts (read view and editor) */
+.rp{white-space:pre-line}
+.tw-g{display:grid;gap:4px;margin-top:8px;border-radius:14px;overflow:hidden;max-width:520px}
+.tw-g.n2,.tw-g.n3,.tw-g.n4{grid-template-columns:1fr 1fr}
+.tw-g.n3 .tw-c:first-child{grid-row:span 2}
+.tw-c{position:relative;min-height:0}
+.tw-g img{display:block;width:100%;height:100%;object-fit:cover;max-height:420px}
+.tw-g.n2 img,.tw-g.n4 img{aspect-ratio:1}
+.tw-g.n3 img{aspect-ratio:1}.tw-g.n3 .tw-c:first-child img{aspect-ratio:auto}
+.tw-x{position:absolute;top:6px;right:6px;width:30px;height:30px;border-radius:50%;background:rgba(10,12,40,.62);color:#fff;font-size:18px;line-height:1}
+.tw-bar{display:flex;gap:14px;margin-top:6px}
+.tw-b{position:relative;overflow:hidden;font-size:.82rem;color:var(--acc);cursor:pointer;min-height:32px;display:inline-flex;align-items:center}
+.tw-b input{position:absolute;inset:0;opacity:0;font-size:0;cursor:pointer}
+.tw-del{color:var(--mute)}
+.tw-th .re+.re{border-top:0}
+.tw-th .rxi{min-height:3.4em}
+.tw-next{margin:14px 0 0 54px;min-height:40px;padding:0 16px;border:1px solid var(--line);border-radius:999px;color:var(--acc);font-size:.9rem}
+.tw-more{margin-top:4px}
+.tw-more>summary{cursor:pointer;color:var(--mute);font-size:.88rem;min-height:40px;display:flex;align-items:center}
+.tw-f{display:grid;gap:2px;margin-top:14px}
+.tw-f>span{font-size:.78rem;color:var(--mute);letter-spacing:.08em}
+.tw-f .edi{text-align:left;width:100%;padding:4px 0}
 .addn{padding-top:9px;padding-bottom:9px}
 .pi[data-p]{min-height:180px;background:var(--glass)}
 .sy{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:60;max-width:min(88vw,420px);padding:6px 14px;border-radius:99px;background:var(--solid);border:1px solid var(--line);color:var(--mute);font-size:.78rem;line-height:1.4;text-align:center;opacity:0;pointer-events:none;transition:opacity .25s}
@@ -875,18 +939,16 @@ window.go=go;
 /* profile and timeline */
 const ME=D.me;
 const tail=e=>e.ar.length?e.ar[e.ar.length-1]:'';
-const avOf=n=>S.av[n]||D.eps[n].im[0]||null;
+const allIm=e=>[...e.im,...e.rx.flatMap(r=>r.im||[])];
+const avOf=n=>S.av[n]||allIm(D.eps[n])[0]||null;
 function avatar(n,cls=''){const u=avOf(n);return u?`<img class="ava ${cls}" src="${u}" alt="" loading="lazy">`:`<svg class="ava fla ${cls}" viewBox="-20 -20 40 40" aria-hidden="true">${lily(0,0,18,n*9)}</svg>`}
 function replyAv(n){return avOf(n)?avatar(n,'sm'):`<svg class="rfl" viewBox="-20 -20 40 40" aria-hidden="true">${blossom(0,0,13,n*5)}</svg>`}
 function latestAv(){for(let n=Math.min(S.read,D.eps.length-1);n>=0;n--)if(avOf(n))return avOf(n);return null}
-function postBody(e){return e.su||e.pl.slice(0,2).join('　')||''}
-function post(e,prev){const b=postBody(e),r=e.rx.length,a=tail(e),div=a&&a!==prev?`<div class="chap"><svg viewBox="-20 -20 40 40" aria-hidden="true">${lily(0,0,18,e.n*7)}</svg><span>${esc(a)}</span></div>`:'';
- return `${div}<article class="po" data-n="${e.n}" tabindex="0" role="link" aria-label="${nm(e.n)}">
- <div class="av">${avatar(e.n)}${r?'<i class="ln"></i>':''}</div>
- <div class="pb"><div class="ph"><b>${nm(e.n)}</b>${e.lb?`<span class="lb">${esc(e.lb)}</span>`:''}</div>
- ${b?`<p class="bd2">${esc(b)}</p>`:''}${e.im[0]?`<img class="pi" src="${e.im[0]}" alt="${nm(e.n)}的圖" loading="lazy">`:''}
- </div></article>
- ${r?`<button class="prev" data-n="${e.n}"><div class="av"><svg class="rfl" viewBox="-20 -20 40 40" aria-hidden="true">${lily(0,0,18,e.n*7)}</svg></div><div class="pb"><p class="rp">${e.rx[0].l?'<span class="tg">回頭補</span>':''}${esc(e.rx[0].x)}</p>${r>1?`<span class="more2">看這串的 ${r} 則吐槽</span>`:''}</div></button>`:''}`}
+function postBody(e){return e.su||e.pl.join('\n')||''}
+function post(e,prev){const b=postBody(e),r=e.rx.length,a=tail(e),div=a&&a!==prev?`<div class="chap"><svg viewBox="-20 -20 40 40" aria-hidden="true">${lily(0,0,18,e.n*7)}</svg><span>${esc(a)}</span></div>`:'',im=allIm(e)[0];
+ return `${div}<article class="eg-post"><div class="eg-pcard eg-glass eg-go" data-n="${e.n}" tabindex="0" role="link" aria-label="${nm(e.n)}">${EGC}<div class="eg-ph"><span class="eg-av">${avatar(e.n)}</span><b>${nm(e.n)}</b>${e.lb?`<span>${esc(e.lb)}</span>`:''}</div>
+ ${b?`<p class="eg-psum">${esc(b)}</p>`:''}${im?`<img class="eg-pimg" src="${im}" alt="${nm(e.n)}的圖" loading="lazy">`:''}</div>
+ ${r?`<div class="eg-hang">${EGB}<i class="eg-hchain" aria-hidden="true"></i><div class="eg-node"><span class="eg-pearl">${egJewel(e.n)}</span><i class="eg-joint" aria-hidden="true"></i><div class="eg-pendant"><button class="eg-note eg-glass eg-go" data-n="${e.n}">${e.rx[0].l?'<span class="tg">回頭補</span>':''}<p>${esc(e.rx[0].x)}</p></button></div></div></div><span class="eg-more eg-go" data-n="${e.n}" role="link" tabindex="0">看這串的 ${r} 則吐槽 ›</span>`:''}</article>`}
 function aboutBlock(){return `<details class="abt"><summary>我的心得與書名</summary><p>${esc(D.intro)}</p>${D.review.map(x=>`<p>${esc(x)}</p>`).join('')}<p class="hdl2">${D.titles.map(esc).join('<br>')}<br>原作：天壱　制作：SORAJIMA</p></details>`}
 function titleArt(){const R=rng(7),C=['#ffffff','#f4f5ff','#e3e6ff','#c9d2ff','#aeb9f8','#ece0ff','#d3e4ff','#ffffff'],c=()=>{const k=C[Math.floor(R()*C.length)];return `${k}" stroke="${k}" stroke-width="1.2`},g=38;let f='';
  for(let y=14;y<190;y+=g)for(let x=30;x<1170;x+=g){const k=R()>.5,A=`${x},${y}`,B=`${x+g},${y}`,D2=`${x},${y+g}`,E=`${x+g},${y+g}`;f+=k?`<polygon points="${A} ${B} ${D2}" fill="${c()}"/><polygon points="${B} ${E} ${D2}" fill="${c()}"/>`:`<polygon points="${A} ${B} ${E}" fill="${c()}"/><polygon points="${A} ${E} ${D2}" fill="${c()}"/>`}
@@ -914,29 +976,52 @@ function vHome(){const vis=D.eps.filter(e=>e.st!=='todo'&&!hidden(e.n)).reverse(
  <div class="tl">
  ${hid?`<div class="spo">防劇透：${hid} 話已收起</div>`:''}${rows}${vis.length>S.shown?`<button class="pillb more" id="mr">再看 30 話</button>`:''}</div></div>`}
 function bindHome(){$('#mode').onclick=toggleMode;$('#rd').oninput=e=>{setRead(+e.target.value);$('#bw').innerHTML=bracelet(Math.min(S.read,204)/204);$('#rl').textContent=rdl();clearTimeout(window._t);window._t=setTimeout(()=>{const y=scrollY;render(true);scrollTo(0,y)},350)};
- $$('.po,.prev,.todo').forEach(x=>{x.onclick=()=>go('ep-'+x.dataset.n);x.onkeydown=e=>{if(e.key==='Enter')go('ep-'+x.dataset.n)}});const m=$('#mr');if(m)m.onclick=()=>{const y=scrollY;S.shown+=30;render();scrollTo(0,y)}}
+ $$('.po,.prev,.todo,.eg-go').forEach(x=>{x.onclick=()=>go('ep-'+x.dataset.n);x.onkeydown=e=>{if(e.key==='Enter')go('ep-'+x.dataset.n)}});const m=$('#mr');if(m)m.onclick=()=>{const y=scrollY;S.shown+=30;render();scrollTo(0,y)}}
 function vEp(n){const e=D.eps[n],hide=hidden(n)&&e.st!=='todo',edit=!hide&&(S.edit===n||e.st==='todo'),pics=(edit&&(S.edit=n),e.im),r=e.rx,u=hide?null:avOf(n),fl=c=>`<svg id="epf" class="${c} turn" viewBox="-20 -20 40 40" style="transform:rotate(${S.pa}deg)" aria-hidden="true">${lily(0,0,18)}</svg>`;
  const ava=hide?fl('ehf'):`<label class="avbtn ehav" title="換這話的頭像">${u?`<img class="ehi" src="${u}" alt="">${fl('ehb')}`:fl('ehf')}<input id="avf" type="file" accept="image/*" aria-label="換這話的頭像"></label>`;
- const sub=hide?'':edit?edSub(e,n):`${e.lb?`<p class="ehlb">${esc(e.lb)}</p>`:''}${tail(e)?`<span class="hn">${esc(tail(e))}</span>`:''}${S.av[n]?'<button class="rs" id="avr">改回預設</button>':''}`;
+ const sub=hide?'':`${e.lb?`<p class="ehlb">${esc(e.lb)}</p>`:''}${tail(e)?`<span class="hn">${esc(tail(e))}</span>`:''}${S.av[n]?'<button class="rs" id="avr">改回預設</button>':''}`;
  const head=`<header class="ehd"><div class="ehl"><button class="ib" onclick="go('home')" aria-label="回主頁">←</button><button class="ib" id="ep" aria-label="上一話" ${n?'':'disabled'}>‹</button></div><div class="ehc">${ava}<b class="ehn">${nm(n)}</b></div><div class="ehr"><button class="ib" id="en" aria-label="下一話" ${n<D.eps.length-1?'':'disabled'}>›</button>${hide?'':`<button class="edb" id="edt">${edit?'完成':'編輯'}</button>`}</div>${sub?`<div class="ehs">${sub}</div>`:''}</header>`;
  if(hide)return `<div class="col">${head}<div class="spo" style="margin-top:20px">防劇透：這話在你的手鐲進度之後。</div></div>`;
  if(edit)return `<div class="col">${head}${edBody(e,n)}</div>`;
- return `<div class="col">${head}<article class="mainp">
+ /* summary card, then the thread: first reaction, the episode's pictures, the rest of the reactions — each hung on the chain */
+ const items=[...(r.length?[egNote(r[0])]:[]),...pics.map(s=>`<figure class="eg-photo eg-glass"><img src="${s}" alt="${nm(n)}的圖"><figcaption>${nm(n)}附圖</figcaption></figure>`),...r.slice(1).map(egNote)];
+ return `<div class="col">${head}<article class="eg-summary eg-glass">${EGC}
  ${e.su?`<p class="bd2 full">${esc(e.su)}</p><span class="src">摘要來源：使用者筆記改寫</span>`:(e.pl.length?e.pl.map(x=>`<p class="bd2 full">${esc(x)}</p>`).join(''):'<p class="bd2 full" style="color:var(--mute)">這話還沒寫。</p>')}
- ${pics.map((s,i)=>i?`<img class="pi fullp" src="${s}" alt="${nm(n)}的圖">`:`<div class="bloom"><img class="pi fullp" src="${s}" alt="${nm(n)}的圖">${spray(112,84,n+9,'left:-14px;top:-20px')}${spray(176,126,n+3,'right:-16px;bottom:-34px')}</div>`).join('')}
  ${e.su&&e.pl.length?`<details class="nt"><summary>我的劇情筆記</summary>${e.pl.map(x=>`<p>${esc(x)}</p>`).join('')}</details>`:''}
- ${e.rf.length?`<div class="chips" style="margin-top:12px">${e.rf.map(x=>`<button class="chip" onclick="go('ep-${x}')">${nm(x)}</button>`).join('')}</div>`:''}</article>
- <div class="th">${r.length?r.map((x,i)=>`<div class="re"><div class="av">${PRL}${i<r.length-1?'<i class="ln"></i>':''}</div><div><p class="rp">${x.l?'<span class="tg">回頭補</span>':''}${esc(x.x)}</p></div></div>`).join(''):'<p class="spo">這話還沒有吐槽。</p>'}</div></div>`}
+ ${e.rf.length?`<div class="chips" style="margin-top:12px">${e.rf.map(x=>`<button class="chip" onclick="go('ep-${x}')">${nm(x)}</button>`).join('')}</div>`:''}${EGC2}</article>
+ ${items.length?`<section class="eg-thread" id="egth" aria-label="吐槽串">${EGB}<div class="eg-chain" aria-hidden="true"></div>${items.map((c,i)=>egNode(i,c)).join('')}<span class="eg-tail" aria-hidden="true">${medal('mode',false)}</span></section>`:'<p class="spo" style="margin-top:14px">這話還沒有吐槽。</p>'}</div>`}
+/* ---- glass cards on a pearl chain (design v16m) ---- */
+const EGC='<svg class="eg-corner" viewBox="0 0 58 58" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M6 52V20C6 11 11 6 20 6h32M11 40c0-12 4-20 12-24 6-3 13-4 22-4M20 6c-2 5-1 9 4 10s7-3 4-6M6 20c5-2 9-1 10 4s-3 7-6 4"/><circle cx="9.5" cy="9.5" r="3.4" fill="#fff"/></svg>',EGC2=EGC.replace('eg-corner','eg-corner eg-bottom');
+const EGB='<svg class="eg-bail" viewBox="-14 -13 28 26" aria-hidden="true"><path d="M-9 -11H9Q11 -11 10 -8L6 -3H-6L-10 -8Q-11 -11 -9 -11Z" fill="url(#silver)" stroke="#565a7e" stroke-width=".6"/><circle cy="-7" r="1.5" fill="#fff" stroke="#565a7e" stroke-width=".4"/><ellipse cy="3.5" rx="4.6" ry="6.4" fill="none" stroke="#565a7e" stroke-width="3"/><ellipse cy="3.5" rx="4.6" ry="6.4" fill="none" stroke="#e4e6f2" stroke-width="1.8"/><path d="M-3.2 0Q-3 -2 -1 -2.6" stroke="#fff" stroke-width=".8" fill="none"/></svg>';
+/* pearls and the menu's gems take turns along the chain */
+const egJewel=i=>i%2?medal(['home','wall','world','mode'][Math.floor(i/2)%4],false):pearlMd(false);
+const egNode=(i,c)=>`<div class="eg-node"><span class="eg-pearl">${egJewel(i)}</span><i class="eg-joint" aria-hidden="true"></i><div class="eg-pendant">${c}</div></div>`;
+const egNote=x=>`<article class="eg-note eg-glass">${x.l?'<span class="tg">回頭補</span>':''}${x.x?`<p>${esc(x.x)}</p>`:''}${twIm(x.im)}</article>`;
+/* the chain sways and carries the panes with it: a controlled motion (top fixed, lower links lag, capped amplitude), not a physics engine */
+const EG={links:[],nodes:[],tail:null,len:0,clock:0,prev:0,nudge:-100,raf:0,th:null,ro:null},egRM=matchMedia('(prefers-reduced-motion: reduce)');
+function egDisp(y){if(egRM.matches)return 0;const amp=innerWidth<600?5:9,depth=1-Math.exp(-y/210),lag=Math.min(y/1500,1.2),age=EG.clock-EG.nudge,pulse=age<10?Math.exp(-age/2.5)*Math.sin(age*3.2-lag)*amp*.7:0;return depth*(amp*.65*Math.sin(EG.clock*.85-lag)+pulse)}
+function egPaint(dt=0){for(const l of EG.links){const x=egDisp(l.y),dx=egDisp(l.y+l.len)-x;l.el.style.height=Math.hypot(l.len,dx)+'px';l.el.style.transform=`translateX(${x}px) rotate(${-Math.atan2(dx,l.len)*57.296}deg)`}
+ for(const n of EG.nodes){const x=egDisp(n.y),slope=(egDisp(n.y+16)-egDisp(Math.max(0,n.y-16)))/32;n.a+=(-slope*57.296*.7-n.a)*Math.min(1,dt*5);if(egRM.matches)n.a=0;n.pearl.style.transform=n.joint.style.transform=`translateX(${x}px)`;n.panel.style.transform=`translateX(${x}px) rotate(${n.a}deg)`}
+ if(EG.tail){const x=egDisp(EG.len),s=(x-egDisp(Math.max(0,EG.len-28)))/28;EG.tail.style.transform=`translateX(${x}px) rotate(${-s*57.296*.8}deg)`}}
+function egMeasure(){const th=EG.th;if(!th||!th.isConnected)return egStop();const rail=th.querySelector('.eg-chain');EG.len=th.offsetHeight-44;rail.replaceChildren();EG.links=[];
+ for(let y=0;y<EG.len;y+=28){const el=document.createElement('i');el.className='eg-link';el.style.top=y+'px';rail.append(el);EG.links.push({el,y,len:Math.min(28,EG.len-y)})}
+ EG.nodes=[...th.querySelectorAll('.eg-node')].map(el=>({y:el.offsetTop+35,pearl:el.querySelector('.eg-pearl'),joint:el.querySelector('.eg-joint'),panel:el.querySelector('.eg-pendant'),a:0}));
+ EG.tail=th.querySelector('.eg-tail');if(EG.tail){EG.tail.style.top=(EG.len-19)+'px';EG.tail.style.transformOrigin='24px 5px'}egPaint()}
+function egTick(t){if(!EG.th||!EG.th.isConnected)return egStop();const dt=Math.min(.05,(t-EG.prev)/1000||0);EG.prev=t;if(!egRM.matches&&!document.hidden){EG.clock+=dt;egPaint(dt)}EG.raf=requestAnimationFrame(egTick)}
+function egStop(){cancelAnimationFrame(EG.raf);EG.ro?.disconnect();EG.ro=null;EG.th=null}
+function egStart(){egStop();const th=$('#egth');if(!th)return;EG.th=th;egMeasure();EG.ro=new ResizeObserver(egMeasure);EG.ro.observe(th);document.fonts?.ready.then(()=>EG.th===th&&egMeasure());
+ th.onclick=e=>{if(e.target.closest('.eg-pearl'))EG.nudge=EG.clock};EG.prev=performance.now();EG.raf=requestAnimationFrame(egTick)}
+egRM.addEventListener?.('change',()=>EG.th&&egPaint());
 function cropSquare(file,cb){const u=URL.createObjectURL(file),im=new Image();im.onload=()=>{const z=Math.min(im.width,im.height),c=document.createElement('canvas');c.width=c.height=320;c.getContext('2d').drawImage(im,(im.width-z)/2,Math.max(0,(im.height-z)*.12),z,z,0,0,320,320);URL.revokeObjectURL(u);c.toBlob(cb,'image/jpeg',.86)};im.src=u}
 function bindEp(n){const t=d=>{S.pa=S.ang;S.ang+=d*120;go('ep-'+(n+d))};$('#ep').onclick=()=>t(-1);$('#en').onclick=()=>t(1);const f=$('#epf');f.getBoundingClientRect();f.style.transform=`rotate(${S.ang}deg)`;S.pa=S.ang;
- const a=$('#avf');if(a)a.onchange=()=>{if(a.files[0])cropSquare(a.files[0],u=>setAv(n,u))};const r=$('#avr');if(r)r.onclick=()=>setAv(n,null);bindEdit(n)}
+ const a=$('#avf');if(a)a.onchange=()=>{if(a.files[0])cropSquare(a.files[0],u=>setAv(n,u))};const r=$('#avr');if(r)r.onclick=()=>setAv(n,null);bindEdit(n);egStart()}
 /* ---- edits: everything the user adds lives in edits.json in the private repo ---- */
 const BE=D.eps,BA=D.arcs,ls=(k,d)=>{try{return JSON.parse(lsGet(k))??d}catch(e){return d}};
 let E=ls('edits',{eps:{},kinds:{},read:null}),dirty=ls('dirty',false),upq=ls('upq',[]),SHA=null,gen=0,_pt=0,_ps=0,pushing=false;
 const blankEp=n=>({n,lb:'',st:'todo',su:'',pl:[],rx:[],im:[],ar:[],rf:[]});
 function rebuild(){const len=Math.max(BE.length,...Object.keys(E.eps).map(k=>+k+1));S.av={};
  D.eps=Array.from({length:len},(_,n)=>{const b=BE[n]||blankEp(n),x=E.eps[n];if(!x)return b;if(x.av)S.av[n]=x.av;const e={...b,...x};e.st=e.rx.length?'has_reactions':e.pl.length||e.su||e.im.length||e.lb?'plot_only':'todo';return e});
- D.wall=D.eps.flatMap(e=>e.im.map(src=>({n:e.n,src})));D.noted=D.eps.filter(e=>e.st!=='todo').length;
+ D.wall=D.eps.flatMap(e=>allIm(e).map(src=>({n:e.n,src})));D.noted=D.eps.filter(e=>e.st!=='todo').length;
  const A=BA.map(a=>({...a}));for(const k of Object.keys(E.eps)){const n=+k;for(const nm2 of D.eps[n].ar){let a=A.find(x=>x.name===nm2);if(!a)A.push(a={name:nm2,kind:E.kinds[nm2]||'side',start_ep:n,end_ep:n,note:''});if(n<a.start_ep)a.start_ep=n;if(a.end_ep!=null&&n>a.end_ep)a.end_ep=n}}D.arcs=A;
  if(E.read)S.read=E.read.v}
 function persist(){lsSet('edits',JSON.stringify(E));lsSet('dirty',JSON.stringify(dirty));lsSet('upq',JSON.stringify(upq))}
@@ -970,33 +1055,48 @@ function hydrate(){attachStudyEntrance();attachStudyTea();$$('[data-p],[data-bg]
 /* adding pictures: phone photos shrink to 1600px, name comes from the content so re-adding never doubles */
 async function shrink(f){const u=URL.createObjectURL(f);try{const im=await new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=no;i.src=u}),k=Math.min(1,1600/Math.max(im.naturalWidth,im.naturalHeight)),c=document.createElement('canvas');c.width=Math.round(im.naturalWidth*k);c.height=Math.round(im.naturalHeight*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);return await new Promise(ok=>c.toBlob(ok,'image/jpeg',.84))}finally{URL.revokeObjectURL(u)}}
 async function storeImg(b){const h=[...new Uint8Array(await crypto.subtle.digest('SHA-256',await b.arrayBuffer()))].slice(0,8).map(x=>x.toString(16).padStart(2,'0')).join(''),p=`img/u-${h}.jpg`;await dbSet('img:'+p,b);URLS.set(p,URL.createObjectURL(b));if(!upq.includes(p))upq.push(p);return p}
-function epEdit(n){const e=D.eps[n]||blankEp(n);return E.eps[n]||(E.eps[n]={lb:e.lb,pl:[...e.pl],rx:e.rx.map(x=>({...x})),im:[...e.im],ar:[...e.ar]})}
+function epEdit(n){const e=D.eps[n]||blankEp(n);return E.eps[n]||(E.eps[n]={lb:e.lb,su:e.su||'',pl:[...e.pl],rx:e.rx.map(x=>({...x,...(x.im?{im:[...x.im]}:{})})),im:[...e.im],ar:[...e.ar]})}
 async function addImages(n,files){let fail=0;for(const f of files){try{const p=await storeImg(await shrink(f)),x=epEdit(n);if(!x.im.includes(p))x.im.push(p);x.t=Date.now()}catch(e){fail++}}if(n>S.read)setRead(n);touch();persist();if(fail)sync(`有 ${fail} 張圖讀不出來，換成 JPG 或 PNG 再試`,true)}
 window.setAv=async(n,b)=>{const x=epEdit(n);x.av=b?await storeImg(b):null;x.t=Date.now();touch();persist();const y=scrollY;render(true);scrollTo(0,y)};
 const lastWritten=()=>{for(let n=D.eps.length-1;n>=0;n--)if(D.eps[n].st!=='todo')return n;return 0};
-/* in-place editor on the episode page */
-const rxRow=(x,i,all)=>`<div class="re"><div class="av">${PRL}${i<all.length-1?'<i class="ln"></i>':''}</div><div>${x.l?'<span class="tg">回頭補</span>':''}<textarea class="eta rxi" rows="1" data-l="${x.l?1:''}" placeholder="${i===all.length-1?'吐槽打在這裡，換行就開下一則':''}" aria-label="吐槽">${esc(x.x)}</textarea></div></div>`;
-function edSub(e,n){const a=tail(e)||(e.st==='todo'&&n>0?tail(D.eps[n-1]):'');return `<input class="edi" id="edl" value="${esc(e.lb)}" placeholder="註記（可空白）" aria-label="註記"><input class="edi" id="eda" list="edal" value="${esc(a)}" placeholder="劇情線" aria-label="劇情線"><datalist id="edal">${D.arcs.map(x=>`<option value="${esc(x.name)}">`).join('')}</datalist><select class="edi" id="edk" aria-label="新劇情線的種類" hidden><option value="side">支線</option><option value="main">主線</option></select>`}
-function edBody(e,n){const rows=[...e.rx,{x:''}];return `<article class="mainp edm" data-n="${n}">${e.su?`<p class="bd2 full">${esc(e.su)}</p><span class="src">摘要來源：使用者筆記改寫</span>`:''}
- <textarea class="eta" id="edp" rows="2" placeholder="劇情筆記，一行一條" aria-label="劇情筆記">${esc(e.pl.join('\n'))}</textarea>
- ${e.im.map((s,i)=>`<div class="edim"><img class="pi fullp" src="${s}" alt="${nm(n)}的圖"><button class="chip" data-rm="${i}">移除這張</button></div>`).join('')}
- <label class="chip edadd">＋ 加圖<input id="edf" type="file" accept="image/*" multiple></label></article><div class="th" id="edr">${rows.map(rxRow).join('')}</div>`}
+/* in-place editor on the episode page: the reactions are a thread of posts, like on X — each one can wrap lines and carry up to 4 pictures */
+const twIm=(im,ed)=>im&&im.length?`<div class="tw-g n${Math.min(im.length,4)}">${im.map((s,j)=>`<div class="tw-c"><img src="${s}" alt="" loading="lazy">${ed?`<button class="tw-x" data-x="${j}" aria-label="移除這張">×</button>`:''}</div>`).join('')}</div>`:'';
+const rxRow=(x,i,all)=>`<div class="re" data-i="${i}"><div class="av">${PRL}${i<all.length-1?'<i class="ln"></i>':''}</div><div>${x.l?'<span class="tg">回頭補</span>':''}<textarea class="eta rxi" rows="1" data-l="${x.l?1:''}" placeholder="${i?'接著寫…':'吐槽打在這裡，可以換行；推文整段貼上也行'}" aria-label="第${i+1}則吐槽">${esc(x.x)}</textarea>${twIm(x.im,true)}<div class="tw-bar">${(x.im||[]).length<4?`<label class="tw-b">＋圖<input type="file" accept="image/*" multiple aria-label="替第${i+1}則加圖"></label>`:''}${all.length>1?`<button class="tw-b tw-del">刪掉這則</button>`:''}</div></div></div>`;
+function edMore(e,n){const a=tail(e)||(e.st==='todo'&&n>0?tail(D.eps[n-1]):'');return `<details class="tw-more" id="edmore"${S.more?' open':''}><summary>摘要、劇情筆記、劇情線、註記、整話大圖</summary>
+ <label class="tw-f"><span>摘要</span><textarea class="eta" id="eds" rows="2" placeholder="可空白" aria-label="摘要">${esc(e.su)}</textarea></label>
+ <label class="tw-f"><span>劇情筆記</span><textarea class="eta" id="edp" rows="2" placeholder="一行一條，可空白" aria-label="劇情筆記">${esc(e.pl.join('\n'))}</textarea></label>
+ <label class="tw-f"><span>註記</span><input class="edi" id="edl" value="${esc(e.lb)}" placeholder="可空白" aria-label="註記"></label>
+ <label class="tw-f"><span>劇情線</span><input class="edi" id="eda" list="edal" value="${esc(a)}" placeholder="選一條或打新的名字" aria-label="劇情線"></label><datalist id="edal">${D.arcs.map(x=>`<option value="${esc(x.name)}">`).join('')}</datalist><select class="edi" id="edk" aria-label="新劇情線的種類" hidden><option value="side">支線</option><option value="main">主線</option></select>
+ <div class="tw-f"><span>整話大圖</span>${e.im.map((s,i)=>`<div class="edim"><img class="pi fullp" src="${s}" alt="${nm(n)}的圖"><button class="chip" data-rm="${i}">移除這張</button></div>`).join('')}<label class="chip edadd">＋ 加大圖<input id="edf" type="file" accept="image/*" multiple></label></div></details>`}
+function edBody(e,n){const rows=e.rx.length&&S.addRow!==n?[...e.rx]:[...e.rx,{x:''}];return `<div class="th tw-th" id="edr">${rows.map(rxRow).join('')}<button class="tw-next" id="ednx">＋ 接下一則</button></div><article class="mainp edm" data-n="${n}">${edMore(e,n)}</article>`}
+/* a pasted post: drop the hashtag line and the t.co links X adds */
+const cleanPaste=s=>s.replace(/^\s*#\S+(\s+#?\d+)?[ \t]*\n/,'').replace(/\s*https:\/\/t\.co\/\w+/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').trim();
 const grow=t=>{t.style.height='auto';t.style.height=t.scrollHeight+'px'};
-function collect(n,withArc){const x=epEdit(n),old=JSON.stringify([x.lb,x.pl,x.rx,x.ar]);x.lb=$('#edl').value.trim();x.pl=$('#edp').value.split('\n').map(s=>s.trim()).filter(Boolean);x.rx=$$('.rxi').map(t=>({x:t.value.trim(),l:t.dataset.l==='1'})).filter(r=>r.x);
+function collect(n,withArc){const x=epEdit(n),old=JSON.stringify([x.lb,x.su,x.pl,x.rx,x.ar]),prev=x.rx;x.lb=$('#edl').value.trim();x.su=$('#eds').value.trim();x.pl=$('#edp').value.split('\n').map(s=>s.trim()).filter(Boolean);
+ x.rx=$$('#edr .re').map(el=>{const i=+el.dataset.i,t=el.querySelector('.rxi'),im=(prev[i]&&prev[i].im)||[],r={x:t.value.trim(),l:t.dataset.l==='1'};if(im.length)r.im=[...im];return r}).filter(r=>r.x||r.im);
+ if(x.rx.length>=$$('#edr .re').length)S.addRow=null;
  if(withArc||document.activeElement!==$('#eda')){const v=$('#eda').value.trim(),ar=[...D.eps[n].ar];if(v!==(ar[ar.length-1]||'')){if(ar.length)ar.pop();if(v&&!ar.includes(v))ar.push(v)}x.ar=ar;const known=BA.some(a=>a.name===v);if(v&&!known&&!$('#edk').hidden)E.kinds[v]=$('#edk').value}
  /* a never-saved episode with nothing typed is not a change; it must not overwrite another device's work */
- if(!x.t&&!x.lb&&!x.pl.length&&!x.rx.length&&!x.im.length&&!x.av){delete E.eps[n];return}
- if(JSON.stringify([x.lb,x.pl,x.rx,x.ar])===old)return;x.t=Date.now();if(n>S.read&&(x.rx.length||x.pl.length))setRead(n);touch()}
+ if(!x.t&&!x.lb&&!x.su&&!x.pl.length&&!x.rx.length&&!x.im.length&&!x.av){delete E.eps[n];return}
+ if(JSON.stringify([x.lb,x.su,x.pl,x.rx,x.ar])===old)return;x.t=Date.now();if(n>S.read&&(x.rx.length||x.pl.length))setRead(n);touch()}
 function bindEdit(n){const t=$('#edt');if(t)t.onclick=()=>{const on=$('.edm');if(on){collect(n,true);persist();S.edit=null;rebuild();if(D.eps[n]?.st==='todo'||!D.eps[n]){go('home');return}}else S.edit=n;const y=scrollY;render(true);scrollTo(0,y)};
  if(!$('.edm'))return;$$('.eta').forEach(grow);
- const sync2=()=>collect(n);$('#edl').oninput=sync2;$('#edp').oninput=e=>{grow(e.target);sync2()};
+ const sync2=()=>collect(n);$('#edl').oninput=sync2;$('#edp').oninput=$('#eds').oninput=e=>{grow(e.target);sync2()};
+ const mo=$('#edmore');mo.ontoggle=()=>{S.more=mo.open;if(mo.open)$$('#edmore .eta').forEach(grow)};
  const ka=()=>{const v=$('#eda').value.trim();$('#edk').hidden=!v||D.arcs.some(a=>a.name===v)};$('#eda').oninput=ka;$('#eda').onchange=()=>{ka();collect(n,true)};$('#edk').onchange=()=>collect(n,true);ka();
- const r=$('#edr');const redraw=(rows,focus,pos)=>{r.innerHTML=rows.map(rxRow).join('');const ts=$$('.rxi');ts.forEach(grow);const f=ts[Math.min(focus,ts.length-1)];f.focus();const q=pos==null?f.value.length:pos;f.setSelectionRange(q,q)};
- const rowsNow=()=>$$('.rxi').map(t=>({x:t.value,l:t.dataset.l==='1'}));
- r.addEventListener('input',e=>{const t=e.target;if(!t.classList.contains('rxi'))return;if(!e.isComposing&&t.value.includes('\n')){const i=$$('.rxi').indexOf(t),rows=rowsNow(),parts=t.value.split('\n');rows.splice(i,1,{x:parts[0],l:rows[i].l},...parts.slice(1).map(x=>({x,l:false})));redraw(rows,i+parts.length-1,0)}else grow(t);collect(n)});
- /* a trailing blank row is always there to type into */
- r.addEventListener('focusin',e=>{const ts=$$('.rxi');if(e.target===ts[ts.length-1]&&e.target.value){const i=ts.length-1;const rows=rowsNow();rows.push({x:'',l:false});const q=e.target.selectionStart;redraw(rows,i,q)}});
- r.addEventListener('keydown',e=>{const t=e.target;if(e.key==='Backspace'&&t.classList.contains('rxi')&&!t.value&&!e.isComposing){const ts=$$('.rxi'),i=ts.indexOf(t);if(i>0){e.preventDefault();const rows=rowsNow();rows.splice(i,1);redraw(rows,i-1);collect(n)}}});
+ const r=$('#edr');
+ /* structural changes save first, then redraw the page and put the cursor back */
+ const again=(focus,mut)=>{collect(n,true);const x=epEdit(n);if(mut)mut(x);x.t=Date.now();touch();persist();const y=scrollY;render(true);scrollTo(0,y);const ts=$$('.rxi'),f=ts[Math.min(focus,ts.length-1)];if(f){f.focus({preventScroll:true});f.setSelectionRange(f.value.length,f.value.length)}};
+ const idx=el=>+el.closest('.re').dataset.i;
+ r.addEventListener('input',e=>{const t=e.target;if(!t.classList.contains('rxi'))return;grow(t);collect(n)});
+ r.addEventListener('paste',e=>{const t=e.target;if(!t.classList.contains('rxi'))return;const s=e.clipboardData&&e.clipboardData.getData('text');if(!s||!/t\.co\/|^\s*#\S/.test(s))return;e.preventDefault();const c=cleanPaste(s),a=t.selectionStart,b=t.selectionEnd;t.value=t.value.slice(0,a)+c+t.value.slice(b);t.setSelectionRange(a+c.length,a+c.length);grow(t);collect(n)});
+ $('#ednx').onclick=()=>{collect(n,true);S.addRow=n;const y=scrollY;render(true);scrollTo(0,y);const ts=$$('.rxi');ts[ts.length-1].focus()};
+ r.addEventListener('keydown',e=>{const t=e.target;if(e.key==='Backspace'&&t.classList.contains('rxi')&&!t.value&&!e.isComposing){const i=idx(t),el=t.closest('.re');if(i>0&&!el.querySelector('.tw-c')){e.preventDefault();el.remove();again(i-1)}}});
+ r.addEventListener('click',e=>{const d=e.target.closest('.tw-del'),xb=e.target.closest('.tw-x');
+  if(d){const i=idx(d),el=d.closest('.re');if((el.querySelector('.rxi').value.trim()||el.querySelector('.tw-c'))&&!confirm('刪掉這則吐槽和它的圖？'))return;el.remove();again(Math.max(0,i-1))}
+  if(xb){const i=idx(xb),j=+xb.dataset.x;again(i,x=>{const rr=x.rx[i];if(rr&&rr.im){rr.im.splice(j,1);if(!rr.im.length)delete rr.im}})}});
+ r.addEventListener('change',async e=>{const f=e.target;if(f.type!=='file'||!f.files.length)return;const i=idx(f),fs=[...f.files].slice(0,4);collect(n,true);let fail=0,ps=[];for(const fl of fs){try{ps.push(await storeImg(await shrink(fl)))}catch(_){fail++}}
+  again(i,x=>{while(x.rx.length<=i)x.rx.push({x:'',l:false});const rr=x.rx[i];rr.im=[...(rr.im||[]),...ps.filter(p=>!(rr.im||[]).includes(p))].slice(0,4)});if(n>S.read)setRead(n);if(fail)sync(`有 ${fail} 張圖讀不出來，換成 JPG 或 PNG 再試`,true)});
  const f=$('#edf');f.onchange=async()=>{const fs=[...f.files];if(!fs.length)return;collect(n,true);await addImages(n,fs);const y=scrollY;render(true);scrollTo(0,y)};
  $$('[data-rm]').forEach(b=>b.onclick=()=>{collect(n,true);const x=epEdit(n);x.im.splice(+b.dataset.rm,1);x.t=Date.now();touch();persist();const y=scrollY;render(true);scrollTo(0,y)})}
 /* right column on computers */
