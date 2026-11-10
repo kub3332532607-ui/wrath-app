@@ -529,6 +529,28 @@ select.edi[hidden]{display:none}
 .tw-f{display:grid;gap:2px;margin-top:14px}
 .tw-f>span{font-size:.78rem;color:var(--mute);letter-spacing:.08em}
 .tw-f .edi{text-align:left;width:100%;padding:4px 0}
+/* arcs: chips on the episode editor, cards on the vine */
+.arc-in{margin-top:6px}
+.arc-c{gap:2px;padding-right:2px;color:var(--note)}
+.arc-x{width:30px;height:30px;border-radius:99px;color:var(--mute);font-size:1.05rem;line-height:1}
+.arc-x:hover{color:var(--acc)}
+.arc-add{display:flex;gap:8px;align-items:end}
+.arc-add .edi{flex:1;min-width:0}
+.arc-add .chip{flex:none}
+.arc-go{justify-self:start;min-height:34px;margin-top:4px;text-align:left}
+.lnb{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:42px}
+.ale{padding-bottom:16px}
+.ale .tw-f{margin-top:8px}
+.ale>label.tw-f:first-of-type{margin-top:0}
+.ale [data-f=n]{font-family:var(--t);font-size:1.1rem;color:var(--fg)}
+.ale.mn [data-f=n]{font-size:1.28rem}
+.alr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.alr .edi{-moz-appearance:textfield}
+.alr .edi::-webkit-inner-spin-button,.alr .edi::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.alf{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px 10px;margin-top:10px}
+.alm{margin:6px 0 0;font-size:.82rem;color:#f08ab0}
+[data-mode=light] .alm{color:#b8336a}
+.aln{margin:14px 0 0 66px}
 .addn{padding-top:9px;padding-bottom:9px}
 .pi[data-p]{min-height:180px;background:var(--glass)}
 .sy{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:60;max-width:min(88vw,420px);padding:6px 14px;border-radius:99px;background:var(--solid);border:1px solid var(--line);color:var(--mute);font-size:.78rem;line-height:1.4;text-align:center;opacity:0;pointer-events:none;transition:opacity .25s}
@@ -991,7 +1013,7 @@ function go(h){location.hash=h}
 window.go=go;
 /* profile and timeline */
 const ME=D.me;
-const tail=e=>e.ar.length?e.ar[e.ar.length-1]:'';
+const tail=e=>e.sp||'';
 const allIm=e=>[...e.im,...e.rx.flatMap(r=>r.im||[])];
 const avOf=n=>S.av[n]||allIm(D.eps[n])[0]||null;
 function avatar(n,cls=''){const u=avOf(n);return u?`<img class="ava ${cls}" src="${u}" alt="" loading="lazy">`:`<svg class="ava fla ${cls}" viewBox="-20 -20 40 40" aria-hidden="true">${lily(0,0,18,n*9)}</svg>`}
@@ -1032,7 +1054,7 @@ function bindHome(){$('#mode').onclick=toggleMode;$('#rd').oninput=e=>{setRead(+
  $$('.po,.prev,.todo,.eg-go').forEach(x=>{x.onclick=()=>go('ep-'+x.dataset.n);x.onkeydown=e=>{if(e.key==='Enter')go('ep-'+x.dataset.n)}});const m=$('#mr');if(m)m.onclick=()=>{const y=scrollY;S.shown+=30;render();scrollTo(0,y)}}
 function vEp(n){const e=D.eps[n],hide=hidden(n)&&e.st!=='todo',edit=!hide&&(S.edit===n||e.st==='todo'),pics=(edit&&(S.edit=n),e.im),r=e.rx,u=hide?null:avOf(n),fl=c=>`<svg id="epf" class="${c} turn" viewBox="-20 -20 40 40" style="transform:rotate(${S.pa}deg)" aria-hidden="true">${lily(0,0,18)}</svg>`;
  const ava=hide?fl('ehf'):`<button class="avbtn ehav" id="avb" title="換這話的頭像" aria-label="換這話的頭像">${u?`<img class="ehi" src="${u}" alt="">${fl('ehb')}`:fl('ehf')}</button>`;
- const sub=hide?'':`${e.lb?`<p class="ehlb">${esc(e.lb)}</p>`:''}${tail(e)?`<span class="hn">${esc(tail(e))}</span>`:''}${S.av[n]?'<button class="rs" id="avr">改回預設</button>':''}`;
+ const sub=hide?'':`${e.lb?`<p class="ehlb">${esc(e.lb)}</p>`:''}${e.ar.length?`<span class="hn">${esc(e.ar.join('・'))}</span>`:''}${S.av[n]?'<button class="rs" id="avr">改回預設</button>':''}`;
  const head=`<header class="ehd"><div class="ehl"><button class="ib" onclick="go('home')" aria-label="回主頁">←</button><button class="ib" id="ep" aria-label="上一話" ${n?'':'disabled'}>‹</button></div><div class="ehc">${ava}<b class="ehn">${nm(n)}</b></div><div class="ehr"><button class="ib" id="en" aria-label="下一話" ${n<D.eps.length-1?'':'disabled'}>›</button>${hide?'':`<button class="edb" id="edt">${edit?'完成':'編輯'}</button>`}</div>${sub?`<div class="ehs">${sub}</div>`:''}</header>`;
  if(hide)return `<div class="col">${head}<div class="spo" style="margin-top:20px">防劇透：這話在你的手鐲進度之後。</div></div>`;
  if(edit)return `<div class="col">${head}${edBody(e,n)}</div>`;
@@ -1070,16 +1092,49 @@ function bindEp(n){const t=d=>{S.pa=S.ang;S.ang+=d*120;go('ep-'+(n+d))};$('#ep')
 /* ---- edits: everything the user adds lives in edits.json in the private repo ---- */
 const BE=D.eps,BA=D.arcs,ls=(k,d)=>{try{return JSON.parse(lsGet(k))??d}catch(e){return d}};
 let E=ls('edits',{eps:{},kinds:{},read:null}),dirty=ls('dirty',false),upq=ls('upq',[]),SHA=null,gen=0,_pt=0,_ps=0,pushing=false;
-const blankEp=n=>({n,lb:'',st:'todo',su:'',pl:[],rx:[],im:[],ar:[],rf:[]});
+const blankEp=n=>({n,lb:'',st:'todo',su:'',pl:[],rx:[],im:[],ar:[],rf:[],tg:[],ai:[],sp:''});
 function rebuild(){const len=Math.max(BE.length,...Object.keys(E.eps).map(k=>+k+1));S.av={};
- D.eps=Array.from({length:len},(_,n)=>{const b=BE[n]||blankEp(n),x=E.eps[n];if(!x)return b;if(x.av)S.av[n]=x.av;const e={...b,...x};e.st=e.rx.length?'has_reactions':e.pl.length||e.su||e.im.length||e.lb?'plot_only':'todo';return e});
+ D.eps=Array.from({length:len},(_,n)=>{const b=BE[n]||blankEp(n),x=E.eps[n];if(!x)return{...b,tg:b.ar};if(x.av)S.av[n]=x.av;const e={...b,...x};e.tg=e.ar||[];e.st=e.rx.length?'has_reactions':e.pl.length||e.su||e.im.length||e.lb?'plot_only':'todo';return e});
  D.wall=D.eps.flatMap(e=>allIm(e).map(src=>({n:e.n,src})));D.noted=D.eps.filter(e=>e.st!=='todo').length;
- const A=BA.map(a=>({...a}));for(const k of Object.keys(E.eps)){const n=+k;for(const nm2 of D.eps[n].ar){let a=A.find(x=>x.name===nm2);if(!a)A.push(a={name:nm2,kind:E.kinds[nm2]||'side',start_ep:n,end_ep:n,note:''});if(n<a.start_ep)a.start_ep=n;if(a.end_ep!=null&&n>a.end_ep)a.end_ep=n}}D.arcs=A;
+ arcsBuild(len);
  if(E.read)S.read=E.read.v}
+/* story arcs. Base list from the notes, then edits on top. An edited arc is stored whole as E.kinds['@arc:'+id] —
+   kinds is the one part of edits.json that older versions of this app keep as-is when they sync, so nothing is lost on a device that has not reloaded yet.
+   id = the arc's original name (base arcs, and arcs typed on an episode) or 'u…' for arcs added on the timeline page; renaming keeps the id.
+   Membership: an arc covers its from..to episodes. An arc without an end ("還沒結束") covers up to the last episode tagged with it in ep.ar. */
+const AK='@arc:';
+function arcsBuild(len){const A=BA.map(a=>({id:a.name,name:a.name,kind:a.kind,start_ep:a.start_ep,end_ep:a.end_ep,note:a.note||''})),ed={};
+ for(const k in E.kinds)if(k.startsWith(AK)){const r=E.kinds[k];if(r&&typeof r==='object'&&(r.d||(typeof r.n==='string'&&r.n&&Number.isInteger(r.s))))ed[k.slice(AK.length)]=r}
+ /* arcs typed on an episode (older versions) stretch to cover it, unless the arc itself has been edited */
+ for(const k of Object.keys(E.eps)){const n=+k;for(const t of D.eps[n].tg){let a=A.find(x=>x.id===t);if(!a)A.push(a={id:t,name:t,kind:E.kinds[t]==='main'?'main':'side',start_ep:n,end_ep:n,note:''});if(ed[t])continue;if(n<a.start_ep)a.start_ep=n;if(a.end_ep!=null&&n>a.end_ep)a.end_ep=n}}
+ for(const id in ed){const r=ed[id],i=A.findIndex(x=>x.id===id);if(r.d){if(i>=0)A.splice(i,1);continue}const a=i>=0?A[i]:(A.push({id}),A[A.length-1]);Object.assign(a,{name:r.n,kind:r.k==='main'?'main':'side',start_ep:r.s,end_ep:Number.isInteger(r.e)?r.e:null,note:r.o||''})}
+ const last={};for(let n=0;n<len;n++)for(const t of D.eps[n].tg)last[t]=n;
+ for(const a of A)a.to=a.end_ep!=null?a.end_ep:Math.max(a.start_ep,last[a.id]??a.start_ep);
+ A.sort((x,y)=>x.start_ep-y.start_ep||y.to-x.to);D.arcs=A;
+ /* each episode lists its arcs from the widest to the narrowest; the feed's chapter title uses the narrowest (the most specific event) */
+ for(const e of D.eps){const c=A.filter(a=>a.start_ep<=e.n&&e.n<=a.to);e.ar=c.map(a=>a.name);e.ai=c.map(a=>a.id);let s=null;for(const a of c)if(!s||a.to-a.start_ep<=s.to-s.start_ep)s=a;e.sp=s?s.name:''}}
+const arcBy=id=>D.arcs.find(a=>a.id===id),arcByName=v=>D.arcs.find(a=>a.name===v);
+const arcSpan=a=>a.end_ep==null?`${nm(a.start_ep)}起`:a.end_ep===a.start_ep?nm(a.start_ep):`${nm(a.start_ep)}～${nm(a.end_ep)}`;
+const arcsDone=()=>D.arcs.reduce((m,a)=>Math.max(m,a.to),-1);
+function arcPut(a,ch){E.kinds[AK+a.id]={n:a.name,k:a.kind,s:a.start_ep,e:a.end_ep??null,o:a.note||'',...ch,t:Date.now()};touch();persist();rebuild()}
+/* add episode n to the arc named v (a new name makes a new arc of that one episode) */
+function arcJoin(n,v,k){const a=arcByName(v);
+ if(!a){const id=D.arcs.some(x=>x.id===v)?'u'+Date.now().toString(36):v;arcPut({id,name:v,kind:k==='main'?'main':'side',start_ep:n,end_ep:n,note:''},{});return}
+ if(a.end_ep!=null)return arcPut(a,{s:Math.min(a.start_ep,n),e:Math.max(a.end_ep,n)});
+ if(n<a.start_ep)return arcPut(a,{s:n});
+ if(n>a.to){const x=epEdit(n);if(!x.ar.includes(a.id))x.ar.push(a.id);x.t=Date.now();touch();persist();rebuild()}}
+/* take episode n out of an arc: only from either end, since an arc is one stretch of episodes */
+function arcLeave(n,id){const a=arcBy(id);if(!a)return false;const s=a.start_ep,t=a.to,L=`「${a.name}」`;
+ if(s===n&&t===n){if(!confirm(`${L}只有這一話，移出就等於刪除這條劇情線。要刪除嗎？`))return false;arcPut(a,{d:1});return true}
+ if(n!==s&&n!==t){alert(`${nm(n)}在${L}的中間（${nm(s)}～${nm(t)}），移出會把它切成兩段。\n請到時間線頁改起訖。`);return false}
+ if(n===s){arcPut(a,{s:n+1});return true}
+ if(a.end_ep!=null){arcPut(a,{e:n-1});return true}
+ const x=epEdit(n);x.ar=x.ar.filter(v=>v!==id);x.t=Date.now();touch();persist();rebuild();return true}
 function persist(){lsSet('edits',JSON.stringify(E));lsSet('dirty',JSON.stringify(dirty));lsSet('upq',JSON.stringify(upq))}
 function touch(){dirty=true;gen++;clearTimeout(_ps);_ps=setTimeout(persist,300);sync('存在這台，等待上傳…');clearTimeout(_pt);_pt=setTimeout(push,4000)}
 function setRead(v){S.read=v;E.read={v,t:Date.now()};touch()}
-function merge(r,l){if(!r)return l;const eps={...r.eps};for(const k in l.eps)if(!eps[k]||(l.eps[k].t||0)>=(eps[k].t||0))eps[k]=l.eps[k];return{eps,kinds:{...r.kinds,...l.kinds},read:!r.read||(l.read&&l.read.t>=r.read.t)?l.read:r.read}}
+/* arc edits (kinds['@arc:…']) go by time like episodes; any other field this version doesn't know is kept */
+function merge(r,l){if(!r)return l;const eps={...r.eps};for(const k in l.eps)if(!eps[k]||(l.eps[k].t||0)>=(eps[k].t||0))eps[k]=l.eps[k];const rk=r.kinds||{},lk=l.kinds||{},kinds={...rk,...lk};for(const k in rk)if(k.startsWith(AK)&&lk[k]&&((rk[k]&&rk[k].t)||0)>((lk[k]&&lk[k].t)||0))kinds[k]=rk[k];return{...r,...l,eps,kinds,read:!r.read||(l.read&&l.read.t>=r.read.t)?l.read:r.read}}
 /* status line */
 function sync(t,sticky){const y=$('#sy');if(!y)return;y.textContent=t;y.classList.toggle('on',!!t);y.classList.toggle('bad',!!sticky);clearTimeout(sync.t);if(t&&t==='已同步')sync.t=setTimeout(()=>y.classList.remove('on'),1800)}
 /* base64 */
@@ -1095,7 +1150,7 @@ async function push(){if(pushing)return;if(!dirty&&!upq.length)return;if(navigat
   if(!dirty&&!upq.length)sync('已同步')}catch(e){bad=e}finally{pushing=false}
  if(bad){if(bad.status===401||bad.status===403||bad.status===404){sync('金鑰無法使用，內容還在這台。請重新整理後再輸入密碼。',true);TK=null;lsDel('tk')}else{sync('上傳失敗，內容還在這台，稍後自動再試',true);clearTimeout(_pt);_pt=setTimeout(push,30000)}}
  else if(dirty||upq.length){clearTimeout(_pt);_pt=setTimeout(push,1500)}}
-async function pull(){if(!TK)return;if(dirty||upq.length)return push();if(pushing)return;try{const before=JSON.stringify(E),rem=await getEdits();if(dirty||pushing)return;E=merge(rem,E);const now=JSON.stringify(E);if(now!==before){persist();rebuild();const typing=$('.edm')&&document.activeElement?.matches('input,textarea,select');if(!typing){const y=scrollY;render(true);scrollTo(0,y)}}}catch(e){}}
+async function pull(){if(!TK)return;if(dirty||upq.length)return push();if(pushing)return;try{const before=JSON.stringify(E),rem=await getEdits();if(dirty||pushing)return;E=merge(rem,E);const now=JSON.stringify(E);if(now!==before){persist();rebuild();const typing=$('.edm,.ale')&&document.activeElement?.matches('input,textarea,select');if(!typing){const y=scrollY;render(true);scrollTo(0,y)}}}catch(e){}}
 function startSync(){document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){persist();push()}else pull()});addEventListener('pagehide',persist);addEventListener('online',pull);setInterval(()=>{if(document.visibilityState==='visible')pull()},60000);pull()}
 /* pictures: fetched once with the key, kept on the device afterwards */
 const URLS=new Map(),INF=new Map(),PH='data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';let _act=0;const _wq=[];
@@ -1107,18 +1162,22 @@ function hydrate(){attachStudyEntrance();attachStudyTea();$$('[data-p],[data-bg]
 /* adding pictures: phone photos shrink to 1600px, name comes from the content so re-adding never doubles */
 async function shrink(f){const u=URL.createObjectURL(f);try{const im=await new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=no;i.src=u}),k=Math.min(1,1600/Math.max(im.naturalWidth,im.naturalHeight)),c=document.createElement('canvas');c.width=Math.round(im.naturalWidth*k);c.height=Math.round(im.naturalHeight*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);return await new Promise(ok=>c.toBlob(ok,'image/jpeg',.84))}finally{URL.revokeObjectURL(u)}}
 async function storeImg(b){const h=[...new Uint8Array(await crypto.subtle.digest('SHA-256',await b.arrayBuffer()))].slice(0,8).map(x=>x.toString(16).padStart(2,'0')).join(''),p=`img/u-${h}.jpg`;await dbSet('img:'+p,b);URLS.set(p,URL.createObjectURL(b));if(!upq.includes(p))upq.push(p);return p}
-function epEdit(n){const e=D.eps[n]||blankEp(n);return E.eps[n]||(E.eps[n]={lb:e.lb,su:e.su||'',pl:[...e.pl],rx:e.rx.map(x=>({...x,...(x.im?{im:[...x.im]}:{})})),im:[...e.im],ar:[...e.ar]})}
+function epEdit(n){const e=D.eps[n]||blankEp(n);return E.eps[n]||(E.eps[n]={lb:e.lb,su:e.su||'',pl:[...e.pl],rx:e.rx.map(x=>({...x,...(x.im?{im:[...x.im]}:{})})),im:[...e.im],ar:[...(e.tg||[])]})}
 async function addImages(n,files){let fail=0;for(const f of files){try{const p=await storeImg(await shrink(f)),x=epEdit(n);if(!x.im.includes(p))x.im.push(p);x.t=Date.now()}catch(e){fail++}}if(n>S.read)setRead(n);touch();persist();if(fail)sync(`有 ${fail} 張圖讀不出來，換成 JPG 或 PNG 再試`,true)}
 window.setAv=async(n,b)=>{const x=epEdit(n);x.av=b?await storeImg(b):null;x.t=Date.now();touch();persist();const y=scrollY;render(true);scrollTo(0,y)};
 const lastWritten=()=>{for(let n=D.eps.length-1;n>=0;n--)if(D.eps[n].st!=='todo')return n;return 0};
 /* in-place editor on the episode page: the reactions are a thread of posts, like on X — each one can wrap lines and carry up to 4 pictures */
 const twIm=(im,ed)=>im&&im.length?`<div class="tw-g n${Math.min(im.length,4)}">${im.map((s,j)=>`<div class="tw-c"><img src="${s}" alt="" loading="lazy">${ed?`<button class="tw-x" data-x="${j}" aria-label="移除這張">×</button>`:''}</div>`).join('')}</div>`:'';
 const rxRow=(x,i,all)=>`<div class="re" data-i="${i}"><div class="av">${PRL}${i<all.length-1?'<i class="ln"></i>':''}</div><div>${x.l?'<span class="tg">回頭補</span>':''}<textarea class="eta rxi" rows="1" data-l="${x.l?1:''}" placeholder="${i?'接著寫…':'吐槽打在這裡，可以換行；推文整段貼上也行'}" aria-label="第${i+1}則吐槽">${esc(x.x)}</textarea>${twIm(x.im,true)}<div class="tw-bar">${(x.im||[]).length<4?`<label class="tw-b">＋圖<input type="file" accept="image/*" multiple aria-label="替第${i+1}則加圖"></label>`:''}${all.length>1?`<button class="tw-b tw-del">刪掉這則</button>`:''}</div></div></div>`;
-function edMore(e,n){const a=tail(e)||(e.st==='todo'&&n>0?tail(D.eps[n-1]):'');return `<details class="tw-more" id="edmore"${S.more?' open':''}><summary>摘要、劇情筆記、劇情線、註記、整話大圖</summary>
+/* the episode's arcs as chips: × takes it out, the field below adds one; names, from/to and notes are edited on the timeline page */
+const arcField=(e,n)=>`<div class="tw-f"><span>劇情線</span><div class="chips arc-in">${e.ai.map((id,i)=>`<span class="chip arc-c">${esc(e.ar[i])}<button class="arc-x" data-out="${esc(id)}" aria-label="把這話移出「${esc(e.ar[i])}」">×</button></span>`).join('')||'<span class="hn">這話還沒有劇情線</span>'}</div>
+ <div class="arc-add"><input class="edi" id="eda" list="edal" placeholder="加入一條：選現有的或打新名字" aria-label="加入劇情線" enterkeyhint="done"><button class="chip" id="edag">加入</button></div><select class="edi" id="edk" aria-label="新劇情線的種類" hidden><option value="side">新的是支線</option><option value="main">新的是主線</option></select><datalist id="edal">${D.arcs.filter(a=>!e.ai.includes(a.id)).map(x=>`<option value="${esc(x.name)}">`).join('')}</datalist>
+ <button class="hn arc-go" id="edgo">名字、起訖、說明到時間線頁改 ›</button></div>`;
+function edMore(e,n){return `<details class="tw-more" id="edmore"${S.more?' open':''}><summary>摘要、劇情筆記、劇情線、註記、整話大圖</summary>
  <label class="tw-f"><span>摘要</span><textarea class="eta" id="eds" rows="2" placeholder="可空白" aria-label="摘要">${esc(e.su)}</textarea></label>
  <label class="tw-f"><span>劇情筆記</span><textarea class="eta" id="edp" rows="2" placeholder="一行一條，可空白" aria-label="劇情筆記">${esc(e.pl.join('\n'))}</textarea></label>
  <label class="tw-f"><span>註記</span><input class="edi" id="edl" value="${esc(e.lb)}" placeholder="可空白" aria-label="註記"></label>
- <label class="tw-f"><span>劇情線</span><input class="edi" id="eda" list="edal" value="${esc(a)}" placeholder="選一條或打新的名字" aria-label="劇情線"></label><datalist id="edal">${D.arcs.map(x=>`<option value="${esc(x.name)}">`).join('')}</datalist><select class="edi" id="edk" aria-label="新劇情線的種類" hidden><option value="side">支線</option><option value="main">主線</option></select>
+ ${arcField(e,n)}
  <div class="tw-f"><span>整話大圖</span>${e.im.map((s,i)=>`<div class="edim"><img class="pi fullp" src="${s}" alt="${nm(n)}的圖"><button class="chip" data-rm="${i}">移除這張</button></div>`).join('')}<label class="chip edadd">＋ 加大圖<input id="edf" type="file" accept="image/*" multiple></label></div></details>`}
 function edBody(e,n){const rows=e.rx.length&&S.addRow!==n?[...e.rx]:[...e.rx,{x:''}];return `<div class="th tw-th" id="edr">${rows.map(rxRow).join('')}<button class="tw-next" id="ednx">＋ 接下一則</button></div><article class="mainp edm" data-n="${n}">${edMore(e,n)}</article>`}
 /* a pasted post: drop the hashtag line and the t.co links X adds */
@@ -1127,7 +1186,6 @@ const grow=t=>{t.style.height='auto';t.style.height=t.scrollHeight+'px'};
 function collect(n,withArc){const x=epEdit(n),old=JSON.stringify([x.lb,x.su,x.pl,x.rx,x.ar]),prev=x.rx;x.lb=$('#edl').value.trim();x.su=$('#eds').value.trim();x.pl=$('#edp').value.split('\n').map(s=>s.trim()).filter(Boolean);
  x.rx=$$('#edr .re').map(el=>{const i=+el.dataset.i,t=el.querySelector('.rxi'),im=(prev[i]&&prev[i].im)||[],r={x:t.value.trim(),l:t.dataset.l==='1'};if(im.length)r.im=[...im];return r}).filter(r=>r.x||r.im);
  if(x.rx.length>=$$('#edr .re').length)S.addRow=null;
- if(withArc||document.activeElement!==$('#eda')){const v=$('#eda').value.trim(),ar=[...D.eps[n].ar];if(v!==(ar[ar.length-1]||'')){if(ar.length)ar.pop();if(v&&!ar.includes(v))ar.push(v)}x.ar=ar;const known=BA.some(a=>a.name===v);if(v&&!known&&!$('#edk').hidden)E.kinds[v]=$('#edk').value}
  /* a never-saved episode with nothing typed is not a change; it must not overwrite another device's work */
  if(!x.t&&!x.lb&&!x.su&&!x.pl.length&&!x.rx.length&&!x.im.length&&!x.av){delete E.eps[n];return}
  if(JSON.stringify([x.lb,x.su,x.pl,x.rx,x.ar])===old)return;x.t=Date.now();if(n>S.read&&(x.rx.length||x.pl.length))setRead(n);touch()}
@@ -1135,7 +1193,12 @@ function bindEdit(n){const t=$('#edt');if(t)t.onclick=()=>{const on=$('.edm');if
  if(!$('.edm'))return;$$('.eta').forEach(grow);
  const sync2=()=>collect(n);$('#edl').oninput=sync2;$('#edp').oninput=$('#eds').oninput=e=>{grow(e.target);sync2()};
  const mo=$('#edmore');mo.ontoggle=()=>{S.more=mo.open;if(mo.open)$$('#edmore .eta').forEach(grow)};
- const ka=()=>{const v=$('#eda').value.trim();$('#edk').hidden=!v||D.arcs.some(a=>a.name===v)};$('#eda').oninput=ka;$('#eda').onchange=()=>{ka();collect(n,true)};$('#edk').onchange=()=>collect(n,true);ka();
+ const ka=()=>{const v=$('#eda').value.trim();$('#edk').hidden=!v||!!arcByName(v)};$('#eda').oninput=ka;ka();
+ const redraw=()=>{const y=scrollY;render(true);scrollTo(0,y)};
+ const join=()=>{const v=$('#eda').value.trim();if(!v)return;collect(n,true);arcJoin(n,v,$('#edk').value);redraw()};
+ $('#edag').onclick=join;$('#eda').onkeydown=ev=>{if(ev.key==='Enter'){ev.preventDefault();join()}};
+ $$('[data-out]').forEach(b=>b.onclick=()=>{collect(n,true);if(arcLeave(n,b.dataset.out))redraw()});
+ $('#edgo').onclick=()=>{collect(n,true);persist();S.edit=null;S.lnEdit=true;go('line')};
  const r=$('#edr');
  /* structural changes save first, then redraw the page and put the cursor back */
  const again=(focus,mut)=>{collect(n,true);const x=epEdit(n);if(mut)mut(x);x.t=Date.now();touch();persist();const y=scrollY;render(true);scrollTo(0,y);const ts=$$('.rxi'),f=ts[Math.min(focus,ts.length-1)];if(f){f.focus({preventScroll:true});f.setSelectionRange(f.value.length,f.value.length)}};
@@ -1244,17 +1307,40 @@ function bindWall(){const L=wallList().map(w=>({p:w.src,n:w.n}));$$('.tile').for
  $('#wvt').onclick=()=>{S.wtOpen=!S.wtOpen;const y=scrollY;render(true);scrollTo(0,y)};$('#add').onclick=()=>{S.addOpen=true;render()};const g=$('#ag');if(g){g.onclick=async()=>{const f=await cropSeq([...$('#af').files]);if(!f.length)return;const n=Math.min(+$('#an').value||0,D.eps.length);S.addOpen=false;await addImages(n,f);render(true)};$('#ac').onclick=()=>{S.addOpen=false;render()}}}
 /* timeline */
 function statsBar(){const sel=D.stats.find(t=>t.k===S.stat),say=sel&&!/^第|：/.test(sel.note)?sel.note:'';return `<div class="stb"><div class="stg">${D.stats.map(t=>`<button class="st ${t.k===S.stat?'on':''}" data-st="${t.k}" aria-pressed="${t.k===S.stat}"><b>${t.eps.filter(n=>!hidden(n)).length}</b><span>${t.k}</span></button>`).join('')}</div>${sel?(say?`<p class="stn">${esc(say)}</p>`:''):'<p class="stn">點一個，那幾話會開在藤蔓上。</p>'}</div>`}
-function vLine(){const sel=D.stats.find(t=>t.k===S.stat),say={};if(sel)for(const m of sel.note.matchAll(/([\d、]+)：([^。]+)。/g))m[1].split('、').forEach(n=>say[n]=m[2]);
+const arcIc=a=>a.kind==='main'?`<svg class="ic" viewBox="0 0 60 60" aria-hidden="true">${lily(30,30,23,a.start_ep*7)}</svg>`:`<svg class="ic wide" viewBox="0 0 92 60" aria-hidden="true"><path d="M30 0C32 22 48 30 66 29" fill="none" stroke="#a6c2ff" stroke-opacity=".75" stroke-width="1.5"/>${blossom(74,29,10,a.start_ep*5)}</svg>`;
+const arcCov=a=>a.end_ep==null?`${nm(a.start_ep)}起，還沒結束${a.to>a.start_ep?`（目前標到${nm(a.to)}）`:''}`:arcSpan(a);
+/* editing the arcs right on the vine: each field saves when you leave it */
+const arcCard=a=>`<div class="tr ${a.kind==='main'?'mn':'sd'} ale" data-id="${esc(a.id)}">${arcIc(a)}
+ <label class="tw-f"><span>名字</span><input class="edi" data-f="n" value="${esc(a.name)}" aria-label="劇情線名字"></label>
+ <div class="alr"><label class="tw-f"><span>從第幾話</span><input class="edi" data-f="s" type="number" inputmode="numeric" min="0" max="${D.eps.length-1}" value="${a.start_ep}" aria-label="從第幾話"></label><label class="tw-f"><span>到第幾話</span><input class="edi" data-f="e" type="number" inputmode="numeric" min="0" max="${D.eps.length-1}" value="${a.end_ep??''}" placeholder="還沒結束" aria-label="到第幾話，空白是還沒結束"></label><label class="tw-f"><span>種類</span><select class="edi" data-f="k" aria-label="主線或支線"><option value="main"${a.kind==='main'?' selected':''}>主線</option><option value="side"${a.kind==='main'?'':' selected'}>支線</option></select></label></div>
+ <label class="tw-f"><span>說明</span><input class="edi" data-f="o" value="${esc(a.note)}" placeholder="可空白" aria-label="說明"></label>
+ <div class="alf"><span class="hn alc">${arcCov(a)}</span><button class="chip ald">刪除這條</button></div></div>`;
+function vLineEdit(){return `<div class="pg"><div class="hd"><h2 class="logo">時間線</h2><span>改完一格就自動存，序章是 0，幕間從 205 起</span>${spray(110,70,21,'right:-6px;top:-10px')}</div>
+ <div class="lg">${statsBar()}<div class="vn" id="aled"><div class="lnb"><span class="hn">${D.arcs.length} 條劇情線</span><button class="edb" id="lne">完成</button></div>${D.arcs.map(arcCard).join('')}<button class="tw-next aln" id="lnadd">＋ 新增劇情線</button></div></div></div>`}
+function vLine(){if(S.lnEdit)return vLineEdit();const sel=D.stats.find(t=>t.k===S.stat),say={};if(sel)for(const m of sel.note.matchAll(/([\d、]+)：([^。]+)。/g))m[1].split('、').forEach(n=>say[n]=m[2]);
  const arcs=D.arcs.filter(a=>!hidden(a.start_ep)),hid=D.arcs.length-arcs.length,marks=sel?sel.eps.filter(n=>!hidden(n)):[];
  const items=[...arcs.map(a=>({ep:a.start_ep,o:0,a})),...marks.map(n=>({ep:n,o:1,n}))].sort((x,y)=>x.ep-y.ep||x.o-y.o);
- const span=a=>a.end_ep==null?`${nm(a.start_ep)}起`:a.end_ep===a.start_ep?nm(a.start_ep):`${nm(a.start_ep)}～第${a.end_ep}話`;
- const rows=items.map(({a,n},i)=>{if(a){const main=a.kind==='main',ic=main?`<svg class="ic" viewBox="0 0 60 60" aria-hidden="true">${lily(30,30,23,a.start_ep*7)}</svg>`:`<svg class="ic wide" viewBox="0 0 92 60" aria-hidden="true"><path d="M30 0C32 22 48 30 66 29" fill="none" stroke="#a6c2ff" stroke-opacity=".75" stroke-width="1.5"/>${blossom(74,29,10,a.start_ep*5)}</svg>`;
-   return `<button class="tr ${main?'mn':'sd'}" data-n="${a.start_ep}">${ic}<span class="tl1"><b>${esc(a.name)}</b><span>${span(a)}</span></span>${a.note?`<span class="tn">${esc(a.note)}</span>`:''}</button>`}
+ const rows=items.map(({a,n},i)=>{if(a){const main=a.kind==='main',ic=arcIc(a);
+   return `<button class="tr ${main?'mn':'sd'}" data-n="${a.start_ep}">${ic}<span class="tl1"><b>${esc(a.name)}</b><span>${arcSpan(a)}</span></span>${a.note?`<span class="tn">${esc(a.note)}</span>`:''}</button>`}
   const x=say[n]||D.eps[n].lb||'';return `<button class="tr mk" data-n="${n}"><svg class="ic" viewBox="0 0 60 60" aria-hidden="true">${blossom(30,26,12,n*5,'gd')}</svg><span class="tl1"><b>${nm(n)}</b></span>${x?`<span class="tn">${esc(x)}</span>`:''}</button>`}).join('');
- const end=hid?`<div class="tr dim"><span class="tl1"><span>防劇透：還有 ${hid} 段已收起</span></span></div>`:`<div class="tr dim"><span class="tl1"><span>第122話之後的劇情線還沒整理</span></span></div><div class="tr dim mn"><svg class="ic" viewBox="0 0 60 60" aria-hidden="true">${lily(30,30,18,40)}</svg><span class="tl1"><span>第204話　第一部完結</span></span></div>`;
+ const end=hid?`<div class="tr dim"><span class="tl1"><span>防劇透：還有 ${hid} 段已收起</span></span></div>`:`${arcsDone()<204?`<div class="tr dim"><span class="tl1"><span>${nm(arcsDone()+1)}之後的劇情線還沒整理</span></span></div>`:''}<div class="tr dim mn"><svg class="ic" viewBox="0 0 60 60" aria-hidden="true">${lily(30,30,18,40)}</svg><span class="tl1"><span>第204話　第一部完結</span></span></div>`;
  return `<div class="pg"><div class="hd"><h2 class="logo">時間線</h2><span>由上往下讀，點一段就到那一話</span>${spray(110,70,21,'right:-6px;top:-10px')}</div>
- <div class="lg">${statsBar()}<div class="vn">${rows}${end}</div></div></div>`}
-function bindLine(){$$('button.tr').forEach(b=>b.onclick=()=>go('ep-'+b.dataset.n));$$('[data-st]').forEach(b=>b.onclick=()=>{S.stat=S.stat===b.dataset.st?null:b.dataset.st;const y=scrollY;render();scrollTo(0,y)})}
+ <div class="lg">${statsBar()}<div class="vn"><div class="lnb"><span></span><button class="edb" id="lne">編輯劇情線</button></div>${rows}${end}</div></div></div>`}
+function bindLine(){const t=$('#lne');if(t)t.onclick=()=>{if(S.lnEdit)document.activeElement?.blur?.();S.lnEdit=!S.lnEdit;const y=scrollY;render(true);scrollTo(0,y)};
+ $$('[data-st]').forEach(b=>b.onclick=()=>{S.stat=S.stat===b.dataset.st?null:b.dataset.st;const y=scrollY;render();scrollTo(0,y)});if(S.lnEdit)return bindLineEdit();
+ $$('button.tr').forEach(b=>b.onclick=()=>go('ep-'+b.dataset.n))}
+function bindLineEdit(){const box=$('#aled'),len=D.eps.length;
+ const say=(c,t)=>{let m=c.querySelector('.alm');if(!m){m=document.createElement('p');m.className='alm';m.setAttribute('role','alert');c.append(m)}m.textContent=t;m.hidden=!t};
+ box.addEventListener('change',ev=>{const el=ev.target,f=el.dataset.f,c=el.closest('.ale');if(!f||!c)return;const a=arcBy(c.dataset.id);if(!a)return;const v=el.value.trim(),back=t=>{el.value=f==='n'?a.name:f==='s'?a.start_ep:f==='e'?(a.end_ep??''):el.value;say(c,t)};let ch;
+  if(f==='n'){if(!v)return back('名字不能空白');if(v!==a.name&&arcByName(v))return back(`已經有一條叫「${v}」`);ch={n:v}}
+  else if(f==='s'||f==='e'){if(f==='e'&&v==='')ch={e:null};else{const x=Number(v);if(v===''||!Number.isInteger(x)||x<0||x>=len)return back(`請填 0～${len-1} 的整數`);const s2=f==='s'?x:a.start_ep,e2=f==='e'?x:a.end_ep;if(e2!=null&&e2<s2)return back('結束的話數不能比開始早');ch={[f]:x}}}
+  else if(f==='k')ch={k:v==='main'?'main':'side'};else ch={o:v};
+  say(c,'');arcPut(a,ch);const b=arcBy(a.id);if(!b)return;
+  if(f==='k'){const h=document.createElement('div');h.innerHTML=arcCard(b);c.replaceWith(h.firstElementChild)}else c.querySelector('.alc').textContent=arcCov(b)});
+ box.addEventListener('click',ev=>{const d=ev.target.closest('.ald');if(!d)return;const c=d.closest('.ale'),a=arcBy(c.dataset.id);if(!a)return;
+  if(!confirm(`刪除劇情線「${a.name}」？\n那幾話的筆記和吐槽不會受影響。`))return;arcPut(a,{d:1});const y=scrollY;render(true);scrollTo(0,y)});
+ $('#lnadd').onclick=()=>{document.activeElement?.blur?.();let v='新劇情線',i=2;while(arcByName(v))v='新劇情線'+i++;const id='u'+Date.now().toString(36),s=Math.min(arcsDone()+1,len-1);
+  arcPut({id,name:v,kind:'side',start_ep:s,end_ep:s,note:''},{});const y=scrollY;render(true);scrollTo(0,y);const c=$(`.ale[data-id="${id}"]`);if(c){c.scrollIntoView({block:'center'});const f=c.querySelector('[data-f=n]');f.focus({preventScroll:true});f.select()}}}
 /* goods */
 const G=D.goodsData;
 const ICON2={c:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 5h16v11H9l-5 4Z"/></svg>',i:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg>',l:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 15l6-6M10 6l2-2a4 4 0 0 1 6 6l-2 2M14 18l-2 2a4 4 0 0 1-6-6l2-2"/></svg>',p:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 20l1-5L16 4l4 4L9 19Z"/></svg>'};
@@ -1384,5 +1470,5 @@ function render(keep){rebuild();const h=location.hash.slice(1)||'home',m=$('#m')
  else{cur=TABS.some(t=>t[0]===h)?h:'home';html={home:vHome,wall:vWall,line:vLine,goods:vGoods,world:vWorld}[cur]()}
  const wide=cur==='home'||r==='ep';m.innerHTML=hy((cur==='home'&&!full?hero():'')+(wide?`<div class="shell"><div class="mainc">${html}</div>${side()}</div>`:html));document.body.classList.toggle('full',full);nav();hydrate();if(!keep)window.scrollTo(0,0);
  if(r==='ep'&&full)bindEp(n);else if(!full)({home:bindHome,wall:bindWall,line:bindLine})[cur]?.()}
-addEventListener('hashchange',()=>{S.edit=null;persist();render()});if(!lsGet('edits'))await pull();render();startSync();
+addEventListener('hashchange',()=>{S.edit=null;if(location.hash!=='#line')S.lnEdit=false;persist();render()});if(!lsGet('edits'))await pull();render();startSync();
 </script></body></html>
