@@ -761,6 +761,37 @@ select.edi[hidden]{display:none}
 .sr-cover b{word-break:keep-all;overflow-wrap:normal}
 .sr-room .sr-ledger-link{margin-left:0}
 .sr-room .sr-total-note{margin-left:0}}
+/* 過場（2026-11-10）：展覽入口→書房／溫室，及返回展覽 */
+.fx{position:fixed;inset:0;z-index:9000;overflow:hidden;cursor:pointer;contain:strict}
+.fx.out{pointer-events:none}
+.fx-art{position:absolute;inset:0;will-change:clip-path}
+.fx-art img{position:absolute;max-width:none;transform-origin:0 0;will-change:transform;user-select:none}
+.fx-art:after{content:'';position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(236,211,143,.75),inset 0 0 60px rgba(9,13,44,.45)}
+.fx-veil{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(ellipse 70% 60% at 50% 46%,rgba(43,26,102,.9),rgba(9,13,44,.97) 72%)}
+[data-mode=light] .fx-veil{background:radial-gradient(ellipse 70% 60% at 50% 46%,rgba(255,253,248,.93),rgba(242,236,246,.98) 72%)}
+.fx-tea .fx-veil:before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 calc(25% - 1px),rgba(205,214,255,.13) calc(25% - 1px) 25%),linear-gradient(180deg,rgba(166,194,255,.1),transparent 40%);pointer-events:none}
+[data-mode=light] .fx-tea .fx-veil:before{background:repeating-linear-gradient(90deg,transparent 0 calc(25% - 1px),rgba(183,143,60,.16) calc(25% - 1px) 25%),linear-gradient(180deg,rgba(255,255,255,.6),transparent 40%)}
+.fx-mark{position:relative;display:grid;justify-items:center;gap:8px;padding:0 24px;text-align:center}
+.fx-emb{width:64px;height:64px;object-fit:contain;filter:drop-shadow(0 2px 10px rgba(217,184,101,.45))}
+.fx-name{font-family:var(--t);font-weight:400;font-size:clamp(30px,6vw,42px);letter-spacing:.32em;margin-right:-.32em;color:var(--goldt);text-shadow:0 0 18px rgba(236,211,143,.35)}
+[data-mode=light] .fx-name{color:#1b1d57;text-shadow:0 0 14px #fff,0 0 2px #fff}
+.fx-line{position:relative;display:block;width:min(240px,60vw);height:9px}
+.fx-line:before{content:'';position:absolute;left:0;right:0;top:4px;height:1px;background:linear-gradient(90deg,transparent,var(--gold) 22%,var(--goldt) 50%,var(--gold) 78%,transparent)}
+.fx-line:after{content:'';position:absolute;left:50%;top:0;width:9px;height:9px;margin-left:-4.5px;transform:rotate(45deg);background:linear-gradient(135deg,#8fb2ff,#2545d6 45%,#0b1a78);border:1px solid var(--goldt);box-shadow:0 0 6px rgba(143,178,255,.7)}
+.fx-mark small{font-size:13px;letter-spacing:.4em;margin-right:-.4em;color:var(--mute)}
+.fx-petals{position:absolute;inset:0;pointer-events:none}
+.fx-petals svg{position:absolute;top:-40px;overflow:visible;opacity:0}
+@media(prefers-reduced-motion:no-preference){
+.fx-veil .fx-mark>*{animation:fx-rise .5s cubic-bezier(.2,.7,.2,1) both}
+.fx-veil .fx-emb{animation-name:fx-seal}
+.fx-veil .fx-line{animation-name:fx-draw}
+.fx-veil .fx-mark>:nth-child(2){animation-delay:.06s}.fx-veil .fx-mark>:nth-child(3){animation-delay:.1s}.fx-veil .fx-mark>:nth-child(4){animation-delay:.16s}
+.fx-petals svg{animation:fx-fall var(--d,1.6s) linear var(--w,0s) infinite both}
+}
+@keyframes fx-rise{from{opacity:0;transform:translateY(8px)}}
+@keyframes fx-seal{from{opacity:0;transform:scale(1.25)}60%{opacity:1;transform:scale(.97)}}
+@keyframes fx-draw{from{opacity:0;transform:scaleX(.1)}}
+@keyframes fx-fall{0%{opacity:0;transform:translate(0,0) rotate(var(--r0,0deg))}15%{opacity:.85}85%{opacity:.75}100%{opacity:0;transform:translate(var(--dx,-60px),var(--dy,70vh)) rotate(var(--r1,140deg))}}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <radialGradient id="pg" cx="50%" cy="100%" r="100%"><stop offset="0" stop-color="#3f47c9"/><stop offset=".38" stop-color="#7763ea"/><stop offset=".72" stop-color="#c3cbff"/><stop offset="1" stop-color="#fff"/></radialGradient>
@@ -1005,10 +1036,44 @@ function vSlides(){return simpleBar('選圖評價','goods')+`<div class="pg" sty
 let studyEntranceURL=null;
 async function attachStudyEntrance(){const frame=document.querySelector('.sr-entry:not(.sr-tea)');if(!frame||frame.dataset.loading)return;frame.dataset.loading='1';frame.style.height=Math.max(500,innerHeight-Math.max(0,frame.getBoundingClientRect().top))+'px';try{if(!studyEntranceURL)studyEntranceURL=(async()=>{const r=await rawGet('data/study-entrance-20a642ea6f01.html');if(!r.ok)throw Error('讀取失敗');let t=(await r.text()).split('__FONTS__').join(new URL('fonts',location.href).href);const ps=[...new Set(t.match(/img\/[0-9a-f]{16}\.(?:jpg|png)/g)||[])];const m=new Map(await Promise.all(ps.map(async p=>[p,await loadImg(p)])));t=t.replace(/img\/[0-9a-f]{16}\.(?:jpg|png)/g,p=>m.get(p));return URL.createObjectURL(new Blob([t],{type:'text/html'}))})();const url=await studyEntranceURL;if(frame.isConnected)frame.src=url}catch(e){studyEntranceURL=null;if(frame.isConnected){const p=document.createElement('p');p.className='pg';p.textContent='展覽載入失敗，請重新整理後再試。';frame.replaceWith(p)}}}
 let studyTeaURL=null;
-async function attachStudyTea(){const frame=document.querySelector('.sr-tea');if(!frame||frame.dataset.loading)return;frame.dataset.loading='1';try{if(!studyTeaURL)studyTeaURL=(async()=>{const r=await rawGet('data/study-tea.html');if(!r.ok)throw Error('讀取失敗');let t=(await r.text()).split('__FONTS__').join(new URL('fonts',location.href).href);const ps=[...new Set(t.match(/img\/[0-9a-f]{16}\.(?:jpg|png)/g)||[])];const m=new Map(await Promise.all(ps.map(async p=>[p,await loadImg(p)])));if(ps.some(p=>!m.get(p)))throw Error('圖片讀取失敗');t=t.replace(/img\/[0-9a-f]{16}\.(?:jpg|png)/g,p=>m.get(p));return URL.createObjectURL(new Blob([t],{type:'text/html'}))})();const url=await studyTeaURL;if(frame.isConnected)frame.src=url}catch(e){studyTeaURL=null;if(frame.isConnected){const p=document.createElement('p');p.className='pg';p.textContent='溫室載入失敗，請重新整理後再試。';frame.replaceWith(p)}}}
+function prepTea(){if(!studyTeaURL){studyTeaURL=(async()=>{const r=await rawGet('data/study-tea.html');if(!r.ok)throw Error('讀取失敗');let t=(await r.text()).split('__FONTS__').join(new URL('fonts',location.href).href);const ps=[...new Set(t.match(/img\/[0-9a-f]{16}\.(?:jpg|png)/g)||[])];const m=new Map(await Promise.all(ps.map(async p=>[p,await loadImg(p)])));if(ps.some(p=>!m.get(p)))throw Error('圖片讀取失敗');t=t.replace(/img\/[0-9a-f]{16}\.(?:jpg|png)/g,p=>m.get(p));return URL.createObjectURL(new Blob([t],{type:'text/html'}))})();studyTeaURL.catch(()=>{studyTeaURL=null})}return studyTeaURL}
+async function attachStudyTea(){const frame=document.querySelector('.sr-tea');if(!frame||frame.dataset.loading)return;frame.dataset.loading='1';try{const url=await prepTea();if(frame.isConnected)frame.src=url}catch(e){studyTeaURL=null;if(frame.isConnected){const p=document.createElement('p');p.className='pg';p.textContent='溫室載入失敗，請重新整理後再試。';frame.replaceWith(p)}}}
 function sizeEntrance(){const frame=document.querySelector('.sr-entry');if(frame&&frame.contentWindow)frame.contentWindow.postMessage({studyPreview:'viewport',height:Math.max(500,innerHeight-Math.max(0,frame.getBoundingClientRect().top))},location.origin)}
 addEventListener('resize',sizeEntrance);
-addEventListener('message',e=>{const frame=document.querySelector('.sr-entry');if(!frame||e.source!==frame.contentWindow||e.origin!==location.origin)return;const k=e.data?.studyPreview;if(k==='open')go('study');else if(k==='tea')go('tea');else if(k==='back')go('goods');else if(k==='height')frame.style.height=Math.min(5000,Math.max(500,Number(e.data.height)||500))+'px';else if(k==='ready')frame.contentWindow.postMessage({studyPreview:'theme',mode:document.documentElement.dataset.mode},location.origin);else if(k==='viewport-request')sizeEntrance()});
+addEventListener('message',e=>{const frame=document.querySelector('.sr-entry');if(!frame||e.source!==frame.contentWindow||e.origin!==location.origin)return;const k=e.data?.studyPreview;if(k==='open')fxRoom('study',e.data.fx);else if(k==='tea')fxRoom('tea',e.data.fx);else if(k==='prefetch')prepTea();else if(k==='back')go('goods');else if(k==='height')frame.style.height=Math.min(5000,Math.max(500,Number(e.data.height)||500))+'px';else if(k==='ready'){fxReady();frame.contentWindow.postMessage({studyPreview:'theme',mode:document.documentElement.dataset.mode},location.origin)}else if(k==='viewport-request')sizeEntrance()});
+/* 過場（2026-11-10）：入口點「走進／進入」→ 從門框放大進房 → 房名與金線 → 換頁 → 淡出。點擊或按鍵可跳過；返回展覽用同一層遮罩等入口載好再淡出。 */
+const FXR=matchMedia('(prefers-reduced-motion: reduce)');let FX=null,fxEmblem='';
+const FXT={study:['書房','支出報告'],tea:['溫室','茶會與吐槽'],};
+function fxMark(k){const[n,s]=FXT[k];return `<div class="fx-mark">${fxEmblem?`<img class="fx-emb" src="${fxEmblem}" alt="">`:''}<b class="fx-name">${n}</b><i class="fx-line"></i><small>${s}</small></div>`}
+function fxPetals(){let s='';for(let i=0;i<9;i++){const x=6+i*11+Math.random()*6,r=Math.random()*360,L=18+Math.random()*14;s+=`<svg style="left:${x}%;--d:${(1.3+Math.random()*.7).toFixed(2)}s;--w:${(Math.random()*.35).toFixed(2)}s;--dx:${Math.round(-90+Math.random()*60)}px;--dy:${Math.round(55+Math.random()*35)}vh;--r0:${Math.round(r)}deg;--r1:${Math.round(r+90+Math.random()*120)}deg" width="${L}" height="${L}" viewBox="${-L/2} ${-L} ${L} ${L}"><path d="${petal(L,L*.32)}" fill="url(#pg)" fill-opacity=".8" stroke="#fff" stroke-opacity=".7" stroke-width=".6"/></svg>`}return `<div class="fx-petals">${s}</div>`}
+function fxEnd(fast){const f=FX;if(!f)return;FX=null;f.timers.forEach(clearTimeout);removeEventListener('keydown',f.key,true);const el=f.el;if(!el.isConnected)return;el.classList.add('out');if(fast===0){el.remove();return}el.animate([{opacity:getComputedStyle(el).opacity},{opacity:0}],{duration:fast?160:FXR.matches?220:380,easing:'ease-out',fill:'forwards'}).onfinish=()=>el.remove()}
+function fxStart(kind,target,o){fxEnd(0);const el=document.createElement('div');el.className='fx fx-'+kind;el.setAttribute('aria-hidden','true');const f=FX={el,target,timers:[],switched:!!o.switched,ready:!o.wait,min:0};
+ const T=(fn,ms)=>f.timers.push(setTimeout(()=>{if(FX===f)fn()},ms));f.T=T;
+ f.go=()=>{if(f.switched)return;f.switched=true;go(target)};
+ f.finish=()=>{if(FX!==f)return;if(f.ready&&performance.now()>=f.min)fxEnd()};
+ f.skip=()=>{f.go();fxEnd(true)};
+ el.addEventListener('pointerdown',e=>{e.preventDefault();f.skip()});
+ f.key=e=>{if(['Shift','Control','Alt','Meta'].includes(e.key))return;f.skip()};addEventListener('keydown',f.key,true);
+ document.body.append(el);T(()=>{f.go();fxEnd(true)},o.cap||2600);return f}
+function fxRoom(kind,fx){if(FX&&FX.target===kind)return;if(fx&&fx.emblem)fxEmblem=fx.emblem;if(kind==='tea')prepTea();const reduce=FXR.matches,frame=document.querySelector('.sr-entry'),fr=frame&&frame.getBoundingClientRect();
+ if(reduce&&kind==='study'){fxEnd(0);go(kind);return}
+ const f=fxStart(kind,kind,{wait:kind==='tea',cap:reduce?2400:2800}),el=f.el,vw=innerWidth,vh=innerHeight;
+ const veil=document.createElement('div');veil.className='fx-veil';el.append(veil);
+ if(reduce){veil.innerHTML=fxMark(kind);f.go();f.min=performance.now()+200;return}
+ let art=null;
+ if(fx&&fx.img&&fr&&fx.rect&&fx.box){const[l,t,w,h]=fx.rect,X=fr.left+l,Y=fr.top+t,[bx,by,bw,bh]=fx.box,ix=X+bx,iy=Y+by;
+  if(w>20&&h>20&&bw>0&&bh>0){art=document.createElement('div');art.className='fx-art';art.innerHTML='<img alt="">';const im=art.firstChild;im.src=fx.img;Object.assign(im.style,{left:ix+'px',top:iy+'px',width:bw+'px',height:bh+'px',filter:fx.filter||''});el.prepend(art);
+   const cT=Math.max(0,Y-iy),cB=Math.min(bh,Y+h-iy),k=Math.max(vw/bw,vh/Math.max(1,cB-cT),1.25)*1.04,u=(X+w/2-ix)/bw,v=(Y+h/2-iy)/bh,nx=Math.min(0,Math.max(vw-bw*k,vw/2-u*bw*k)),ny=Math.min(-cT*k,Math.max(vh-cB*k,vh/2-v*bh*k)),ease='cubic-bezier(.65,0,.3,1)';
+   art.animate([{clipPath:`inset(${Y}px ${vw-X-w}px ${vh-Y-h}px ${X}px)`},{clipPath:'inset(0px 0px 0px 0px)'}],{duration:560,easing:ease,fill:'forwards'});
+   im.animate([{transform:'none'},{transform:`translate(${nx-ix}px,${ny-iy}px) scale(${k})`}],{duration:900,easing:'cubic-bezier(.5,0,.2,1)',fill:'forwards'})}}
+ const vIn=art?260:0,sw=art?600:320;
+ veil.style.opacity=0;f.T(()=>{veil.innerHTML=fxMark(kind)+(kind==='tea'?fxPetals():'');veil.animate([{opacity:0},{opacity:1}],{duration:art?340:260,easing:'ease-out',fill:'forwards'})},vIn);
+ f.T(()=>{f.go();f.min=performance.now()+(art?180:260);f.T(f.finish,f.min-performance.now()+5)},sw)}
+function fxBack(){const reduce=FXR.matches,f=fxStart('goods','goods',{switched:true,wait:true,cap:1800}),veil=document.createElement('div');veil.className='fx-veil';f.el.append(veil);f.min=performance.now()+(reduce?120:260);f.T(f.finish,f.min-performance.now()+5)}
+function fxReady(){if(FX&&FX.switched&&!FX.ready){FX.ready=true;FX.T(FX.finish,FXR.matches?60:160)}}
+let fxPrev=(location.hash.slice(1)||'home').split('-')[0];
+addEventListener('hashchange',()=>{const h=location.hash.slice(1)||'home',r=h.split('-')[0],was=fxPrev;fxPrev=r;if(FX&&h!==FX.target)fxEnd(true);if(!FX&&h==='goods'&&(was==='study'||was==='tea'))fxBack()});
+
 /* Book-room views. Uses the main application's data, floral artwork and navigation. */
 const STUDY_NAMES=['空島浪漫譚','ピッコマくじ','Romance Fantasy'];
 const STUDY_SUB=['SORAJIMA 展 2026','四月的抽賞收藏','Festival · 秋日紀事'];
