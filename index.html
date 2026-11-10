@@ -792,6 +792,13 @@ select.edi[hidden]{display:none}
 @keyframes fx-seal{from{opacity:0;transform:scale(1.25)}60%{opacity:1;transform:scale(.97)}}
 @keyframes fx-draw{from{opacity:0;transform:scaleX(.1)}}
 @keyframes fx-fall{0%{opacity:0;transform:translate(0,0) rotate(var(--r0,0deg))}15%{opacity:.85}85%{opacity:.75}100%{opacity:0;transform:translate(var(--dx,-60px),var(--dy,70vh)) rotate(var(--r1,140deg))}}
+/* 展覽與溫室的底部（2026-11-10）：入口不留主程式底邊；溫室茶席下接書房同款地板與花飾，填滿到螢幕底 */
+#m:has(>.sr-entry:not(.sr-tea)){padding-bottom:0}
+#m:has(>.sr-tea){display:flex;flex-direction:column;min-height:100vh;min-height:100dvh;padding-bottom:0}
+#m>.sr-tea{flex:none}
+.sr-tea-floor{position:relative;flex:1 0 130px;margin-top:-1px;pointer-events:none;overflow:hidden;--sr-petal:#b3b7f166;--sr-facet:#dddfff80;--sr-outline:#c4baf0;--sr-vein:#f0eeff;--sr-leaf:#9e95cb33;--sr-gold:#d3bd86}
+[data-mode=light] .sr-tea-floor{--sr-petal:#fffaf0c9;--sr-facet:#e2d9f080;--sr-outline:#ba9c65;--sr-vein:#fff;--sr-leaf:#c4b48d33;--sr-gold:#b49250}
+.sr-tea-floor>.sr-floor{height:100%;min-height:130px}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <radialGradient id="pg" cx="50%" cy="100%" r="100%"><stop offset="0" stop-color="#3f47c9"/><stop offset=".38" stop-color="#7763ea"/><stop offset=".72" stop-color="#c3cbff"/><stop offset="1" stop-color="#fff"/></radialGradient>
@@ -1038,7 +1045,7 @@ async function attachStudyEntrance(){const frame=document.querySelector('.sr-ent
 let studyTeaURL=null;
 function prepTea(){if(!studyTeaURL){studyTeaURL=(async()=>{const r=await rawGet('data/study-tea.html');if(!r.ok)throw Error('讀取失敗');let t=(await r.text()).split('__FONTS__').join(new URL('fonts',location.href).href);const ps=[...new Set(t.match(/img\/[0-9a-f]{16}\.(?:jpg|png)/g)||[])];const m=new Map(await Promise.all(ps.map(async p=>[p,await loadImg(p)])));if(ps.some(p=>!m.get(p)))throw Error('圖片讀取失敗');t=t.replace(/img\/[0-9a-f]{16}\.(?:jpg|png)/g,p=>m.get(p));return URL.createObjectURL(new Blob([t],{type:'text/html'}))})();studyTeaURL.catch(()=>{studyTeaURL=null})}return studyTeaURL}
 async function attachStudyTea(){const frame=document.querySelector('.sr-tea');if(!frame||frame.dataset.loading)return;frame.dataset.loading='1';try{const url=await prepTea();if(frame.isConnected)frame.src=url}catch(e){studyTeaURL=null;if(frame.isConnected){const p=document.createElement('p');p.className='pg';p.textContent='溫室載入失敗，請重新整理後再試。';frame.replaceWith(p)}}}
-function sizeEntrance(){const frame=document.querySelector('.sr-entry');if(frame&&frame.contentWindow)frame.contentWindow.postMessage({studyPreview:'viewport',height:Math.max(500,innerHeight-Math.max(0,frame.getBoundingClientRect().top))},location.origin)}
+function sizeEntrance(){const frame=document.querySelector('.sr-entry');if(frame&&frame.contentWindow){const h=Math.max(500,innerHeight-Math.max(0,frame.getBoundingClientRect().top));if(!frame.classList.contains('sr-tea'))frame.style.height=h+'px';frame.contentWindow.postMessage({studyPreview:'viewport',height:h},location.origin)}}
 addEventListener('resize',sizeEntrance);
 addEventListener('message',e=>{const frame=document.querySelector('.sr-entry');if(!frame||e.source!==frame.contentWindow||e.origin!==location.origin)return;const k=e.data?.studyPreview;if(k==='open')fxRoom('study',e.data.fx);else if(k==='tea')fxRoom('tea',e.data.fx);else if(k==='prefetch')prepTea();else if(k==='back')go('goods');else if(k==='height')frame.style.height=Math.min(5000,Math.max(500,Number(e.data.height)||500))+'px';else if(k==='ready'){fxReady();frame.contentWindow.postMessage({studyPreview:'theme',mode:document.documentElement.dataset.mode},location.origin)}else if(k==='viewport-request')sizeEntrance()});
 /* 過場（2026-11-10）：入口點「走進／進入」→ 從門框放大進房 → 房名與金線 → 換頁 → 淡出。點擊或按鍵可跳過；返回展覽用同一層遮罩等入口載好再淡出。 */
@@ -1137,7 +1144,7 @@ let _ly=0;addEventListener('scroll',()=>{const y=scrollY,f=$('#fav');if(f){if(y>
 function nav(){$('#nav').innerHTML=hy(menu());closeDw();$('#fav').innerHTML=hy(avSmall());$('#fav').classList.remove('dim');setTimeout(favSync,0)}
 function render(keep){rebuild();const h=location.hash.slice(1)||'home',m=$('#m'),[r,a]=h.split('-');const n=+a;let full=false,html;
  if(r==='ep'&&n===D.eps.length)D.eps.push(blankEp(n));
- if(r==='tea'){cur='goods';html='<iframe class="sr-entry sr-tea" title="溫室茶會"></iframe>';full=true}else if(r==='study'){cur='goods';html=a==='summary'?vStudySummary():G.events[n]&&a!==undefined?vStudyBook(n,+h.split('-')[2]||0):vStudy();full=true}else if(r==='ep'&&D.eps[n]){html=vEp(n);full=true;cur='eps'}else if(r==='event'&&G.events[n]){html=vEvent(n);full=true;cur='goods'}else if(r==='prize'&&G.prizes[n]){html=vPrize(n);full=true;cur='goods'}else if(r==='slides'){html=vSlides();full=true;cur='goods'}else if(r==='person'&&D.ppl[n]){html=vPerson(n);full=true;cur='world'}else if(r==='nation'&&D.nations[n]){html=vNation(n);full=true;cur='world'}
+ if(r==='tea'){cur='goods';html='<iframe class="sr-entry sr-tea" title="溫室茶會"></iframe><div class="sr-tea-floor" aria-hidden="true"><div class="sr-floor">'+srGarden('left:-45px;bottom:-25px')+srGarden('right:-45px;bottom:-25px;transform:scaleX(-1)')+'</div></div>';full=true}else if(r==='study'){cur='goods';html=a==='summary'?vStudySummary():G.events[n]&&a!==undefined?vStudyBook(n,+h.split('-')[2]||0):vStudy();full=true}else if(r==='ep'&&D.eps[n]){html=vEp(n);full=true;cur='eps'}else if(r==='event'&&G.events[n]){html=vEvent(n);full=true;cur='goods'}else if(r==='prize'&&G.prizes[n]){html=vPrize(n);full=true;cur='goods'}else if(r==='slides'){html=vSlides();full=true;cur='goods'}else if(r==='person'&&D.ppl[n]){html=vPerson(n);full=true;cur='world'}else if(r==='nation'&&D.nations[n]){html=vNation(n);full=true;cur='world'}
  else{cur=TABS.some(t=>t[0]===h)?h:'home';html={home:vHome,wall:vWall,line:vLine,goods:vGoods,world:vWorld}[cur]()}
  const wide=cur==='home'||r==='ep';m.innerHTML=hy((cur==='home'&&!full?hero():'')+(wide?`<div class="shell"><div class="mainc">${html}</div>${side()}</div>`:html));document.body.classList.toggle('full',full);nav();hydrate();if(!keep)window.scrollTo(0,0);
  if(r==='ep'&&full)bindEp(n);else if(!full)({home:bindHome,wall:bindWall,line:bindLine})[cur]?.()}
