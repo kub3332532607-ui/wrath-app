@@ -628,6 +628,11 @@ select.edi[hidden]{display:none}
 .tw-f .edi{text-align:left;width:100%;padding:4px 0}
 /* arcs: chips on the episode editor, cards on the vine */
 .arc-in{margin-top:6px}
+.sg-in{margin-top:6px}
+.sg-c{min-height:40px;color:var(--mute)}
+.sg-c[aria-pressed=true]{color:var(--goldt);background:rgba(217,184,101,.14);border-color:var(--goldt)}
+.sy-r{display:flex;gap:10px;justify-content:flex-end;align-items:center}
+.sy-t{width:100%;border-bottom:1px solid var(--line)}
 .arc-c{gap:2px;padding-right:2px;color:var(--note)}
 .arc-x{width:30px;height:30px;border-radius:99px;color:var(--mute);font-size:1.05rem;line-height:1}
 .arc-x:hover{color:var(--acc)}
@@ -1029,7 +1034,7 @@ async function dbGet(k){try{const d=await db();return await new Promise((ok,no)=
 async function dbSet(k,v){try{const d=await db();await new Promise((ok,no)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error)})}catch(e){}}
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
 /* private repo: this page holds no notes or pictures, they are read with the device's key */
-const BASE='data/base-4b6f0f4c94b5.json',VER='2026.11.11 19:21 · 1190767';
+const BASE='data/base-3805e068ac64.json',VER='2026.11.11 22:56 · 0e073b6';
 let CFG=null,TK=lsGet('tk');
 const api=(p,o={})=>fetch(`${CFG.api??'https://api.github.com'}/repos/${CFG.owner}/${CFG.repo}/contents/${p}`,{cache:'no-store',...o,headers:{Authorization:`Bearer ${TK}`,...o.headers}});
 const rawGet=p=>api(p,{headers:{Accept:'application/vnd.github.raw+json'}});
@@ -1118,7 +1123,7 @@ function hero(){return `<header class="hero"><img src="${D.cover}" alt="Emperor 
 function vHome(){const vis=D.eps.filter(e=>e.st!=='todo'&&!hidden(e.n)).reverse(),hid=D.eps.filter(e=>e.st!=='todo'&&hidden(e.n)).length,todo=D.eps.filter(e=>e.st==='todo'&&!hidden(e.n)),la=latestAv();let prev=null;
  const rows=vis.slice(0,S.shown).map(e=>{const h=post(e,prev);prev=tail(e)||prev;return h}).join('');
  return `<div class="col"><div class="pf"><div class="pfc"><div class="pfh"><button class="pav" id="pav" aria-label="打開選單" aria-haspopup="dialog">${la?`<img src="${la}" alt="目前頭像">`:`<svg viewBox="-20 -20 40 40" aria-hidden="true">${lily(0,0,18)}</svg>`}</button>
- <p class="bio">${esc(D.synopsis)}</p></div>
+ ${S.synE?`<div class="sy-w"><textarea class="eta bio sy-t" id="syT" rows="4" aria-label="主頁簡介">${esc(D.synopsis)}</textarea><div class="sy-r">${D.synopsis!==BY?'<button class="chip" id="syR">恢復原文</button>':''}<button class="edb" id="syE">完成</button></div></div>`:`<div class="sy-w"><p class="bio">${esc(D.synopsis)}</p><div class="sy-r"><button class="edb" id="syE">編輯簡介</button></div></div>`}</div>
  <p class="fo"><span><b>204</b> 話第一部　<b>${D.eps.length-205}</b> 話幕間　<b>${D.noted}</b> 話已寫</span><button class="mode" id="mode" aria-label="切換成${document.documentElement.dataset.mode==='light'?'夜':'日'}版" title="切換成${document.documentElement.dataset.mode==='light'?'夜':'日'}版"><svg viewBox="0 0 256 256" fill="currentColor">${document.documentElement.dataset.mode==='light'?ICON.moon:ICON.sun}</svg></button></p></div>
  ${aboutBlock()}
  <div class="brace"><span id="bw">${bracelet(braceFull())}</span><input id="rd" type="range" min="0" max="${D.eps.length-1}" value="${Math.min(S.read,D.eps.length-1)}" aria-label="我目前讀到第幾話"${LOCK?' disabled title="已固定在最新話，可到設定解除"':''}></div><div class="rl" id="rl">${rdl()}</div></div>
@@ -1126,7 +1131,11 @@ function vHome(){const vis=D.eps.filter(e=>e.st!=='todo'&&!hidden(e.n)).reverse(
  ${hid?`<div class="spo">防劇透：${hid} 話已收起</div>`:''}${rows}${vis.length>S.shown?`<button class="pillb more" id="mr">再看 30 話</button>`:''}</div></div>`}
 // bracelet is full when the reader reaches the newest episode in the data (incl. interludes), per user 2026-11-11
 function braceFull(){const last=Math.max(1,D.eps.length-1);return Math.min(S.read,last)/last}
-function bindHome(){$('#mode').onclick=toggleMode;$('#rd').oninput=e=>{setRead(+e.target.value);$('#bw').innerHTML=bracelet(braceFull());$('#rl').textContent=rdl();clearTimeout(window._t);window._t=setTimeout(()=>{const y=scrollY;render(true);scrollTo(0,y)},350)};
+function bindHome(){$('#mode').onclick=toggleMode;
+ const se=$('#syE'),stx=$('#syT'),redo=()=>{const y=scrollY;render(true);scrollTo(0,y)};
+ if(stx){grow(stx);stx.oninput=()=>grow(stx);stx.onchange=()=>synSave(stx.value)}
+ se.onclick=()=>{if(S.synE&&stx)synSave(stx.value);S.synE=!S.synE;redo()};const sr=$('#syR');if(sr)sr.onclick=()=>{synSave('');S.synE=false;redo()};
+$('#rd').oninput=e=>{setRead(+e.target.value);$('#bw').innerHTML=bracelet(braceFull());$('#rl').textContent=rdl();clearTimeout(window._t);window._t=setTimeout(()=>{const y=scrollY;render(true);scrollTo(0,y)},350)};
  $$('.po,.prev,.todo,.eg-go').forEach(x=>{x.onclick=()=>go('ep-'+x.dataset.n);x.onkeydown=e=>{if(e.key==='Enter')go('ep-'+x.dataset.n)}});const m=$('#mr');if(m)m.onclick=()=>{const y=scrollY;S.shown+=30;render();scrollTo(0,y)}}
 function vEp(n){const e=D.eps[n],hide=hidden(n)&&e.st!=='todo',edit=!hide&&(S.edit===n||e.st==='todo'),pics=(edit&&(S.edit=n),e.im),r=e.rx,u=hide?null:avOf(n),fl=c=>`<svg id="epf" class="${c} turn" viewBox="-20 -20 40 40" style="transform:rotate(${S.pa}deg)" aria-hidden="true">${lily(0,0,18)}</svg>`;
  const ava=hide?fl('ehf'):`<button class="avbtn ehav" id="avb" title="換這話的頭像" aria-label="換這話的頭像">${u?`<img class="ehi" src="${u}" alt="">${fl('ehb')}`:fl('ehf')}</button>`;
@@ -1169,10 +1178,17 @@ function bindEp(n){const t=d=>{S.pa=S.ang;S.ang+=d*120;go('ep-'+(n+d))};$('#ep')
 const BE=D.eps,BA=D.arcs,ls=(k,d)=>{try{return JSON.parse(lsGet(k))??d}catch(e){return d}};
 let E=ls('edits',{eps:{},kinds:{},read:null}),dirty=ls('dirty',false),upq=ls('upq',[]),SHA=null,gen=0,_pt=0,_ps=0,pushing=false;
 const blankEp=n=>({n,lb:'',st:'todo',su:'',pl:[],rx:[],im:[],ar:[],rf:[],tg:[],ai:[],sp:''});
+/* stats on the timeline: the build's lists (BS) are the starting point. An episode that has its own tick list E.eps[n].sg (keys such as "親吻") is decided by that list alone; the others keep the build's lists.
+   Home synopsis: E.kinds['@home']={x:text,t}; empty text = the build's original. */
+const BS=D.stats,BY=D.synopsis,sgOf=n=>{const x=E.eps[n];return x&&Array.isArray(x.sg)?x.sg:null};
+const sgNow=n=>{const g=sgOf(n);return BS.filter(t=>g?g.includes(t.k):t.eps.includes(n)).map(t=>t.k)};
+function statsBuild(){D.stats=BS.map(t=>{const s=new Set(t.eps.filter(n=>!sgOf(n)));for(const k in E.eps){const g=sgOf(+k);if(g&&g.includes(t.k))s.add(+k)}return{...t,eps:[...s].sort((a,b)=>a-b)}});
+ const h=(E.kinds||{})['@home'];D.synopsis=h&&typeof h.x==='string'&&h.x.trim()?h.x:BY}
+function synSave(v){v=v.trim();if(v===D.synopsis)return;E.kinds['@home']={x:v===BY?'':v,t:Date.now()};touch();persist();rebuild()}
 function rebuild(){const len=Math.max(BE.length,...Object.keys(E.eps).map(k=>+k+1));S.av={};
  D.eps=Array.from({length:len},(_,n)=>{const b=BE[n]||blankEp(n),x=E.eps[n];if(!x)return{...b,tg:b.ar};if(x.av)S.av[n]=x.av;const e={...b,...x};e.tg=e.ar||[];e.st=e.rx.length?'has_reactions':e.pl.length||e.su||e.im.length||e.lb?'plot_only':'todo';return e});
  D.wall=D.eps.flatMap(e=>allIm(e).map(src=>({n:e.n,src})));D.noted=D.eps.filter(e=>e.st!=='todo').length;
- arcsBuild(len);wdBuild();
+ arcsBuild(len);wdBuild();statsBuild();
  if(E.read)S.read=E.read.v;if(LOCK)S.read=9999}
 /* story arcs. Base list from the notes, then edits on top. An edited arc is stored whole as E.kinds['@arc:'+id] —
    kinds is the one part of edits.json that older versions of this app keep as-is when they sync, so nothing is lost on a device that has not reloaded yet.
@@ -1225,7 +1241,7 @@ function persist(){lsSet('edits',JSON.stringify(E));lsSet('dirty',JSON.stringify
 function touch(){dirty=true;gen++;clearTimeout(_ps);_ps=setTimeout(persist,300);sync('存在這台，等待上傳…');clearTimeout(_pt);_pt=setTimeout(push,4000)}
 function setRead(v){if(LOCK)return;S.read=v;E.read={v,t:Date.now()};touch()}
 /* arc, people and nation edits (kinds['@arc:…'], ['@ppl:…'], ['@nat:…']) go by time like episodes; any other field this version doesn't know is kept */
-function merge(r,l){if(!r)return l;const eps={...r.eps};for(const k in l.eps)if(!eps[k]||(l.eps[k].t||0)>=(eps[k].t||0))eps[k]=l.eps[k];const rk=r.kinds||{},lk=l.kinds||{},kinds={...rk,...lk};for(const k in rk)if(/^@(arc|ppl|nat):/.test(k)&&lk[k]&&((rk[k]&&rk[k].t)||0)>((lk[k]&&lk[k].t)||0))kinds[k]=rk[k];return{...r,...l,eps,kinds,read:!r.read||(l.read&&l.read.t>=r.read.t)?l.read:r.read}}
+function merge(r,l){if(!r)return l;const eps={...r.eps};for(const k in l.eps)if(!eps[k]||(l.eps[k].t||0)>=(eps[k].t||0))eps[k]=l.eps[k];const rk=r.kinds||{},lk=l.kinds||{},kinds={...rk,...lk};for(const k in rk)if(/^@(arc|ppl|nat):|^@home$/.test(k)&&lk[k]&&((rk[k]&&rk[k].t)||0)>((lk[k]&&lk[k].t)||0))kinds[k]=rk[k];return{...r,...l,eps,kinds,read:!r.read||(l.read&&l.read.t>=r.read.t)?l.read:r.read}}
 /* status line */
 function sync(t,sticky){const y=$('#sy');if(!y)return;y.textContent=t;y.classList.toggle('on',!!t);y.classList.toggle('bad',!!sticky);clearTimeout(sync.t);if(t&&t==='已同步')sync.t=setTimeout(()=>y.classList.remove('on'),1800)}
 /* base64 */
@@ -1264,11 +1280,13 @@ const rxRow=(x,i,all)=>`<div class="re" data-i="${i}"><div class="av">${PRL}${i<
 const arcField=(e,n)=>`<div class="tw-f"><span>劇情線</span><div class="chips arc-in">${e.ai.map((id,i)=>`<span class="chip arc-c">${esc(e.ar[i])}<button class="arc-x" data-out="${esc(id)}" aria-label="把這話移出「${esc(e.ar[i])}」">×</button></span>`).join('')||'<span class="hn">這話還沒有劇情線</span>'}</div>
  <div class="arc-add"><input class="edi" id="eda" list="edal" placeholder="加入一條：選現有的或打新名字" aria-label="加入劇情線" enterkeyhint="done"><button class="chip" id="edag">加入</button></div><select class="edi" id="edk" aria-label="新劇情線的種類" hidden><option value="side">新的是支線</option><option value="main">新的是主線</option></select><datalist id="edal">${D.arcs.filter(a=>!e.ai.includes(a.id)).map(x=>`<option value="${esc(x.name)}">`).join('')}</datalist>
  <button class="hn arc-go" id="edgo">名字、起訖、說明到時間線頁改 ›</button></div>`;
-function edMore(e,n){return `<details class="tw-more" id="edmore"${S.more?' open':''}><summary>摘要、劇情筆記、劇情線、註記、整話大圖</summary>
+/* tick what this episode has (kiss, flower…): the stats above the timeline count from these */
+const sgField=n=>{const on=sgNow(n);return `<div class="tw-f"><span>這話有（算進時間線上方的統計）</span><div class="chips sg-in">${BS.map(t=>`<button type="button" class="chip sg-c" data-sg="${esc(t.k)}" aria-pressed="${on.includes(t.k)}">${esc(t.k)}</button>`).join('')}</div></div>`};
+function edMore(e,n){return `<details class="tw-more" id="edmore"${S.more?' open':''}><summary>摘要、劇情筆記、劇情線、統計勾選、註記、整話大圖</summary>
  <label class="tw-f"><span>摘要</span><textarea class="eta" id="eds" rows="2" placeholder="可空白" aria-label="摘要">${esc(e.su)}</textarea></label>
  <label class="tw-f"><span>劇情筆記</span><textarea class="eta" id="edp" rows="2" placeholder="一行一條，可空白" aria-label="劇情筆記">${esc(e.pl.join('\n'))}</textarea></label>
  <label class="tw-f"><span>註記</span><input class="edi" id="edl" value="${esc(e.lb)}" placeholder="可空白" aria-label="註記"></label>
- ${arcField(e,n)}
+ ${arcField(e,n)}${sgField(n)}
  <div class="tw-f"><span>整話大圖</span>${e.im.map((s,i)=>`<div class="edim"><img class="pi fullp" src="${s}" alt="${nm(n)}的圖"><button class="chip" data-rm="${i}">移除這張</button></div>`).join('')}<label class="chip edadd">＋ 加大圖<input id="edf" type="file" accept="image/*" multiple></label></div></details>`}
 function edBody(e,n){const rows=e.rx.length&&S.addRow!==n?[...e.rx]:[...e.rx,{x:''}];return `<div class="th tw-th" id="edr">${rows.map(rxRow).join('')}<button class="tw-next" id="ednx">＋ 接下一則</button></div><article class="mainp edm" data-n="${n}">${edMore(e,n)}</article>`}
 /* a pasted post: drop the hashtag line and the t.co links X adds */
@@ -1289,6 +1307,7 @@ function bindEdit(n){const t=$('#edt');if(t)t.onclick=()=>{const on=$('.edm');if
  const join=()=>{const v=$('#eda').value.trim();if(!v)return;collect(n,true);arcJoin(n,v,$('#edk').value);redraw()};
  $('#edag').onclick=join;$('#eda').onkeydown=ev=>{if(ev.key==='Enter'){ev.preventDefault();join()}};
  $$('[data-out]').forEach(b=>b.onclick=()=>{collect(n,true);if(arcLeave(n,b.dataset.out))redraw()});
+ $$('[data-sg]').forEach(b=>b.onclick=()=>{collect(n,true);const k=b.dataset.sg,now=sgNow(n),nx=now.includes(k)?now.filter(v=>v!==k):[...now,k],x=epEdit(n);x.sg=nx;x.t=Date.now();touch();persist();rebuild();b.setAttribute('aria-pressed',nx.includes(k))});
  $('#edgo').onclick=()=>{collect(n,true);persist();S.edit=null;S.lnEdit=true;go('line')};
  const r=$('#edr');
  /* structural changes save first, then redraw the page and put the cursor back */
