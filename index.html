@@ -199,6 +199,66 @@ h3{margin:0 0 8px;font-family:var(--t);font-size:1.02rem;font-weight:400;color:v
 .pp small{color:var(--mute);font-size:.74rem}
 .ring{display:block;width:84px;height:84px;border-radius:50%;background:center/cover var(--glass2);box-shadow:0 0 0 2px var(--gold),0 0 0 5px rgba(9,13,44,.85),0 0 0 6px var(--gold);margin:6px auto 12px}
 .ring.mono{display:grid;place-items:center;font-family:var(--t);font-size:1.7rem;color:var(--goldt);font-style:normal}
+/* wd-: people and nations (family tree, relation star, court chart). Rings sit on the page itself, like the home avatar: thin gold line + a rim in the page colour */
+.ring.wd-r{width:var(--z);height:var(--z);margin:0;flex:none;box-shadow:0 0 0 max(1.5px,calc(var(--z)/34)) var(--gold),0 0 0 calc(var(--z)/11) var(--solid);background-color:var(--solid)}
+.ring.mono.wd-r{background:linear-gradient(var(--glass2),var(--glass2)),var(--solid);font-size:calc(var(--z)/2.6)}
+.wd-hd b,.wd-n b,.wd-o b,.wd-s b{display:block;font-family:var(--t);font-weight:400;line-height:1.3}
+.wd-hd small,.wd-n small,.wd-o small{display:block;color:var(--mute);font-size:.72rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wd-hd span,.wd-n span,.wd-o span{display:block;min-width:0;max-width:100%}
+.wd-duo{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:560px;margin:10px auto 0}
+.wd-duo::before{content:"";position:absolute;left:25%;right:25%;top:42px;border-top:1px solid color-mix(in srgb,var(--gold) 60%,transparent)}
+.wd-tie{position:absolute;left:50%;top:42px;transform:translate(-50%,-50%);z-index:1;padding:0 8px;background:var(--solid);border-radius:8px;font-size:.74rem;letter-spacing:.1em;color:var(--goldt)}
+.wd-hd{position:relative;z-index:1;display:grid;justify-items:center;gap:8px;width:100%;text-align:center}
+.wd-hd b{font-size:1.15rem}
+.wd-el{display:block;position:relative;height:26px}
+.wd-el::before{content:"";position:absolute;left:50%;top:4px;height:9px;border-left:1px solid color-mix(in srgb,var(--gold) 60%,transparent)}
+.wd-el::after{content:"";position:absolute;left:19px;right:50%;top:12px;bottom:0;border:solid color-mix(in srgb,var(--gold) 60%,transparent);border-width:1px 0 0 1px;border-top-left-radius:8px}
+.wd-br{margin-left:19px;padding-left:10px}
+.wd-it,.wd-br>.wd-sec{position:relative}
+.wd-br>.wd-it::after,.wd-br>.wd-sec::after{content:"";position:absolute;left:-10px;top:0;bottom:0;border-left:1px solid color-mix(in srgb,var(--gold) 60%,transparent)}
+.wd-br>.wd-it:last-child::after{bottom:auto;height:27px}
+.wd-br>.wd-it::before{content:"";position:absolute;left:-10px;top:27px;width:8px;border-top:1px solid color-mix(in srgb,var(--gold) 60%,transparent)}
+.wd-it>.wd-br>:first-child::after{top:-9px}
+.wd-it>.wd-br{padding-left:8px}
+.wd-it>.wd-br>.wd-it::after,.wd-it>.wd-br>.wd-sec::after{left:-8px}
+.wd-it>.wd-br>.wd-it::before{left:-8px;top:24px;width:6px}
+.wd-it>.wd-br>.wd-it:last-child::after{height:24px}
+.wd-it>.wd-br>.wd-it:first-child:last-child::after{height:33px}
+.wd-it .wd-it>.wd-br{margin-left:16px}
+.wd-it .wd-it .wd-n b{font-size:.88rem}
+.wd-sec{padding:10px 0 2px;font-size:.74rem;letter-spacing:.1em;color:var(--goldt)}
+.wd-more{margin-top:14px}
+.wd-n{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;padding:8px 0;text-align:left}
+.wd-n b{font-size:.95rem;overflow-wrap:anywhere}
+.wd-rest{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 10px;max-width:560px;margin:0 auto}
+.wd-rest.wd-from{margin:0}
+.wd-pg{max-width:640px}
+.wd-pg .tw-f p{margin:0}
+.wd-tags{align-items:center;justify-content:center}
+.wd-nm{margin:0;font-family:var(--t);font-weight:400;font-size:1.5rem;line-height:1.3;text-align:center}
+.sr-backnav .edb{font-size:.9rem}
+@media (min-width:900px){.wd-w{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:44px;align-items:start}.wd-w>.hd{grid-column:1/-1}}
+.wd-star{position:relative;width:320px;margin:10px auto 0}
+.wd-star svg,.wd-ln{position:absolute;inset:0;width:100%;height:100%;overflow:visible;fill:none;stroke:color-mix(in srgb,var(--gold) 60%,transparent);stroke-width:1;pointer-events:none}
+.wd-c{position:absolute;transform:translate(-50%,-50%)}
+.wd-s{position:absolute;display:grid;justify-items:center;gap:5px;width:76px;margin-left:-38px;text-align:center}
+.wd-s b{max-width:100%;font-size:.8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wd-su b{order:-1}
+.wd-sl{position:absolute;transform:translate(-50%,-50%);padding:0 6px;background:var(--solid);border-radius:8px;font-size:.68rem;line-height:1.6;white-space:nowrap;color:var(--goldt);pointer-events:none}
+.wd-org{position:relative;padding:8px 8px 0}
+.wd-row{position:relative;display:flex;flex-wrap:wrap;justify-content:center;gap:26px 0;margin-top:28px}
+.wd-row.wd-top{margin-top:0}
+.wd-row[data-s]::before{content:attr(data-s);position:absolute;top:-22px;left:50%;transform:translateX(-50%);z-index:1;padding:0 8px;background:var(--solid);border-radius:8px;font-size:.74rem;letter-spacing:.1em;color:var(--goldt)}
+.wd-o{position:relative;display:grid;justify-items:center;align-content:start;gap:5px;width:48px;text-align:center}
+.wd-o b{font-size:.74rem;overflow-wrap:anywhere}
+.wd-top .wd-o{width:84px}
+.wd-top .wd-o b{font-size:.9rem}
+.wd-eps{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.wd-eps button{min-width:40px;min-height:36px;padding:0 8px;border:1px solid var(--line);border-radius:10px;background:var(--glass);color:var(--acc);font-size:.84rem}
+.alr.wd-two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.wd-rl{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.wd-rl input{grid-column:1/-1}
+.wd-ra{margin-left:0;justify-self:start}
 .pillb{min-height:40px;padding:0 15px;border-radius:99px;background:var(--glass);border:1px solid var(--line);font-size:.86rem}
 .round{border-radius:var(--r);width:100%}
 /* goods */
@@ -969,7 +1029,7 @@ async function dbGet(k){try{const d=await db();return await new Promise((ok,no)=
 async function dbSet(k,v){try{const d=await db();await new Promise((ok,no)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error)})}catch(e){}}
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
 /* private repo: this page holds no notes or pictures, they are read with the device's key */
-const BASE='data/base-6008fc55328f.json',VER='2026.11.11 14:31 · b935a2e';
+const BASE='data/base-4b6f0f4c94b5.json',VER='2026.11.11 19:21 · 1190767';
 let CFG=null,TK=lsGet('tk');
 const api=(p,o={})=>fetch(`${CFG.api??'https://api.github.com'}/repos/${CFG.owner}/${CFG.repo}/contents/${p}`,{cache:'no-store',...o,headers:{Authorization:`Bearer ${TK}`,...o.headers}});
 const rawGet=p=>api(p,{headers:{Accept:'application/vnd.github.raw+json'}});
@@ -1112,7 +1172,7 @@ const blankEp=n=>({n,lb:'',st:'todo',su:'',pl:[],rx:[],im:[],ar:[],rf:[],tg:[],a
 function rebuild(){const len=Math.max(BE.length,...Object.keys(E.eps).map(k=>+k+1));S.av={};
  D.eps=Array.from({length:len},(_,n)=>{const b=BE[n]||blankEp(n),x=E.eps[n];if(!x)return{...b,tg:b.ar};if(x.av)S.av[n]=x.av;const e={...b,...x};e.tg=e.ar||[];e.st=e.rx.length?'has_reactions':e.pl.length||e.su||e.im.length||e.lb?'plot_only':'todo';return e});
  D.wall=D.eps.flatMap(e=>allIm(e).map(src=>({n:e.n,src})));D.noted=D.eps.filter(e=>e.st!=='todo').length;
- arcsBuild(len);
+ arcsBuild(len);wdBuild();
  if(E.read)S.read=E.read.v;if(LOCK)S.read=9999}
 /* story arcs. Base list from the notes, then edits on top. An edited arc is stored whole as E.kinds['@arc:'+id] —
    kinds is the one part of edits.json that older versions of this app keep as-is when they sync, so nothing is lost on a device that has not reloaded yet.
@@ -1146,11 +1206,26 @@ function arcLeave(n,id){const a=arcBy(id);if(!a)return false;const s=a.start_ep,
  if(n===s){arcPut(a,{s:n+1});return true}
  if(a.end_ep!=null){arcPut(a,{e:n-1});return true}
  const x=epEdit(n);x.ar=x.ar.filter(v=>v!==id);x.t=Date.now();touch();persist();rebuild();return true}
+
+/* people and nations: base list from the build, then edits on top. An edited one is stored whole as E.kinds['@ppl:'+id] / E.kinds['@nat:'+id]
+   (people: the id the build gives them; nations: 'n' + place in the base list; added ones: 'u…'). Same rules as arcs: the latest edit wins when two devices change the same one, {d:1} = deleted.
+   People: {n name, r role, x text, px previous life, g nation they belong to, h home nation, sec heading on the family tree,
+            rel [{to, as: what this person is to them, inv: what they are to this person, sp: spouse}], av avatar path, c added-at, t}. Nations: {n, x, c, t}. */
+const PK='@ppl:',NK='@nat:',BP=D.ppl,BN=D.nations;
+function wdBuild(){const ed=K=>{const o={};for(const k in E.kinds)if(k.startsWith(K)){const r=E.kinds[k];if(r&&typeof r==='object'&&(r.d||(typeof r.n==='string'&&r.n)))o[k.slice(K.length)]=r}return o},str=v=>typeof v==='string'?v:'';
+ const mk=(A,e,ap)=>{for(const id of Object.keys(e).sort((a,b)=>(e[a].c||0)-(e[b].c||0))){const r=e[id],i=A.findIndex(x=>x.id===id);if(r.d){if(i>=0)A.splice(i,1);continue}if(i>=0)A[i]=ap(A[i],r);else if(r.c)A.push(ap({id},r))}return A};
+ const rel=a=>Array.isArray(a)?a.filter(q=>q&&typeof q.to==='string'&&typeof q.as==='string').map(q=>({to:q.to,as:q.as,...(typeof q.inv==='string'&&q.inv?{inv:q.inv}:{}),...(q.sp?{sp:1}:{})})):[];
+ D.ppl=mk(BP.map((p,i)=>({px:'',g:'',h:'',sec:'',al:[],...p,id:p.id||'p'+i,bn:p.name,rel:rel(p.rel)})),ed(PK),(p,r)=>({al:[],...p,name:r.n,role:str(r.r),x:str(r.x),px:str(r.px),g:str(r.g),h:str(r.h),sec:str(r.sec),rel:rel(r.rel),...(typeof r.av==='string'&&/^img\//.test(r.av)?{img:r.av,av:1}:{})}));
+ const ids=new Set(D.ppl.map(p=>p.id));for(const p of D.ppl)p.rel=p.rel.filter(r=>r.to!==p.id&&ids.has(r.to));
+ D.nations=mk(BN.map((t,i)=>{const[h,...r]=t.split('：');return{id:'n'+i,name:h,x:r.join('：')}}),ed(NK),(p,r)=>({...p,name:r.n,x:str(r.x)}))}
+function wdPut(K,a,ch){const o=E.kinds[K+a.id]||{};E.kinds[K+a.id]={n:a.name,x:a.x||'',...(K===PK?{r:a.role||'',px:a.px||'',g:a.g||'',h:a.h||'',sec:a.sec||'',rel:(a.rel||[]).map(r=>({...r})),...(o.av?{av:o.av}:{})}:{}),...(o.c?{c:o.c}:{}),...ch,t:Date.now()};touch();persist();rebuild()}
+function wdAdd(K){const P=K===PK,b=P?'新人物':'新王國';let v=b,i=2;while((P?D.ppl:D.nations).some(x=>x.name===v))v=b+i++;const id='u'+Date.now().toString(36);wdPut(K,{id,name:v,x:'',role:''},{c:Date.now()});
+ const h=(P?'person-':'nation-')+(P?D.ppl:D.nations).findIndex(x=>x.id===id);S.wdNext='#'+h;go(h)}
 function persist(){lsSet('edits',JSON.stringify(E));lsSet('dirty',JSON.stringify(dirty));lsSet('upq',JSON.stringify(upq))}
 function touch(){dirty=true;gen++;clearTimeout(_ps);_ps=setTimeout(persist,300);sync('存在這台，等待上傳…');clearTimeout(_pt);_pt=setTimeout(push,4000)}
 function setRead(v){if(LOCK)return;S.read=v;E.read={v,t:Date.now()};touch()}
-/* arc edits (kinds['@arc:…']) go by time like episodes; any other field this version doesn't know is kept */
-function merge(r,l){if(!r)return l;const eps={...r.eps};for(const k in l.eps)if(!eps[k]||(l.eps[k].t||0)>=(eps[k].t||0))eps[k]=l.eps[k];const rk=r.kinds||{},lk=l.kinds||{},kinds={...rk,...lk};for(const k in rk)if(k.startsWith(AK)&&lk[k]&&((rk[k]&&rk[k].t)||0)>((lk[k]&&lk[k].t)||0))kinds[k]=rk[k];return{...r,...l,eps,kinds,read:!r.read||(l.read&&l.read.t>=r.read.t)?l.read:r.read}}
+/* arc, people and nation edits (kinds['@arc:…'], ['@ppl:…'], ['@nat:…']) go by time like episodes; any other field this version doesn't know is kept */
+function merge(r,l){if(!r)return l;const eps={...r.eps};for(const k in l.eps)if(!eps[k]||(l.eps[k].t||0)>=(eps[k].t||0))eps[k]=l.eps[k];const rk=r.kinds||{},lk=l.kinds||{},kinds={...rk,...lk};for(const k in rk)if(/^@(arc|ppl|nat):/.test(k)&&lk[k]&&((rk[k]&&rk[k].t)||0)>((lk[k]&&lk[k].t)||0))kinds[k]=rk[k];return{...r,...l,eps,kinds,read:!r.read||(l.read&&l.read.t>=r.read.t)?l.read:r.read}}
 /* status line */
 function sync(t,sticky){const y=$('#sy');if(!y)return;y.textContent=t;y.classList.toggle('on',!!t);y.classList.toggle('bad',!!sticky);clearTimeout(sync.t);if(t&&t==='已同步')sync.t=setTimeout(()=>y.classList.remove('on'),1800)}
 /* base64 */
@@ -1361,7 +1436,7 @@ function bindLineEdit(){const box=$('#aled'),len=D.eps.length;
 const G=D.goodsData;
 const ICON2={c:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 5h16v11H9l-5 4Z"/></svg>',i:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg>',l:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 15l6-6M10 6l2-2a4 4 0 0 1 6 6l-2 2M14 18l-2 2a4 4 0 0 1-6-6l2-2"/></svg>',p:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 20l1-5L16 4l4 4L9 19Z"/></svg>'};
 function vGoods(){return '<iframe class="sr-entry" title="展覽入口與溫室茶會"></iframe>'}
-const simpleBar=(t,back)=>`<div class="fbar simple"><button class="ib" onclick="go('${back}')" aria-label="返回">‹</button><div class="tt">${esc(t)}</div><span></span></div>`;
+const simpleBar=(t,back,right)=>`<div class="fbar simple"><button class="ib" onclick="go('${back}')" aria-label="返回">‹</button><div class="tt">${esc(t)}</div>${right||'<span></span>'}</div>`;
 function vPrize(i){const p=G.prizes[i],prev=i>0,next=i<G.prizes.length-1;return studyTop(p.id,'study-1-0')+`
  <div class="epb prize"><div class="pics">${p.imgs.map(s=>`<img src="${s}" alt="${esc(p.id)}的圖" loading="lazy">`).join('')}</div><div>
  <h2 style="margin:0;font-family:var(--t);font-weight:400;font-size:1.35rem;line-height:1.5">${esc(p.jp)}</h2><p class="ctx" style="margin-top:2px">${esc(p.zh)}${p.count?'・'+esc(p.count):''}${p.size?'<br>'+esc(p.size):''}</p>
@@ -1374,8 +1449,10 @@ function vSlides(){return studyTop('選圖評價','study')+`<div class="pg" styl
 
 let studyEntranceURL=null;
 async function attachStudyEntrance(){const frame=document.querySelector('.sr-entry:not(.sr-tea)');if(!frame||frame.dataset.loading)return;frame.dataset.loading='1';frame.style.height=Math.max(500,innerHeight-Math.max(0,frame.getBoundingClientRect().top))+'px';try{if(!studyEntranceURL)studyEntranceURL=(async()=>{const r=await rawGet('data/study-entrance-20a642ea6f01.html');if(!r.ok)throw Error('讀取失敗');let t=(await r.text()).split('__FONTS__').join(new URL('fonts',location.href).href);const ps=[...new Set(t.match(/img\/[0-9a-f]{16}\.(?:jpg|png)/g)||[])];const m=new Map(await Promise.all(ps.map(async p=>[p,await loadImg(p)])));t=t.replace(/img\/[0-9a-f]{16}\.(?:jpg|png)/g,p=>m.get(p));return URL.createObjectURL(new Blob([t],{type:'text/html'}))})();const url=await studyEntranceURL;if(frame.isConnected)frame.src=url}catch(e){studyEntranceURL=null;if(frame.isConnected){const p=document.createElement('p');p.className='pg';p.textContent='展覽載入失敗，請重新整理後再試。';frame.replaceWith(p)}}}
-let studyTeaURL=null;
-function prepTea(){if(!studyTeaURL){studyTeaURL=(async()=>{const r=await rawGet('data/study-tea.html');if(!r.ok)throw Error('讀取失敗');let t=(await r.text()).split('__FONTS__').join(new URL('fonts',location.href).href);const ps=[...new Set(t.match(/img\/[0-9a-f]{16}\.(?:jpg|png)/g)||[])];const m=new Map(await Promise.all(ps.map(async p=>[p,await loadImg(p)])));if(ps.some(p=>!m.get(p)))throw Error('圖片讀取失敗');t=t.replace(/img\/[0-9a-f]{16}\.(?:jpg|png)/g,p=>m.get(p));return URL.createObjectURL(new Blob([t],{type:'text/html'}))})();studyTeaURL.catch(()=>{studyTeaURL=null})}return studyTeaURL}
+let studyTeaURL=null,studyTeaSig='';
+/* a person whose avatar was changed on the people page shows the same picture in the tea room (matched by name) */
+const teaSig=()=>D.ppl.filter(p=>p.av).map(p=>p.bn+'|'+p.name+'|'+p.img).join(',');
+function prepTea(){const sig=teaSig();if(studyTeaSig!==sig)studyTeaURL=null;if(!studyTeaURL){studyTeaSig=sig;const av=D.ppl.filter(p=>p.av);studyTeaURL=(async()=>{const r=await rawGet('data/study-tea.html');if(!r.ok)throw Error('讀取失敗');let t=(await r.text()).split('__FONTS__').join(new URL('fonts',location.href).href);const ps=[...new Set(t.match(/img\/[0-9a-f]{16}\.(?:jpg|png)/g)||[])];const m=new Map(await Promise.all(ps.map(async p=>[p,await loadImg(p)])));if(ps.some(p=>!m.get(p)))throw Error('圖片讀取失敗');for(const p of av){const u=await loadImg(p.img);if(u)for(const k of new Set([p.bn,p.name]))if(k)t=t.split('"k":'+JSON.stringify(k)+',"i":"').map((x,j)=>j?u+x.slice(x.indexOf('"')):x).join('"k":'+JSON.stringify(k)+',"i":"')}t=t.replace(/img\/[0-9a-f]{16}\.(?:jpg|png)/g,p=>m.get(p));return URL.createObjectURL(new Blob([t],{type:'text/html'}))})();studyTeaURL.catch(()=>{studyTeaURL=null})}return studyTeaURL}
 async function attachStudyTea(){const frame=document.querySelector('.sr-tea');if(!frame||frame.dataset.loading)return;frame.dataset.loading='1';try{const url=await prepTea();if(frame.isConnected)frame.src=url}catch(e){studyTeaURL=null;if(frame.isConnected){const p=document.createElement('p');p.className='pg';p.textContent='溫室載入失敗，請重新整理後再試。';frame.replaceWith(p)}}}
 function sizeEntrance(){const frame=document.querySelector('.sr-entry');if(frame&&frame.contentWindow){const h=Math.max(500,innerHeight-Math.max(0,frame.getBoundingClientRect().top));if(!frame.classList.contains('sr-tea'))frame.style.height=h+'px';frame.contentWindow.postMessage({studyPreview:'viewport',height:h},location.origin)}}
 addEventListener('resize',sizeEntrance);
@@ -1438,10 +1515,80 @@ const studyPic={};window.studyPhoto=(i,page,delta)=>{const count=G.events[i].img
 window.studyZoom=i=>{const d=document.createElement('dialog');d.className='sr-zoom';d.setAttribute('aria-label','收藏圖片，點擊圖片外圍或按 Escape 關閉');d.tabIndex=-1;d.innerHTML=hy(`<img src="${G.events[i].imgs[studyPic[i]||0]}" alt="收藏圖片放大檢視">`);document.body.append(d);hydrate();d.onclick=e=>{if(e.target===d)d.close()};d.onclose=()=>d.remove();d.showModal()};
 
 /* people */
-function vWorld(){return `<div class="pg"><div class="hd"><h2 class="logo">人物與王國</h2>${spray(110,70,41,'right:-6px;top:-10px')}</div><div><h3>人物</h3><div class="shelf">${D.ppl.map((p,i)=>`<button class="pp" onclick="go('person-${i}')">${p.img?`<i class="ring" style="background-image:url(${p.img})"></i>`:`<i class="ring mono">${esc(p.m)}</i>`}<b>${esc(p.name)}</b><small>${p.role}</small></button>`).join('')}</div></div>
- <div><h3>王國</h3><img class="round" src="${D.map}" alt="第9話的大陸地圖"><div class="chips" style="margin-top:10px">${D.nations.map((n,i)=>`<button class="chip" onclick="go('nation-${i}')">${esc(n.split('：')[0].replace(/（.*/,''))}</button>`).join('')}</div></div></div>`}
-function vPerson(i){const p=D.ppl[i];return simpleBar(p.name,'world')+`<div class="pg" style="max-width:640px;text-align:center">${p.img?`<i class="ring" style="width:150px;height:150px;background-image:url(${p.img})"></i>`:`<i class="ring mono" style="width:150px;height:150px;font-size:3rem">${esc(p.m)}</i>`}<p style="margin:0;text-align:left">${esc(p.x)}</p></div>`}
-function vNation(i){const[h,...r]=D.nations[i].split('：');return simpleBar(h,'world')+`<div class="pg" style="max-width:640px"><p style="margin:0">${esc(r.join('：')||'這國還沒有資料。')}</p></div>`}
+/* people and nations pages. wd-: family tree on the people page (roots = the married pair), relation star on a person's page, court chart on a nation's page */
+const wdBy=id=>D.ppl.find(p=>p.id===id),wdNat=id=>D.nations.find(n=>n.id===id),wdShort=n=>n.name.replace(/（.*/,'')||n.name;
+const wdGo=p=>`go('person-${D.ppl.indexOf(p)}')`,wdGoN=n=>`go('nation-${D.nations.indexOf(n)}')`;
+const wdR=(p,z)=>p.img?`<i class="ring wd-r" style="--z:${z}px;background-image:url(${p.img})"></i>`:`<i class="ring mono wd-r" style="--z:${z}px">${esc(p.m||[...p.name][0])}</i>`;
+const wdRel=p=>p.rel[0]||null;
+function wdSub(p,max=2){const r=wdRel(p),h=wdNat(p.h),a=[];for(const v of[r&&!r.sp?r.as:'',p.role,h&&p.h!==p.g?wdShort(h):''])if(v&&!a.includes(v))a.push(v);return a.slice(0,max).join('・')}
+const wdTxt=(p,whose)=>{const r=whose&&wdRel(p);return `<span><b>${esc(p.name)}</b><small>${esc(r?`${wdBy(r.to).name}的${r.as}`:wdSub(p))}</small></span>`};
+const wdItem=(k,seen,d=1,whose)=>`<div class="wd-it"><button class="wd-n" onclick="${wdGo(k)}">${wdR(k,d>1?32:38)}${wdTxt(k,whose)}</button>${wdKids(k,seen,d+1)}</div>`;
+function wdKids(root,seen,d=1){const kids=D.ppl.filter(p=>!seen.has(p.id)&&wdRel(p)?.to===root.id&&(d<2||p.g===root.g));if(!kids.length)return'';kids.forEach(k=>seen.add(k.id));const secs=[...new Set(kids.map(k=>k.sec))].sort((a,b)=>!!a-!!b);
+ return `<div class="wd-br">${secs.map(s=>(s?`<div class="wd-sec">${esc(s)}</div>`:'')+kids.filter(k=>k.sec===s).map(k=>wdItem(k,seen,d)).join('')).join('')}</div>`}
+function wdForest(){const seen=new Set(),sp=D.ppl.find(p=>p.rel.some(r=>r.sp));let h='';
+ const col=p=>{const t=wdKids(p,seen);return `<div class="wd-col"><button class="wd-hd" onclick="${wdGo(p)}">${wdR(p,84)}${wdTxt(p)}</button>${t?`<i class="wd-el" aria-hidden="true"></i>${t}`:''}</div>`};
+ if(sp){const a=wdBy(sp.rel.find(r=>r.sp).to);seen.add(a.id);seen.add(sp.id);h+=`<div class="wd-duo"><span class="wd-tie">夫妻</span>${col(a)}${col(sp)}</div>`}
+ let rest='';for(const p of D.ppl)if(!seen.has(p.id)){seen.add(p.id);rest+=wdItem(p,seen,1,true)}
+ return h+`${sp?'<div class="wd-sec wd-more">其他人物</div>':''}<div class="wd-rest">${rest}<div class="wd-it"><button class="wd-n" id="wdAp"><i class="ring mono wd-r" style="--z:38px" aria-hidden="true">＋</i><span><b>新增人物</b></span></button></div></div>`}
+function vWorld(){return `<div class="pg wd-w"><div class="hd"><h2 class="logo">人物與王國</h2>${spray(110,70,41,'right:-6px;top:-10px')}</div><div><h3>人物</h3>${wdForest()}</div>
+ <div><h3>王國</h3><img class="round" src="${D.map}" alt="第9話的大陸地圖"><div class="chips" style="margin-top:10px">${D.nations.map((n,i)=>`<button class="chip" onclick="go('nation-${i}')">${esc(wdShort(n))}</button>`).join('')}<button class="chip" id="wdAn">＋ 新增王國</button></div></div></div>`}
+function bindWorld(){$('#wdAp').onclick=()=>wdAdd(PK);$('#wdAn').onclick=()=>wdAdd(NK)}
+/* relation star: the person in the middle, everyone tied to them around, the tie written on the line. Tapping one goes to that person. */
+function wdStar(p){const L=[];for(const r of p.rel)L.push([wdBy(r.to),r.inv||'']);for(const o of D.ppl)for(const r of o.rel)if(r.to===p.id&&!L.some(l=>l[0]===o))L.push([o,r.as]);
+ const n=L.length;if(!n)return `<div class="wd-star" style="height:150px"><span class="wd-c" style="left:50%;top:75px">${wdR(p,138)}</span></div>`;
+ const cz=n>9?76:n>6?92:104,z=n>9?38:n>6?46:54,ro=n>9?136:n>6?132:128,cx=160,top=ro+z/2+28,H=top+ro+z/2+28;let ln='',h='';
+ L.forEach(([o,t],i)=>{const a=(-90+(i+(n%2?0:.5))*360/n)*Math.PI/180,c=Math.cos(a),q=Math.sin(a),x=cx+ro*c,y=top+ro*q,up=q<-.3,m=(cz/2+ro-z/2)/2+(n>7?(i%2?12:-12):0);
+  ln+=`<path d="M${cx} ${top}L${x.toFixed(1)} ${y.toFixed(1)}"/>`;
+  h+=`<button class="wd-s${up?' wd-su':''}" style="left:${x.toFixed(1)}px;${up?`bottom:${(H-y-z/2).toFixed(1)}`:`top:${(y-z/2).toFixed(1)}`}px" onclick="${wdGo(o)}">${wdR(o,z)}<b>${esc(o.name)}</b></button>${t?`<span class="wd-sl" style="left:${(cx+m*c).toFixed(1)}px;top:${(top+m*q).toFixed(1)}px">${esc(t)}</span>`:''}`});
+ return `<div class="wd-star" style="height:${H}px"><svg aria-hidden="true">${ln}</svg>${h}<span class="wd-c" style="left:${cx}px;top:${top}px">${wdR(p,cz)}</span></div>`}
+/* court chart of one nation: rulers on top, the people tied to them below; the lines are drawn after layout by wdLines() */
+function wdOrg(nid){const M=D.ppl.filter(p=>p.g===nid);if(!M.length)return'';const inM=p=>p.rel.find(r=>M.some(m=>m.id===r.to))||null,lv=new Map();
+ const level=(p,st)=>{if(lv.has(p.id))return lv.get(p.id);const r=inM(p);let v=0;if(r&&!st.includes(p.id)){const q=level(wdBy(r.to),[...st,p.id]);v=r.sp?q:q+1}lv.set(p.id,v);return v};M.forEach(p=>level(p,[]));
+ const rows=[];for(const p of M){const l=lv.get(p.id),s=l?p.sec:'';let r=rows.find(x=>x.l===l&&x.s===s);if(!r)rows.push(r={l,s,p:[]});r.p.push(p)}
+ rows.sort((a,b)=>a.l-b.l||!!a.s-!!b.s);rows[0].p.sort((a,b)=>!!(inM(a)||{}).sp-!!(inM(b)||{}).sp);
+ const node=(p,z)=>{const r=inM(p);return `<button class="wd-o" data-id="${esc(p.id)}"${r?` data-par="${esc(r.to)}"${r.sp?' data-sp="1"':''}`:''} onclick="${wdGo(p)}">${wdR(p,z)}<span><b>${esc(p.name)}</b><small>${esc(p.role||(r&&!r.sp?r.as:''))}</small></span></button>`};
+ return `<div class="wd-org" id="wdOrg"><svg class="wd-ln" aria-hidden="true"></svg>${rows.map(r=>`<div class="wd-row${r.l?'':' wd-top'}"${r.s?` data-s="${esc(r.s)}"`:''}>${r.p.map(p=>node(p,r.l?40:64)).join('')}</div>`).join('')}</div>`}
+function wdLines(){const o=$('#wdOrg');if(!o)return;const B=o.getBoundingClientRect(),rows=$$('.wd-row',o),rc=e=>{const r=e.getBoundingClientRect();return{t:r.top-B.top,b:r.bottom-B.top,x:(r.left+r.right)/2-B.left}};let d='';
+ for(const c of $$('.wd-o[data-par]',o)){const p=o.querySelector(`.wd-o[data-id="${CSS.escape(c.dataset.par)}"]`);if(!p)continue;const cr=rc(c.querySelector('.ring')),pr=rc(p.querySelector('.ring')),pb=rc(p).b+4;
+  if(c.dataset.sp){d+=`M${pr.x} ${(pr.t+pr.b)/2}H${cr.x}`;continue}
+  const y=cr.t-11,pi=rows.indexOf(p.parentElement),nx=rows[pi+1]?rc(rows[pi+1]).t-11:y;
+  d+=y-nx<4&&y>pb?`M${pr.x} ${pb}V${y}H${cr.x}V${cr.t}`:`M${pr.x} ${pb}V${nx}H3V${y}H${cr.x}V${cr.t}`}
+ o.querySelector('svg').innerHTML=`<path d="${d}"/>`}
+addEventListener('resize',wdLines);
+/* episodes whose notes mention this person (by name or the other names the build knows). A guess, not a record. */
+function wdEps(p){const ks=[...new Set([p.name,p.bn,...p.al].filter(k=>k&&[...k].length>=2))];if(!ks.length)return[];return D.eps.filter(e=>!hidden(e.n)&&e.st!=='todo'&&(t=>ks.some(k=>t.includes(k)))([e.lb,e.su||'',...e.pl,...e.rx.map(x=>x.x)].join('\n'))).map(e=>e.n)}
+const wdBtn=()=>`<button class="edb" id="wdE">${S.wdEdit?'完成':'編輯'}</button>`;
+const wdTop=()=>`<nav class="sr-backnav" aria-label="返回導覽"><button onclick="go('world')">‹ <span>返回人物與王國</span></button>${wdBtn()}</nav>`,wdNm=p=>`<h2 class="wd-nm">${esc(p.name)}</h2>`;
+const wdFoot=t=>`<div class="alf"><span class="hn">改完一格就自動存</span><button class="chip" id="wdD">${t}</button></div>`;
+const wdSel=(f,v,lb)=>`<select class="edi" data-f="${f}" aria-label="${lb}"><option value="">（沒有）</option>${D.nations.map(n=>`<option value="${esc(n.id)}"${n.id===v?' selected':''}>${esc(wdShort(n))}</option>`).join('')}</select>`;
+function vPerson(i){const p=D.ppl[i],g=wdNat(p.g),h=wdNat(p.h);
+ if(S.wdEdit)return wdTop()+`<div class="pg wd-pg"><div class="wd-star" style="height:126px"><span class="wd-c" style="left:50%;top:63px">${wdR(p,110)}</span></div>${wdNm(p)}<div class="av-b" style="justify-content:center;padding:0"><label class="chip">換頭像<input type="file" accept="image/*" id="wdF" aria-label="換頭像"></label>${p.av?'<button class="chip" id="wdR">改回預設</button>':''}</div>
+ <div id="wdBox"><label class="tw-f"><span>名字</span><input class="edi" data-f="n" value="${esc(p.name)}" aria-label="名字"></label><label class="tw-f"><span>身分</span><input class="edi" data-f="r" value="${esc(p.role)}" placeholder="可空白" aria-label="身分"></label>
+ <div class="alr wd-two"><label class="tw-f"><span>現在屬於哪一國</span>${wdSel('g',p.g,'現在屬於哪一國')}</label><label class="tw-f"><span>出身（母國）</span>${wdSel('h',p.h,'出身的國家')}</label></div>
+ <label class="tw-f"><span>${'介紹（今生）'}</span><textarea class="eta" data-f="x" rows="2" placeholder="可空白" aria-label="介紹">${esc(p.x)}</textarea></label><label class="tw-f"><span>前世</span><textarea class="eta" data-f="px" rows="1" placeholder="可空白" aria-label="前世">${esc(p.px)}</textarea></label>
+ <div class="tw-f"><span>關係（填在這位身上，對方那邊會自動出現）</span>${p.rel.map((r,k)=>`<div class="wd-rl"><select class="edi" data-rf="to" aria-label="對方是誰">${D.ppl.filter(o=>o.id!==p.id).map(o=>`<option value="${esc(o.id)}"${o.id===r.to?' selected':''}>${esc(o.name)}</option>`).join('')}</select><button class="chip" data-rd="${k}">移除</button><input class="edi" data-rf="as" value="${esc(r.as)}" placeholder="這位是對方的…（例：秘書）" aria-label="這位是對方的什麼"><input class="edi" data-rf="inv" value="${esc(r.inv||'')}" placeholder="對方是這位的…（可空白）" aria-label="對方是這位的什麼"></div>`).join('')}${D.ppl.length>1?'<button class="tw-next wd-ra" id="wdRa">＋ 加一條關係</button>':''}</div>
+ <label class="tw-f"><span>在人物圖上的分區標題（例：情婦）</span><input class="edi" data-f="sec" value="${esc(p.sec)}" placeholder="可空白" aria-label="分區標題"></label>${wdFoot('刪除這位')}</div></div>`;
+ const eps=wdEps(p),cut=!S.wdAll&&eps.length>40;
+ return wdTop()+`<div class="pg wd-pg">${wdStar(p)}${wdNm(p)}<div class="chips wd-tags">${p.role?`<span class="hn">${esc(p.role)}</span>`:''}${g?`<button class="chip" onclick="${wdGoN(g)}">${esc(wdShort(g))}</button>`:''}${h&&h!==g?`<button class="chip" onclick="${wdGoN(h)}">出身：${esc(wdShort(h))}</button>`:''}</div>
+ ${p.x?`<div class="tw-f"><span>${p.px?'今生':'介紹'}</span><p>${esc(p.x)}</p></div>`:''}${p.px?`<div class="tw-f"><span>前世</span><p>${esc(p.px)}</p></div>`:''}
+ <div class="tw-f"><span>${eps.length?`筆記裡提到的話（${eps.length} 話，自動比對，可能不準）`:'筆記裡還沒有提到這位'}</span>${eps.length?`<div class="wd-eps">${(cut?eps.slice(0,40):eps).map(n=>`<button onclick="go('ep-${n}')" aria-label="${nm(n)}">${n>204?'幕'+(n-204):n}</button>`).join('')}${cut?'<button id="wdAll">全部…</button>':''}</div>`:''}</div></div>`}
+function vNation(i){const p=D.nations[i],from=D.ppl.filter(q=>q.h===p.id&&q.g!==p.id),org=wdOrg(p.id);
+ return wdTop()+`<div class="pg wd-pg">${wdNm(p)}${S.wdEdit?`<div id="wdBox"><label class="tw-f" style="margin-top:0"><span>國名</span><input class="edi" data-f="n" value="${esc(p.name)}" aria-label="國名"></label><label class="tw-f"><span>說明</span><textarea class="eta" data-f="x" rows="2" placeholder="可空白" aria-label="說明">${esc(p.x)}</textarea></label>${wdFoot('刪除這國')}</div>`:`<p style="margin:0">${esc(p.x||'這國還沒有資料。')}</p>${org?`<div class="tw-f"><span>這國的人</span>${org}</div>`:''}${from.length?`<div class="tw-f"><span>出身這國，現在在別處</span><div class="wd-rest wd-from">${from.map(q=>`<div class="wd-it"><button class="wd-n" onclick="${wdGo(q)}">${wdR(q,38)}${wdTxt(q)}</button></div>`).join('')}</div></div>`:''}`}</div>`}
+/* person / nation page: each field saves when you leave it */
+function bindWd(r,n){const P=r==='person',K=P?PK:NK,id=(P?D.ppl:D.nations)[n].id,cur=()=>(P?D.ppl:D.nations).find(x=>x.id===id),redraw=()=>{const y=scrollY;render(true);scrollTo(0,y)};
+ $('#wdE').onclick=()=>{document.activeElement?.blur?.();S.wdEdit=!S.wdEdit;redraw()};
+ const all=$('#wdAll');if(all)all.onclick=()=>{S.wdAll=true;redraw()};
+ if($('#wdOrg')){wdLines();setTimeout(wdLines,400);document.fonts?.ready.then(wdLines)}
+ const box=$('#wdBox');if(!box)return;$$('#wdBox .eta').forEach(grow);
+ const say=t=>{let m=box.querySelector('.alm');if(!m){m=document.createElement('p');m.className='alm';m.setAttribute('role','alert');box.append(m)}m.textContent=t;m.hidden=!t};
+ const rels=()=>$$('#wdBox .wd-rl').map((d,k)=>{const o=cur().rel[k]||{},to=d.querySelector('[data-rf=to]').value,as=d.querySelector('[data-rf=as]').value.trim(),inv=d.querySelector('[data-rf=inv]').value.trim();return{to,as,...(inv?{inv}:{}),...(o.sp&&o.to===to?{sp:1}:{})}});
+ box.addEventListener('input',e=>{if(e.target.classList.contains('eta'))grow(e.target)});
+ box.addEventListener('change',e=>{const el=e.target,f=el.dataset.f,a=cur();if(!a)return;if(el.dataset.rf){wdPut(PK,a,{rel:rels()});return}if(!f)return;const v=el.value.trim();if(f==='n'&&!v){el.value=a.name;return say('名字不能空白')}say('');wdPut(K,a,{[f]:v});if(f==='n'){const t=$('.wd-nm');if(t)t.textContent=v}});
+ box.addEventListener('click',e=>{const b=e.target.closest('[data-rd]');if(!b)return;const L=rels();L.splice(+b.dataset.rd,1);wdPut(PK,cur(),{rel:L});redraw()});
+ const ra=$('#wdRa');if(ra)ra.onclick=()=>{const o=D.ppl.find(x=>x.id!==id);wdPut(PK,cur(),{rel:[...rels(),{to:o.id,as:''}]});redraw();const rs=$$('#wdBox .wd-rl');rs[rs.length-1]?.querySelector('select').focus()};
+ $('#wdD').onclick=()=>{const a=cur();if(!a||!confirm(`刪除「${a.name}」？\n各話的筆記和吐槽不會受影響。`))return;wdPut(K,a,{d:1});S.wdEdit=false;go('world')};
+ const f=$('#wdF');if(f)f.onchange=async()=>{const fl=f.files[0];f.value='';if(!fl)return;const u=URL.createObjectURL(fl);try{const b=await openCrop(u,{ratios:['1:1'],title:'框出頭像',max:320});if(b&&b!=='skip'&&cur()){wdPut(PK,cur(),{av:await storeImg(b)});redraw()}}catch(_){sync('這張圖讀不出來，換成 JPG 或 PNG 再試',true)}finally{URL.revokeObjectURL(u)}};
+ const rb=$('#wdR');if(rb)rb.onclick=()=>{wdPut(PK,cur(),{av:null});redraw()}}
 /* nav and routing */
 function lilyIcon(){let s='';for(let i=0;i<6;i++)s+=`<path transform="rotate(${i*60} 12 12)" d="M12 12C14 9 14 5 12 2C10 5 10 9 12 12Z"/>`;return s}
 const ICON=D.icons;
@@ -1486,6 +1633,6 @@ function render(keep){rebuild();const h=location.hash.slice(1)||'home',m=$('#m')
  if(r==='tea'){cur='goods';html='<iframe class="sr-entry sr-tea" title="溫室茶會"></iframe><div class="sr-tea-floor" aria-hidden="true"><div class="sr-floor">'+srGarden('left:-45px;bottom:-25px')+srGarden('right:-45px;bottom:-25px;transform:scaleX(-1)')+'</div></div>';full=true}else if(r==='study'){cur='goods';html=a==='summary'?vStudySummary():G.events[n]&&a!==undefined?vStudyBook(n,+h.split('-')[2]||0):vStudy();full=true}else if(r==='ep'&&D.eps[n]){html=vEp(n);full=true;cur='eps'}else if(r==='prize'&&G.prizes[n]){html=vPrize(n);full=true;cur='goods'}else if(r==='slides'){html=vSlides();full=true;cur='goods'}else if(r==='settings'){html=vSettings();cur='settings'}else if(r==='person'&&D.ppl[n]){html=vPerson(n);full=true;cur='world'}else if(r==='nation'&&D.nations[n]){html=vNation(n);full=true;cur='world'}
  else{cur=TABS.some(t=>t[0]===h)?h:'home';html={home:vHome,wall:vWall,line:vLine,goods:vGoods,world:vWorld}[cur]()}
  const wide=cur==='home'||r==='ep';m.innerHTML=hy((cur==='home'&&!full?hero():'')+(wide?`<div class="shell"><div class="mainc">${html}</div>${side()}</div>`:html));document.body.classList.toggle('full',full);nav();hydrate();if(!keep)window.scrollTo(0,0);
- if(r==='ep'&&full)bindEp(n);else if(!full)({home:bindHome,wall:bindWall,line:bindLine,settings:bindSettings})[cur]?.()}
-addEventListener('hashchange',()=>{S.edit=null;if(location.hash!=='#line')S.lnEdit=false;persist();render()});if(!lsGet('edits'))await pull();render();startSync();
+ if(r==='ep'&&full)bindEp(n);else if(full&&$('#wdE'))bindWd(r,n);else if(!full)({home:bindHome,wall:bindWall,line:bindLine,settings:bindSettings,world:bindWorld})[cur]?.()}
+addEventListener('hashchange',()=>{S.edit=null;S.wdEdit=S.wdNext===location.hash;S.wdNext=null;S.wdAll=false;if(location.hash!=='#line')S.lnEdit=false;persist();render()});if(!lsGet('edits'))await pull();render();startSync();
 </script></body></html>
