@@ -9,6 +9,7 @@ function setBar(m){document.querySelector('meta[name=theme-color]').content=m===
  斷點：主要分界 900px —— 手機版 @media (max-width:899.98px)、桌面版 @media (min-width:900px)；JS 用 innerWidth<900。
    其他已在用的值：600、700、760、1050、1120、1219、1450。新樣式請優先用 900，真的需要時才用上面這些值，不要再發明 859/861 這類相近數字。
    注意：max-width:700 和 min-width:700 在剛好 700px 會同時成立（760 也是），沿用舊行為未改。
+ 1219：電腦放大用（html 字級 112.5%、選單加寬、時間線與設定頁改兩欄）。
  主題：顏色變數只寫在下面的 :root（夜版）和 html[data-mode=light]（日版）兩條；元件專用的一組顏色（例 --eg-*、--sr-*）也一樣分夜日兩條。
  命名：新 class / 變數加功能前綴（stg-、eg-、sr-、tw-、arc-、lb-、av- …），新增前先搜尋整份檔案避免撞名。
  順序：同一個選擇器不要在後面另開一條覆蓋前面；要改就改原來那條。*/
@@ -21,6 +22,8 @@ function setBar(m){document.querySelector('meta[name=theme-color]').content=m===
 html[data-mode=light]{color-scheme:light;--fg:#1b1d57;--mute:#555894;--acc:#2743c4;--note:#7c1f7b;--gold:#b78f3c;--goldt:#8a6414;--cur:#1b1d57;--logo:linear-gradient(115deg,#e0237f 0%,#b12fb6 42%,#3d55e6 100%);--dim:#6a70b4;--page:linear-gradient(168deg,#fffdf8 0%,#fbf6ee 50%,#f9f0ea 100%);--solid:#fbf6ee;--glass:rgba(255,255,255,.64);--glass2:rgba(255,255,255,.9);--line:rgba(128,112,126,.25);--navp:rgba(255,252,246,.55);--nav:rgba(255,251,245,.8);--eg-glass:rgba(255,255,255,.6);--eg-glass2:linear-gradient(150deg,rgba(255,255,255,.78),rgba(243,238,255,.62));--eg-edge:rgba(183,143,60,.42);--eg-shine:rgba(255,255,255,.96);--eg-shadow:rgba(120,100,130,.16)}
 *{box-sizing:border-box}
 html{height:100%;color-scheme:dark}
+/* 電腦放大（2026-11-12，V1）：≥1219 全站字級與左側選單放大約 112%（rem 一起放大）；手機與窄電腦不變 */
+@media (min-width:1219px){html{font-size:112.5%;--sb:clamp(200px,15.6vw,230px)}}
 body{margin:0;min-height:100%;background:var(--page) fixed;color:var(--fg);font-family:var(--b);line-height:1.85}
 button,input{font:inherit;color:inherit}
 button{background:none;border:0;padding:0;cursor:pointer}
@@ -35,6 +38,7 @@ img{display:block;max-width:100%}
 .cfg .cfg-c{display:grid;gap:8px;max-width:640px}
 .cfg h3{margin:0;font-family:var(--t);font-size:1.05rem}
 .cfg .cfg-c p{margin:0;color:var(--mute);font-size:.92rem}
+@media (min-width:1219px){.cfg{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:18px}.cfg>.hd{grid-column:1/-1}.cfg .cfg-c{max-width:none}.cfg>section:last-child{grid-column:1/-1}}
 .cfg-l{display:flex;align-items:center;gap:14px;cursor:pointer}
 .cfg-t{flex:1;display:grid;gap:2px}
 .cfg-t small{color:var(--mute);font-size:.84rem;line-height:1.6}
@@ -193,10 +197,6 @@ h3{margin:0 0 8px;font-family:var(--t);font-size:1.02rem;font-weight:400;color:v
 .addf{display:grid;gap:10px;padding:14px;background:var(--glass);border:1px solid var(--line);border-radius:var(--r)}
 .addf label{display:grid;gap:3px;font-size:.86rem}
 .addf input{min-height:44px;padding:6px 12px;border-radius:14px;border:1px solid var(--line);background:var(--glass)}
-.shelf{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;margin-inline:-18px;padding:2px 18px 8px}
-.pp{flex:0 0 150px;text-align:center;padding:10px;background:var(--glass);border:1px solid var(--line);border-radius:var(--r)}
-.pp b{display:block;font-family:var(--t);font-weight:400}
-.pp small{color:var(--mute);font-size:.74rem}
 .ring{display:block;width:84px;height:84px;border-radius:50%;background:center/cover var(--glass2);box-shadow:0 0 0 2px var(--gold),0 0 0 5px rgba(9,13,44,.85),0 0 0 6px var(--gold);margin:6px auto 12px}
 .ring.mono{display:grid;place-items:center;font-family:var(--t);font-size:1.7rem;color:var(--goldt);font-style:normal}
 /* wd-: people and nations (family tree, relation star, court chart). Rings sit on the page itself, like the home avatar: thin gold line + a rim in the page colour */
@@ -262,9 +262,6 @@ h3{margin:0 0 8px;font-family:var(--t);font-size:1.02rem;font-weight:400;color:v
 .pillb{min-height:40px;padding:0 15px;border-radius:99px;background:var(--glass);border:1px solid var(--line);font-size:.86rem}
 .round{border-radius:var(--r);width:100%}
 /* goods */
-.total{position:relative;padding:18px;border-radius:26px;background:linear-gradient(120deg,rgba(201,92,192,.3),rgba(90,111,240,.3));border:1px solid var(--line)}
-.total strong{display:block;font-family:var(--t);font-weight:400;font-size:clamp(2.3rem,10vw,3.4rem);line-height:1.2}
-.total small{color:var(--mute);font-size:.8rem;line-height:1.5;display:block}
 .tickets{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
 .tk{position:relative;display:grid;grid-template-columns:62px minmax(0,1fr);text-align:left;background:linear-gradient(120deg,#2a2c7c,#40267f);border-radius:18px;min-height:104px;overflow:hidden;-webkit-mask-image:radial-gradient(circle 9px at 62px 0,transparent 98%,#000),radial-gradient(circle 9px at 62px 100%,transparent 98%,#000);-webkit-mask-composite:source-in;mask-image:radial-gradient(circle 9px at 62px 0,transparent 98%,#000),radial-gradient(circle 9px at 62px 100%,transparent 98%,#000);mask-composite:intersect}
 .tk i{display:grid;place-items:center;font-style:normal;font-family:var(--t);writing-mode:vertical-rl;font-size:1.02rem;color:#ecd38f;border-right:2px dashed rgba(236,211,143,.5)}
@@ -277,12 +274,6 @@ h3{margin:0 0 8px;font-family:var(--t);font-size:1.02rem;font-weight:400;color:v
 .tc{position:relative;display:block;aspect-ratio:3/5;border-radius:14px;overflow:hidden;box-shadow:0 0 0 1.5px var(--gold),0 0 0 4px #1a1650,0 0 0 5px var(--gold);margin:5px}
 .tc img{width:100%;height:100%;object-fit:cover;object-position:50% 22%;opacity:.8}
 .tc b{position:absolute;left:0;right:0;bottom:0;padding:18px 2px 4px;text-align:center;font-family:var(--t);font-weight:400;font-size:1.25rem;color:#fff;background:linear-gradient(transparent,rgba(13,11,60,.95))}
-.rc{background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:var(--r);padding:6px 14px}
-.rr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:.92rem;line-height:1.5}
-.rr:last-child{border-bottom:0}
-.rr span:last-child{white-space:nowrap;text-align:right}
-.rr.sum{font-family:var(--t);font-size:1.15rem;border-bottom:0}
-.rr small{display:block;color:var(--mute);font-size:.74rem}
 .wish{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 .wish button{display:flex;gap:10px;width:100%;text-align:left;padding:10px 14px;background:var(--glass);border:1px solid var(--line);border-radius:16px;color:var(--note);line-height:1.5}
 .wish em{font-style:normal;font-family:var(--t);color:var(--acc);white-space:nowrap}
@@ -406,6 +397,8 @@ button.tr:hover .tl1 b{color:var(--acc)}
 .stb{top:18px;margin:0;padding:12px;background:var(--glass);border:1px solid var(--line);border-radius:22px}
 .stg{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
 .st b{font-size:1.7rem}}
+@media (min-width:1219px){.lg{grid-template-columns:270px minmax(0,1fr);justify-content:stretch;gap:36px}
+.vn{display:block;columns:2;column-gap:48px}.vn .tr{break-inside:avoid}.vn .lnb{column-span:all}}
 /* day version */
 [data-mode=light] .ic,[data-mode=light] .av svg,[data-mode=light] .chap svg,[data-mode=light] .tt svg,[data-mode=light] .pav svg,[data-mode=light] .nav [data-v=home] svg,[data-mode=light] .brace svg{filter:drop-shadow(0 1px 2px rgba(50,50,150,.45))}
 html:not([data-mode=light]) .dayo{display:none}
@@ -1043,7 +1036,7 @@ async function dbGet(k){try{const d=await db();return await new Promise((ok,no)=
 async function dbSet(k,v){try{const d=await db();await new Promise((ok,no)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error)})}catch(e){}}
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
 /* private repo: this page holds no notes or pictures, they are read with the device's key */
-const BASE='data/base-3805e068ac64.json',VER='2026.11.11 23:48 · cb45ab1';
+const BASE='data/base-3805e068ac64.json',VER='2026.11.12 01:18 · 62875b5';
 let CFG=null,TK=lsGet('tk');
 const api=(p,o={})=>fetch(`${CFG.api??'https://api.github.com'}/repos/${CFG.owner}/${CFG.repo}/contents/${p}`,{cache:'no-store',...o,headers:{Authorization:`Bearer ${TK}`,...o.headers}});
 const rawGet=p=>api(p,{headers:{Accept:'application/vnd.github.raw+json'}});
