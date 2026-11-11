@@ -629,8 +629,17 @@ select.edi[hidden]{display:none}
 /* arcs: chips on the episode editor, cards on the vine */
 .arc-in{margin-top:6px}
 .sg-in{margin-top:6px}
-.sg-c{min-height:40px;color:var(--mute)}
-.sg-c[aria-pressed=true]{color:var(--goldt);background:rgba(217,184,101,.14);border-color:var(--goldt)}
+.sg-c,.ec-in .ec-c{min-height:40px;color:var(--mute)}
+.ec-c{gap:7px;padding-left:7px}
+.ec-w{margin-top:12px}
+.ec-in{margin-top:2px}
+.ec-g{margin-top:10px}
+.ec-gh{display:block;font-size:.8rem}
+.ec-g .chips{margin-top:4px}
+.ec-w .chips{margin-top:6px}
+.ec-note{margin:6px 0 0}
+.ec-auto{margin-top:8px}
+.sg-c[aria-pressed=true],.ec-c[aria-pressed=true]{color:var(--goldt);background:rgba(217,184,101,.14);border-color:var(--goldt)}
 .sy-r{display:flex;gap:10px;justify-content:flex-end;align-items:center}
 .sy-t{width:100%;border-bottom:1px solid var(--line)}
 .arc-c{gap:2px;padding-right:2px;color:var(--note)}
@@ -1034,7 +1043,7 @@ async function dbGet(k){try{const d=await db();return await new Promise((ok,no)=
 async function dbSet(k,v){try{const d=await db();await new Promise((ok,no)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error)})}catch(e){}}
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
 /* private repo: this page holds no notes or pictures, they are read with the device's key */
-const BASE='data/base-3805e068ac64.json',VER='2026.11.11 22:56 · 0e073b6';
+const BASE='data/base-3805e068ac64.json',VER='2026.11.11 23:48 · cb45ab1';
 let CFG=null,TK=lsGet('tk');
 const api=(p,o={})=>fetch(`${CFG.api??'https://api.github.com'}/repos/${CFG.owner}/${CFG.repo}/contents/${p}`,{cache:'no-store',...o,headers:{Authorization:`Bearer ${TK}`,...o.headers}});
 const rawGet=p=>api(p,{headers:{Accept:'application/vnd.github.raw+json'}});
@@ -1148,7 +1157,7 @@ function vEp(n){const e=D.eps[n],hide=hidden(n)&&e.st!=='todo',edit=!hide&&(S.ed
  return `<div class="col">${head}<article class="eg-summary eg-glass">${EGC}
  ${e.su?`<p class="bd2 full">${esc(e.su)}</p><span class="src">摘要來源：使用者筆記改寫</span>`:(e.pl.length?e.pl.map(x=>`<p class="bd2 full">${esc(x)}</p>`).join(''):'<p class="bd2 full" style="color:var(--mute)">這話還沒寫。</p>')}
  ${e.su&&e.pl.length?`<details class="nt"><summary>我的劇情筆記</summary>${e.pl.map(x=>`<p>${esc(x)}</p>`).join('')}</details>`:''}
- ${e.rf.length?`<div class="chips" style="margin-top:12px">${e.rf.map(x=>`<button class="chip" onclick="go('ep-${x}')">${nm(x)}</button>`).join('')}</div>`:''}${EGC2}</article>
+ ${e.rf.length?`<div class="chips" style="margin-top:12px">${e.rf.map(x=>`<button class="chip" onclick="go('ep-${x}')">${nm(x)}</button>`).join('')}</div>`:''}${castBlock(n)}${EGC2}</article>
  ${items.length?`<section class="eg-thread" id="egth" aria-label="吐槽串">${EGB}<div class="eg-chain" aria-hidden="true"></div>${items.map((c,i)=>egNode(i,c)).join('')}<span class="eg-tail" aria-hidden="true">${medal('mode',false)}</span></section>`:'<p class="spo" style="margin-top:14px">這話還沒有吐槽。</p>'}</div>`}
 /* ---- glass cards on a pearl chain (design v16m) ---- */
 const EGC='<svg class="eg-corner" viewBox="0 0 58 58" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M6 52V20C6 11 11 6 20 6h32M11 40c0-12 4-20 12-24 6-3 13-4 22-4M20 6c-2 5-1 9 4 10s7-3 4-6M6 20c5-2 9-1 10 4s-3 7-6 4"/><circle cx="9.5" cy="9.5" r="3.4" fill="#fff"/></svg>',EGC2=EGC.replace('eg-corner','eg-corner eg-bottom');
@@ -1282,11 +1291,11 @@ const arcField=(e,n)=>`<div class="tw-f"><span>劇情線</span><div class="chips
  <button class="hn arc-go" id="edgo">名字、起訖、說明到時間線頁改 ›</button></div>`;
 /* tick what this episode has (kiss, flower…): the stats above the timeline count from these */
 const sgField=n=>{const on=sgNow(n);return `<div class="tw-f"><span>這話有（算進時間線上方的統計）</span><div class="chips sg-in">${BS.map(t=>`<button type="button" class="chip sg-c" data-sg="${esc(t.k)}" aria-pressed="${on.includes(t.k)}">${esc(t.k)}</button>`).join('')}</div></div>`};
-function edMore(e,n){return `<details class="tw-more" id="edmore"${S.more?' open':''}><summary>摘要、劇情筆記、劇情線、統計勾選、註記、整話大圖</summary>
+function edMore(e,n){return `<details class="tw-more" id="edmore"${S.more?' open':''}><summary>摘要、劇情筆記、劇情線、統計勾選、出場人物、註記、整話大圖</summary>
  <label class="tw-f"><span>摘要</span><textarea class="eta" id="eds" rows="2" placeholder="可空白" aria-label="摘要">${esc(e.su)}</textarea></label>
  <label class="tw-f"><span>劇情筆記</span><textarea class="eta" id="edp" rows="2" placeholder="一行一條，可空白" aria-label="劇情筆記">${esc(e.pl.join('\n'))}</textarea></label>
  <label class="tw-f"><span>註記</span><input class="edi" id="edl" value="${esc(e.lb)}" placeholder="可空白" aria-label="註記"></label>
- ${arcField(e,n)}${sgField(n)}
+ ${arcField(e,n)}${sgField(n)}${ppField(n)}
  <div class="tw-f"><span>整話大圖</span>${e.im.map((s,i)=>`<div class="edim"><img class="pi fullp" src="${s}" alt="${nm(n)}的圖"><button class="chip" data-rm="${i}">移除這張</button></div>`).join('')}<label class="chip edadd">＋ 加大圖<input id="edf" type="file" accept="image/*" multiple></label></div></details>`}
 function edBody(e,n){const rows=e.rx.length&&S.addRow!==n?[...e.rx]:[...e.rx,{x:''}];return `<div class="th tw-th" id="edr">${rows.map(rxRow).join('')}<button class="tw-next" id="ednx">＋ 接下一則</button></div><article class="mainp edm" data-n="${n}">${edMore(e,n)}</article>`}
 /* a pasted post: drop the hashtag line and the t.co links X adds */
@@ -1308,6 +1317,8 @@ function bindEdit(n){const t=$('#edt');if(t)t.onclick=()=>{const on=$('.edm');if
  $('#edag').onclick=join;$('#eda').onkeydown=ev=>{if(ev.key==='Enter'){ev.preventDefault();join()}};
  $$('[data-out]').forEach(b=>b.onclick=()=>{collect(n,true);if(arcLeave(n,b.dataset.out))redraw()});
  $$('[data-sg]').forEach(b=>b.onclick=()=>{collect(n,true);const k=b.dataset.sg,now=sgNow(n),nx=now.includes(k)?now.filter(v=>v!==k):[...now,k],x=epEdit(n);x.sg=nx;x.t=Date.now();touch();persist();rebuild();b.setAttribute('aria-pressed',nx.includes(k))});
+ $$('[data-pp]').forEach(b=>b.onclick=()=>{collect(n,true);const id=b.dataset.pp,now=epCast(n).map(p=>p.id),x=epEdit(n);x.pp=now.includes(id)?now.filter(v=>v!==id):[...now,id];x.t=Date.now();touch();persist();rebuild();redraw()});
+ const eca=$('#eca');if(eca)eca.onclick=()=>{collect(n,true);const x=epEdit(n);delete x.pp;x.t=Date.now();touch();persist();rebuild();redraw()};
  $('#edgo').onclick=()=>{collect(n,true);persist();S.edit=null;S.lnEdit=true;go('line')};
  const r=$('#edr');
  /* structural changes save first, then redraw the page and put the cursor back */
@@ -1575,7 +1586,14 @@ function wdLines(){const o=$('#wdOrg');if(!o)return;const B=o.getBoundingClientR
  o.querySelector('svg').innerHTML=`<path d="${d}"/>`}
 addEventListener('resize',wdLines);
 /* episodes whose notes mention this person (by name or the other names the build knows). A guess, not a record. */
-function wdEps(p){const ks=[...new Set([p.name,p.bn,...p.al].filter(k=>k&&[...k].length>=2))];if(!ks.length)return[];return D.eps.filter(e=>!hidden(e.n)&&e.st!=='todo'&&(t=>ks.some(k=>t.includes(k)))([e.lb,e.su||'',...e.pl,...e.rx.map(x=>x.x)].join('\n'))).map(e=>e.n)}
+/* who appears in an episode: the ticks the user made (E.eps[n].pp = person ids) when there are any, else the guess above. The person page and the episode page both read this, so they always agree. */
+const ppOf=n=>{const x=E.eps[n];return x&&Array.isArray(x.pp)?x.pp:null};
+const wdGuess=(e,p)=>{if(e.st==='todo')return false;const ks=[...new Set([p.name,p.bn,...(p.al||[])].filter(k=>k&&[...k].length>=2))];if(!ks.length)return false;const t=[e.lb,e.su||'',...e.pl,...e.rx.map(x=>x.x)].join('\n');return ks.some(k=>t.includes(k))};
+const epCast=n=>{const g=ppOf(n),e=D.eps[n];return e?(g?D.ppl.filter(p=>g.includes(p.id)):D.ppl.filter(p=>wdGuess(e,p))):[]};
+const wdEps=p=>D.eps.filter(e=>!hidden(e.n)&&(ppOf(e.n)?ppOf(e.n).includes(p.id):wdGuess(e,p))).map(e=>e.n);
+const ecChip=(p,x)=>`<button${x?'':' type="button"'} class="chip ec-c"${x}>${wdR(p,24)}<span>${esc(p.name)}</span></button>`;
+const castBlock=n=>{const L=epCast(n);return L.length?`<div class="ec-w"><span class="hn">出場人物${ppOf(n)?'':'（自動比對，可能不準）'}</span><div class="chips">${L.map(p=>ecChip(p,` onclick="${wdGo(p)}"`)).join('')}</div></div>`:''}
+const ppField=n=>{const on=new Set(epCast(n).map(p=>p.id));return `<div class="tw-f"><span>出場人物（人物頁的出場話數也跟著這裡）</span><div class="ec-in">${[...D.nations.map(t=>[wdShort(t),D.ppl.filter(p=>p.g===t.id)]),['其他人物',D.ppl.filter(p=>!wdNat(p.g))]].filter(([,L])=>L.length).map(([h,L])=>`<div class="ec-g"><span class="hn ec-gh">${esc(h)}</span><div class="chips">${L.map(p=>`<button type="button" class="chip ec-c" data-pp="${esc(p.id)}" aria-pressed="${on.has(p.id)}">${wdR(p,24)}<span>${esc(p.name)}</span></button>`).join('')}</div></div>`).join('')}</div>${ppOf(n)?'<button class="chip ec-auto" id="eca">恢復自動比對</button>':'<p class="hn ec-note">目前是自動比對；點任一位，就改成以你勾的為準。</p>'}</div>`}
 const wdBtn=()=>`<button class="edb" id="wdE">${S.wdEdit?'完成':'編輯'}</button>`;
 const wdTop=()=>`<nav class="sr-backnav" aria-label="返回導覽"><button onclick="go('world')">‹ <span>返回人物與王國</span></button>${wdBtn()}</nav>`,wdNm=p=>`<h2 class="wd-nm">${esc(p.name)}</h2>`;
 const wdFoot=t=>`<div class="alf"><span class="hn">改完一格就自動存</span><button class="chip" id="wdD">${t}</button></div>`;
@@ -1590,7 +1608,7 @@ function vPerson(i){const p=D.ppl[i],g=wdNat(p.g),h=wdNat(p.h);
  const eps=wdEps(p),cut=!S.wdAll&&eps.length>40;
  return wdTop()+`<div class="pg wd-pg">${wdStar(p)}${wdNm(p)}<div class="chips wd-tags">${p.role?`<span class="hn">${esc(p.role)}</span>`:''}${g?`<button class="chip" onclick="${wdGoN(g)}">${esc(wdShort(g))}</button>`:''}${h&&h!==g?`<button class="chip" onclick="${wdGoN(h)}">出身：${esc(wdShort(h))}</button>`:''}</div>
  ${p.x?`<div class="tw-f"><span>${p.px?'今生':'介紹'}</span><p>${esc(p.x)}</p></div>`:''}${p.px?`<div class="tw-f"><span>前世</span><p>${esc(p.px)}</p></div>`:''}
- <div class="tw-f"><span>${eps.length?`筆記裡提到的話（${eps.length} 話，自動比對，可能不準）`:'筆記裡還沒有提到這位'}</span>${eps.length?`<div class="wd-eps">${(cut?eps.slice(0,40):eps).map(n=>`<button onclick="go('ep-${n}')" aria-label="${nm(n)}">${n>204?'幕'+(n-204):n}</button>`).join('')}${cut?'<button id="wdAll">全部…</button>':''}</div>`:''}</div></div>`}
+ <div class="tw-f"><span>${eps.length?`出場的話（${eps.length} 話；沒校正過的話是自動比對，可能不準，到單話編輯可改）`:'還沒有出場的話'}</span>${eps.length?`<div class="wd-eps">${(cut?eps.slice(0,40):eps).map(n=>`<button onclick="go('ep-${n}')" aria-label="${nm(n)}">${n>204?'幕'+(n-204):n}</button>`).join('')}${cut?'<button id="wdAll">全部…</button>':''}</div>`:''}</div></div>`}
 function vNation(i){const p=D.nations[i],from=D.ppl.filter(q=>q.h===p.id&&q.g!==p.id),org=wdOrg(p.id);
  return wdTop()+`<div class="pg wd-pg">${wdNm(p)}${S.wdEdit?`<div id="wdBox"><label class="tw-f" style="margin-top:0"><span>國名</span><input class="edi" data-f="n" value="${esc(p.name)}" aria-label="國名"></label><label class="tw-f"><span>說明</span><textarea class="eta" data-f="x" rows="2" placeholder="可空白" aria-label="說明">${esc(p.x)}</textarea></label>${wdFoot('刪除這國')}</div>`:`<p style="margin:0">${esc(p.x||'這國還沒有資料。')}</p>${org?`<div class="tw-f"><span>這國的人</span>${org}</div>`:''}${from.length?`<div class="tw-f"><span>出身這國，現在在別處</span><div class="wd-rest wd-from">${from.map(q=>`<div class="wd-it"><button class="wd-n" onclick="${wdGo(q)}">${wdR(q,38)}${wdTxt(q)}</button></div>`).join('')}</div></div>`:''}`}</div>`}
 /* person / nation page: each field saves when you leave it */
