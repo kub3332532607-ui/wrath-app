@@ -217,9 +217,9 @@ h3{margin:0 0 8px;font-family:var(--t);font-size:1.02rem;font-weight:400;color:v
 .mp-c{min-height:52px;padding:6px 12px 6px 8px;border-radius:99px;background:var(--glass);border:1px solid var(--line);font:inherit;font-size:.86rem;color:var(--acc);display:flex;align-items:center;gap:10px;text-align:left;cursor:pointer}
 .mp-lg .mp-n{box-shadow:0 0 0 1.5px var(--gold),0 0 0 3.5px var(--solid)}
 .mp-c.mp-s{border-color:var(--gold)}.mp-c.mp-o{opacity:.7;border-style:dashed}.mp-c.mp-w{grid-column:1/-1}
-.mp-tx{display:flex;flex-direction:column;gap:3px;line-height:1.25;min-width:0}.mp-tx small{font-size:.68rem;color:var(--mute);overflow-wrap:anywhere}
+.mp-tx{display:flex;flex-direction:column;gap:3px;line-height:1.25;min-width:0;overflow-wrap:anywhere}.mp-tx small{font-size:.68rem;color:var(--mute);overflow-wrap:anywhere}
 .mp-st{margin-top:10px;padding:10px 14px;border-radius:var(--r);background:var(--glass);border:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
-.mp-st p{margin:0;flex:1 1 150px;font-size:.88rem}.mp-st small{display:block;color:var(--mute);font-size:.72rem}
+.mp-st p{margin:0;flex:1 1 150px;font-size:.88rem;overflow-wrap:anywhere}.mp-st small{display:block;color:var(--mute);font-size:.72rem}
 .mp-b{min-height:44px;padding:0 14px;border-radius:99px;background:var(--glass2);border:1px solid var(--line);color:var(--acc);font:inherit;font-size:.84rem;cursor:pointer}
 /* wd-: people and nations (family tree, relation star, court chart). Rings sit on the page itself, like the home avatar: thin gold line + a rim in the page colour */
 .ring.wd-r{width:var(--z);height:var(--z);margin:0;flex:none;box-shadow:0 0 0 max(1.5px,calc(var(--z)/34)) var(--gold),0 0 0 calc(var(--z)/11) var(--solid);background-color:var(--solid)}
@@ -351,9 +351,6 @@ h3{margin:0 0 8px;font-family:var(--t);font-size:1.02rem;font-weight:400;color:v
 .re .av{min-height:34px}
 .re .av svg{width:28px;height:28px}
 .re .ln{top:32px;bottom:-16px}
-.nt{margin-top:10px;font-size:.92rem;color:var(--mute)}
-.nt summary{cursor:pointer;min-height:36px;color:var(--acc)}
-.nt p{margin:6px 0}
 .tl .more{justify-self:center;margin:16px}
 .shell{display:flex;justify-content:center;gap:28px;align-items:flex-start;min-width:0}
 .mainc{width:100%;max-width:620px;min-width:0}
@@ -564,8 +561,6 @@ select.edi[hidden]{display:none}
 .eg-summary{margin:14px 12px 0;padding:28px 30px 28px;font-size:17px;line-height:1.95}
 .eg-summary .bd2.full{font-size:inherit;line-height:inherit;margin:0 0 10px}
 .eg-summary .bd2.full:last-of-type{margin-bottom:0}
-.eg-summary .src{display:block;margin-top:6px}
-.eg-summary .nt{margin-top:12px}
 .eg-thread{position:relative;margin:0 8px 0 34px;padding-top:34px;padding-bottom:58px}
 .eg-bail{position:absolute;left:3px;top:-17px;width:28px;height:26px;z-index:4;pointer-events:none}
 .eg-chain{position:absolute;inset:0;pointer-events:none}
@@ -590,11 +585,11 @@ select.edi[hidden]{display:none}
 .eg-tail svg{width:48px;height:48px;display:block;filter:none}
 .eg-post{position:relative;margin:0 12px 40px}
 .eg-pcard{padding:22px 24px 22px;cursor:pointer}
-.eg-ph{display:flex;align-items:center;gap:12px;margin:0 0 10px}
+.eg-ph{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;margin:0 0 10px}
 .eg-av{flex:none;width:46px;height:46px}
 .eg-av .ava{width:46px;height:46px}
-.eg-ph b{font-family:var(--t);font-weight:400;font-size:20px;letter-spacing:.08em}
-.eg-ph span{color:var(--mute);font-size:14px}
+.eg-ph b{font-family:var(--t);font-weight:400;font-size:20px;letter-spacing:.08em;white-space:nowrap}
+.eg-ph .eg-lb{flex:1 1 auto;min-width:0;color:var(--mute);font-size:14px;overflow-wrap:anywhere}
 .eg-psum{margin:0;font-size:15.5px;line-height:1.85;white-space:pre-line;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .eg-pimg{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;object-position:50% 14%;border-radius:12px;margin-top:14px;border:1px solid var(--eg-edge)}
 .eg-hang{position:relative;margin:0 0 0 26px;padding-top:24px}
@@ -642,8 +637,29 @@ select.edi[hidden]{display:none}
 .tw-th .re+.re{border-top:0}
 .tw-th .rxi{min-height:3.4em}
 .tw-next{margin:14px 0 0 54px;min-height:40px;padding:0 16px;border:1px solid var(--line);border-radius:999px;color:var(--acc);font-size:.9rem}
-.tw-more{margin-top:4px}
-.tw-more>summary{cursor:pointer;color:var(--mute);font-size:.88rem;min-height:40px;display:flex;align-items:center}
+/* 單話編輯（A3c）：頂部入口行、卡片點了才出選單、底部＋吐槽／＋台詞。前綴 se- */
+.se-top{padding-top:0;padding-bottom:4px}
+.ehd.se-hd{padding-top:calc(4px + env(safe-area-inset-top,0px));padding-bottom:0}
+.se-hd .ehs{margin-top:-4px}
+.se-hs{margin:-2px 0}
+.se-ent{display:flex;flex-wrap:wrap;align-items:center;gap:0 2px;font-size:.88rem}
+.se-ent i{color:var(--mute);font-style:normal;padding:0 1px}
+.se-e{min-height:44px;padding:0 8px;color:var(--acc);display:inline-flex;align-items:center;gap:5px;max-width:100%}
+.se-e small{color:var(--mute);font-size:.78rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:9em}
+.se-e[aria-expanded=true]{color:var(--goldt);text-decoration:underline;text-underline-offset:5px}
+.se-pn{padding:2px 0 10px}
+.se-pn>.tw-f:first-child{margin-top:4px}
+.se-c{min-width:0}
+.se-sp{display:flex;text-align:left;min-height:44px;align-items:center;padding:0}
+.se-spc{margin:2px 0 6px}
+.xl-qi{font-family:"QT",var(--b);color:var(--fg)}
+.se-mn{display:none;flex-wrap:wrap;gap:0 4px;margin-top:2px}
+.se-i.on .se-mn{display:flex}
+.se-b{min-height:44px;min-width:44px;padding:0 9px;font-size:.88rem;color:var(--acc);display:inline-flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.se-b:disabled{color:var(--mute);opacity:.45;cursor:default}
+.se-add{display:flex;justify-content:center;gap:12px;padding:0 18px 36px}
+.se-ab{min-height:44px;padding:0 14px;color:var(--acc);font-size:.95rem}
+.ec-ex{margin-top:10px}
 .tw-f{display:grid;gap:2px;margin-top:14px}
 .tw-f>span{font-size:.78rem;color:var(--mute);letter-spacing:.08em}
 .tw-f .edi{text-align:left;width:100%;padding:4px 0}
@@ -658,8 +674,6 @@ select.edi[hidden]{display:none}
 .ec-gh{display:block;font-size:.8rem}
 .ec-g .chips{margin-top:4px}
 .ec-w .chips{margin-top:6px}
-.ec-note{margin:6px 0 0}
-.xl-nt{margin:6px 0 0}
 .ec-auto{margin-top:8px}
 .sg-c[aria-pressed=true],.ec-c[aria-pressed=true]{color:var(--goldt);background:rgba(217,184,101,.14);border-color:var(--goldt)}
 .sy-r{display:flex;gap:10px;justify-content:flex-end;align-items:center}
@@ -1065,7 +1079,7 @@ async function dbGet(k){try{const d=await db();return await new Promise((ok,no)=
 async function dbSet(k,v){try{const d=await db();await new Promise((ok,no)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error)})}catch(e){}}
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
 /* private repo: this page holds no notes or pictures, they are read with the device's key */
-const BASE='data/base-b77ae9edde1b.json',VER='2026.11.12 19:33 · 68566ac';
+const BASE='data/base-b77ae9edde1b.json',VER='2026.11.12 23:46 · d8beb91';
 let CFG=null,TK=lsGet('tk');
 const api=(p,o={})=>fetch(`${CFG.api??'https://api.github.com'}/repos/${CFG.owner}/${CFG.repo}/contents/${p}`,{cache:'no-store',...o,headers:{Authorization:`Bearer ${TK}`,...o.headers}});
 const rawGet=p=>api(p,{headers:{Accept:'application/vnd.github.raw+json'}});
@@ -1132,7 +1146,7 @@ function replyAv(n){return avOf(n)?avatar(n,'sm'):`<svg class="rfl" viewBox="-20
 function latestAv(){for(let n=Math.min(S.read,D.eps.length-1);n>=0;n--)if(avOf(n))return avOf(n);return null}
 function postBody(e){return e.su||e.pl.join('\n')||''}
 function post(e,prev){const b=postBody(e),r=e.rx.length,a=tail(e),div=a&&a!==prev?`<div class="chap"><svg viewBox="-20 -20 40 40" aria-hidden="true">${lily(0,0,18,e.n*7)}</svg><span>${esc(a)}</span></div>`:'',im=allIm(e)[0];
- return `${div}<article class="eg-post"><div class="eg-pcard eg-glass eg-go" data-n="${e.n}" tabindex="0" role="link" aria-label="${nm(e.n)}">${EGC}<div class="eg-ph"><span class="eg-av">${avatar(e.n)}</span><b>${nm(e.n)}</b>${e.lb?`<span>${esc(e.lb)}</span>`:''}</div>
+ return `${div}<article class="eg-post"><div class="eg-pcard eg-glass eg-go" data-n="${e.n}" tabindex="0" role="link" aria-label="${nm(e.n)}">${EGC}<div class="eg-ph"><span class="eg-av">${avatar(e.n)}</span><b>${nm(e.n)}</b>${e.lb?`<span class="eg-lb">${esc(e.lb)}</span>`:''}</div>
  ${b?`<p class="eg-psum">${esc(b)}</p>`:''}${im?`<img class="eg-pimg" src="${im}" alt="${nm(e.n)}的圖" loading="lazy">`:''}</div>
  ${r?`<div class="eg-hang">${EGB}<i class="eg-hchain" aria-hidden="true"></i><div class="eg-node"><span class="eg-pearl">${egJewel(e.n)}</span><i class="eg-joint" aria-hidden="true"></i><div class="eg-pendant"><button class="eg-note eg-glass eg-go" data-n="${e.n}">${e.rx[0].l?'<span class="tg">回頭補</span>':''}<p>${esc(e.rx[0].x)}</p></button></div></div></div><span class="eg-more eg-go" data-n="${e.n}" role="link" tabindex="0">看這串的 ${r} 則吐槽 ›</span>`:''}</article>`}
 function aboutBlock(){return `<details class="abt"><summary>我的心得與書名</summary><p>${esc(D.intro)}</p>${D.review.map(x=>`<p>${esc(x)}</p>`).join('')}<p class="hdl2">${D.titles.map(esc).join('<br>')}<br>原作：天壱　制作：SORAJIMA</p></details>`}
@@ -1171,17 +1185,16 @@ $('#rd').oninput=e=>{setRead(+e.target.value);$('#bw').innerHTML=bracelet(braceF
  $$('.po,.prev,.todo,.eg-go').forEach(x=>{x.onclick=()=>go('ep-'+x.dataset.n);x.onkeydown=e=>{if(e.key==='Enter')go('ep-'+x.dataset.n)}});const m=$('#mr');if(m)m.onclick=()=>{const y=scrollY;S.shown+=30;render();scrollTo(0,y)}}
 function vEp(n){const e=D.eps[n],hide=hidden(n)&&e.st!=='todo',edit=!hide&&(S.edit===n||e.st==='todo'),pics=(edit&&(S.edit=n),e.im),r=e.rx,u=hide?null:avOf(n),fl=c=>`<svg id="epf" class="${c} turn" viewBox="-20 -20 40 40" style="transform:rotate(${S.pa}deg)" aria-hidden="true">${lily(0,0,18)}</svg>`;
  const ava=hide?fl('ehf'):`<button class="avbtn ehav" id="avb" title="換這話的頭像" aria-label="換這話的頭像">${u?`<img class="ehi" src="${u}" alt="">${fl('ehb')}`:fl('ehf')}</button>`;
- const sub=hide?'':`${e.lb?`<p class="ehlb">${esc(e.lb)}</p>`:''}${e.ar.length?`<span class="hn">${esc(e.ar.join('・'))}</span>`:''}${S.av[n]?'<button class="rs" id="avr">改回預設</button>':''}`;
- const head=`<header class="ehd"><div class="ehl"><button class="ib" onclick="go('home')" aria-label="回主頁">←</button><button class="ib" id="ep" aria-label="上一話" ${n?'':'disabled'}>‹</button></div><div class="ehc">${ava}<b class="ehn">${nm(n)}</b></div><div class="ehr"><button class="ib" id="en" aria-label="下一話" ${n<D.eps.length-1?'':'disabled'}>›</button>${hide?'':`<button class="edb" id="edt">${edit?'完成':'編輯'}</button>`}</div>${sub?`<div class="ehs">${sub}</div>`:''}</header>`;
+ const sub=hide?'':`${e.lb?`<p class="ehlb">${esc(e.lb)}</p>`:''}${edit?`<button type="button" class="se-e se-hs" data-sec="arc" aria-expanded="${S.sec==='arc'}">${e.ar.length?esc(e.ar.join('・')):'劇情線'}</button>`:e.ar.length?`<span class="hn">${esc(e.ar.join('・'))}</span>`:''}${S.av[n]?'<button class="rs" id="avr">改回預設</button>':''}`;
+ const head=`<header class="ehd${edit?' se-hd':''}"><div class="ehl"><button class="ib" onclick="go('home')" aria-label="回主頁">←</button><button class="ib" id="ep" aria-label="上一話" ${n?'':'disabled'}>‹</button></div><div class="ehc">${ava}<b class="ehn">${nm(n)}</b></div><div class="ehr"><button class="ib" id="en" aria-label="下一話" ${n<D.eps.length-1?'':'disabled'}>›</button>${hide?'':`<button class="edb" id="edt">${edit?'完成':'編輯'}</button>`}</div>${sub?`<div class="ehs">${sub}</div>`:''}</header>`;
  if(hide)return `<div class="col">${head}<div class="spo" style="margin-top:20px">防劇透：這話在你的手鐲進度之後。</div></div>`;
  if(edit)return `<div class="col">${head}${edBody(e,n)}</div>`;
  /* summary card, then the thread: first reaction, the episode's pictures, the rest of the reactions — each hung on the chain */
  const qs=(e.qt||[]).map((q,k)=>({...q,k})),xq=f=>qs.filter(q=>f(q.a)).map(q=>xlQ(q,n)),ph=pics.map(s=>`<figure class="eg-photo eg-glass"><img src="${s}" alt="${nm(n)}的圖"><figcaption>${nm(n)}附圖</figcaption></figure>`),
  items=r.length?[...r.flatMap((x,i)=>[...xq(a=>a===i),egNote(x),...(i?[]:ph)]),...xq(a=>a>=r.length)]:[...xq(()=>true),...ph];
  return `<div class="col">${head}<article class="eg-summary eg-glass">${EGC}
- ${e.su?`<p class="bd2 full">${lk(e.su)}</p><span class="src">摘要來源：使用者筆記改寫</span>`:(e.pl.length?e.pl.map(x=>`<p class="bd2 full">${lk(x)}</p>`).join(''):'<p class="bd2 full" style="color:var(--mute)">這話還沒寫。</p>')}
- ${e.su&&e.pl.length?`<details class="nt"><summary>我的劇情筆記</summary>${e.pl.map(x=>`<p>${lk(x)}</p>`).join('')}</details>`:''}
- ${e.rf.length?`<div class="chips" style="margin-top:12px">${e.rf.map(x=>`<button class="chip" onclick="go('ep-${x}')">${nm(x)}</button>`).join('')}</div>`:''}${castBlock(n)}${EGC2}</article>
+ ${(()=>{const L=e.su?e.su.split(String.fromCharCode(10)).filter(Boolean):e.pl;return L.length?L.map(x=>`<p class="bd2 full">${lk(x)}</p>`).join(''):'<p class="bd2 full" style="color:var(--mute)">這話還沒寫。</p>'})()}
+ ${castBlock(n)}${EGC2}</article>
  ${items.length?`<section class="eg-thread" id="egth" aria-label="吐槽串">${EGB}<div class="eg-chain" aria-hidden="true"></div>${items.map((c,i)=>egNode(i,c)).join('')}<span class="eg-tail" aria-hidden="true">${medal('mode',false)}</span></section>`:'<p class="spo" style="margin-top:14px">這話還沒有吐槽。</p>'}</div>`}
 /* ---- glass cards on a pearl chain (design v16m) ---- */
 const EGC='<svg class="eg-corner" viewBox="0 0 58 58" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M6 52V20C6 11 11 6 20 6h32M11 40c0-12 4-20 12-24 6-3 13-4 22-4M20 6c-2 5-1 9 4 10s7-3 4-6M6 20c5-2 9-1 10 4s-3 7-6 4"/><circle cx="9.5" cy="9.5" r="3.4" fill="#fff"/></svg>',EGC2=EGC.replace('eg-corner','eg-corner eg-bottom');
@@ -1312,59 +1325,106 @@ async function addImages(n,files){let fail=0;for(const f of files){try{const p=a
 window.setAv=async(n,b)=>{const x=epEdit(n);x.av=b?await storeImg(b):null;x.t=Date.now();touch();persist();const y=scrollY;render(true);scrollTo(0,y)};
 const lastWritten=()=>{for(let n=D.eps.length-1;n>=0;n--)if(D.eps[n].st!=='todo')return n;return 0};
 /* in-place editor on the episode page: the reactions are a thread of posts, like on X — each one can wrap lines and carry up to 4 pictures */
+/* ---- episode edit view (A3c, 2026-11-12) ----
+   One chain of cards: reactions (E.eps[n].rx) and quotes (E.eps[n].qt=[{a,x}], a = how many reactions come before it; speakers E.eps[n].qs={quoteIndex:[personId]}) in the order they are read.
+   Tap a card to get its menu (↑ ↓ insert-above, picture, change type, delete). The top line opens one of: summary, arcs, cast, more. */
 const twIm=(im,ed)=>im&&im.length?`<div class="tw-g n${Math.min(im.length,4)}">${im.map((s,j)=>`<div class="tw-c"><img src="${s}" alt="" loading="lazy">${ed?`<button class="tw-x" data-x="${j}" aria-label="移除這張">×</button>`:''}</div>`).join('')}</div>`:'';
-const rxRow=(x,i,all)=>`<div class="re" data-i="${i}"><div class="av">${PRL}${i<all.length-1?'<i class="ln"></i>':''}</div><div>${x.l?'<span class="tg">回頭補</span>':''}<textarea class="eta rxi" rows="1" data-l="${x.l?1:''}" placeholder="${i?'接著寫…':'吐槽打在這裡，可以換行；推文整段貼上也行'}" aria-label="第${i+1}則吐槽">${esc(x.x)}</textarea>${twIm(x.im,true)}<div class="tw-bar">${(x.im||[]).length<4?`<label class="tw-b">＋圖<input type="file" accept="image/*" multiple aria-label="替第${i+1}則加圖"></label>`:''}${all.length>1?`<button class="tw-b tw-del">刪掉這則</button>`:''}</div></div></div>`;
+/* the chain as one list: quotes with a===i come just before reaction i, the ones with a>=count at the end (same order as the episode page) */
+const seRows=(e,n)=>{const r=e.rx,q=(e.qt||[]).map((x,k)=>({t:'q',x:x.x,a:x.a,sp:[...qsOf(n,k,x)]})),o=[];
+ r.forEach((x,i)=>{o.push(...q.filter(z=>z.a===i),{t:'r',x:x.x,l:!!x.l,im:x.im?[...x.im]:[]})});o.push(...q.filter(z=>z.a>=r.length));return o};
+const seBlank=t=>t==='q'?{t:'q',x:'',sp:[]}:{t:'r',x:'',l:false,im:[]};
+const seNe=r=>r.x||(r.im&&r.im.length);
+const seSpk=(n,r)=>{const sel=r.sp,ids=[...new Set([...sel,...epCast(n).map(p=>p.id)])].map(wdBy).filter(Boolean);return ids.length?`<div class="chips se-spc">${ids.map(p=>`<button type="button" class="chip ec-c" data-spk="${esc(p.id)}" aria-pressed="${sel.includes(p.id)}">${wdR(p,24)}<span>${esc(p.name)}</span></button>`).join('')}</div>`:'<p class="hn">先到上面「人物」勾這話的出場人物，才能選說話者。</p>'};
+const seRow=(r,i,all,n)=>{const q=r.t==='q',c=S.cur&&S.cur.n===n&&S.cur.i===i,L=q?r.sp.map(wdBy).filter(Boolean):[],last=i===all.length-1;
+ return `<div class="re se-i${c?' on':''}" data-t="${r.t}" data-i="${i}"${q?` data-sps="${esc(JSON.stringify(r.sp))}"`:` data-im="${esc(JSON.stringify(r.im||[]))}"`}><div class="av">${PRL}${!last?'<i class="ln"></i>':''}</div><div class="se-c">
+ ${q?`<button type="button" class="xl-sp se-sp" data-act="sp" aria-label="選說話者">${L.length?L.map(p=>`<span class="xl-s">${wdR(p,30)}<b>${esc(p.name)}</b></span>`).join(''):'<span class="hn">說話者（點這裡選）</span>'}</button>${c&&S.cur.sp?seSpk(n,r):''}`:(r.l?'<span class="tg">回頭補</span>':'')}
+ <textarea class="eta ${q?'qxi xl-qi':'rxi'}" rows="1" data-l="${r.l?1:''}" placeholder="${q?'台詞打在這裡':i?'接著寫…':'吐槽打在這裡，可以換行；推文整段貼上也行'}" aria-label="第${i+1}則${q?'台詞':'吐槽'}">${esc(r.x)}</textarea>${q?'':twIm(r.im,true)}
+ <div class="se-mn" role="group" aria-label="這一則的操作"><button type="button" class="se-b" data-act="up" aria-label="往上移"${i?'':' disabled'}>↑</button><button type="button" class="se-b" data-act="dn" aria-label="往下移"${last?' disabled':''}>↓</button><button type="button" class="se-b" data-act="ins">在上面插入</button>${q?'':(r.im||[]).length<4?`<label class="se-b tw-b">加圖<input type="file" accept="image/*" multiple aria-label="替第${i+1}則加圖"></label>`:''}<button type="button" class="se-b" data-act="typ">改類型</button><button type="button" class="se-b" data-act="del">刪除</button></div></div></div>`};
 /* the episode's arcs as chips: × takes it out, the field below adds one; names, from/to and notes are edited on the timeline page */
-const arcField=(e,n)=>`<div class="tw-f"><span>劇情線</span><div class="chips arc-in">${e.ai.map((id,i)=>`<span class="chip arc-c">${esc(e.ar[i])}<button class="arc-x" data-out="${esc(id)}" aria-label="把這話移出「${esc(e.ar[i])}」">×</button></span>`).join('')||'<span class="hn">這話還沒有劇情線</span>'}</div>
+const arcField=(e,n)=>`<div class="tw-f"><div class="chips arc-in">${e.ai.map((id,i)=>`<span class="chip arc-c">${esc(e.ar[i])}<button class="arc-x" data-out="${esc(id)}" aria-label="把這話移出「${esc(e.ar[i])}」">×</button></span>`).join('')||'<span class="hn">這話還沒有劇情線</span>'}</div>
  <div class="arc-add"><input class="edi" id="eda" list="edal" placeholder="加入一條：選現有的或打新名字" aria-label="加入劇情線" enterkeyhint="done"><button class="chip" id="edag">加入</button></div><select class="edi" id="edk" aria-label="新劇情線的種類" hidden><option value="side">新的是支線</option><option value="main">新的是主線</option></select><datalist id="edal">${D.arcs.filter(a=>!e.ai.includes(a.id)).map(x=>`<option value="${esc(x.name)}">`).join('')}</datalist>
- <button class="hn arc-go" id="edgo">名字、起訖、說明到時間線頁改 ›</button></div>`;
+ <button class="hn arc-go" id="edgo">到時間線改 ›</button></div>`;
 /* tick what this episode has (kiss, flower…): the stats above the timeline count from these */
-const sgField=n=>{const on=sgNow(n);return `<div class="tw-f"><span>這話有（算進時間線上方的統計）</span><div class="chips sg-in">${BS.map(t=>`<button type="button" class="chip sg-c" data-sg="${esc(t.k)}" aria-pressed="${on.includes(t.k)}">${esc(t.k)}</button>`).join('')}</div></div>`};
-function edMore(e,n){return `<details class="tw-more" id="edmore"${S.more?' open':''}><summary>摘要、劇情筆記、劇情線、統計勾選、出場人物、註記、整話大圖</summary>
- <label class="tw-f"><span>摘要</span><textarea class="eta" id="eds" rows="2" placeholder="可空白" aria-label="摘要">${esc(e.su)}</textarea></label>
- <label class="tw-f"><span>劇情筆記</span><textarea class="eta" id="edp" rows="2" placeholder="一行一條，可空白" aria-label="劇情筆記">${esc(e.pl.join('\n'))}</textarea></label>
- <label class="tw-f"><span>註記</span><input class="edi" id="edl" value="${esc(e.lb)}" placeholder="可空白" aria-label="註記"></label>
- ${arcField(e,n)}${sgField(n)}${ppField(n)}${qsField(n)}
- <div class="tw-f"><span>整話大圖</span>${e.im.map((s,i)=>`<div class="edim"><img class="pi fullp" src="${s}" alt="${nm(n)}的圖"><button class="chip" data-rm="${i}">移除這張</button></div>`).join('')}<label class="chip edadd">＋ 加大圖<input id="edf" type="file" accept="image/*" multiple></label></div></details>`}
-function edBody(e,n){const rows=e.rx.length&&S.addRow!==n?[...e.rx]:[...e.rx,{x:''}];return `<div class="th tw-th" id="edr">${rows.map(rxRow).join('')}<button class="tw-next" id="ednx">＋ 接下一則</button></div><article class="mainp edm" data-n="${n}">${edMore(e,n)}</article>`}
+const sgField=n=>{const on=sgNow(n);return `<div class="tw-f"><span>統計</span><div class="chips sg-in">${BS.map(t=>`<button type="button" class="chip sg-c" data-sg="${esc(t.k)}" aria-pressed="${on.includes(t.k)}">${esc(t.k)}</button>`).join('')}</div></div>`};
+const SESEC=['su','pp','more'];
+const seEnt=(e,n)=>{const lab={su:'摘要',pp:`人物 <small>${epCast(n).length} 位${ppOf(n)?'':' · 自動'}</small>`,more:'更多'};
+ return `<nav class="se-ent" aria-label="這話的其他欄位">${SESEC.map(k=>`<button type="button" class="se-e" data-sec="${k}" aria-expanded="${S.sec===k}">${lab[k]}</button>`).join('<i aria-hidden="true">·</i>')}</nav>`};
+const sePanel=(e,n)=>{const k=S.sec;if(!k)return '';let h='';
+ if(k==='su'){const v=e.su||e.pl.join('\n');h=`<label class="tw-f"><textarea class="eta" id="eds" rows="3" data-o="${esc(v)}" placeholder="摘要、劇情筆記都寫在這裡；可空白" aria-label="摘要">${esc(v)}</textarea></label>`}
+ else if(k==='arc')h=arcField(e,n);
+ else if(k==='pp')h=ppField(n);
+ else h=`<label class="tw-f"><span>註記</span><input class="edi" id="edl" value="${esc(e.lb)}" placeholder="可空白" aria-label="註記"></label>${sgField(n)}<div class="tw-f"><span>整話大圖</span>${e.im.map((s,i)=>`<div class="edim"><img class="pi fullp" src="${s}" alt="${nm(n)}的圖"><button class="chip" data-rm="${i}">移除這張</button></div>`).join('')}<label class="chip edadd">＋ 加大圖<input id="edf" type="file" accept="image/*" multiple></label></div>`;
+ return `<div class="se-pn" id="sepn" data-k="${k}">${h}</div>`};
+function edBody(e,n){let rows=seRows(e,n);const d=S.draft;if(d&&d.n===n)rows.splice(Math.min(d.at,rows.length),0,seBlank(d.t));if(!rows.length)rows=[seBlank('r')];
+ return `<article class="mainp edm se-top" data-n="${n}">${seEnt(e,n)}${sePanel(e,n)}</article><div class="th tw-th" id="edr">${rows.map((r,i)=>seRow(r,i,rows,n)).join('')}</div><div class="se-add"><button type="button" class="se-ab" id="ednx">＋ 吐槽</button><button type="button" class="se-ab" id="ednq">＋ 台詞</button></div>`}
 /* a pasted post: drop the hashtag line and the t.co links X adds */
 const cleanPaste=s=>s.replace(/^\s*#\S+(\s+#?\d+)?[ \t]*\n/,'').replace(/\s*https:\/\/t\.co\/\w+/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').trim();
 const grow=t=>{t.style.height='auto';t.style.height=t.scrollHeight+'px'};
-function collect(n,withArc){const x=epEdit(n),old=JSON.stringify([x.lb,x.su,x.pl,x.rx,x.ar]),prev=x.rx;x.lb=$('#edl').value.trim();x.su=$('#eds').value.trim();x.pl=$('#edp').value.split('\n').map(s=>s.trim()).filter(Boolean);
- x.rx=$$('#edr .re').map(el=>{const i=+el.dataset.i,t=el.querySelector('.rxi'),im=(prev[i]&&prev[i].im)||[],r={x:t.value.trim(),l:t.dataset.l==='1'};if(im.length)r.im=[...im];return r}).filter(r=>r.x||r.im);
- if(x.rx.length>=$$('#edr .re').length)S.addRow=null;
+const seRead=()=>$$('#edr .re').map(el=>{const t=el.dataset.t,a=el.querySelector('textarea'),v=a.value.trim();return t==='q'?{t,x:v,sp:JSON.parse(el.dataset.sps||'[]')}:{t,x:v,l:a.dataset.l==='1',im:JSON.parse(el.dataset.im||'[]')}});
+/* write the list back: reactions in order, quotes with their position and speakers. Quotes are only written when something about them differs from what the episode already has. */
+function seWrite(n,x,rows){rows=rows.filter(seNe);x.rx=rows.filter(r=>r.t==='r').map(r=>({x:r.x,l:!!r.l,...(r.im&&r.im.length?{im:[...r.im]}:{})}));
+ let c=0;const qt=[],qs={};for(const r of rows){if(r.t==='r')c++;else{qs[qt.length]=[...r.sp];qt.push({a:c,x:r.x})}}
+ const base=(BE[n]&&BE[n].qt)||[],eff=k=>x.qs&&Array.isArray(x.qs[k])?x.qs[k]:(base[k]&&base[k].sp)||[];
+ const same=!x.qt&&qt.length===base.length&&qt.every((q,k)=>q.a===Math.min(base[k].a,c)&&q.x===base[k].x&&JSON.stringify(qs[k])===JSON.stringify(eff(k)));
+ if(!same){x.qt=qt;x.qs=qs}}
+function collect(n,rows){const x=epEdit(n),old=JSON.stringify([x.lb,x.su,x.pl,x.rx,x.ar,x.qt,x.qs]);if(!$('#edr'))return;
+ const l=$('#edl');if(l)x.lb=l.value.trim();const s=$('#eds');if(s&&s.value.trim()!==(s.dataset.o||'').trim())x.su=s.value.trim();
+ seWrite(n,x,rows||seRead());
  /* a never-saved episode with nothing typed is not a change; it must not overwrite another device's work */
- if(!x.t&&!x.lb&&!x.su&&!x.pl.length&&!x.rx.length&&!x.im.length&&!x.av){delete E.eps[n];return}
- if(JSON.stringify([x.lb,x.su,x.pl,x.rx,x.ar])===old)return;x.t=Date.now();if(n>S.read&&(x.rx.length||x.pl.length))setRead(n);touch()}
-function bindEdit(n){const t=$('#edt');if(t)t.onclick=()=>{const on=$('.edm');if(on){collect(n,true);persist();S.edit=null;rebuild();if(D.eps[n]?.st==='todo'||!D.eps[n]){go('home');return}}else S.edit=n;const y=scrollY;render(true);scrollTo(0,y)};
+ if(!x.t&&!x.lb&&!x.su&&!x.pl.length&&!x.rx.length&&!x.im.length&&!x.av&&!(x.qt&&x.qt.length)){delete E.eps[n];return}
+ if(JSON.stringify([x.lb,x.su,x.pl,x.rx,x.ar,x.qt,x.qs])===old)return;x.t=Date.now();if(n>S.read&&(x.rx.length||x.pl.length))setRead(n);touch()}
+/* a new person typed in the cast section: same record as the people page (no kingdom yet), ticked on this episode */
+function seNewPerson(n,name){name=name.trim();if(!name)return;const had=D.ppl.find(p=>p.name===name);let id;
+ if(had)id=had.id;else{id='u'+Date.now().toString(36);wdPut(PK,{id,name,x:'',role:''},{c:Date.now()})}
+ const now=epCast(n).map(p=>p.id);if(!now.includes(id))ppSet(n,[...now,id])}
+/* ticks → E.eps[n].pp; when the ticked list is the same as the automatic guess, drop pp (back to automatic) so the "恢復自動比對" button goes away */
+function ppSet(n,list){rebuild();const x=epEdit(n),e=D.eps[n],auto=D.ppl.filter(p=>wdGuess(e,p)).map(p=>p.id);
+ if(list.length===auto.length&&list.every(v=>auto.includes(v)))delete x.pp;else x.pp=list;x.t=Date.now();touch();persist();rebuild()}
+function bindEdit(n){const t=$('#edt');if(t)t.onclick=()=>{const on=$('.edm');if(on){collect(n);persist();S.edit=null;S.draft=S.cur=null;S.sec=null;rebuild();if(D.eps[n]?.st==='todo'||!D.eps[n]){go('home');return}}else S.edit=n;const y=scrollY;render(true);scrollTo(0,y)};
  if(!$('.edm'))return;$$('.eta').forEach(grow);
- const sync2=()=>collect(n);$('#edl').oninput=sync2;$('#edp').oninput=$('#eds').oninput=e=>{grow(e.target);sync2()};
- const mo=$('#edmore');mo.ontoggle=()=>{S.more=mo.open;if(mo.open)$$('#edmore .eta').forEach(grow)};
- const ka=()=>{const v=$('#eda').value.trim();$('#edk').hidden=!v||!!arcByName(v)};$('#eda').oninput=ka;ka();
  const redraw=()=>{const y=scrollY;render(true);scrollTo(0,y)};
- const join=()=>{const v=$('#eda').value.trim();if(!v)return;collect(n,true);arcJoin(n,v,$('#edk').value);redraw()};
- $('#edag').onclick=join;$('#eda').onkeydown=ev=>{if(ev.key==='Enter'){ev.preventDefault();join()}};
- $$('[data-out]').forEach(b=>b.onclick=()=>{collect(n,true);if(arcLeave(n,b.dataset.out))redraw()});
- $$('[data-sg]').forEach(b=>b.onclick=()=>{collect(n,true);const k=b.dataset.sg,now=sgNow(n),nx=now.includes(k)?now.filter(v=>v!==k):[...now,k],x=epEdit(n);x.sg=nx;x.t=Date.now();touch();persist();rebuild();b.setAttribute('aria-pressed',nx.includes(k))});
- $$('[data-pp]').forEach(b=>b.onclick=()=>{collect(n,true);const id=b.dataset.pp,now=epCast(n).map(p=>p.id),x=epEdit(n);x.pp=now.includes(id)?now.filter(v=>v!==id):[...now,id];x.t=Date.now();touch();persist();rebuild();redraw()});
- $$('[data-qs]').forEach(b=>b.onclick=()=>{collect(n,true);const[k,id]=b.dataset.qs.split('|'),q=(D.eps[n].qt||[])[+k],now=qsOf(n,+k,q),x=epEdit(n);(x.qs||(x.qs={}))[k]=now.includes(id)?now.filter(v=>v!==id):[...now,id];x.t=Date.now();touch();persist();rebuild();redraw()});
- const eca=$('#eca');if(eca)eca.onclick=()=>{collect(n,true);const x=epEdit(n);delete x.pp;x.t=Date.now();touch();persist();rebuild();redraw()};
- $('#edgo').onclick=()=>{collect(n,true);persist();S.edit=null;S.lnEdit=true;go('line')};
+ /* top line: open one section at a time */
+ $$('[data-sec]').forEach(b=>b.onclick=()=>{collect(n);S.sec=S.sec===b.dataset.sec?null:b.dataset.sec;redraw()});
+ const sync2=()=>collect(n),pn=$('#sepn');
+ if(pn){const l=$('#edl');if(l)l.oninput=sync2;const s=$('#eds');if(s)s.oninput=e=>{grow(e.target);sync2()};
+  const ka=()=>{const v=$('#eda').value.trim();$('#edk').hidden=!v||!!arcByName(v)};const ea=$('#eda');if(ea){ea.oninput=ka;ka();
+   const join=()=>{const v=ea.value.trim();if(!v)return;collect(n);arcJoin(n,v,$('#edk').value);redraw()};
+   $('#edag').onclick=join;ea.onkeydown=ev=>{if(ev.key==='Enter'){ev.preventDefault();join()}};
+   $$('[data-out]').forEach(b=>b.onclick=()=>{collect(n);if(arcLeave(n,b.dataset.out))redraw()});
+   $('#edgo').onclick=()=>{collect(n);persist();S.edit=null;S.lnEdit=true;go('line')}}
+  $$('[data-sg]').forEach(b=>b.onclick=()=>{collect(n);const k=b.dataset.sg,now=sgNow(n),nx=now.includes(k)?now.filter(v=>v!==k):[...now,k],x=epEdit(n);x.sg=nx;x.t=Date.now();touch();persist();rebuild();b.setAttribute('aria-pressed',nx.includes(k))});
+  $$('[data-pp]').forEach(b=>b.onclick=()=>{collect(n);rebuild();const id=b.dataset.pp,now=epCast(n).map(p=>p.id);ppSet(n,now.includes(id)?now.filter(v=>v!==id):[...now,id]);redraw()});
+  const eca=$('#eca');if(eca)eca.onclick=()=>{collect(n);const x=epEdit(n);delete x.pp;x.t=Date.now();touch();persist();rebuild();redraw()};
+  const npb=$('#senb'),npi=$('#senn');if(npb){const mk=()=>{const v=npi.value.trim();if(!v)return;collect(n);seNewPerson(n,v);redraw()};npb.onclick=mk;npi.onkeydown=ev=>{if(ev.key==='Enter'){ev.preventDefault();mk()}}}
+  const npt=$('#sena');if(npt)npt.onclick=()=>{$('#senw').hidden=false;npt.hidden=true;$('#senn').focus()};
+  const f=$('#edf');if(f)f.onchange=async()=>{const fs=await cropSeq([...f.files]);f.value='';if(!fs.length)return;collect(n);await addImages(n,fs);redraw()};
+  $$('[data-rm]').forEach(b=>b.onclick=()=>{collect(n);const x=epEdit(n);x.im.splice(+b.dataset.rm,1);x.t=Date.now();touch();persist();redraw()})}
  const r=$('#edr');
- /* structural changes save first, then redraw the page and put the cursor back */
- const again=(focus,mut)=>{collect(n,true);const x=epEdit(n);if(mut)mut(x);x.t=Date.now();touch();persist();const y=scrollY;render(true);scrollTo(0,y);const ts=$$('.rxi'),f=ts[Math.min(focus,ts.length-1)];if(f){f.focus({preventScroll:true});f.setSelectionRange(f.value.length,f.value.length)}};
+ /* save the list (with the changed card marked), then redraw; the marked card stays open, and an empty new one gets the cursor */
+ const commit=(rows,mk,sp)=>{const at=mk?rows.slice(0,rows.indexOf(mk)).filter(seNe).length:-1;collect(n,rows);
+  S.draft=mk&&!seNe(mk)?{n,at,t:mk.t}:null;S.cur=mk?{n,i:at,sp:!!sp}:null;redraw();
+  const row=mk&&$$('#edr .re')[at],f=row&&row.querySelector('textarea');if(f&&!seNe(mk)){f.focus({preventScroll:true})}};
  const idx=el=>+el.closest('.re').dataset.i;
- r.addEventListener('input',e=>{const t=e.target;if(!t.classList.contains('rxi'))return;grow(t);collect(n)});
+ const mark=row=>{if(!row||row.classList.contains('on'))return;$$('#edr .re.on').forEach(x=>x.classList.remove('on'));row.classList.add('on');S.cur={n,i:idx(row),sp:false}};
+ r.addEventListener('input',e=>{const t=e.target;if(t.tagName!=='TEXTAREA')return;S.draft=null;grow(t);collect(n)});
+ r.addEventListener('focusin',e=>mark(e.target.closest('.se-i')));
  r.addEventListener('paste',e=>{const t=e.target;if(!t.classList.contains('rxi'))return;const s=e.clipboardData&&e.clipboardData.getData('text');if(!s||!/t\.co\/|^\s*#\S/.test(s))return;e.preventDefault();const c=cleanPaste(s),a=t.selectionStart,b=t.selectionEnd;t.value=t.value.slice(0,a)+c+t.value.slice(b);t.setSelectionRange(a+c.length,a+c.length);grow(t);collect(n)});
- $('#ednx').onclick=()=>{collect(n,true);S.addRow=n;const y=scrollY;render(true);scrollTo(0,y);const ts=$$('.rxi');ts[ts.length-1].focus()};
- r.addEventListener('keydown',e=>{const t=e.target;if(e.key==='Backspace'&&t.classList.contains('rxi')&&!t.value&&!e.isComposing){const i=idx(t),el=t.closest('.re');if(i>0&&!el.querySelector('.tw-c')){e.preventDefault();el.remove();again(i-1)}}});
- r.addEventListener('click',e=>{const d=e.target.closest('.tw-del'),xb=e.target.closest('.tw-x');
-  if(d){const i=idx(d),el=d.closest('.re');if((el.querySelector('.rxi').value.trim()||el.querySelector('.tw-c'))&&!confirm('刪掉這則吐槽和它的圖？'))return;el.remove();again(Math.max(0,i-1))}
-  if(xb){const i=idx(xb),j=+xb.dataset.x;again(i,x=>{const rr=x.rx[i];if(rr&&rr.im){rr.im.splice(j,1);if(!rr.im.length)delete rr.im}})}});
- r.addEventListener('change',async e=>{const f=e.target;if(f.type!=='file'||!f.files.length)return;const i=idx(f),fs=await cropSeq([...f.files].slice(0,4));f.value='';if(!fs.length)return;collect(n,true);let fail=0,ps=[];for(const fl of fs){try{ps.push(await storeImg(await shrink(fl)))}catch(_){fail++}}
-  again(i,x=>{while(x.rx.length<=i)x.rx.push({x:'',l:false});const rr=x.rx[i];rr.im=[...(rr.im||[]),...ps.filter(p=>!(rr.im||[]).includes(p))].slice(0,4)});if(n>S.read)setRead(n);if(fail)sync(`有 ${fail} 張圖讀不出來，換成 JPG 或 PNG 再試`,true)});
- const f=$('#edf');f.onchange=async()=>{const fs=await cropSeq([...f.files]);f.value='';if(!fs.length)return;collect(n,true);await addImages(n,fs);const y=scrollY;render(true);scrollTo(0,y)};
- $$('[data-rm]').forEach(b=>b.onclick=()=>{collect(n,true);const x=epEdit(n);x.im.splice(+b.dataset.rm,1);x.t=Date.now();touch();persist();const y=scrollY;render(true);scrollTo(0,y)})}
+ const add=ty=>{const rows=seRead(),b=seBlank(ty);rows.push(b);commit(rows,b)};
+ $('#ednx').onclick=()=>add('r');$('#ednq').onclick=()=>add('q');
+ r.addEventListener('keydown',e=>{const t=e.target;if(e.key==='Backspace'&&t.tagName==='TEXTAREA'&&!t.value&&!e.isComposing){const rows=seRead(),i=idx(t);if(rows.length>1&&!(rows[i].im||[]).length){e.preventDefault();rows.splice(i,1);const k=rows[Math.max(0,i-1)];commit(rows,k);const f=$$('#edr .re')[Math.max(0,i-1)]?.querySelector('textarea');if(f){f.focus({preventScroll:true});f.setSelectionRange(f.value.length,f.value.length)}}}});
+ r.addEventListener('click',e=>{const row=e.target.closest('.se-i');if(!row)return;if(!e.target.closest('.se-mn'))mark(row);
+  const xb=e.target.closest('.tw-x'),b=e.target.closest('[data-act]'),cp=e.target.closest('[data-spk]');
+  const i=idx(row),rows=seRead(),cur=rows[i];
+  if(xb){cur.im.splice(+xb.dataset.x,1);commit(rows,cur);return}
+  if(cp){const id=cp.dataset.spk;cur.sp=cur.sp.includes(id)?cur.sp.filter(v=>v!==id):[...cur.sp,id];commit(rows,cur,true);return}
+  if(!b)return;const a=b.dataset.act;
+  if(a==='sp'){commit(rows,cur,!(S.cur&&S.cur.n===n&&S.cur.i===i&&S.cur.sp));return}
+  if(a==='up'||a==='dn'){const j=i+(a==='up'?-1:1);if(j<0||j>=rows.length)return;[rows[i],rows[j]]=[rows[j],rows[i]];commit(rows,cur);return}
+  if(a==='ins'){const nb=seBlank(cur.t);rows.splice(i,0,nb);commit(rows,nb);return}
+  if(a==='typ'){if(cur.t==='r'){if((cur.im||[]).length){alert('這則吐槽有圖，台詞不能放圖。請先移除圖，再改類型。');return}rows[i]={t:'q',x:cur.x,sp:[]}}else rows[i]={t:'r',x:cur.x,l:false,im:[]};commit(rows,rows[i]);return}
+  if(a==='del'){if(seNe(cur)&&!confirm(cur.t==='q'?'刪掉這則台詞？':'刪掉這則吐槽和它的圖？'))return;rows.splice(i,1);commit(rows,rows[Math.max(0,i-1)]);return}});
+ r.addEventListener('change',async e=>{const f=e.target;if(f.type!=='file'||!f.files.length)return;const i=idx(f),fs=await cropSeq([...f.files].slice(0,4));f.value='';if(!fs.length)return;let fail=0,ps=[];for(const fl of fs){try{ps.push(await storeImg(await shrink(fl)))}catch(_){fail++}}
+  const rows=seRead(),cur=rows[i];cur.im=[...(cur.im||[]),...ps.filter(p=>!(cur.im||[]).includes(p))].slice(0,4);commit(rows,cur);if(n>S.read)setRead(n);if(fail)sync(`有 ${fail} 張圖讀不出來，換成 JPG 或 PNG 再試`,true)})}
 /* right column on computers */
 function side(){const pics=D.wall.filter(w=>!hidden(w.n)).slice(-6).reverse(),todo=D.eps.find(e=>e.st==='todo')||{n:D.eps.length};return `<aside class="side"><section class="sc"><h3>作品資料</h3><p class="hdl2">${D.titles.map(esc).join('<br>')}<br>原作：天壱　制作：SORAJIMA</p></section>
  <section class="sc"><h3>下一話要寫</h3><button class="next" onclick="go('ep-${todo.n}')">${nm(todo.n)}</button><p class="src">${D.eps.filter(e=>e.st==='todo').length} 話待補，${D.eps.filter(e=>e.st==='plot_only').length} 話只有劇情</p></section>
@@ -1653,9 +1713,8 @@ const wdGuess=(e,p)=>{if(e.st==='todo')return false;const ks=[...new Set([p.name
 const epCast=n=>{const g=ppOf(n),e=D.eps[n];return e?(g?D.ppl.filter(p=>g.includes(p.id)):D.ppl.filter(p=>wdGuess(e,p))):[]};
 const wdEps=p=>D.eps.filter(e=>!hidden(e.n)&&(ppOf(e.n)?ppOf(e.n).includes(p.id):wdGuess(e,p))).map(e=>e.n);
 const ecChip=(p,x)=>`<button${x?'':' type="button"'} class="chip ec-c"${x}>${wdR(p,24)}<span>${esc(p.name)}</span></button>`;
-const castBlock=n=>{const L=epCast(n);return L.length?`<div class="ec-w"><span class="hn">出場人物${ppOf(n)?'':'（自動比對，可能不準）'}</span><div class="chips">${L.map(p=>ecChip(p,` onclick="${wdGo(p)}"`)).join('')}</div></div>`:''}
-const qsField=n=>{const qt=D.eps[n].qt||[];return qt.length?`<div class="tw-f"><span>台詞說話者</span><div class="ec-in">${qt.map((q,k)=>{const sel=qsOf(n,k,q),ids=[...new Set([...sel,...epCast(n).map(p=>p.id)])];return `<div class="ec-g"><span class="hn ec-gh">${esc([...q.x].slice(0,18).join(''))}…</span><div class="chips">${ids.map(wdBy).filter(Boolean).map(p=>`<button type="button" class="chip ec-c" data-qs="${k}|${esc(p.id)}" aria-pressed="${sel.includes(p.id)}">${wdR(p,24)}<span>${esc(p.name)}</span></button>`).join('')}</div></div>`}).join('')}</div><p class="hn xl-nt">點人物＝切換這句台詞的說話者（可選兩位，依點的順序）；要選的人沒出現，先在上面「出場人物」勾他。</p></div>`:''};
-const ppField=n=>{const on=new Set(epCast(n).map(p=>p.id));return `<div class="tw-f"><span>出場人物（人物頁的出場話數也跟著這裡）</span><div class="ec-in">${[...D.nations.map(t=>[wdShort(t),D.ppl.filter(p=>p.g===t.id)]),['其他人物',D.ppl.filter(p=>!wdNat(p.g))]].filter(([,L])=>L.length).map(([h,L])=>`<div class="ec-g"><span class="hn ec-gh">${esc(h)}</span><div class="chips">${L.map(p=>`<button type="button" class="chip ec-c" data-pp="${esc(p.id)}" aria-pressed="${on.has(p.id)}">${wdR(p,24)}<span>${esc(p.name)}</span></button>`).join('')}</div></div>`).join('')}</div>${ppOf(n)?'<button class="chip ec-auto" id="eca">恢復自動比對</button>':'<p class="hn ec-note">目前是自動比對；點任一位，就改成以你勾的為準。</p>'}</div>`}
+const castBlock=n=>{const L=epCast(n);return L.length?`<div class="ec-w"><span class="hn">出場人物${ppOf(n)?'':'（自動）'}</span><div class="chips">${L.map(p=>ecChip(p,` onclick="${wdGo(p)}"`)).join('')}</div></div>`:''}
+const ppField=n=>{const on=new Set(epCast(n).map(p=>p.id));return `<div class="tw-f"><div class="ec-in">${[...D.nations.map(t=>[wdShort(t),D.ppl.filter(p=>p.g===t.id)]),['其他人物',D.ppl.filter(p=>!wdNat(p.g))]].filter(([,L])=>L.length).map(([h,L])=>`<div class="ec-g"><span class="hn ec-gh">${esc(h)}</span><div class="chips">${L.map(p=>`<button type="button" class="chip ec-c" data-pp="${esc(p.id)}" aria-pressed="${on.has(p.id)}">${wdR(p,24)}<span>${esc(p.name)}</span></button>`).join('')}</div></div>`).join('')}</div><div class="chips ec-ex"><button type="button" class="chip ec-auto" id="sena">＋ 新增人物</button>${ppOf(n)?'<button type="button" class="chip ec-auto" id="eca">恢復自動比對</button>':''}</div><div class="arc-add" id="senw" hidden><input class="edi" id="senn" placeholder="新人物的名字" aria-label="新人物的名字" enterkeyhint="done"><button type="button" class="chip" id="senb">建立</button></div></div>`}
 const wdBtn=()=>`<button class="edb" id="wdE">${S.wdEdit?'完成':'編輯'}</button>`;
 const wdTop=()=>`<nav class="sr-backnav" aria-label="返回導覽"><button onclick="go('world')">‹ <span>返回人物與王國</span></button>${wdBtn()}</nav>`,wdNm=p=>`<h2 class="wd-nm">${esc(p.name)}</h2>`;
 const wdFoot=t=>`<div class="alf"><span class="hn">改完一格就自動存</span><button class="chip" id="wdD">${t}</button></div>`;
@@ -1733,5 +1792,5 @@ function render(keep){rebuild();const h=location.hash.slice(1)||'home',m=$('#m')
  else{cur=TABS.some(t=>t[0]===h)?h:'home';html={home:vHome,wall:vWall,line:vLine,goods:vGoods,world:vWorld}[cur]()}
  const wide=cur==='home'||r==='ep';m.innerHTML=hy((cur==='home'&&!full?hero():'')+(wide?`<div class="shell"><div class="mainc">${html}</div>${side()}</div>`:html));document.body.classList.toggle('full',full);nav();hydrate();if(!keep)window.scrollTo(0,0);
  if(r==='ep'&&full)bindEp(n);else if(full&&$('#wdE'))bindWd(r,n);else if(!full)({home:bindHome,wall:bindWall,line:bindLine,settings:bindSettings,world:bindWorld})[cur]?.()}
-addEventListener('hashchange',()=>{S.edit=null;S.wdEdit=S.wdNext===location.hash;S.wdNext=null;S.wdAll=false;if(location.hash!=='#line')S.lnEdit=false;persist();render()});if(!lsGet('edits'))await pull();render();startSync();
+addEventListener('hashchange',()=>{S.edit=null;S.draft=S.cur=null;S.sec=null;S.wdEdit=S.wdNext===location.hash;S.wdNext=null;S.wdAll=false;if(location.hash!=='#line')S.lnEdit=false;persist();render()});if(!lsGet('edits'))await pull();render();startSync();
 </script></body></html>
