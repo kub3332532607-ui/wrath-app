@@ -217,7 +217,7 @@ h3{margin:0 0 8px;font-family:var(--t);font-size:1.02rem;font-weight:400;color:v
 .mp-c{min-height:52px;padding:6px 12px 6px 8px;border-radius:99px;background:var(--glass);border:1px solid var(--line);font:inherit;font-size:.86rem;color:var(--acc);display:flex;align-items:center;gap:10px;text-align:left;cursor:pointer}
 .mp-lg .mp-n{box-shadow:0 0 0 1.5px var(--gold),0 0 0 3.5px var(--solid)}
 .mp-c.mp-s{border-color:var(--gold)}.mp-c.mp-o{opacity:.7;border-style:dashed}.mp-c.mp-w{grid-column:1/-1}
-.mp-tx{display:flex;flex-direction:column;gap:3px;line-height:1.25;min-width:0;overflow-wrap:anywhere}.mp-tx small{font-size:.68rem;color:var(--mute);overflow-wrap:anywhere}
+.mp-tx{display:flex;flex-direction:column;gap:3px;line-height:1.25;min-width:0;overflow-wrap:anywhere}.mp-tx>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.mp-tx small{font-size:.68rem;color:var(--mute);overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .mp-st{margin-top:10px;padding:10px 14px;border-radius:var(--r);background:var(--glass);border:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
 .mp-st p{margin:0;flex:1 1 150px;font-size:.88rem;overflow-wrap:anywhere}.mp-st small{display:block;color:var(--mute);font-size:.72rem}
 .mp-b{min-height:44px;padding:0 14px;border-radius:99px;background:var(--glass2);border:1px solid var(--line);color:var(--acc);font:inherit;font-size:.84rem;cursor:pointer}
@@ -257,7 +257,7 @@ h3{margin:0 0 8px;font-family:var(--t);font-size:1.02rem;font-weight:400;color:v
 .wd-pg{max-width:640px}
 .wd-pg .tw-f p{margin:0}
 .wd-tags{align-items:center;justify-content:center}
-.wd-nm{margin:0;font-family:var(--t);font-weight:400;font-size:1.5rem;line-height:1.3;text-align:center}
+.wd-nm{margin:0;font-family:var(--t);font-weight:400;font-size:1.5rem;line-height:1.3;text-align:center;overflow-wrap:anywhere}
 .sr-backnav .edb{font-size:.9rem}
 @media (min-width:900px){.wd-w{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:44px;align-items:start}.wd-w>.hd{grid-column:1/-1}}
 .wd-star{position:relative;width:320px;margin:10px auto 0}
@@ -1079,7 +1079,7 @@ async function dbGet(k){try{const d=await db();return await new Promise((ok,no)=
 async function dbSet(k,v){try{const d=await db();await new Promise((ok,no)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error)})}catch(e){}}
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
 /* private repo: this page holds no notes or pictures, they are read with the device's key */
-const BASE='data/base-b77ae9edde1b.json',VER='2026.11.12 23:46 · d8beb91';
+const BASE='data/base-b77ae9edde1b.json',VER='2026.11.13 01:11 · bee2b71';
 let CFG=null,TK=lsGet('tk');
 const api=(p,o={})=>fetch(`${CFG.api??'https://api.github.com'}/repos/${CFG.owner}/${CFG.repo}/contents/${p}`,{cache:'no-store',...o,headers:{Authorization:`Bearer ${TK}`,...o.headers}});
 const rawGet=p=>api(p,{headers:{Accept:'application/vnd.github.raw+json'}});
@@ -1277,15 +1277,16 @@ function arcLeave(n,id){const a=arcBy(id);if(!a)return false;const s=a.start_ep,
 /* people and nations: base list from the build, then edits on top. An edited one is stored whole as E.kinds['@ppl:'+id] / E.kinds['@nat:'+id]
    (people: the id the build gives them; nations: 'n' + place in the base list; added ones: 'u…'). Same rules as arcs: the latest edit wins when two devices change the same one, {d:1} = deleted.
    People: {n name, r role, x text, px previous life, g nation they belong to, h home nation, sec heading on the family tree,
-            rel [{to, as: what this person is to them, inv: what they are to this person, sp: spouse}], av avatar path, c added-at, t}. Nations: {n, x, c, t, mx, my (map marker, % of the map width / height; no fields = none; both null = the default marker was removed)}. */
-const PK='@ppl:',NK='@nat:',BP=D.ppl,BN=D.nations;
+            rel [{to, as: what this person is to them, inv: what they are to this person, sp: spouse}], av avatar path, c added-at, t}. Nations: {n, x, c, t, mx, my (map marker, % of the map width / height; no fields = none; both null = the default marker was removed),
+            kr, ja, en (Korean / Japanese / English name; a field that is there wins over the build's default in mapGeo.nm, '' = show none; only written once the user edits that field)}. */
+const PK='@ppl:',NK='@nat:',BP=D.ppl,BN=D.nations,NL=['kr','ja','en'];
 function wdBuild(){const ed=K=>{const o={};for(const k in E.kinds)if(k.startsWith(K)){const r=E.kinds[k];if(r&&typeof r==='object'&&(r.d||(typeof r.n==='string'&&r.n)))o[k.slice(K.length)]=r}return o},str=v=>typeof v==='string'?v:'';
  const mk=(A,e,ap)=>{for(const id of Object.keys(e).sort((a,b)=>(e[a].c||0)-(e[b].c||0))){const r=e[id],i=A.findIndex(x=>x.id===id);if(r.d){if(i>=0)A.splice(i,1);continue}if(i>=0)A[i]=ap(A[i],r);else if(r.c)A.push(ap({id},r))}return A};
  const rel=a=>Array.isArray(a)?a.filter(q=>q&&typeof q.to==='string'&&typeof q.as==='string').map(q=>({to:q.to,as:q.as,...(typeof q.inv==='string'&&q.inv?{inv:q.inv}:{}),...(q.sp?{sp:1}:{})})):[];
  D.ppl=mk(BP.map((p,i)=>({px:'',g:'',h:'',sec:'',al:[],...p,id:p.id||'p'+i,bn:p.name,rel:rel(p.rel)})),ed(PK),(p,r)=>({al:[],...p,name:r.n,role:str(r.r),x:str(r.x),px:str(r.px),g:str(r.g),h:str(r.h),sec:str(r.sec),rel:rel(r.rel),...(typeof r.av==='string'&&/^img\//.test(r.av)?{img:r.av,av:1}:{})}));
  const ids=new Set(D.ppl.map(p=>p.id));for(const p of D.ppl)p.rel=p.rel.filter(r=>r.to!==p.id&&ids.has(r.to));
- const dk=D.mapGeo?.mk||{};D.nations=mk(BN.map((t,i)=>{const[h,...r]=t.split('：');return{id:'n'+i,name:h,x:r.join('：'),...(dk['n'+i]?{mx:dk['n'+i][0],my:dk['n'+i][1]}:{})}}),ed(NK),(p,r)=>({...p,name:r.n,x:str(r.x),...('mx' in r?(typeof r.mx==='number'&&typeof r.my==='number'?{mx:r.mx,my:r.my}:{mx:null,my:null}):{})}))}
-function wdPut(K,a,ch){const o=E.kinds[K+a.id]||{};E.kinds[K+a.id]={n:a.name,x:a.x||'',...(K===PK?{r:a.role||'',px:a.px||'',g:a.g||'',h:a.h||'',sec:a.sec||'',rel:(a.rel||[]).map(r=>({...r})),...(o.av?{av:o.av}:{})}:{}),...(K===NK&&a.mx!==undefined?{mx:a.mx,my:a.my}:{}),...(o.c?{c:o.c}:{}),...ch,t:Date.now()};touch();persist();rebuild()}
+ const dk=D.mapGeo?.mk||{};D.nations=mk(BN.map((t,i)=>{const[h,...r]=t.split('：');const d=D.mapGeo?.nm?.['n'+i];return{id:'n'+i,name:h,x:r.join('：'),kr:d?d[1]:'',ja:'',en:d?d[2]:'',...(dk['n'+i]?{mx:dk['n'+i][0],my:dk['n'+i][1]}:{})}}),ed(NK),(p,r)=>({kr:'',ja:'',en:'',...p,name:r.n,x:str(r.x),...Object.fromEntries(NL.filter(k=>k in r).map(k=>[k,str(r[k])])),...('mx' in r?(typeof r.mx==='number'&&typeof r.my==='number'?{mx:r.mx,my:r.my}:{mx:null,my:null}):{})}))}
+function wdPut(K,a,ch){const o=E.kinds[K+a.id]||{};E.kinds[K+a.id]={n:a.name,x:a.x||'',...(K===PK?{r:a.role||'',px:a.px||'',g:a.g||'',h:a.h||'',sec:a.sec||'',rel:(a.rel||[]).map(r=>({...r})),...(o.av?{av:o.av}:{})}:{}),...(K===NK&&a.mx!==undefined?{mx:a.mx,my:a.my}:{}),...(K===NK?Object.fromEntries(NL.filter(k=>k in o).map(k=>[k,o[k]])):{}),...(o.c?{c:o.c}:{}),...ch,t:Date.now()};touch();persist();rebuild()}
 function wdAdd(K,at){const P=K===PK,b=P?'新人物':'新王國';let v=b,i=2;while((P?D.ppl:D.nations).some(x=>x.name===v))v=b+i++;const id='u'+Date.now().toString(36);wdPut(K,{id,name:v,x:'',role:'',...(at?{mx:at[0],my:at[1]}:{})},{c:Date.now()});
  const h=(P?'person-':'nation-')+(P?D.ppl:D.nations).findIndex(x=>x.id===id);S.wdNext='#'+h;go(h)}
 function persist(){lsSet('edits',JSON.stringify(E));lsSet('dirty',JSON.stringify(dirty));lsSet('upq',JSON.stringify(upq))}
@@ -1339,7 +1340,7 @@ const seRow=(r,i,all,n)=>{const q=r.t==='q',c=S.cur&&S.cur.n===n&&S.cur.i===i,L=
  return `<div class="re se-i${c?' on':''}" data-t="${r.t}" data-i="${i}"${q?` data-sps="${esc(JSON.stringify(r.sp))}"`:` data-im="${esc(JSON.stringify(r.im||[]))}"`}><div class="av">${PRL}${!last?'<i class="ln"></i>':''}</div><div class="se-c">
  ${q?`<button type="button" class="xl-sp se-sp" data-act="sp" aria-label="選說話者">${L.length?L.map(p=>`<span class="xl-s">${wdR(p,30)}<b>${esc(p.name)}</b></span>`).join(''):'<span class="hn">說話者（點這裡選）</span>'}</button>${c&&S.cur.sp?seSpk(n,r):''}`:(r.l?'<span class="tg">回頭補</span>':'')}
  <textarea class="eta ${q?'qxi xl-qi':'rxi'}" rows="1" data-l="${r.l?1:''}" placeholder="${q?'台詞打在這裡':i?'接著寫…':'吐槽打在這裡，可以換行；推文整段貼上也行'}" aria-label="第${i+1}則${q?'台詞':'吐槽'}">${esc(r.x)}</textarea>${q?'':twIm(r.im,true)}
- <div class="se-mn" role="group" aria-label="這一則的操作"><button type="button" class="se-b" data-act="up" aria-label="往上移"${i?'':' disabled'}>↑</button><button type="button" class="se-b" data-act="dn" aria-label="往下移"${last?' disabled':''}>↓</button><button type="button" class="se-b" data-act="ins">在上面插入</button>${q?'':(r.im||[]).length<4?`<label class="se-b tw-b">加圖<input type="file" accept="image/*" multiple aria-label="替第${i+1}則加圖"></label>`:''}<button type="button" class="se-b" data-act="typ">改類型</button><button type="button" class="se-b" data-act="del">刪除</button></div></div></div>`};
+ <div class="se-mn" role="group" aria-label="這一則的操作"><button type="button" class="se-b" data-act="up" aria-label="往上移"${i?'':' disabled'}>↑</button><button type="button" class="se-b" data-act="dn" aria-label="往下移"${last?' disabled':''}>↓</button>${q?'':(r.im||[]).length<4?`<label class="se-b tw-b">加圖<input type="file" accept="image/*" multiple aria-label="替第${i+1}則加圖"></label>`:''}<button type="button" class="se-b" data-act="typ">改類型</button><button type="button" class="se-b" data-act="del">刪除</button></div></div></div>`};
 /* the episode's arcs as chips: × takes it out, the field below adds one; names, from/to and notes are edited on the timeline page */
 const arcField=(e,n)=>`<div class="tw-f"><div class="chips arc-in">${e.ai.map((id,i)=>`<span class="chip arc-c">${esc(e.ar[i])}<button class="arc-x" data-out="${esc(id)}" aria-label="把這話移出「${esc(e.ar[i])}」">×</button></span>`).join('')||'<span class="hn">這話還沒有劇情線</span>'}</div>
  <div class="arc-add"><input class="edi" id="eda" list="edal" placeholder="加入一條：選現有的或打新名字" aria-label="加入劇情線" enterkeyhint="done"><button class="chip" id="edag">加入</button></div><select class="edi" id="edk" aria-label="新劇情線的種類" hidden><option value="side">新的是支線</option><option value="main">新的是主線</option></select><datalist id="edal">${D.arcs.filter(a=>!e.ai.includes(a.id)).map(x=>`<option value="${esc(x.name)}">`).join('')}</datalist>
@@ -1420,7 +1421,6 @@ function bindEdit(n){const t=$('#edt');if(t)t.onclick=()=>{const on=$('.edm');if
   if(!b)return;const a=b.dataset.act;
   if(a==='sp'){commit(rows,cur,!(S.cur&&S.cur.n===n&&S.cur.i===i&&S.cur.sp));return}
   if(a==='up'||a==='dn'){const j=i+(a==='up'?-1:1);if(j<0||j>=rows.length)return;[rows[i],rows[j]]=[rows[j],rows[i]];commit(rows,cur);return}
-  if(a==='ins'){const nb=seBlank(cur.t);rows.splice(i,0,nb);commit(rows,nb);return}
   if(a==='typ'){if(cur.t==='r'){if((cur.im||[]).length){alert('這則吐槽有圖，台詞不能放圖。請先移除圖，再改類型。');return}rows[i]={t:'q',x:cur.x,sp:[]}}else rows[i]={t:'r',x:cur.x,l:false,im:[]};commit(rows,rows[i]);return}
   if(a==='del'){if(seNe(cur)&&!confirm(cur.t==='q'?'刪掉這則台詞？':'刪掉這則吐槽和它的圖？'))return;rows.splice(i,1);commit(rows,rows[Math.max(0,i-1)]);return}});
  r.addEventListener('change',async e=>{const f=e.target;if(f.type!=='file'||!f.files.length)return;const i=idx(f),fs=await cropSeq([...f.files].slice(0,4));f.value='';if(!fs.length)return;let fail=0,ps=[];for(const fl of fs){try{ps.push(await storeImg(await shrink(fl)))}catch(_){fail++}}
@@ -1656,11 +1656,11 @@ const mpPoly=Object.fromEntries(Object.entries(mpG.rg).map(([k,d])=>[k,d.split('
 const mpIn=(q,k)=>{let c=false;for(const r of mpPoly[k])for(let i=0,j=r.length-1;i<r.length;j=i++){const[a,b]=r[i],[u,v]=r[j];if((b>q[1])!==(v>q[1])&&q[0]<(u-a)*(q[1]-b)/(v-b)+a)c=!c}return c};
 const mpAt=q=>Object.keys(mpPoly).find(k=>mpIn(q,k));
 const mpOf=k=>D.nations.find(n=>mpN(n)&&mpAt(mpPt(n))===k);
-function mpView(){const N=D.nations,pl=N.filter(mpN),sel=S.mpSel,sn=N.find(n=>n.id===sel),sr=sn?(mpN(sn)?mpAt(mpPt(sn)):null):(sel&&sel.startsWith('r:')?sel.slice(2):null),nm=n=>mpG.nm[n.id],sub=n=>nm(n)?`<small>${nm(n)[1]} · ${nm(n)[2]}</small>`:'';
+function mpView(){const N=D.nations,pl=N.filter(mpN),sel=S.mpSel,sn=N.find(n=>n.id===sel),sr=sn?(mpN(sn)?mpAt(mpPt(sn)):null):(sel&&sel.startsWith('r:')?sel.slice(2):null),sub=n=>{const t=NL.map(k=>n[k]).filter(Boolean).join(' · ');return t?`<small>${esc(t)}</small>`:''};
  const free=mpG.un.filter(k=>!mpOf(k));
  const svg=`<svg class="mp-svg" viewBox="${mpV.join(' ')}" role="img" aria-label="大陸地圖">`+Object.keys(mpG.rg).map(k=>`<path class="mp-r${mpG.un.includes(k)?' mp-u':''}" data-r="${k}" fill-rule="evenodd" d="${mpG.rg[k]}"/>`).join('')+mpG.bd.map(d=>`<path class="mp-bd" d="${d}"/>`).join('')+(sr?`<path class="mp-sl" fill-rule="evenodd" d="${mpG.rg[sr]}"/>`:'')+'</svg>';
  const mk=pl.map((n,i)=>`<button class="mp-k${n===sn?' mp-s':''}" data-n="${esc(n.id)}" aria-label="${esc(wdShort(n))}" style="left:${n.mx}%;top:${n.my}%"><span class="mp-n">${i+1}</span></button>`).join('');
- const lg=pl.map((n,i)=>`<button class="mp-c${n===sn?' mp-s':''}" data-n="${esc(n.id)}"><span class="mp-n">${i+1}</span><span class="mp-tx"><span>${esc(wdShort(n))}</span>${sub(n)}</span></button>`).join('')
+ const lg=pl.map((n,i)=>`<button class="mp-c${n===sn?' mp-s':''}" data-n="${esc(n.id)}"><span class="mp-n">${i+1}</span><span class="mp-tx"><span title="${esc(wdShort(n))}">${esc(wdShort(n))}</span>${sub(n)}</span></button>`).join('')
   +(free.length?`<button class="mp-c mp-o mp-w${sel&&sel.startsWith('r:')&&free.includes(sel.slice(2))?' mp-s':''}" data-r="${free[0]}"><span class="mp-n" style="width:14px;height:14px;background:transparent"></span><span class="mp-tx"><span>無名地區 ×${free.length}（北方中間）</span><small>還沒有名字，點地圖上那塊地可命名</small></span></button>`:'')
   +N.filter(n=>!mpN(n)).map(n=>`<button class="mp-c mp-o${n===sn?' mp-s':''}" data-n="${esc(n.id)}"><span class="mp-n">·</span><span class="mp-tx"><span>${esc(wdShort(n))}</span><small>圖上還沒對應　未放</small></span></button>`).join('');
  let st='<p>點地圖上的國家或下面的名單，看這國的資料。</p>';
@@ -1731,7 +1731,7 @@ function vPerson(i){const p=D.ppl[i],g=wdNat(p.g),h=wdNat(p.h);
  ${p.x?`<div class="tw-f"><span>${p.px?'今生':'介紹'}</span><p>${esc(p.x)}</p></div>`:''}${p.px?`<div class="tw-f"><span>前世</span><p>${esc(p.px)}</p></div>`:''}
  <div class="tw-f"><span>${eps.length?`出場的話（${eps.length} 話；沒校正過的話是自動比對，可能不準，到單話編輯可改）`:'還沒有出場的話'}</span>${eps.length?`<div class="wd-eps">${(cut?eps.slice(0,40):eps).map(n=>`<button onclick="go('ep-${n}')" aria-label="${nm(n)}">${n>204?'幕'+(n-204):n}</button>`).join('')}${cut?'<button id="wdAll">全部…</button>':''}</div>`:''}</div></div>`}
 function vNation(i){const p=D.nations[i],from=D.ppl.filter(q=>q.h===p.id&&q.g!==p.id),org=wdOrg(p.id);
- return wdTop()+`<div class="pg wd-pg">${wdNm(p)}${S.wdEdit?`<div id="wdBox"><label class="tw-f" style="margin-top:0"><span>國名</span><input class="edi" data-f="n" value="${esc(p.name)}" aria-label="國名"></label><label class="tw-f"><span>說明</span><textarea class="eta" data-f="x" rows="2" placeholder="可空白" aria-label="說明">${esc(p.x)}</textarea></label>${wdFoot('刪除這國')}</div>`:`<p style="margin:0">${esc(p.x||'這國還沒有資料。')}</p>${org?`<div class="tw-f"><span>這國的人</span>${org}</div>`:''}${from.length?`<div class="tw-f"><span>出身這國，現在在別處</span><div class="wd-rest wd-from">${from.map(q=>`<div class="wd-it"><button class="wd-n" onclick="${wdGo(q)}">${wdR(q,38)}${wdTxt(q)}</button></div>`).join('')}</div></div>`:''}`}</div>`}
+ return wdTop()+`<div class="pg wd-pg">${wdNm(p)}${S.wdEdit?`<div id="wdBox"><label class="tw-f" style="margin-top:0"><span>國名</span><input class="edi" data-f="n" value="${esc(p.name)}" aria-label="國名"></label>${[['kr','韓文名'],['ja','日文名'],['en','英文名']].map(([f,l])=>`<label class="tw-f"><span>${l}</span><input class="edi" data-f="${f}" value="${esc(p[f]||'')}" placeholder="可空白" aria-label="${l}"${f==='ja'?' lang="ja"':f==='kr'?' lang="ko"':''}></label>`).join('')}<label class="tw-f"><span>說明</span><textarea class="eta" data-f="x" rows="2" placeholder="可空白" aria-label="說明">${esc(p.x)}</textarea></label>${wdFoot('刪除這國')}</div>`:`<p style="margin:0">${esc(p.x||'這國還沒有資料。')}</p>${org?`<div class="tw-f"><span>這國的人</span>${org}</div>`:''}${from.length?`<div class="tw-f"><span>出身這國，現在在別處</span><div class="wd-rest wd-from">${from.map(q=>`<div class="wd-it"><button class="wd-n" onclick="${wdGo(q)}">${wdR(q,38)}${wdTxt(q)}</button></div>`).join('')}</div></div>`:''}`}</div>`}
 /* person / nation page: each field saves when you leave it */
 function bindWd(r,n){const P=r==='person',K=P?PK:NK,id=(P?D.ppl:D.nations)[n].id,cur=()=>(P?D.ppl:D.nations).find(x=>x.id===id),redraw=()=>{const y=scrollY;render(true);scrollTo(0,y)};
  $('#wdE').onclick=()=>{document.activeElement?.blur?.();S.wdEdit=!S.wdEdit;redraw()};
