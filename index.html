@@ -292,7 +292,8 @@ h3{margin:0 0 8px;font-family:var(--t);font-size:1.02rem;font-weight:400;color:v
  .wd-npg .wd-row.wd-top{margin-top:0}
  .wd-npg>.wd-nat .wd-mini{width:100%}
  .wd-npg>section{grid-column:2}
- .wd-npg>section:first-of-type>.wd-sh{margin-top:0}}
+ .wd-npg>section:first-of-type>.wd-sh{margin-top:0}
+ .wd-star{zoom:1.4}}
 .sr-backnav .edb{font-size:.9rem}
 @media (min-width:900px){.wd-w{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:44px;align-items:start}.wd-w>.hd{grid-column:1/-1}}
 .wd-star{position:relative;width:320px;margin:10px auto 0}
@@ -302,14 +303,31 @@ h3{margin:0 0 8px;font-family:var(--t);font-size:1.02rem;font-weight:400;color:v
 .wd-s b{max-width:100%;font-size:.8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .wd-su b{order:-1}
 .wd-sl{position:absolute;transform:translate(-50%,-50%);padding:0 6px;background:var(--solid);border-radius:8px;font-size:.68rem;line-height:1.6;white-space:nowrap;color:var(--goldt);pointer-events:none}
-.wd-org{position:relative;padding:8px 8px 0}
-.wd-row{position:relative;display:flex;flex-wrap:wrap;justify-content:center;gap:26px 0;margin-top:28px}
+/* V2b 組織圖整張一起左右滑（同溫室茶桌：原生橫向捲動、overscroll 不連動返回手勢、滑鼠可拖）；放不下才會滑，滑得動的那側淡出表示還有人；線畫在 .wd-org 裡，跟著一起滑 */
+.wd-osc{position:relative;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scrollbar-width:none;padding-bottom:4px}
+.wd-osc::-webkit-scrollbar{display:none}
+.wd-osc.wd-ofl{-webkit-mask-image:linear-gradient(90deg,transparent,#000 34px);mask-image:linear-gradient(90deg,transparent,#000 34px)}
+.wd-osc.wd-ofr{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 34px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 34px),transparent)}
+.wd-osc.wd-ofl.wd-ofr{-webkit-mask-image:linear-gradient(90deg,transparent,#000 34px,#000 calc(100% - 34px),transparent);mask-image:linear-gradient(90deg,transparent,#000 34px,#000 calc(100% - 34px),transparent)}
+.wd-osc.wd-ocan{cursor:grab}
+.wd-osc.wd-odrag,.wd-osc.wd-odrag *{cursor:grabbing!important;user-select:none}
+.wd-org{position:relative;width:max-content;min-width:100%;box-sizing:border-box;padding:8px 8px 0}
+.wd-row{position:relative;display:flex;flex-wrap:nowrap;justify-content:center;gap:26px 0;margin-top:28px}
 .wd-row.wd-top{margin-top:0}
 .wd-row[data-s]::before{content:attr(data-s);position:absolute;top:-22px;left:50%;transform:translateX(-50%);z-index:1;padding:0 8px;background:var(--solid);border-radius:8px;font-size:.74rem;letter-spacing:.1em;color:var(--goldt)}
 .wd-o{position:relative;display:grid;justify-items:center;align-content:start;gap:5px;width:48px;text-align:center}
 .wd-o b{font-size:.74rem;overflow-wrap:anywhere}
 .wd-top .wd-o{width:84px}
 .wd-top .wd-o b{font-size:.9rem}
+/* V2b 手機：組織圖貼齊螢幕兩側、非最上排頭像約 1.3 倍（使用者選 B：之後人物還會增加，放不下就滑） */
+@media (max-width:899.98px){.wd-osc{margin:0 calc(50% - 50vw)}
+ .wd-osc>.wd-org{padding-left:12px;padding-right:12px}
+ .wd-row:not(.wd-top) .wd-o{width:62px}
+ .wd-row:not(.wd-top) .wd-o .ring.wd-r{width:calc(var(--z)*1.3);height:calc(var(--z)*1.3);font-size:calc(var(--z)*1.3/2.6)}
+ .wd-row:not(.wd-top) .wd-o b{font-size:.8rem}
+ .wd-o small{font-size:.74rem}
+ .wd-row{margin-top:32px}
+ .wd-row.wd-top{margin-top:0}}
 .wd-eps{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:6px}
 .wd-eps button{width:44px;height:44px;padding:0;border:1px solid color-mix(in srgb,var(--gold) 55%,transparent);border-radius:50%;color:var(--goldt);font-family:var(--t);font-size:.84rem}
 .wd-eps #wdAll{width:auto;padding:0 12px;border-radius:22px}
@@ -1120,7 +1138,7 @@ async function dbGet(k){try{const d=await db();return await new Promise((ok,no)=
 async function dbSet(k,v){try{const d=await db();await new Promise((ok,no)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error)})}catch(e){}}
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
 /* private repo: this page holds no notes or pictures, they are read with the device's key */
-const BASE='data/base-b77ae9edde1b.json',VER='2026.11.13 11:01 · c8ae53e';
+const BASE='data/base-b77ae9edde1b.json',VER='2026.11.13 12:31 · b0227db';
 let CFG=null,TK=lsGet('tk');
 const api=(p,o={})=>fetch(`${CFG.api??'https://api.github.com'}/repos/${CFG.owner}/${CFG.repo}/contents/${p}`,{cache:'no-store',...o,headers:{Authorization:`Bearer ${TK}`,...o.headers}});
 const rawGet=p=>api(p,{headers:{Accept:'application/vnd.github.raw+json'}});
@@ -1739,7 +1757,7 @@ function wdOrg(nid){const M=D.ppl.filter(p=>p.g===nid);if(!M.length)return'';con
  const rows=[];for(const p of M){const l=lv.get(p.id),s=l?p.sec:'';let r=rows.find(x=>x.l===l&&x.s===s);if(!r)rows.push(r={l,s,p:[]});r.p.push(p)}
  rows.sort((a,b)=>a.l-b.l||!!a.s-!!b.s);rows[0].p.sort((a,b)=>!!(inM(a)||{}).sp-!!(inM(b)||{}).sp);
  const node=(p,z)=>{const r=inM(p);return `<button class="wd-o" data-id="${esc(p.id)}"${r?` data-par="${esc(r.to)}"${r.sp?' data-sp="1"':''}`:''} onclick="${wdGo(p)}">${wdR(p,z)}<span><b>${esc(p.name)}</b><small>${esc(p.role||(r&&!r.sp?r.as:''))}</small></span></button>`};
- return `<div class="wd-org" id="wdOrg"><svg class="wd-ln" aria-hidden="true"></svg>${rows.map(r=>`<div class="wd-row${r.l?'':' wd-top'}"${r.s?` data-s="${esc(r.s)}"`:''}>${r.p.map(p=>node(p,r.l?40:64)).join('')}</div>`).join('')}</div>`}
+ return `<div class="wd-osc" id="wdSc"><div class="wd-org" id="wdOrg"><svg class="wd-ln" aria-hidden="true"></svg>${rows.map(r=>`<div class="wd-row${r.l?'':' wd-top'}"${r.s?` data-s="${esc(r.s)}"`:''}>${r.p.map(p=>node(p,r.l?40:64)).join('')}</div>`).join('')}</div></div>`}
 function wdLines(){const o=$('#wdOrg');if(!o)return;const rows=$$('.wd-row',o);rows.forEach(r=>r.style.translate='');$$('.wd-o',o).forEach(n=>{n.style.marginLeft='';delete n.dataset.gap});
  let B=o.getBoundingClientRect();const rc=e=>{const r=e.getBoundingClientRect();return{l:r.left-B.left,r:r.right-B.left,t:r.top-B.top,b:r.bottom-B.top,x:(r.left+r.right)/2-B.left}};
  const par=c=>o.querySelector(`.wd-o[data-id="${CSS.escape(c.dataset.par)}"]`),rowOf=e=>rows.indexOf(e.parentElement),seen=new Set();
@@ -1758,8 +1776,18 @@ function wdLines(){const o=$('#wdOrg');if(!o)return;const rows=$$('.wd-row',o);r
    if(!g){if(pr.x<rc(ns[0]).l-6||pr.x>rc(ns[ns.length-1]).r+6){s+=`V${nx}`;continue}ok=false;break}
    s+=`V${rc(rows[ri]).t-11}H${(rc(g.previousElementSibling).r+rc(g).l)/2}V${nx}`}
   d+=ok?`${s}H${cr.x}V${cr.t}`:`M${pr.x} ${pb}V${rc(rows[pi+1]).t-11}H3V${y}H${cr.x}V${cr.t}`}
- o.querySelector('svg').innerHTML=`<path d="${d}"/>`}
+ o.querySelector('svg').innerHTML=`<path d="${d}"/>`;wdOFade()}
 addEventListener('resize',wdLines);
+/* V2b: the whole chart slides sideways as one piece; it opens centred on the rulers, the side that has more fades, and a mouse can drag it (same as the tea table) */
+function wdOFade(){const w=$('#wdSc');if(!w)return;const m=w.scrollWidth-w.clientWidth;w.classList.toggle('wd-ocan',m>1);w.classList.toggle('wd-ofl',w.scrollLeft>2);w.classList.toggle('wd-ofr',w.scrollLeft<m-2)}
+function wdOSwipe(){const w=$('#wdSc');if(!w||w.dataset.on)return;w.dataset.on='1';let drag=null,sup=false,used=false;const mid=()=>{if(!used)w.scrollLeft=(w.scrollWidth-w.clientWidth)/2;wdOFade()};
+ w.addEventListener('scroll',wdOFade,{passive:true});
+ w.addEventListener('pointerdown',e=>{used=true;if(e.pointerType!=='mouse'||e.button!==0||w.scrollWidth<=w.clientWidth)return;drag={id:e.pointerId,x:e.clientX,l:w.scrollLeft,m:false};sup=false});
+ w.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;const dx=e.clientX-drag.x;if(!drag.m&&Math.abs(dx)>6){drag.m=true;w.setPointerCapture(e.pointerId);w.classList.add('wd-odrag')}if(drag.m){e.preventDefault();w.scrollLeft=drag.l-dx}});
+ const end=e=>{if(!drag||drag.id!==e.pointerId)return;sup=drag.m;drag=null;w.classList.remove('wd-odrag');if(w.hasPointerCapture(e.pointerId))w.releasePointerCapture(e.pointerId);setTimeout(()=>sup=false,0)};
+ w.addEventListener('pointerup',end);w.addEventListener('pointercancel',end);w.addEventListener('lostpointercapture',()=>{drag=null;w.classList.remove('wd-odrag')});
+ w.addEventListener('click',e=>{if(sup){e.preventDefault();e.stopImmediatePropagation()}},true);w.addEventListener('dragstart',e=>e.preventDefault());
+ mid();setTimeout(mid,450);document.fonts?.ready.then(()=>setTimeout(mid,60))}
 /* episodes whose notes mention this person (by name or the other names the build knows). A guess, not a record. */
 /* who appears in an episode: the ticks the user made (E.eps[n].pp = person ids) when there are any, else the guess above. The person page and the episode page both read this, so they always agree. */
 const ppOf=n=>{const x=E.eps[n];return x&&Array.isArray(x.pp)?x.pp:null};
@@ -1794,7 +1822,7 @@ function vNation(i){const p=D.nations[i],from=D.ppl.filter(q=>q.h===p.id&&q.g!==
 function bindWd(r,n){const P=r==='person',K=P?PK:NK,id=(P?D.ppl:D.nations)[n].id,cur=()=>(P?D.ppl:D.nations).find(x=>x.id===id),redraw=()=>{const y=scrollY;render(true);scrollTo(0,y)};
  $('#wdE').onclick=()=>{document.activeElement?.blur?.();S.wdEdit=!S.wdEdit;redraw()};
  const all=$('#wdAll');if(all)all.onclick=()=>{S.wdAll=true;redraw()};
- if($('#wdOrg')){wdLines();setTimeout(wdLines,400);document.fonts?.ready.then(wdLines)}
+ if($('#wdOrg')){wdLines();wdOSwipe();setTimeout(wdLines,400);document.fonts?.ready.then(wdLines)}
  const box=$('#wdBox');if(!box)return;$$('#wdBox .eta').forEach(grow);
  const say=t=>{let m=box.querySelector('.alm');if(!m){m=document.createElement('p');m.className='alm';m.setAttribute('role','alert');box.append(m)}m.textContent=t;m.hidden=!t};
  const rels=()=>$$('#wdBox .wd-rl').map((d,k)=>{const o=cur().rel[k]||{},to=d.querySelector('[data-rf=to]').value,as=d.querySelector('[data-rf=as]').value.trim(),inv=d.querySelector('[data-rf=inv]').value.trim();return{to,as,...(inv?{inv}:{}),...(o.sp&&o.to===to?{sp:1}:{})}});
