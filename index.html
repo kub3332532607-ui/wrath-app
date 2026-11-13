@@ -189,9 +189,9 @@ h3{margin:0 0 8px;font-family:var(--t);font-size:1.02rem;font-weight:400;color:v
 .card p{margin:0;color:var(--note);line-height:1.72}
 .more{justify-self:center}
 .wall{columns:3 170px;column-gap:10px}
-.tile{position:relative;display:block;width:100%;margin:0 0 10px;break-inside:avoid;border-radius:var(--r);overflow:hidden}
-.tile img{width:100%;height:auto}
-.tile em{position:absolute;left:10px;top:3px;font-family:var(--t);font-style:normal;font-size:1.5rem;color:#fff;text-shadow:0 1px 8px rgba(10,10,60,.95)}
+.tile{position:relative;display:block;width:100%;margin:0 0 26px;break-inside:avoid;border-radius:14px}
+.tile img{width:100%;height:auto;border-radius:14px;box-shadow:0 0 0 1.5px var(--gold),0 0 0 4px var(--solid),0 0 0 5px color-mix(in srgb,var(--gold) 70%,transparent)}
+.tile em{position:absolute;left:50%;bottom:-13px;transform:translateX(-50%);padding:0 10px;border-radius:8px;background:var(--solid);font-family:var(--t);font-style:normal;font-size:.78rem;letter-spacing:.1em;line-height:1.6;white-space:nowrap;color:var(--goldt)}
 .fab{position:fixed;z-index:15;right:18px;bottom:calc(84px + env(safe-area-inset-bottom,0px));width:58px;height:58px;border-radius:50%;background:radial-gradient(circle at 35% 28%,#8fb2ff,#2545d6 60%,#0b1a78);box-shadow:0 0 0 2px var(--gold);color:#fff;font-size:1.8rem;line-height:1}
 @media (min-width:900px){.fab{bottom:28px;right:28px}}
 .addf{display:grid;gap:10px;padding:14px;background:var(--glass);border:1px solid var(--line);border-radius:var(--r)}
@@ -200,7 +200,7 @@ h3{margin:0 0 8px;font-family:var(--t);font-size:1.02rem;font-weight:400;color:v
 .ring{display:block;width:84px;height:84px;border-radius:50%;background:center/cover var(--glass2);box-shadow:0 0 0 2px var(--gold),0 0 0 5px rgba(9,13,44,.85),0 0 0 6px var(--gold);margin:6px auto 12px}
 .ring.mono{display:grid;place-items:center;font-family:var(--t);font-size:1.7rem;color:var(--goldt);font-style:normal}
 /* mp-: the map on the people & kingdoms page (traced border lines, numbered gold markers, legend) */
-.mp-hd{display:flex;align-items:center;justify-content:space-between}.mp-hd h3{margin:0}
+.mp-hd{display:flex;align-items:center;justify-content:flex-end;margin-top:-6px}
 .mp-vp{overflow:hidden;border-radius:var(--r);border:1px solid var(--line);background:var(--mp-sea)}
 .mp-vp.mp-z{overflow:auto;-webkit-overflow-scrolling:touch}
 .mp-wrap{position:relative;width:100%}.mp-vp.mp-z .mp-wrap{width:230%}
@@ -257,7 +257,42 @@ h3{margin:0 0 8px;font-family:var(--t);font-size:1.02rem;font-weight:400;color:v
 .wd-pg{max-width:640px}
 .wd-pg .tw-f p{margin:0}
 .wd-tags{align-items:center;justify-content:center}
-.wd-nm{margin:0;font-family:var(--t);font-weight:400;font-size:1.5rem;line-height:1.3;text-align:center;overflow-wrap:anywhere}
+.wd-nm{margin:0;font-family:var(--t);font-weight:400;font-size:1.95rem;line-height:1.3;text-align:center;overflow-wrap:anywhere;letter-spacing:.06em}
+.wd-sh{display:flex;align-items:center;gap:10px;margin:26px 0 12px;font-size:.92rem;letter-spacing:.24em;color:var(--goldt)}
+.wd-sh::before,.wd-sh::after{content:"";flex:1;border-top:1px solid color-mix(in srgb,var(--gold) 60%,transparent)}
+.wd-sw{position:relative}
+.wd-sw>.wd-star{z-index:1;margin-top:-21px}
+.wd-w>.hd+div>.wd-sh{margin-top:0}
+.wd-nmb{margin:4px 0 2px;text-align:center}
+.wd-nmw{position:relative;display:inline-block;max-width:100%;padding:0 62px}
+.wd-nmw>.fl{top:50%;width:62px;height:43px}
+.wd-role{display:block;margin-top:2px;color:var(--mute);font-size:.84rem;letter-spacing:.12em}
+.wd-tags .chip{background:transparent;border-color:color-mix(in srgb,var(--gold) 60%,transparent);color:var(--goldt);font-family:var(--t);letter-spacing:.06em}
+.wd-sc{text-align:center}
+.wd-sc>p{margin:0 auto;max-width:34em}
+.wd-nat{display:grid;grid-template-columns:132px minmax(0,1fr);gap:14px;align-items:center;margin:4px 0 6px}
+.wd-nat.wd-nomap{grid-template-columns:minmax(0,1fr)}
+.wd-nat h2{margin:0;font-family:var(--t);font-weight:400;font-size:1.85rem;line-height:1.3;overflow-wrap:anywhere}
+.wd-nat h2>.fl{position:relative;display:inline-block;vertical-align:middle;margin-left:4px;width:62px;height:43px}
+.wd-nat small{display:block;color:var(--mute);font-size:.8rem}
+.wd-nat p{margin:6px 0 0;font-size:.9rem;line-height:1.7}
+.wd-mini{width:132px;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--mp-sea)}
+.wd-mini svg{display:block;width:100%;height:auto}
+.wd-mini .mp-r{cursor:default}
+@media (min-width:900px){.wd-nat{grid-template-columns:170px minmax(0,1fr)}.wd-mini{width:170px}.wd-w>div>.wd-sh:first-child{margin-top:0}}
+@media (min-width:1219px){.wd-npg{max-width:1120px;display:grid;grid-template-columns:minmax(240px,300px) minmax(0,1fr);gap:0 44px;align-items:start}
+ .wd-npg>.wd-nat{grid-column:1;grid-row:1/span 9;grid-template-columns:minmax(0,1fr);align-items:start;margin:0;text-align:center}
+ .wd-npg .wd-o{width:68px}
+ .wd-npg .wd-top .wd-o{width:120px}
+ .wd-npg .wd-o .ring.wd-r{width:calc(var(--z)*1.4);height:calc(var(--z)*1.4);font-size:calc(var(--z)*1.4/2.6)}
+ .wd-npg .wd-o b{font-size:.86rem}
+ .wd-npg .wd-top .wd-o b{font-size:1.05rem}
+ .wd-npg .wd-o small{font-size:.76rem}
+ .wd-npg .wd-row{margin-top:34px}
+ .wd-npg .wd-row.wd-top{margin-top:0}
+ .wd-npg>.wd-nat .wd-mini{width:100%}
+ .wd-npg>section{grid-column:2}
+ .wd-npg>section:first-of-type>.wd-sh{margin-top:0}}
 .sr-backnav .edb{font-size:.9rem}
 @media (min-width:900px){.wd-w{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:44px;align-items:start}.wd-w>.hd{grid-column:1/-1}}
 .wd-star{position:relative;width:320px;margin:10px auto 0}
@@ -275,8 +310,9 @@ h3{margin:0 0 8px;font-family:var(--t);font-size:1.02rem;font-weight:400;color:v
 .wd-o b{font-size:.74rem;overflow-wrap:anywhere}
 .wd-top .wd-o{width:84px}
 .wd-top .wd-o b{font-size:.9rem}
-.wd-eps{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-.wd-eps button{min-width:40px;min-height:36px;padding:0 8px;border:1px solid var(--line);border-radius:10px;background:var(--glass);color:var(--acc);font-size:.84rem}
+.wd-eps{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:6px}
+.wd-eps button{width:44px;height:44px;padding:0;border:1px solid color-mix(in srgb,var(--gold) 55%,transparent);border-radius:50%;color:var(--goldt);font-family:var(--t);font-size:.84rem}
+.wd-eps #wdAll{width:auto;padding:0 12px;border-radius:22px}
 .alr.wd-two{grid-template-columns:repeat(2,minmax(0,1fr))}
 .wd-rl{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
 .wd-rl input{grid-column:1/-1}
@@ -1044,16 +1080,21 @@ html:has(dialog.lbx[open],dialog.crx[open]){overflow:hidden}
 .av-b label{position:relative;cursor:pointer}
 .av-b input{position:absolute;inset:0;opacity:0;width:100%;cursor:pointer}
 .eg-photo img,.tw-c img{cursor:zoom-in}
-.wtool{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;margin:0 0 14px}
-.wall.v-grid{columns:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(108px,1fr));gap:6px}
-.wall.v-grid .tile{margin:0;aspect-ratio:1;border-radius:12px}
-.wall.v-grid .tile img{height:100%;object-fit:cover;object-position:50% 14%}
-.wall.v-grid .tile em{font-size:1.05rem;left:7px;top:1px}
-.wall.v-fall{columns:auto;display:flex;gap:10px;align-items:flex-start}
+.wtool{display:grid;gap:8px;margin:0 0 16px}
+.wtool .seg2{display:flex;width:100%;padding:2px;background:transparent;border-color:color-mix(in srgb,var(--gold) 55%,transparent)}
+.wtool .seg2 button{flex:1;min-height:44px;padding:0 10px;font-family:var(--t);letter-spacing:.06em}
+.wtool .seg2 button.on{background:color-mix(in srgb,var(--gold) 26%,transparent);color:var(--goldt);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--gold) 70%,transparent)}
+@media (min-width:900px){.wtool{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.wall.v-grid{columns:auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (min-width:900px){.wall.v-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}}
+.wall.v-grid .tile{margin:0;aspect-ratio:3/4;border-radius:12px;overflow:hidden;box-shadow:0 0 0 1px var(--gold)}
+.wall.v-grid .tile img{height:100%;object-fit:cover;object-position:50% 14%;border-radius:0;box-shadow:none}
+.wall.v-grid .tile em{left:0;right:0;bottom:0;transform:none;padding:16px 0 3px;border-radius:0;text-align:center;font-size:.8rem;color:#ecd38f;background:linear-gradient(transparent,rgba(9,13,44,.78))}
+.wall.v-fall{columns:auto;display:flex;gap:14px;align-items:flex-start}
 .wall.v-fall>div{flex:1;min-width:0}
 .wgp .tile em{display:none}
 .wall.v-big{columns:auto;max-width:680px;margin-inline:auto}
-.wall.v-big .tile{margin:0 0 14px}
+.wall.v-big .tile{margin:0 0 26px}
 .wl-gem{position:absolute;right:0;top:50%;transform:translateY(-50%);width:62px;height:62px;display:grid;place-items:center}
 .wl-gem svg.md{width:62px;height:62px;overflow:visible}
 .fab.wl-pearl{background:none;box-shadow:none;width:64px;height:64px;display:grid;place-items:center;filter:drop-shadow(0 6px 14px rgba(10,10,60,.55))}
@@ -1079,7 +1120,7 @@ async function dbGet(k){try{const d=await db();return await new Promise((ok,no)=
 async function dbSet(k,v){try{const d=await db();await new Promise((ok,no)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error)})}catch(e){}}
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
 /* private repo: this page holds no notes or pictures, they are read with the device's key */
-const BASE='data/base-b77ae9edde1b.json',VER='2026.11.13 07:41 · bee2b71';
+const BASE='data/base-b77ae9edde1b.json',VER='2026.11.13 11:01 · c8ae53e';
 let CFG=null,TK=lsGet('tk');
 const api=(p,o={})=>fetch(`${CFG.api??'https://api.github.com'}/repos/${CFG.owner}/${CFG.repo}/contents/${p}`,{cache:'no-store',...o,headers:{Authorization:`Bearer ${TK}`,...o.headers}});
 const rawGet=p=>api(p,{headers:{Accept:'application/vnd.github.raw+json'}});
@@ -1512,7 +1553,7 @@ function vWall(){const all=wallList(),seg=(k,opts)=>`<div class="seg2" role="gro
  tile=(w,k)=>`<button class="tile" data-k="${k}" aria-label="放大${nm(w.n)}的圖"><img src="${w.src}" alt="${nm(w.n)}的圖" loading="lazy"><em>${w.n}</em></button>`;
  let body;if(WV.g){const gs=[];all.forEach((w,k)=>{const l=gs[gs.length-1];if(l&&l.n===w.n)l.t.push(tile(w,k));else gs.push({n:w.n,t:[tile(w,k)]})});body=gs.map(x=>`<section class="wgp"><h3 class="wgh"><button data-go="${x.n}">${nm(x.n)}</button><span>${x.t.length} 張</span></h3>${wallBox(x.t)}</section>`).join('')}
  else body=wallBox(all.map(tile));
- return `<div class="pg"><div class="hd"><h2 class="logo">圖片牆</h2><span>${all.length} 張</span><button class="wl-gem" id="wvt" aria-label="排序與瀏覽方式" aria-expanded="${!!S.wtOpen}">${medal('wall',!!S.wtOpen)}</button></div>${S.addOpen?`<div class="addf"><label>選圖<input id="af" type="file" accept="image/*" multiple></label><label>這張是第幾話<input id="an" type="number" min="0" max="${D.eps.length}" inputmode="numeric" value="${lastWritten()}"></label><div class="chips"><button class="chip" id="ag">加到圖片牆</button><button class="chip" id="ac">取消</button></div></div>`:''}${S.wtOpen?`<div class="wtool">${seg('o',[['old','舊話在前'],['new','新話在前']])}${seg('v',[['grid','方格'],['fall','瀑布'],['big','大圖']])}${seg('g',[[0,'不分組'],[1,'按話分組']])}</div>`:''}${body}</div><button class="fab wl-pearl" id="add" aria-label="加一張圖" title="加一張圖">${pearlMd(false)}</button>`}
+ return `<div class="pg"><div class="hd"><h2 class="logo">圖片牆</h2><span>${all.length} 張・點一張放大</span>${spray(110,70,41,'right:-12px;top:-12px')}<button class="wl-gem" id="wvt" aria-label="排序與瀏覽方式" aria-expanded="${!!S.wtOpen}">${medal('wall',!!S.wtOpen)}</button></div>${S.addOpen?`<div class="addf"><label>選圖<input id="af" type="file" accept="image/*" multiple></label><label>這張是第幾話<input id="an" type="number" min="0" max="${D.eps.length}" inputmode="numeric" value="${lastWritten()}"></label><div class="chips"><button class="chip" id="ag">加到圖片牆</button><button class="chip" id="ac">取消</button></div></div>`:''}${S.wtOpen?`<div class="wtool">${seg('o',[['old','舊話在前'],['new','新話在前']])}${seg('v',[['grid','方格'],['fall','瀑布'],['big','大圖']])}${seg('g',[[0,'不分組'],[1,'按話分組']])}</div>`:''}${body}</div><button class="fab wl-pearl" id="add" aria-label="加一張圖" title="加一張圖">${pearlMd(false)}</button>`}
 function bindWall(){const L=wallList().map(w=>({p:w.src,n:w.n}));$$('.tile').forEach(b=>b.onclick=()=>openLB(L,+b.dataset.k,{go:true,crop:true}));$$('[data-go]').forEach(b=>b.onclick=()=>go('ep-'+b.dataset.go));
  $$('[data-wk]').forEach(b=>b.onclick=()=>{const k=b.dataset.wk,v=b.dataset.wv;WV[k]=k==='g'?+v:v;lsSet('wallv',JSON.stringify(WV));const y=scrollY;render(true);scrollTo(0,y)});
  $('#wvt').onclick=()=>{S.wtOpen=!S.wtOpen;const y=scrollY;render(true);scrollTo(0,y)};$('#add').onclick=()=>{S.addOpen=true;render()};const g=$('#ag');if(g){g.onclick=async()=>{const f=await cropSeq([...$('#af').files]);if(!f.length)return;const n=Math.min(+$('#an').value||0,D.eps.length);S.addOpen=false;await addImages(n,f);render(true)};$('#ac').onclick=()=>{S.addOpen=false;render()}}}
@@ -1647,7 +1688,7 @@ function wdKids(root,seen,d=1){const kids=D.ppl.filter(p=>!seen.has(p.id)&&wdRel
  return `<div class="wd-br">${secs.map(s=>(s?`<div class="wd-sec">${esc(s)}</div>`:'')+kids.filter(k=>k.sec===s).map(k=>wdItem(k,seen,d)).join('')).join('')}</div>`}
 function wdForest(){const seen=new Set(),sp=D.ppl.find(p=>p.rel.some(r=>r.sp));let h='';
  const col=p=>{const t=wdKids(p,seen);return `<div class="wd-col"><button class="wd-hd" onclick="${wdGo(p)}">${wdR(p,84)}${wdTxt(p)}</button>${t?`<i class="wd-el" aria-hidden="true"></i>${t}`:''}</div>`};
- if(sp){const a=wdBy(sp.rel.find(r=>r.sp).to);seen.add(a.id);seen.add(sp.id);h+=`<div class="wd-duo"><span class="wd-tie">夫妻</span>${col(a)}${col(sp)}</div>`}
+ if(sp){const a=wdBy(sp.rel.find(r=>r.sp).to);seen.add(a.id);seen.add(sp.id);h+=`<div class="wd-duo">${spray(96,74,7,'left:-14px;top:30px;transform:scaleX(-1)')}${spray(96,74,41,'right:-14px;top:30px')}<span class="wd-tie">夫妻</span>${col(a)}${col(sp)}</div>`}
  let rest='';for(const p of D.ppl)if(!seen.has(p.id)){seen.add(p.id);rest+=wdItem(p,seen,1,true)}
  return h+`${sp?'<div class="wd-sec wd-more">其他人物</div>':''}<div class="wd-rest">${rest}<div class="wd-it"><button class="wd-n" id="wdAp"><i class="ring mono wd-r" style="--z:38px" aria-hidden="true">＋</i><span><b>新增人物</b></span></button></div></div>`}
 /* map: a nation's marker (mx,my in %) says which region it sits in; tapping a region = tapping that nation. Edit mode: tap the map to place, drag to move, or remove */
@@ -1666,8 +1707,8 @@ function mpView(){const N=D.nations,pl=N.filter(mpN),sel=S.mpSel,sn=N.find(n=>n.
  let st='<p>點地圖上的國家或下面的名單，看這國的資料。</p>';
  if(sn)st=`<p><b>${esc(wdShort(sn))}</b>${sub(sn)}${!mpN(sn)&&S.mpEdit?'<small>點地圖上的位置，放這國的標記</small>':''}${!mpN(sn)&&!S.mpEdit?'<small>還沒放標記；按右上「編輯標記」再放</small>':''}${mpN(sn)&&S.mpEdit?'<small>拖曳標記可以微調位置</small>':''}</p>${mpN(sn)&&S.mpEdit?'<button class="mp-b" id="mpRm">移除標記</button>':''}<button class="mp-b" id="mpGo" data-i="${N.indexOf(sn)}">開啟 ›</button>`;
  else if(sr)st=`<p>這塊地還沒有國家<small>幫它命名＝新增一個王國，標記會放在這塊地上</small></p><button class="mp-b" id="mpNew" data-r="${sr}">＋ 命名這塊</button>`;
- return `<div class="mp-hd"><h3>王國</h3><span><button class="edb" id="mpZ">${S.mpZ?'縮小':'放大'}</button><button class="edb" id="mpE">${S.mpEdit?'完成':'編輯標記'}</button></span></div><div class="mp-vp${S.mpZ?' mp-z':''}${S.mpEdit?' mp-e':''}" id="mpVp"><div class="mp-wrap" id="mpWrap">${svg}${mk}</div></div><div class="mp-st" id="mpSt">${st}</div><div class="mp-lg">${lg}</div><div class="chips" style="margin-top:10px"><button class="chip" id="wdAn">＋ 新增王國</button></div>`}
-function vWorld(){return `<div class="pg wd-w"><div class="hd"><h2 class="logo">人物與王國</h2>${spray(110,70,41,'right:-6px;top:-10px')}</div><div><h3>人物</h3>${wdForest()}</div>
+ return `<h3 class="wd-sh">王國</h3><div class="mp-hd"><span><button class="edb" id="mpZ">${S.mpZ?'縮小':'放大'}</button><button class="edb" id="mpE">${S.mpEdit?'完成':'編輯標記'}</button></span></div><div class="mp-vp${S.mpZ?' mp-z':''}${S.mpEdit?' mp-e':''}" id="mpVp"><div class="mp-wrap" id="mpWrap">${svg}${mk}</div></div><div class="mp-st" id="mpSt">${st}</div><div class="mp-lg">${lg}</div><div class="chips" style="margin-top:10px"><button class="chip" id="wdAn">＋ 新增王國</button></div>`}
+function vWorld(){return `<div class="pg wd-w"><div class="hd"><h2 class="logo">人物與王國</h2><span>${D.ppl.length} 位人物・${D.nations.length} 個王國</span>${spray(110,70,41,'right:-6px;top:-10px')}</div><div><h3 class="wd-sh">人物</h3>${wdForest()}</div>
  <div id="mpBox">${mpView()}</div></div>`}
 function bindWorld(){$('#wdAp').onclick=()=>wdAdd(PK);const box=$('#mpBox'),again=()=>{const y=scrollY,vp=$('#mpVp'),sl=vp?vp.scrollLeft:0,stp=vp?vp.scrollTop:0;box.innerHTML=mpView();bindMp();const v=$('#mpVp');if(v){v.scrollLeft=sl;v.scrollTop=stp}scrollTo(0,y)};
  const bindMp=()=>{const svg=$('.mp-svg'),find=id=>D.nations.find(n=>n.id===id);
@@ -1699,11 +1740,24 @@ function wdOrg(nid){const M=D.ppl.filter(p=>p.g===nid);if(!M.length)return'';con
  rows.sort((a,b)=>a.l-b.l||!!a.s-!!b.s);rows[0].p.sort((a,b)=>!!(inM(a)||{}).sp-!!(inM(b)||{}).sp);
  const node=(p,z)=>{const r=inM(p);return `<button class="wd-o" data-id="${esc(p.id)}"${r?` data-par="${esc(r.to)}"${r.sp?' data-sp="1"':''}`:''} onclick="${wdGo(p)}">${wdR(p,z)}<span><b>${esc(p.name)}</b><small>${esc(p.role||(r&&!r.sp?r.as:''))}</small></span></button>`};
  return `<div class="wd-org" id="wdOrg"><svg class="wd-ln" aria-hidden="true"></svg>${rows.map(r=>`<div class="wd-row${r.l?'':' wd-top'}"${r.s?` data-s="${esc(r.s)}"`:''}>${r.p.map(p=>node(p,r.l?40:64)).join('')}</div>`).join('')}</div>`}
-function wdLines(){const o=$('#wdOrg');if(!o)return;const B=o.getBoundingClientRect(),rows=$$('.wd-row',o),rc=e=>{const r=e.getBoundingClientRect();return{t:r.top-B.top,b:r.bottom-B.top,x:(r.left+r.right)/2-B.left}};let d='';
- for(const c of $$('.wd-o[data-par]',o)){const p=o.querySelector(`.wd-o[data-id="${CSS.escape(c.dataset.par)}"]`);if(!p)continue;const cr=rc(c.querySelector('.ring')),pr=rc(p.querySelector('.ring')),pb=rc(p).b+4;
+function wdLines(){const o=$('#wdOrg');if(!o)return;const rows=$$('.wd-row',o);rows.forEach(r=>r.style.translate='');$$('.wd-o',o).forEach(n=>{n.style.marginLeft='';delete n.dataset.gap});
+ let B=o.getBoundingClientRect();const rc=e=>{const r=e.getBoundingClientRect();return{l:r.left-B.left,r:r.right-B.left,t:r.top-B.top,b:r.bottom-B.top,x:(r.left+r.right)/2-B.left}};
+ const par=c=>o.querySelector(`.wd-o[data-id="${CSS.escape(c.dataset.par)}"]`),rowOf=e=>rows.indexOf(e.parentElement),seen=new Set();
+ /* a line that has to cross a row in between goes through a gap opened in that row, next to where it comes down */
+ for(const c of $$('.wd-o[data-par]',o)){const p=par(c);if(!p||c.dataset.sp)continue;for(let ri=rowOf(p)+1;ri<rowOf(c);ri++){const key=p.dataset.id+'|'+ri;if(seen.has(key))continue;seen.add(key);
+  const px=rc(p.querySelector('.ring')).x,ns=[...rows[ri].children];if(!ns.length||px<=rc(ns[0]).l||px>=rc(ns[ns.length-1]).r)continue;
+  let best=1,bd=1e9;for(let k=1;k<ns.length;k++){const d=Math.abs(rc(ns[k]).l-px);if(d<bd){bd=d;best=k}}ns[best].style.marginLeft='18px';ns[best].dataset.gap=p.dataset.id}}
+ /* a one-line row whose people all hang from the same person sits right under that person */
+ for(let ri=1;ri<rows.length;ri++){const ns=[...rows[ri].children];if(!ns.length)continue;const ps=new Set(ns.map(n=>n.dataset.sp?'':n.dataset.par||''));if(ps.size!==1)continue;const pid=[...ps][0],p=pid&&o.querySelector(`.wd-o[data-id="${CSS.escape(pid)}"]`);if(!p)continue;
+  const a=rc(ns[0]),z=rc(ns[ns.length-1]);if(z.b-a.t>a.b-a.t+4)continue;const px=rc(p.querySelector('.ring')).x;rows[ri].style.translate=`${Math.max(4-a.l,Math.min(o.clientWidth-4-z.r,px-(a.l+z.r)/2)).toFixed(1)}px 0`}
+ B=o.getBoundingClientRect();let d='';
+ for(const c of $$('.wd-o[data-par]',o)){const p=par(c);if(!p)continue;const cr=rc(c.querySelector('.ring')),pr=rc(p.querySelector('.ring')),pb=rc(p).b+4;
   if(c.dataset.sp){d+=`M${pr.x} ${(pr.t+pr.b)/2}H${cr.x}`;continue}
-  const y=cr.t-11,pi=rows.indexOf(p.parentElement),nx=rows[pi+1]?rc(rows[pi+1]).t-11:y;
-  d+=y-nx<4&&y>pb?`M${pr.x} ${pb}V${y}H${cr.x}V${cr.t}`:`M${pr.x} ${pb}V${nx}H3V${y}H${cr.x}V${cr.t}`}
+  const y=cr.t-11,pi=rowOf(p),ci=rowOf(c);if(ci===pi+1){d+=`M${pr.x} ${pb}V${y}H${cr.x}V${cr.t}`;continue}
+  let s=`M${pr.x} ${pb}`,ok=true;for(let ri=pi+1;ri<ci;ri++){const ns=[...rows[ri].children],g=ns.find(n=>n.dataset.gap===p.dataset.id),nx=(ri+1<ci?rc(rows[ri+1]).t:cr.t)-11;
+   if(!g){if(pr.x<rc(ns[0]).l-6||pr.x>rc(ns[ns.length-1]).r+6){s+=`V${nx}`;continue}ok=false;break}
+   s+=`V${rc(rows[ri]).t-11}H${(rc(g.previousElementSibling).r+rc(g).l)/2}V${nx}`}
+  d+=ok?`${s}H${cr.x}V${cr.t}`:`M${pr.x} ${pb}V${rc(rows[pi+1]).t-11}H3V${y}H${cr.x}V${cr.t}`}
  o.querySelector('svg').innerHTML=`<path d="${d}"/>`}
 addEventListener('resize',wdLines);
 /* episodes whose notes mention this person (by name or the other names the build knows). A guess, not a record. */
@@ -1727,11 +1781,15 @@ function vPerson(i){const p=D.ppl[i],g=wdNat(p.g),h=wdNat(p.h);
  <div class="tw-f"><span>關係（填在這位身上，對方那邊會自動出現）</span>${p.rel.map((r,k)=>`<div class="wd-rl"><select class="edi" data-rf="to" aria-label="對方是誰">${D.ppl.filter(o=>o.id!==p.id).map(o=>`<option value="${esc(o.id)}"${o.id===r.to?' selected':''}>${esc(o.name)}</option>`).join('')}</select><button class="chip" data-rd="${k}">移除</button><input class="edi" data-rf="as" value="${esc(r.as)}" placeholder="這位是對方的…（例：秘書）" aria-label="這位是對方的什麼"><input class="edi" data-rf="inv" value="${esc(r.inv||'')}" placeholder="對方是這位的…（可空白）" aria-label="對方是這位的什麼"></div>`).join('')}${D.ppl.length>1?'<button class="tw-next wd-ra" id="wdRa">＋ 加一條關係</button>':''}</div>
  <label class="tw-f"><span>在人物圖上的分區標題（例：情婦）</span><input class="edi" data-f="sec" value="${esc(p.sec)}" placeholder="可空白" aria-label="分區標題"></label>${wdFoot('刪除這位')}</div></div>`;
  const eps=wdEps(p),cut=!S.wdAll&&eps.length>40;
- return wdTop()+`<div class="pg wd-pg">${wdStar(p)}${wdNm(p)}<div class="chips wd-tags">${p.role?`<span class="hn">${esc(p.role)}</span>`:''}${g?`<button class="chip" onclick="${wdGoN(g)}">${esc(wdShort(g))}</button>`:''}${h&&h!==g?`<button class="chip" onclick="${wdGoN(h)}">出身：${esc(wdShort(h))}</button>`:''}</div>
- ${p.x?`<div class="tw-f"><span>${p.px?'今生':'介紹'}</span><p>${esc(p.x)}</p></div>`:''}${p.px?`<div class="tw-f"><span>前世</span><p>${esc(p.px)}</p></div>`:''}
- <div class="tw-f"><span>${eps.length?`出場的話（${eps.length} 話；沒校正過的話是自動比對，可能不準，到單話編輯可改）`:'還沒有出場的話'}</span>${eps.length?`<div class="wd-eps">${(cut?eps.slice(0,40):eps).map(n=>`<button onclick="go('ep-${n}')" aria-label="${nm(n)}">${n>204?'幕'+(n-204):n}</button>`).join('')}${cut?'<button id="wdAll">全部…</button>':''}</div>`:''}</div></div>`}
+ return wdTop()+`<div class="pg wd-pg"><div class="wd-sw">${spray(150,96,13,'left:50%;top:50%;transform:translate(-50%,-38%);opacity:.75')}${wdStar(p)}</div><div class="wd-nmb"><span class="wd-nmw">${spray(62,43,5,'left:0;transform:translateY(-50%) scaleX(-1)')}${spray(62,43,23,'right:0;transform:translateY(-50%)')}<h2 class="wd-nm logo">${esc(p.name)}</h2></span>${p.role?`<span class="wd-role">${esc(p.role)}</span>`:''}</div><div class="chips wd-tags">${g?`<button class="chip" onclick="${wdGoN(g)}">${esc(wdShort(g))}</button>`:''}${h&&h!==g?`<button class="chip" onclick="${wdGoN(h)}">出身：${esc(wdShort(h))}</button>`:''}</div>
+ ${p.x?`<section class="wd-sc"><h3 class="wd-sh">${p.px?'今生':'介紹'}</h3><p>${esc(p.x)}</p></section>`:''}${p.px?`<section class="wd-sc"><h3 class="wd-sh">前世</h3><p>${esc(p.px)}</p></section>`:''}
+ <section class="wd-sc"><h3 class="wd-sh">出場的話次</h3>${eps.length?`<div class="wd-eps">${(cut?eps.slice(0,40):eps).map(n=>`<button onclick="go('ep-${n}')" aria-label="${nm(n)}">${n>204?'幕'+(n-204):n}</button>`).join('')}${cut?'<button id="wdAll">全部…</button>':''}</div>`:'<p>還沒有出場的話次</p>'}</section></div>`}
+/* nation page head: the whole map with this nation's region outlined, the name, its kr/ja/en names, the description */
+function wdNatHead(p){const sub=NL.map(k=>p[k]).filter(Boolean).join(' · '),k=mpN(p)?mpAt(mpPt(p)):null;
+ const mini=k?`<div class="wd-mini"><svg viewBox="${mpV.join(' ')}" aria-hidden="true">${Object.keys(mpG.rg).map(r=>`<path class="mp-r${mpG.un.includes(r)?' mp-u':''}" fill-rule="evenodd" d="${mpG.rg[r]}"/>`).join('')}${mpG.bd.map(d=>`<path class="mp-bd" d="${d}"/>`).join('')}<path class="mp-sl" fill-rule="evenodd" d="${mpG.rg[k]}"/></svg></div>`:'';
+ return `<div class="wd-nat${mini?'':' wd-nomap'}">${mini}<div><h2 class="logo">${esc(wdShort(p))}${spray(62,43,23,'')}</h2>${sub?`<small>${esc(sub)}</small>`:''}<p>${esc(p.x||'這國還沒有資料。')}</p></div></div>`}
 function vNation(i){const p=D.nations[i],from=D.ppl.filter(q=>q.h===p.id&&q.g!==p.id),org=wdOrg(p.id);
- return wdTop()+`<div class="pg wd-pg">${wdNm(p)}${S.wdEdit?`<div id="wdBox"><label class="tw-f" style="margin-top:0"><span>國名</span><input class="edi" data-f="n" value="${esc(p.name)}" aria-label="國名"></label>${[['kr','韓文名'],['ja','日文名'],['en','英文名']].map(([f,l])=>`<label class="tw-f"><span>${l}</span><input class="edi" data-f="${f}" value="${esc(p[f]||'')}" placeholder="可空白" aria-label="${l}"${f==='ja'?' lang="ja"':f==='kr'?' lang="ko"':''}></label>`).join('')}<label class="tw-f"><span>說明</span><textarea class="eta" data-f="x" rows="2" placeholder="可空白" aria-label="說明">${esc(p.x)}</textarea></label>${wdFoot('刪除這國')}</div>`:`<p style="margin:0">${esc(p.x||'這國還沒有資料。')}</p>${org?`<div class="tw-f"><span>這國的人</span>${org}</div>`:''}${from.length?`<div class="tw-f"><span>出身這國，現在在別處</span><div class="wd-rest wd-from">${from.map(q=>`<div class="wd-it"><button class="wd-n" onclick="${wdGo(q)}">${wdR(q,38)}${wdTxt(q)}</button></div>`).join('')}</div></div>`:''}`}</div>`}
+ return wdTop()+`<div class="pg wd-pg${S.wdEdit?'':' wd-npg'}">${S.wdEdit?wdNm(p):''}${S.wdEdit?`<div id="wdBox"><label class="tw-f" style="margin-top:0"><span>國名</span><input class="edi" data-f="n" value="${esc(p.name)}" aria-label="國名"></label>${[['kr','韓文名'],['ja','日文名'],['en','英文名']].map(([f,l])=>`<label class="tw-f"><span>${l}</span><input class="edi" data-f="${f}" value="${esc(p[f]||'')}" placeholder="可空白" aria-label="${l}"${f==='ja'?' lang="ja"':f==='kr'?' lang="ko"':''}></label>`).join('')}<label class="tw-f"><span>說明</span><textarea class="eta" data-f="x" rows="2" placeholder="可空白" aria-label="說明">${esc(p.x)}</textarea></label>${wdFoot('刪除這國')}</div>`:`${wdNatHead(p)}${org?`<section><h3 class="wd-sh">這國的人</h3>${org}</section>`:''}${from.length?`<section><h3 class="wd-sh">出身這國，現在在別處</h3><div class="wd-rest wd-from">${from.map(q=>`<div class="wd-it"><button class="wd-n" onclick="${wdGo(q)}">${wdR(q,38)}${wdTxt(q)}</button></div>`).join('')}</div></section>`:''}`}</div>`}
 /* person / nation page: each field saves when you leave it */
 function bindWd(r,n){const P=r==='person',K=P?PK:NK,id=(P?D.ppl:D.nations)[n].id,cur=()=>(P?D.ppl:D.nations).find(x=>x.id===id),redraw=()=>{const y=scrollY;render(true);scrollTo(0,y)};
  $('#wdE').onclick=()=>{document.activeElement?.blur?.();S.wdEdit=!S.wdEdit;redraw()};
