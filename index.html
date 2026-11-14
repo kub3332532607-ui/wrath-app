@@ -357,6 +357,35 @@ h3{margin:0 0 8px;font-family:var(--t);font-size:1.02rem;font-weight:400;color:v
 .tart{display:block;width:100%;height:auto;overflow:visible;filter:drop-shadow(0 4px 14px rgba(9,13,60,.5))}
 .mode{display:grid;place-items:center;width:36px;height:36px;margin:-6px -6px -6px auto;border-radius:50%;color:var(--mute)}
 .mode:hover{color:var(--fg)}
+.ord-b{margin:-6px 0 -6px auto}.ord-b+.mode{margin-left:0}.ord-b.on{color:var(--goldt)}
+.rv-at{display:block;margin-top:6px;text-align:right;font-family:var(--t);font-size:.74rem;letter-spacing:.06em;color:var(--mute);opacity:.6}
+.ev-h{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px}
+.ev-st{display:inline-block;font-style:normal;font-family:var(--b);font-size:.72rem;letter-spacing:.06em;padding:0 9px;border-radius:99px;border:1px solid var(--gold);color:#8a6a1f;line-height:1.7}
+[data-mode=dark] .ev-st{color:var(--goldt)}
+.ev-lk{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:10px}
+.ev-c{min-height:44px;background:#fffaf0;border-color:#cdbb92;color:#5a3fa0;font-size:.82rem;cursor:pointer}
+[data-mode=dark] .ev-c{background:#37345a;border-color:#6d6390;color:#e5deef}
+.ev-add{display:block;width:100%;min-height:48px;margin-top:18px;border:1px dashed var(--gold);border-radius:12px;color:#8a6a1f;font-family:var(--t);letter-spacing:.08em}
+[data-mode=dark] .ev-add{color:var(--goldt)}
+.ev-date{font-family:var(--t);font-size:1.1rem;color:#847096;letter-spacing:.04em}
+[data-mode=dark] .ev-date{color:#d4bde7}
+.ev-cal{padding:20px 22px}
+.ev-mh{display:flex;align-items:center;justify-content:space-between}.ev-mh b{font-family:var(--t);font-weight:400;font-size:1.2rem;letter-spacing:.08em}
+.ev-mb{width:44px;height:44px;border-radius:50%;font-size:1.3rem;color:inherit}
+.ev-wk,.ev-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));text-align:center}
+.ev-wk{margin-top:6px;font-size:.75rem;opacity:.7;border-bottom:1px solid #85768c40;padding-bottom:4px}
+.ev-day{position:relative;min-height:46px;padding-top:4px;border-bottom:1px solid #85768c22}.ev-day i{font-style:normal;font-family:var(--t);font-size:.92rem;opacity:.8}
+.ev-has{cursor:pointer}.ev-has i{color:#8a6a1f;opacity:1}[data-mode=dark] .ev-has i{color:var(--goldt)}
+.ev-td i{display:inline-grid;place-items:center;min-width:26px;height:26px;border-radius:50%;box-shadow:0 0 0 1px var(--gold)}
+.ev-bar{display:block;height:5px;margin:3px 0 0;background:color-mix(in srgb,var(--gold) 75%,transparent)}.ev-bar.ev-s{margin-left:20%;border-radius:4px 0 0 4px}.ev-bar.ev-e{margin-right:20%;border-radius:0 4px 4px 0}.ev-bar.ev-s.ev-e{border-radius:4px}
+.ev-ml{display:grid;gap:4px;margin-top:16px}
+.ev-mi{padding:12px 0;border-top:1px solid #85768c40;display:grid;gap:2px;transition:background .3s}.ev-mi b{font-family:var(--t);font-weight:400}.ev-mi small{opacity:.8}
+.ev-hi{background:color-mix(in srgb,var(--gold) 22%,transparent)}
+.ev-none{opacity:.6}
+.ev-nx{justify-self:start;min-height:44px;padding:0;text-align:left;color:#5a3fa0}[data-mode=dark] .ev-nx{color:#d4bde7}
+.ev-f .tw-f>span{color:inherit;opacity:.75}.ev-f .edi{color:inherit;border-bottom-color:#85768c80}.ev-f select.edi{color:inherit}.ev-f select.edi option{color:#32344c}
+.ev-err{margin:8px 0 0;min-height:1.2em;font-size:.86rem;color:#b4452f}[data-mode=dark] .ev-err{color:#ff9d86}
+.ev-del{color:#b4452f}[data-mode=dark] .ev-del{color:#ff9d86}
 .mode svg{width:22px;height:22px}
 .pf{position:relative;padding:0 18px 12px}
 .pav{position:relative;z-index:3;box-shadow:0 0 0 2px var(--gold),0 0 0 6px var(--solid);border-radius:50%;display:grid;place-items:center;overflow:hidden;float:none;width:clamp(104px,28vw,168px);height:clamp(104px,28vw,168px);margin:8px 0 8px 4px;padding:0;cursor:pointer}
@@ -681,23 +710,33 @@ select.edi[hidden]{display:none}
 .se-sp{display:flex;text-align:left;min-height:44px;align-items:center;padding:0}
 .se-spc{margin:2px 0 6px}
 .xl-qi{font-family:"QT",var(--b);color:var(--fg)}
-.fd-box{position:relative;display:flex;align-items:center;gap:10px;margin:14px 12px 18px;padding:0 16px;min-height:48px;border-radius:99px;background:var(--glass);border:1px solid var(--line);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--gold) 22%,transparent)}
+.fd-pg{gap:14px;padding-top:calc(66px + env(safe-area-inset-top,0px))}
+.fd-box{position:relative;display:flex;align-items:center;gap:10px;margin:0;padding:0 16px;min-height:48px;border-radius:99px;background:var(--glass);border:1px solid var(--line);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--gold) 22%,transparent)}
 .fd-box:focus-within{border-color:color-mix(in srgb,var(--gold) 70%,transparent)}
 .fd-ic{flex:none;width:20px;height:20px;color:var(--goldt)}
 .fd-in{flex:1;min-width:0;min-height:46px;background:transparent;border:0;outline:0;font-size:16px;color:var(--fg)}
 .fd-in::placeholder{color:var(--mute);opacity:.85}
 .fd-in::-webkit-search-cancel-button{filter:grayscale(1)}
-.fd-sum{margin:0 14px 10px;color:var(--mute);font-size:.88rem}.fd-sum b{color:var(--goldt);font-weight:400;font-family:var(--t)}
-.wtool.fd-wt{margin:0 12px 18px;grid-template-columns:minmax(0,1fr)}.fd-wt .seg2 button{flex:1 1 0;min-width:0;padding:0 2px;letter-spacing:.02em}
+.fd-sum{margin:6px 6px 0;color:var(--mute);font-size:.88rem}.fd-sum b{color:var(--goldt);font-weight:400;font-family:var(--t)}
+.fd-mb{min-height:44px}
+.fd-hint{margin:10px 6px;color:var(--mute);font-size:.9rem}
+.wtool.fd-wt{margin:0;grid-template-columns:minmax(0,1fr)}.fd-wt .seg2 button{flex:1 1 0;min-width:0;padding:0 2px;letter-spacing:.02em}
+.fd-sec{display:grid;gap:14px}
+.fd-sh{display:flex;align-items:center;gap:16px;margin:12px 0 0;font-family:var(--t);font-weight:400;font-size:1rem;letter-spacing:.3em;color:var(--goldt)}
+.fd-sh::before,.fd-sh::after{content:"";flex:1;height:1px;background:color-mix(in srgb,var(--gold) 55%,transparent)}
+.fd-sh b{margin-left:.7em;font-weight:400;letter-spacing:.08em}
+.fd-hits{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+@media (min-width:900px){.fd-pg{padding-top:calc(22px + env(safe-area-inset-top,0px))}.fd-hits{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.fd-hit{display:grid;gap:8px;padding:16px 18px;cursor:pointer;min-height:44px}
+.fd-hit p{margin:0;font-size:15px;line-height:1.85;color:var(--mute);overflow-wrap:anywhere}
+.fd-hit .fd-qt{color:var(--fg)}
+.fd-hh{display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;min-height:26px;color:var(--mute)}
 .fd-m{background:color-mix(in srgb,var(--gold) 34%,transparent);color:inherit;border-radius:3px;padding:0 1px}
-.fd-hl{list-style:none;margin:0;padding:0;display:grid;gap:9px}
-.fd-hl li{font-size:15px;line-height:1.8;color:var(--mute);overflow-wrap:anywhere}
-.fd-hl .tg{vertical-align:1px}
-.fd-via{margin-right:6px;font-size:.74rem;color:var(--mute);opacity:.85}
-.fd-qt{font-family:"QT",var(--b);color:var(--fg)}
-.fd-sp{display:inline-flex;align-items:center;gap:5px;margin-right:6px;vertical-align:-6px}.fd-sp b{font-weight:400;font-size:.8rem;color:var(--mute);margin-right:4px}
-.fd-more{display:block;margin-top:10px;font-size:.84rem;color:var(--acc)}
-.fd-wd{display:flex;flex-wrap:wrap;gap:10px;margin:0 12px 22px}
+.fd-via{font-size:.74rem;color:var(--mute);opacity:.85}
+.fd-qt{font-family:"QT",var(--b)}
+.fd-sp{display:inline-flex;align-items:center;gap:8px}.fd-sp b{font-weight:400;font-size:.95rem;color:var(--mute)}
+.fd-go{font-family:var(--t);font-size:.9rem;color:var(--acc)}
+.fd-wd{display:flex;flex-wrap:wrap;gap:10px}
 .fd-wdi{display:flex;align-items:center;gap:10px;min-height:52px;padding:6px 16px 6px 6px;border-radius:99px;background:var(--glass);border:1px solid var(--line);text-align:left}
 .fd-wdi span{display:grid;line-height:1.35}.fd-wdi small{color:var(--mute);font-size:.76rem}
 .qv-z{margin:0;font-family:"QT",var(--b);white-space:pre-wrap;overflow-wrap:anywhere}
@@ -1142,7 +1181,7 @@ async function dbGet(k){try{const d=await db();return await new Promise((ok,no)=
 async function dbSet(k,v){try{const d=await db();await new Promise((ok,no)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error)})}catch(e){}}
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
 /* private repo: this page holds no notes or pictures, they are read with the device's key */
-const BASE='data/base-4cdad7f21122.json',VER='2026.11.14 21:42 · 610804a';
+const BASE='data/base-9493b8ad21a3.json',VER='2026.11.14 22:54 · 9d6dc6b';
 let CFG=null,TK=lsGet('tk');
 const api=(p,o={})=>fetch(`${CFG.api??'https://api.github.com'}/repos/${CFG.owner}/${CFG.repo}/contents/${p}`,{cache:'no-store',...o,headers:{Authorization:`Bearer ${TK}`,...o.headers}});
 const rawGet=p=>api(p,{headers:{Accept:'application/vnd.github.raw+json'}});
@@ -1228,18 +1267,18 @@ function titleArt(){const R=rng(7),C=['#ffffff','#eeeaff','#ffffff','#dcdcff','#
  <text font-family="JP,var(--t)" font-size="41" letter-spacing="2" fill="none" style="stroke:var(--hr-ro)" stroke-width="6" stroke-linejoin="round"><textPath href="#rt" startOffset="50%" text-anchor="middle">お求めいただいた暴君陛下の悪女です</textPath></text>
  <text font-family="JP,var(--t)" font-size="41" letter-spacing="2" fill="url(#jg)"><textPath href="#rt" startOffset="50%" text-anchor="middle">お求めいただいた暴君陛下の悪女です</textPath></text></svg>`}
 function hero(){return `<header class="hero"><img src="${D.cover}" alt="Emperor 與 Wrath 愣住的表情"><div class="ht"><h1><span class="hr-wrap"><img class="hr-wm" src="img/84a0ea885c08f7b1.png" alt="">${titleArt()}${spray(96,74,7,'left:1%;bottom:4%;transform:scaleX(-1)')}${spray(96,74,41,'right:1%;bottom:4%')}${spray(120,150,13,'left:-150px;transform:scaleX(-1)').replace('class="fl"','class="fl hr-side"')}${spray(120,150,29,'right:-150px').replace('class="fl"','class="fl hr-side"')}</span></h1></div></header>`}
-function vHome(){const vis=D.eps.filter(e=>e.st!=='todo'&&!hidden(e.n)).reverse(),hid=D.eps.filter(e=>e.st!=='todo'&&hidden(e.n)).length,todo=D.eps.filter(e=>e.st==='todo'&&!hidden(e.n)),la=latestAv();let prev=null;
+function vHome(){const vis=ordList(D.eps.filter(e=>e.st!=='todo'&&!hidden(e.n))),hid=D.eps.filter(e=>e.st!=='todo'&&hidden(e.n)).length,todo=D.eps.filter(e=>e.st==='todo'&&!hidden(e.n)),la=latestAv();let prev=null;
  const rows=vis.slice(0,S.shown).map(e=>{const h=post(e,prev);prev=tail(e)||prev;return h}).join('');
  return `<div class="col"><div class="pf"><div class="pfc"><div class="pfh"><button class="pav" id="pav" aria-label="打開選單" aria-haspopup="dialog">${la?`<img src="${la}" alt="目前頭像">`:`<svg viewBox="-20 -20 40 40" aria-hidden="true">${lily(0,0,18)}</svg>`}</button>
  ${S.synE?`<div class="sy-w"><textarea class="eta bio sy-t" id="syT" rows="4" aria-label="主頁簡介">${esc(D.synopsis)}</textarea><div class="sy-r">${D.synopsis!==BY?'<button class="chip" id="syR">恢復原文</button>':''}<button class="edb" id="syE">完成</button></div></div>`:`<div class="sy-w"><p class="bio">${esc(D.synopsis)}</p><div class="sy-r"><button class="edb" id="syE">編輯簡介</button></div></div>`}</div>
- <p class="fo"><span><b>204</b> 話第一部　<b>${D.eps.length-205}</b> 話幕間　<b>${D.noted}</b> 話已寫</span><button class="mode" id="mode" aria-label="切換成${document.documentElement.dataset.mode==='light'?'夜':'日'}版" title="切換成${document.documentElement.dataset.mode==='light'?'夜':'日'}版"><svg viewBox="0 0 256 256" fill="currentColor">${document.documentElement.dataset.mode==='light'?ICON.moon:ICON.sun}</svg></button></p></div>
+ <p class="fo"><span><b>204</b> 話第一部　<b>${D.eps.length-205}</b> 話幕間　<b>${D.noted}</b> 話已寫</span>${ordBtn()}<button class="mode" id="mode" aria-label="切換成${document.documentElement.dataset.mode==='light'?'夜':'日'}版" title="切換成${document.documentElement.dataset.mode==='light'?'夜':'日'}版"><svg viewBox="0 0 256 256" fill="currentColor">${document.documentElement.dataset.mode==='light'?ICON.moon:ICON.sun}</svg></button></p></div>
  ${aboutBlock()}
  <div class="brace"><span id="bw">${bracelet(braceFull())}</span><input id="rd" type="range" min="0" max="${D.eps.length-1}" value="${Math.min(S.read,D.eps.length-1)}" aria-label="我目前讀到第幾話"${LOCK?' disabled title="已固定在最新話，可到設定解除"':''}></div><div class="rl" id="rl">${rdl()}</div></div>
- ${fdBox()}<div class="tl" id="fdtl">
- ${FD.q.trim()?fdHome():`${hid?`<div class="spo">防劇透：${hid} 話已收起</div>`:''}${rows}${vis.length>S.shown?`<button class="pillb more" id="mr">再看 30 話</button>`:''}`}</div></div>`}
+ <div class="tl">
+ ${hid?`<div class="spo">防劇透：${hid} 話已收起</div>`:''}${rows}${vis.length>S.shown?`<button class="pillb more" id="mr">再看 30 話</button>`:''}</div></div>`}
 // bracelet is full when the reader reaches the newest episode in the data (incl. interludes), per user 2026-11-11
 function braceFull(){const last=Math.max(1,D.eps.length-1);return Math.min(S.read,last)/last}
-function bindHome(){$('#mode').onclick=toggleMode;fdBind();
+function bindHome(){$('#mode').onclick=toggleMode;$('#ord').onclick=ordFlip;
  const se=$('#syE'),stx=$('#syT'),redo=()=>{const y=scrollY;render(true);scrollTo(0,y)};
  if(stx){grow(stx);stx.oninput=()=>grow(stx);stx.onchange=()=>synSave(stx.value)}
  se.onclick=()=>{if(S.synE&&stx)synSave(stx.value);S.synE=!S.synE;redo()};const sr=$('#syR');if(sr)sr.onclick=()=>{synSave('');S.synE=false;redo()};
@@ -1253,7 +1292,7 @@ function vEp(n){const e=D.eps[n],hide=hidden(n)&&e.st!=='todo',edit=!hide&&(S.ed
  if(edit)return `<div class="col">${head}${edBody(e,n)}</div>`;
  /* summary card, then the thread: first reaction, the episode's pictures, the rest of the reactions — each hung on the chain */
  const qs=(e.qt||[]).map((q,k)=>({...q,k})),xq=f=>qvItems(qs.filter(q=>f(q.a)),n),ph=pics.map(s=>`<figure class="eg-photo eg-glass"><img src="${s}" alt="${nm(n)}的圖"><figcaption>${nm(n)}附圖</figcaption></figure>`),
- items=r.length?[...r.flatMap((x,i)=>[...xq(a=>a===i),egNote(x),...(i?[]:ph)]),...xq(a=>a>=r.length)]:[...xq(()=>true),...ph];
+ items=r.length?[...r.flatMap((x,i)=>[...xq(a=>a===i),egNote(x,rvShow(e,i)),...(i?[]:ph)]),...xq(a=>a>=r.length)]:[...xq(()=>true),...ph];
  return `<div class="col">${head}<article class="eg-summary eg-glass">${EGC}
  ${(()=>{const L=e.su?e.su.split(String.fromCharCode(10)).filter(Boolean):e.pl;return L.length?L.map(x=>`<p class="bd2 full">${lk(x)}</p>`).join(''):'<p class="bd2 full" style="color:var(--mute)">這話還沒寫。</p>'})()}
  ${castBlock(n)}${EGC2}</article>
@@ -1268,7 +1307,11 @@ const egNode=(i,c)=>`<div class="eg-node"><span class="eg-pearl">${egJewel(i)}</
 function lk(t){return esc(t).replace(/(?<![0-9])(第\s*)?(\d{1,3}(?:\s*[、，,~～]\s*\d{1,3})*)(\s*話)/g,(m,a,ns,z)=>{const p=ns.split(/(\s*[、，,~～]\s*)/),L=p.length-1;return p.map((x,j)=>{if(j%2)return x;const k=+x,lab=(j===0?a||'':'')+x+(j===L?z:'');return k<D.eps.length?`<a class="xl-l" href="#ep-${k}">${lab}</a>`:lab}).join('')})}
 /* who says a quote: E.eps[n].qs[index] (list of person ids, set in the episode edit view) wins over the built-in guess q.sp */
 const qsOf=(n,k,q)=>{const x=E.eps[n];return x&&x.qs&&Array.isArray(x.qs[k])?x.qs[k]:(q.sp||[])};
-const egNote=x=>`<article class="eg-note eg-glass">${x.l?'<span class="tg">回頭補</span>':''}${x.x?`<p>${lk(x.x)}</p>`:''}${twIm(x.im)}</article>`;
+/* rv-: small added-date on a reaction card (episode page only). Shown when it was added later than the first one written: see 重讀_定案.md */
+const rvDay=ms=>{const t=new Date(ms);return t.getFullYear()*10000+(t.getMonth()+1)*100+t.getDate()};
+const rvFmt=ms=>{const t=new Date(ms),p=v=>String(v).padStart(2,'0');return String(t.getFullYear()).slice(2)+'/'+p(t.getMonth()+1)+'/'+p(t.getDate())};
+function rvShow(e,i){const x=e.rx[i];if(!x||!x.d)return false;if(e.rx.some(r=>!r.d))return true;return rvDay(x.d)>rvDay(Math.min(...e.rx.map(r=>r.d)))}
+const egNote=(x,rv)=>`<article class="eg-note eg-glass">${x.l?'<span class="tg">回頭補</span>':''}${x.x?`<p>${lk(x.x)}</p>`:''}${twIm(x.im)}${rv?`<span class="rv-at">${rvFmt(x.d)}</span>`:''}</article>`;
 /* the chain sways and carries the panes with it: a controlled motion (top fixed, lower links lag, capped amplitude), not a physics engine */
 const EG={links:[],nodes:[],tail:null,len:0,clock:0,prev:0,nudge:-100,raf:0,th:null,ro:null},egRM=matchMedia('(prefers-reduced-motion: reduce)');
 function egDisp(y){if(egRM.matches)return 0;const amp=innerWidth<600?5:9,depth=1-Math.exp(-y/210),lag=Math.min(y/1500,1.2),age=EG.clock-EG.nudge,pulse=age<10?Math.exp(-age/2.5)*Math.sin(age*3.2-lag)*amp*.7:0;return depth*(amp*.65*Math.sin(EG.clock*.85-lag)+pulse)}
@@ -1355,7 +1398,7 @@ function persist(){lsSet('edits',JSON.stringify(E));lsSet('dirty',JSON.stringify
 function touch(){dirty=true;gen++;clearTimeout(_ps);_ps=setTimeout(persist,300);sync('存在這台，等待上傳…');clearTimeout(_pt);_pt=setTimeout(push,4000)}
 function setRead(v){if(LOCK)return;S.read=v;E.read={v,t:Date.now()};touch()}
 /* arc, people and nation edits (kinds['@arc:…'], ['@ppl:…'], ['@nat:…']) go by time like episodes; any other field this version doesn't know is kept */
-function merge(r,l){if(!r)return l;const eps={...r.eps};for(const k in l.eps)if(!eps[k]||(l.eps[k].t||0)>=(eps[k].t||0))eps[k]=l.eps[k];const rk=r.kinds||{},lk=l.kinds||{},kinds={...rk,...lk};for(const k in rk)if(/^@(arc|ppl|nat):|^@home$/.test(k)&&lk[k]&&((rk[k]&&rk[k].t)||0)>((lk[k]&&lk[k].t)||0))kinds[k]=rk[k];return{...r,...l,eps,kinds,read:!r.read||(l.read&&l.read.t>=r.read.t)?l.read:r.read}}
+function merge(r,l){if(!r)return l;const eps={...r.eps};for(const k in l.eps)if(!eps[k]||(l.eps[k].t||0)>=(eps[k].t||0))eps[k]=l.eps[k];const rk=r.kinds||{},lk=l.kinds||{},kinds={...rk,...lk};for(const k in rk)if(/^@(arc|ppl|nat|ev):|^@home$/.test(k)&&lk[k]&&((rk[k]&&rk[k].t)||0)>((lk[k]&&lk[k].t)||0))kinds[k]=rk[k];return{...r,...l,eps,kinds,read:!r.read||(l.read&&l.read.t>=r.read.t)?l.read:r.read}}
 /* status line */
 function sync(t,sticky){const y=$('#sy');if(!y)return;y.textContent=t;y.classList.toggle('on',!!t);y.classList.toggle('bad',!!sticky);clearTimeout(sync.t);if(t&&t==='已同步')sync.t=setTimeout(()=>y.classList.remove('on'),1800)}
 /* base64 */
@@ -1401,12 +1444,12 @@ const lastWritten=()=>{for(let n=D.eps.length-1;n>=0;n--)if(D.eps[n].st!=='todo'
 const twIm=(im,ed)=>im&&im.length?`<div class="tw-g n${Math.min(im.length,4)}">${im.map((s,j)=>`<div class="tw-c"><img src="${s}" alt="" loading="lazy">${ed?`<button class="tw-x" data-x="${j}" aria-label="移除這張">×</button>`:''}</div>`).join('')}</div>`:'';
 /* the chain as one list: quotes with a===i come just before reaction i, the ones with a>=count at the end (same order as the episode page) */
 const seRows=(e,n)=>{const r=e.rx,q=(e.qt||[]).map((x,k)=>({t:'q',x:x.x,a:x.a,sp:[...qsOf(n,k,x)]})),o=[];
- r.forEach((x,i)=>{o.push(...q.filter(z=>z.a===i),{t:'r',x:x.x,l:!!x.l,im:x.im?[...x.im]:[]})});o.push(...q.filter(z=>z.a>=r.length));return o};
-const seBlank=t=>t==='q'?{t:'q',x:'',sp:[]}:{t:'r',x:'',l:false,im:[]};
+ r.forEach((x,i)=>{o.push(...q.filter(z=>z.a===i),{t:'r',x:x.x,l:!!x.l,im:x.im?[...x.im]:[],...(x.d?{d:x.d}:{})})});o.push(...q.filter(z=>z.a>=r.length));return o};
+const seBlank=t=>t==='q'?{t:'q',x:'',sp:[]}:{t:'r',x:'',l:false,im:[],nw:true};
 const seNe=r=>r.x||(r.im&&r.im.length);
 const seSpk=(n,r)=>{const sel=r.sp,ids=[...new Set([...sel,...epCast(n).map(p=>p.id)])].map(wdBy).filter(Boolean);return ids.length?`<div class="chips se-spc">${ids.map(p=>`<button type="button" class="chip ec-c" data-spk="${esc(p.id)}" aria-pressed="${sel.includes(p.id)}">${wdR(p,24)}<span>${esc(p.name)}</span></button>`).join('')}</div>`:'<p class="hn">先到上面「人物」勾這話的出場人物，才能選說話者。</p>'};
 const seRow=(r,i,all,n)=>{const q=r.t==='q',c=S.cur&&S.cur.n===n&&S.cur.i===i,L=q?r.sp.map(wdBy).filter(Boolean):[],last=i===all.length-1;
- return `<div class="re se-i${c?' on':''}" data-t="${r.t}" data-i="${i}"${q?` data-sps="${esc(JSON.stringify(r.sp))}"`:` data-im="${esc(JSON.stringify(r.im||[]))}"`}><div class="av">${PRL}${!last?'<i class="ln"></i>':''}</div><div class="se-c">
+ return `<div class="re se-i${c?' on':''}" data-t="${r.t}" data-i="${i}"${q?` data-sps="${esc(JSON.stringify(r.sp))}"`:` data-im="${esc(JSON.stringify(r.im||[]))}"${r.d?` data-d="${r.d}"`:''}${r.nw?' data-nw="1"':''}`}><div class="av">${PRL}${!last?'<i class="ln"></i>':''}</div><div class="se-c">
  ${q?`<button type="button" class="xl-sp se-sp" data-act="sp" aria-label="選說話者">${L.length?L.map(p=>`<span class="xl-s">${wdR(p,30)}<b>${esc(p.name)}</b></span>`).join(''):'<span class="hn">說話者（點這裡選）</span>'}</button>${c&&S.cur.sp?seSpk(n,r):''}`:(r.l?'<span class="tg">回頭補</span>':'')}
  <textarea class="eta ${q?'qxi xl-qi':'rxi'}" rows="1" data-l="${r.l?1:''}" placeholder="${q?'台詞打在這裡':i?'接著寫…':'吐槽打在這裡，可以換行；推文整段貼上也行'}" aria-label="第${i+1}則${q?'台詞':'吐槽'}">${esc(r.x)}</textarea>${q?'':twIm(r.im,true)}
  <div class="se-mn" role="group" aria-label="這一則的操作"><button type="button" class="se-b" data-act="up" aria-label="往上移"${i?'':' disabled'}>↑</button><button type="button" class="se-b" data-act="dn" aria-label="往下移"${last?' disabled':''}>↓</button>${q?'':(r.im||[]).length<4?`<label class="se-b tw-b">加圖<input type="file" accept="image/*" multiple aria-label="替第${i+1}則加圖"></label>`:''}<button type="button" class="se-b" data-act="typ">改類型</button><button type="button" class="se-b" data-act="del">刪除</button></div></div></div>`};
@@ -1430,9 +1473,12 @@ function edBody(e,n){let rows=seRows(e,n);const d=S.draft;if(d&&d.n===n)rows.spl
 /* a pasted post: drop the hashtag line and the t.co links X adds */
 const cleanPaste=s=>s.replace(/^\s*#\S+(\s+#?\d+)?[ \t]*\n/,'').replace(/\s*https:\/\/t\.co\/\w+/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').trim();
 const grow=t=>{t.style.height='auto';t.style.height=t.scrollHeight+'px'};
-const seRead=()=>$$('#edr .re').map(el=>{const t=el.dataset.t,a=el.querySelector('textarea'),v=a.value.trim();return t==='q'?{t,x:v,sp:JSON.parse(el.dataset.sps||'[]')}:{t,x:v,l:a.dataset.l==='1',im:JSON.parse(el.dataset.im||'[]')}});
+const seRead=()=>$$('#edr .re').map(el=>{const t=el.dataset.t,a=el.querySelector('textarea'),v=a.value.trim();if(t==='q')return {t,x:v,sp:JSON.parse(el.dataset.sps||'[]')};const im=JSON.parse(el.dataset.im||'[]');
+ /* rv-: a reaction typed fresh in this edit session (data-nw) gets its added-time the first time it has content; it is then kept on the row */
+ if(el.dataset.nw==='1'&&(v||im.length)&&!el.dataset.d){el.dataset.d=Date.now();el.removeAttribute('data-nw')}
+ return {t,x:v,l:a.dataset.l==='1',im,...(el.dataset.d?{d:+el.dataset.d}:{}),...(el.dataset.nw==='1'?{nw:true}:{})}});
 /* write the list back: reactions in order, quotes with their position and speakers. Quotes are only written when something about them differs from what the episode already has. */
-function seWrite(n,x,rows){rows=rows.filter(seNe);x.rx=rows.filter(r=>r.t==='r').map(r=>({x:r.x,l:!!r.l,...(r.im&&r.im.length?{im:[...r.im]}:{})}));
+function seWrite(n,x,rows){rows=rows.filter(seNe);rows.forEach(r=>{if(r.t==='r'&&r.nw&&!r.d)r.d=Date.now()});x.rx=rows.filter(r=>r.t==='r').map(r=>({x:r.x,l:!!r.l,...(r.im&&r.im.length?{im:[...r.im]}:{}),...(r.d?{d:r.d}:{})}));
  let c=0;const qt=[],qs={};for(const r of rows){if(r.t==='r')c++;else{qs[qt.length]=[...r.sp];qt.push({a:c,x:r.x})}}
  const base=(BE[n]&&BE[n].qt)||[],eff=k=>x.qs&&Array.isArray(x.qs[k])?x.qs[k]:(base[k]&&base[k].sp)||[];
  const same=!x.qt&&qt.length===base.length&&qt.every((q,k)=>q.a===Math.min(base[k].a,c)&&q.x===base[k].x&&JSON.stringify(qs[k])===JSON.stringify(eff(k)));
@@ -1490,7 +1536,7 @@ function bindEdit(n){const t=$('#edt');if(t)t.onclick=()=>{const on=$('.edm');if
   if(!b)return;const a=b.dataset.act;
   if(a==='sp'){commit(rows,cur,!(S.cur&&S.cur.n===n&&S.cur.i===i&&S.cur.sp));return}
   if(a==='up'||a==='dn'){const j=i+(a==='up'?-1:1);if(j<0||j>=rows.length)return;[rows[i],rows[j]]=[rows[j],rows[i]];commit(rows,cur);return}
-  if(a==='typ'){if(cur.t==='r'){if((cur.im||[]).length){alert('這則吐槽有圖，台詞不能放圖。請先移除圖，再改類型。');return}rows[i]={t:'q',x:cur.x,sp:[]}}else rows[i]={t:'r',x:cur.x,l:false,im:[]};commit(rows,rows[i]);return}
+  if(a==='typ'){if(cur.t==='r'){if((cur.im||[]).length){alert('這則吐槽有圖，台詞不能放圖。請先移除圖，再改類型。');return}rows[i]={t:'q',x:cur.x,sp:[]}}else rows[i]={t:'r',x:cur.x,l:false,im:[],nw:true};commit(rows,rows[i]);return}
   if(a==='del'){if(seNe(cur)&&!confirm(cur.t==='q'?'刪掉這則台詞？':'刪掉這則吐槽和它的圖？'))return;rows.splice(i,1);commit(rows,rows[Math.max(0,i-1)]);return}});
  r.addEventListener('change',async e=>{const f=e.target;if(f.type!=='file'||!f.files.length)return;const i=idx(f),fs=await cropSeq([...f.files].slice(0,4));f.value='';if(!fs.length)return;let fail=0,ps=[];for(const fl of fs){try{ps.push(await storeImg(await shrink(fl)))}catch(_){fail++}}
   const rows=seRead(),cur=rows[i];cur.im=[...(cur.im||[]),...ps.filter(p=>!(cur.im||[]).includes(p))].slice(0,4);commit(rows,cur);if(n>S.read)setRead(n);if(fail)sync(`有 ${fail} 張圖讀不出來，換成 JPG 或 PNG 再試`,true)})}
@@ -1694,12 +1740,62 @@ function srGarden(style){return `<svg class="sr-garden" style="${style}" viewBox
 function srEmblem(i){if(i===0)return srBloom(40,40,29,12);if(i===1)return `<g transform="translate(40 42)"><path d="M0 -32L18 -10L14 15L0 30L-14 15L-18 -10Z" fill="var(--sr-petal)" stroke="var(--sr-gold)"/><path d="M0 -32L-8 -6L0 30L8 -6ZM-18 -10L8 -6L14 15L-8 -6Z" fill="var(--sr-facet)" stroke="var(--sr-vein)" stroke-width=".6"/><circle cy="-36" r="3" fill="url(#pearl)"/></g>`;return `${srFrond(40,69,-27,.42)}${srFrond(40,69,27,.42)}${srBloom(40,35,17,0)}<circle cx="40" cy="71" r="3" fill="url(#pearl)"/>`}
 
 function studyFlowers(style){return srGarden(style)}
-function vStudy(){return studyTop('展覽　／　書房','goods')+`<section class="sr-room"><div class="sr-floor" aria-hidden="true">${srGarden('left:-45px;bottom:-25px')}${srGarden('right:-45px;bottom:-25px;transform:scaleX(-1)')}</div><div class="sr-heading"><h1 class="logo">陛下，這筆我也要買！</h1><p>嘻嘻</p></div><div class="sr-library"><div class="sr-portrait"><img src="${STUDY_EMPEROR}" alt="Emperor">${studyFlowers('left:-36px;bottom:-30px;width:300px;height:auto')}${srGarden('right:-65px;bottom:-25px;width:240px;height:auto;transform:scaleX(-1)')}</div><div class="sr-volumes">${G.events.map((e,i)=>`<button class="sr-volume sr-volume-${i}" onclick="go('study-${i}-0')" aria-label="翻開${esc(e.t)}"><span class="sr-spine">2026 · ${e.date.split('.')[1]}</span><span class="sr-cover"><small>收藏紀事　${['壹','貳','參'][i]}</small><svg class="sr-seal" viewBox="0 0 80 80" aria-hidden="true">${srEmblem(i)}</svg><b>${STUDY_NAMES[i]}</b><em>${STUDY_SUB[i]}</em><span class="sr-cover-date">${e.date.split('.')[1]}<i>月</i></span><span class="sr-open">翻開藏冊　›</span></span></button>`).join('')}</div></div><div class="sr-ledger-link"><div><small>三場收藏 · 目前合計</small><strong><span>NT$</span> ${esc(G.total)}</strong></div><button onclick="go('study-summary')">查閱支出總覽 <span>→</span></button></div><div class="sr-ledger-link"><div><small>週邊選圖</small>我的評價</div><button onclick="go('slides')">查看選圖評價 <span>→</span></button></div><p class="sr-total-note">${esc(G.totalNote)}</p></section>`}
+function vStudy(){return studyTop('展覽　／　書房','goods')+`<section class="sr-room"><div class="sr-floor" aria-hidden="true">${srGarden('left:-45px;bottom:-25px')}${srGarden('right:-45px;bottom:-25px;transform:scaleX(-1)')}</div><div class="sr-heading"><h1 class="logo">陛下，這筆我也要買！</h1><p>嘻嘻</p></div><div class="sr-library"><div class="sr-portrait"><img src="${STUDY_EMPEROR}" alt="Emperor">${studyFlowers('left:-36px;bottom:-30px;width:300px;height:auto')}${srGarden('right:-65px;bottom:-25px;width:240px;height:auto;transform:scaleX(-1)')}</div><div class="sr-volumes">${G.events.map((e,i)=>`<button class="sr-volume sr-volume-${i}" onclick="go('study-${i}-0')" aria-label="翻開${esc(e.t)}"><span class="sr-spine">2026 · ${e.date.split('.')[1]}</span><span class="sr-cover"><small>收藏紀事　${['壹','貳','參'][i]}</small><svg class="sr-seal" viewBox="0 0 80 80" aria-hidden="true">${srEmblem(i)}</svg><b>${STUDY_NAMES[i]}</b><em>${STUDY_SUB[i]}</em><span class="sr-cover-date">${e.date.split('.')[1]}<i>月</i></span><span class="sr-open">翻開藏冊　›</span></span></button>`).join('')}</div></div><div class="sr-ledger-link"><div><small>三場收藏 · 目前合計</small><strong><span>NT$</span> ${esc(G.total)}</strong></div><button onclick="go('study-summary')">查閱支出總覽 <span>→</span></button></div><div class="sr-ledger-link"><div><small>現實活動 · ${evAll().length} 場</small>活動月曆</div><button onclick="go('study-events')">打開月曆 <span>→</span></button></div><div class="sr-ledger-link"><div><small>週邊選圖</small>我的評價</div><button onclick="go('slides')">查看選圖評價 <span>→</span></button></div><p class="sr-total-note">${esc(G.totalNote)}</p></section>`}
 function studyPages(e){const pages=[];if(e.groups.length){e.groups.forEach((g,gi)=>{for(let off=0;off<g.rows.length;off+=6)pages.push({kind:'items',title:g.t,rows:g.rows.slice(off,off+6),group:gi,part:off/6})})}else pages.push({kind:'kuji',title:'抽賞紀錄'});pages.push({kind:'cost',title:'費用紀錄'});return pages}
 function studyRows(rows){return rows.map((r,i)=>`<div class="sr-item"><span class="sr-item-number">${String(i+1).padStart(2,'0')}</span><div>${esc(r[0])}${r[2]?`<small>${esc(r[2])}</small>`:''}</div><b>${esc(r[1])}</b></div>`).join('')}
 function vStudyBook(index,at){const e=G.events[index],pages=studyPages(e);at=Math.max(0,Math.min(at||0,pages.length-1));const p=pages[at],images=e.imgs||[],pic=images[(studyPic[index]||0)%Math.max(images.length,1)];const contents=p.kind==='cost'?`<p class="sr-page-intro">${esc(e.after||e.short)}</p><div class="sr-calcs">${e.calc.map(r=>`<div><span>${esc(r[0])}</span><b>${esc(r[1])}</b></div>`).join('')}</div><div class="sr-page-total"><small>${esc(e.sumL)}</small><strong><span>NT$</span> ${esc(e.c)}</strong></div>${e.buyer?`<p class="sr-page-note">代購：${esc(e.buyer)}</p>`:''}${index===2?`<p class="sr-page-note">${esc(G.totalNote)}</p>`:''}`:p.kind==='kuji'?`<div class="sr-kuji-number"><b>${esc((e.short.match(/^\d+/)||['—'])[0])}</b><span>項收藏</span></div><p class="sr-page-intro">${esc(e.short)}</p><div class="sr-kuji-dates">${G.kuji.map(s=>`<p>${esc(s)}</p>`).join('')}</div><div class="sr-other-volumes" style="margin-top:12px">${G.prizes.map((q,j)=>`<button onclick="go('prize-${j}')">${esc(q.id)}</button>`).join('')}</div>`:`<div class="sr-items">${studyRows(p.rows)}</div>${p.title.includes('另列')?'<p class="sr-page-note">本組另列，不計入本場合計。</p>':''}`;
 return studyTop('書房　／　'+STUDY_NAMES[index])+`<section class="sr-reader"><div class="sr-reader-heading"><span>${esc(e.date)}　／　${esc(e.short)}</span><h1>${esc(e.t)}</h1></div><div class="sr-reader-tabs" aria-label="藏冊內容">${pages.map((x,i)=>`<button onclick="go('study-${index}-${i}')" ${i===at?'aria-current="page"':''}>${x.kind==='cost'?'費用紀錄':x.kind==='kuji'?'抽賞紀錄':(e.groups.length>1?['本作收藏','其他作品','另列收藏'][x.group]:'收藏清單')+(x.part?' · 續':'')}</button>`).join('')}</div><div class="sr-book"><section class="sr-leftpage"><div class="sr-page-running">${STUDY_NAMES[index]} <span>2026</span></div>${pic?`<button class="sr-photo" onclick="studyZoom(${index})" aria-label="放大${esc(e.t)}收藏圖片"><img src="${pic}" alt="${esc(e.t)}的收藏圖片"></button><div class="sr-photo-nav"><span>收藏留影　${(studyPic[index]||0)+1} / ${images.length}</span>${images.length>1?`<button onclick="studyPhoto(${index},${at},-1)" aria-label="上一張收藏圖片">‹</button><button onclick="studyPhoto(${index},${at},1)" aria-label="下一張收藏圖片">›</button>`:''}<span>點圖放大</span></div>`:`<div class="sr-unpictured"><svg viewBox="0 0 150 150" aria-hidden="true">${lily(75,75,58)}</svg><h2>秋日的收藏</h2><p>Romance Fantasy Festival</p><small>這一篇尚未附上收藏照片</small></div>`}<div class="sr-left-caption"><span>${['一月 · 空島浪漫譚','四月 · ピッコマくじ','十月 · Romance Fantasy Festival'][index]}</span>${spray(110,80,27,'right:-10px;bottom:-15px')}</div></section><section class="sr-rightpage"><div class="sr-page-running">${p.kind==='cost'?'支出紀錄':'收藏目錄'}<span>${String(at+1).padStart(2,'0')} / ${String(pages.length).padStart(2,'0')}</span></div><h2>${esc(p.title)}${p.part?' <small>續</small>':''}</h2>${contents}<div class="sr-page-bottom">${pearlMd(false)}<span>${at+1}</span></div></section></div><div class="sr-book-controls"><button onclick="go('study-${index}-${at-1}')" ${at===0?'disabled':''}>‹ 上一頁</button><button onclick="go('study')">收起藏冊</button><button onclick="go('study-${index}-${at+1}')" ${at===pages.length-1?'disabled':''}>下一頁 ›</button></div></section>`}
 function vStudySummary(){return studyTop('書房　／　支出總覽')+`<section class="sr-summary"><div class="sr-heading"><span class="sr-kicker">二〇二六 · 支出紀錄</span><h1 class="logo">收藏總覽</h1><p>每一筆，都是留下來的喜歡。</p>${spray(180,130,41,'right:0;top:10px')}</div><div class="sr-summary-paper"><div class="sr-page-running">收藏紀事<span>2026</span></div>${G.events.map((e,i)=>`<button class="sr-summary-row" onclick="go('study-${i}-${studyPages(e).length-1}')"><span class="sr-summary-month">${e.date.split('.')[1]}<small>月</small></span><span><b>${STUDY_NAMES[i]}</b><small>${esc(e.short)}</small></span><strong><small>NT$</small>${esc(e.c)} <i>›</i></strong></button>`).join('')}<div class="sr-summary-total"><span>目前合計</span><strong><small>NT$</small> ${esc(G.total)}</strong></div><p class="sr-page-note">${esc(G.totalNote)}</p></div><button class="sr-return" onclick="go('study')">‹ 返回書房</button></section>`}
+/* ---- real-life events (ev-): the 3 study volumes (ids b0..b2, order of G.events, never change) plus the ones she adds.
+   E.kinds['@ev:<id>'] = {n:name, d1:'YYYY-MM-DD'|'', d2:'YYYY-MM-DD'|'', x:note, u:https link, s:volume index (only for ones she links), t:time, del:1 when she deletes one she added}.
+   No record = defaults from G.events. Saved like wdPut: keep unknown fields, set t, touch(). ---- */
+const EVK='@ev:',evPad=v=>String(v).padStart(2,'0');
+const evToday=()=>{const t=new Date();return t.getFullYear()+'-'+evPad(t.getMonth()+1)+'-'+evPad(t.getDate())};
+const evIsB=id=>/^b[0-2]$/.test(id);
+function evAll(){const L=G.events.map((g,i)=>{const id='b'+i,o=E.kinds[EVK+id];
+  return {id,s:i,n:(o&&o.n)||g.t,d1:o?(o.d1||''):(g.d1||''),d2:o?(o.d2||''):(g.d2||''),x:(o&&o.x)||'',u:(o&&o.u)||'',m:'20'+g.date.replace('.','-')}});
+ for(const k in E.kinds){if(!k.startsWith(EVK))continue;const id=k.slice(EVK.length),o=E.kinds[k];if(evIsB(id)||!o||typeof o!=='object'||o.del||typeof o.n!=='string'||!o.n||!o.d1)continue;
+  L.push({id,n:o.n,d1:o.d1,d2:o.d2||'',x:o.x||'',u:o.u||'',s:Number.isInteger(o.s)&&G.events[o.s]?o.s:undefined,m:o.d1.slice(0,7)})}
+ return L.sort((a,b)=>(a.d1||a.m+'-00').localeCompare(b.d1||b.m+'-00')||a.id.localeCompare(b.id))}
+const evMD=s=>{const [,m,d]=s.split('-').map(Number);return m+'/'+d};
+const evRange=e=>e.d1?(e.d2&&e.d2!==e.d1?evMD(e.d1)+' – '+evMD(e.d2):evMD(e.d1)):(+e.m.split('-')[1])+' 月・日期還沒填';
+function evState(e){if(!e.d1)return '';const T=evToday(),a=e.d1,b=e.d2||e.d1;if(b<T)return '已結束';if(a>T)return '還有 '+Math.round((new Date(a+'T00:00:00')-new Date(T+'T00:00:00'))/864e5)+' 天';return '進行中'}
+const evCn=y=>String(y).replace(/\d/g,d=>'〇一二三四五六七八九'[d]);
+const evIn=(e,M)=>e.d1?e.d1.slice(0,7)<=M&&(e.d2||e.d1).slice(0,7)>=M:e.m===M;
+function evPut(id,ch){const o=E.kinds[EVK+id]||{};E.kinds[EVK+id]={...o,...ch,t:Date.now()};touch()}
+const evLinks=e=>`${e.s!==undefined?`<button class="chip ev-c" onclick="go('study-${e.s}-0')">翻開藏冊 ›</button>`:''}${/^https:\/\//.test(e.u)?`<a class="chip ev-c" href="${esc(e.u)}" target="_blank" rel="noopener noreferrer">官方連結 ↗</a>`:''}<button class="chip ev-c" data-evedit="${esc(e.id)}">編輯</button>`;
+const evItem=e=>S.evOpen===e.id?evForm(e):`<div class="ev-mi" id="ev-i-${esc(e.id)}"><div class="ev-h"><span class="ev-date">${evRange(e)}</span>${evState(e)?`<span class="ev-st">${evState(e)}</span>`:''}</div><b>${esc(e.n)}</b>${e.x?`<small>${esc(e.x)}</small>`:''}<div class="ev-lk">${evLinks(e)}</div></div>`;
+function evForm(e){const nw=e.id==='new',b=evIsB(e.id);
+ return `<form class="ev-f ev-mi" id="evf" data-id="${esc(e.id)}" novalidate><label class="tw-f"><span>名稱</span><input class="edi" name="n" maxlength="80" value="${esc(e.n||'')}" autocomplete="off"></label>
+ <label class="tw-f"><span>開始日期${b?'（書房的活動可以先空著）':''}</span><input class="edi" type="date" name="d1" value="${esc(e.d1||'')}"></label>
+ <label class="tw-f"><span>結束日期（一天的活動可以空著）</span><input class="edi" type="date" name="d2" value="${esc(e.d2||'')}"></label>
+ <label class="tw-f"><span>一句備註或心得</span><input class="edi" name="x" maxlength="200" value="${esc(e.x||'')}" autocomplete="off"></label>
+ <label class="tw-f"><span>官方連結（https:// 開頭）</span><input class="edi" name="u" inputmode="url" value="${esc(e.u||'')}" autocomplete="off"></label>
+ <label class="tw-f"><span>連到書房的藏冊${b?'（這三場已固定連好）':''}</span><select class="edi" name="s"${b?' disabled':''}><option value="">不連</option>${G.events.map((g,i)=>`<option value="${i}"${e.s===i?' selected':''}>${esc(STUDY_NAMES[i])}</option>`).join('')}</select></label>
+ <p class="ev-err" id="eve" role="alert"></p><div class="ev-lk"><button type="submit" class="chip ev-c ev-ok">完成</button><button type="button" class="chip ev-c" id="evx">取消</button>${!b&&!nw?'<button type="button" class="chip ev-c ev-del" id="evdel">刪除這場</button>':''}</div></form>`}
+function vEvCal(){const L=evAll(),T=evToday(),M=S.evM||T.slice(0,7),[Y,Mo]=M.split('-').map(Number),first=new Date(Y,Mo-1,1).getDay(),days=new Date(Y,Mo,0).getDate(),key=d=>M+'-'+evPad(d);
+ const on=d=>L.filter(e=>e.d1&&e.d1<=key(d)&&(e.d2||e.d1)>=key(d)),cells=[...Array(first).fill(0),...Array.from({length:days},(_,i)=>i+1)];
+ const ML=[...L.filter(e=>!e.d1&&evIn(e,M)),...L.filter(e=>e.d1&&evIn(e,M))],nx=L.find(e=>e.d1&&e.d1.slice(0,7)>M);
+ return studyTop('書房　／　活動月曆')+`<section class="sr-summary"><div class="sr-heading"><span class="sr-kicker">${evCn(Y)} · 現實活動</span><h1 class="logo">活動月曆</h1><p>那天發生的事，都記得。</p>${spray(180,130,41,'right:0;top:10px')}</div><div class="sr-summary-paper ev-cal">
+ <div class="ev-mh"><button class="ev-mb" data-evm="-1" aria-label="上個月">‹</button><b>${Y} 年 ${Mo} 月</b><button class="ev-mb" data-evm="1" aria-label="下個月">›</button></div>
+ <div class="ev-wk">${[...'日一二三四五六'].map(x=>`<span>${x}</span>`).join('')}</div><div class="ev-grid">${cells.map(d=>{if(!d)return '<span></span>';const A=on(d);return `<span class="ev-day${A.length?' ev-has':''}${key(d)===T?' ev-td':''}"${A.length?` data-evd="${esc(A[0].id)}" role="button" tabindex="0" aria-label="${Mo} 月 ${d} 日有活動"`:''}><i>${d}</i>${A.slice(0,3).map(e=>`<em class="ev-bar${e.d1===key(d)?' ev-s':''}${(e.d2||e.d1)===key(d)?' ev-e':''}"></em>`).join('')}</span>`}).join('')}</div>
+ <div class="ev-ml">${ML.length?ML.map(evItem).join(''):`<div class="ev-mi"><span class="ev-none">這個月沒有活動</span>${nx?`<button class="ev-nx" data-evgo="${nx.d1.slice(0,7)}">下一場：${esc(nx.n)} ${evRange(nx)} ›</button>`:''}</div>`}</div>
+ ${S.evOpen==='new'?evForm({id:'new'}):'<button class="ev-add" id="eva">＋ 新增活動</button>'}</div><button class="sr-return" onclick="go('study')">‹ 返回書房</button></section>`}
+function bindEv(){const m=$('#m'),redo=()=>{const y=scrollY;render(true);scrollTo(0,y)},shift=k=>{const [y,mo]=(S.evM||evToday().slice(0,7)).split('-').map(Number),d=new Date(y,mo-1+k,1);S.evM=d.getFullYear()+'-'+evPad(d.getMonth()+1);S.evOpen=null;redo()};
+ m.querySelectorAll('[data-evm]').forEach(b=>b.onclick=()=>shift(+b.dataset.evm));
+ m.querySelectorAll('[data-evgo]').forEach(b=>b.onclick=()=>{S.evM=b.dataset.evgo;S.evOpen=null;redo()});
+ m.querySelectorAll('[data-evedit]').forEach(b=>b.onclick=()=>{S.evOpen=b.dataset.evedit;redo()});
+ const add=$('#eva');if(add)add.onclick=()=>{S.evOpen='new';redo();const f=$('#evf');f&&f.scrollIntoView({block:'center'})};
+ const hit=d=>{const t=document.getElementById('ev-i-'+d.dataset.evd);if(!t)return;t.scrollIntoView({block:'center',behavior:'smooth'});t.classList.add('ev-hi');setTimeout(()=>t.classList.remove('ev-hi'),1400)};
+ m.querySelectorAll('[data-evd]').forEach(d=>{d.onclick=()=>hit(d);d.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();hit(d)}}});
+ const f=$('#evf');if(!f)return;const id=f.dataset.id,err=t=>{$('#eve').textContent=t};
+ $('#evx').onclick=()=>{S.evOpen=null;redo()};
+ const dl=$('#evdel');if(dl)dl.onclick=()=>{if(!confirm('刪掉這場活動？'))return;evPut(id,{del:1});S.evOpen=null;redo()};
+ f.onsubmit=e=>{e.preventDefault();const v=k=>f.elements[k].value.trim(),n=v('n'),d1=v('d1'),d2=v('d2'),u=v('u'),b=evIsB(id);
+  if(!n)return err('請填活動名稱。');if(!b&&!d1)return err('請選開始日期。');if(d2&&!d1)return err('有結束日期，就要有開始日期。');if(d2&&d2<d1)return err('結束日期不能比開始日期早。');
+  if(u&&!/^https:\/\//.test(u))return err('官方連結要以 https:// 開頭。');
+  const ch={n,d1,d2,x:v('x'),u};if(!b){const s=v('s');ch.s=s===''?undefined:+s}
+  evPut(id==='new'?'u'+Date.now().toString(36):id,ch);S.evOpen=null;if(d1)S.evM=d1.slice(0,7);redo()}}
 const studyPic={};window.studyPhoto=(i,page,delta)=>{const count=G.events[i].imgs.length;studyPic[i]=((studyPic[i]||0)+delta+count)%count;const y=scrollY;render(true);scrollTo(0,y)};
 window.studyZoom=i=>{const d=document.createElement('dialog');d.className='sr-zoom';d.setAttribute('aria-label','收藏圖片，點擊圖片外圍或按 Escape 關閉');d.tabIndex=-1;d.innerHTML=hy(`<img src="${G.events[i].imgs[studyPic[i]||0]}" alt="收藏圖片放大檢視">`);document.body.append(d);hydrate();d.onclick=e=>{if(e.target===d)d.close()};d.onclose=()=>d.remove();d.showModal()};
 
@@ -1874,7 +1970,7 @@ function bindWd(r,n){const P=r==='person',K=P?PK:NK,id=(P?D.ppl:D.nations)[n].id
  const rb=$('#wdR');if(rb)rb.onclick=()=>{wdPut(PK,cur(),{av:null});redraw()}}
 /* nav and routing */
 const ICON=D.icons;
-const TABS=[['wall','圖片牆'],['line','藤蔓劇情線'],['home','主頁'],['goods','展覽'],['world','人物與王國']];
+const TABS=[['search','搜尋'],['wall','圖片牆'],['line','藤蔓劇情線'],['home','主頁'],['goods','展覽'],['world','人物與王國']];
 let cur='home';
 function toggleMode(){const m=document.documentElement.dataset.mode==='light'?'dark':'light';document.documentElement.dataset.mode=m;window.setBar(m);try{localStorage.setItem('mode',m)}catch(_){}const fr=$('.sr-entry');if(fr&&fr.contentWindow){fr.contentWindow.postMessage({studyPreview:'theme',mode:m},location.origin);nav();return}const y=scrollY;render();scrollTo(0,y)}
 /* side drawer opened from the avatar; icons are bracelet settings */
@@ -1916,7 +2012,7 @@ function bkCard(pend){const t=+lsGet('lastBk')||0,has=Object.keys(E.eps).length+
  let pv='';if(BK&&BK.bad)pv=`<div class="cfg-pv" role="alert"><p>「${esc(BK.bad)}」不是這個 App 的筆記備份檔，沒有動任何資料。</p><div class="cfg-b"><button class="chip" id="bkNo">知道了</button></div></div>`;
  else if(BK){const s=BK.df,none=!s.add&&!s.upd;pv=`<div class="cfg-pv" role="group" aria-label="匯入預覽"><div class="cfg-pt"><b>準備匯入</b><small>${esc(BK.name)}</small></div>${none?'<p>備份裡沒有比這台新、或這台沒有的內容，不用匯入。</p>':`<dl class="cfg-v"><dt>新增</dt><dd><b>${s.add}</b> 筆・這台沒有的</dd><dt>更新</dt><dd><b>${s.upd}</b> 筆・備份比較新</dd><dt>保留</dt><dd><b>${s.keep}</b> 筆・這台比較新，不動</dd></dl><p>兩邊都有的，留時間較新的那份。按下「確定匯入」時，會先自動下載一份目前的資料。</p>`}<div class="cfg-b">${none?'':'<button class="chip pri" id="bkGo">確定匯入</button>'}<button class="chip" id="bkNo">${none?'知道了':'取消'}</button></div></div>`}
  return `<section class="card cfg-c cfg-bk cfg-r3"><h3>備份</h3><p>把這台裝置上的筆記與修改存成一個檔案，放在手機或電腦裡備用，需要時可以匯回來。</p><dl class="cfg-v"><dt>上次備份</dt><dd${old?' class="cfg-w"':''}>${last}</dd></dl>${old?`<p class="cfg-w" role="status">${t?`已經 ${day} 天沒備份了`:'還沒備份過'}，建議現在存一份。</p>`:''}<div class="cfg-b"><button class="chip" id="stBk">下載筆記備份</button><button class="chip" id="stIm">從備份檔匯入</button><input type="file" id="stFile" accept=".json,application/json" hidden><small id="stBm" role="status">${pend?'這台還有修改等待上傳；備份會包含它們。':''}</small></div>${pv}</section>`}
-const DM=[['home','主頁'],['line','藤蔓劇情線'],['wall','圖片牆'],['goods','展覽'],['world','人物與王國']];
+const DM=[['home','主頁'],['search','搜尋'],['line','藤蔓劇情線'],['wall','圖片牆'],['goods','展覽'],['world','人物與王國']];
 function avSmall(){const a=latestAv();return a?`<img src="${a}" alt="">`:`<svg viewBox="-20 -20 40 40" aria-hidden="true">${lily(0,0,18)}</svg>`}
 function reportItem(){let len=D.eps.length;while(len>BE.length&&D.eps[len-1].st==='todo')len--;const t=D.eps.slice(0,len).filter(e=>e.st==='todo');return `<button class="dwr dwrp" aria-expanded="false">${pearlMd(false)}<span>向陛下報告</span></button><div class="dwsub" hidden>${t.length?`<button class="dwj" data-v="ep-${t[0].n}">補${nm(t[0].n)}<small>還有 ${t.length} 話待補</small></button>`:''}<button class="dwj" data-v="ep-${len}">＋ 新增${nm(len)}</button></div>`}
 function menu(){const light=document.documentElement.dataset.mode==='light';return `<button class="dwh" data-v="home" aria-label="回主頁"><span class="dwa">${avSmall()}</span><span class="dwi"><b>${ME.name}</b><small>${ME.id}</small></span></button><div class="dwl">${DM.map(([k,l])=>`<button class="dwr" data-v="${k}" ${k===cur?'aria-current="page"':''}>${medal(k,k===cur)}<span>${l}</span></button>`).join('')}${reportItem()}<button class="dwr dwm">${medal('mode',false)}<span>切換成${light?'夜':'日'}版</span></button><button class="dwr" data-v="settings" ${cur==='settings'?'aria-current="page"':''}>${pearlMd(cur==='settings')}<span>設定</span></button></div>`}
@@ -1929,11 +2025,16 @@ document.addEventListener('click',e=>{const x=e.target;if(x.closest('#pav,#fav')
 function favSync(){const f=$('#fav');if(!f)return;let show=innerWidth<900&&!$('.fbar');if(show){const a=$('#pav')||$('.ehd');if(a)show=a.getBoundingClientRect().bottom<0}f.classList.toggle('show',show)}
 let _ly=0;addEventListener('scroll',()=>{const y=scrollY,f=$('#fav');if(f){if(y>_ly+4)f.classList.add('dim');else if(y<_ly-4)f.classList.remove('dim')}_ly=y;favSync()},{passive:true});addEventListener('resize',favSync);
 function nav(){$('#nav').innerHTML=hy(menu());closeDw();$('#fav').innerHTML=hy(avSmall());$('#fav').classList.remove('dim');setTimeout(favSync,0)}
-/* ---- search (fd-): box on the home page, results replace the timeline while there is text; reads D only, writes nothing ---- */
-const FD={q:'',k:'all'},FDL={su:'劇情',ar:'劇情線',lb:'標籤',rx:'吐槽',qt:'台詞'},FDK=[['all','全部'],['su','劇情'],['rx','吐槽'],['qt','台詞'],['wd','人物']];
+/* ---- list order (ord-): newest first by default; the flip lives on this device only (localStorage ordAsc, '1' = oldest first), not in edits.json ---- */
+const ordAsc=()=>lsGet('ordAsc')==='1';
+const ordList=a=>ordAsc()?a:[...a].reverse();
+const ordBtn=()=>{const a=ordAsc(),t=a?'舊到新':'新到舊';return `<button class="mode ord-b${a?' on':''}" id="ord" aria-pressed="${a}" aria-label="排序：${t}，按一下改成${a?'新到舊':'舊到新'}" title="排序：${t}（按一下切換）"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${a?'<path d="M7 20V5M3.5 8.5 7 5l3.5 3.5M13 6h4M13 12h6M13 18h8"/>':'<path d="M7 4v15M3.5 15.5 7 19l3.5-3.5M13 6h8M13 12h6M13 18h4"/>'}</svg></button>`};
+function ordFlip(){lsSet('ordAsc',ordAsc()?'0':'1');const y=scrollY;render(true);scrollTo(0,y)}
+/* ---- search page (fd-): menu entry "搜尋" -> #search; the text stays in memory (FD.q) while moving between pages; reads D only, writes nothing ---- */
+const FD={q:'',k:'all',lim:{}},FDL={su:'劇情',ar:'劇情線',lb:'標籤',rx:'吐槽',qt:'台詞'},FDK=[['all','全部'],['su','劇情'],['rx','吐槽'],['qt','台詞'],['wd','人物']],FDS=[['su','劇情'],['rx','吐槽'],['qt','台詞']];
 /* 人名互通 switch lives on this device only (localStorage fdAlias, '0' = off); it is not part of edits.json */
 const fdAliasOn=()=>lsGet('fdAlias')!=='0';
-function fdSnip(t,q,pre=14,post=44){const s=String(t||''),i=s.toLowerCase().indexOf(q);if(i<0)return null;const a=Math.max(0,i-pre),b=Math.min(s.length,i+q.length+post);
+function fdSnip(t,q,pre=18,post=70){const s=String(t||''),i=s.toLowerCase().indexOf(q);if(i<0)return null;const a=Math.max(0,i-pre),b=Math.min(s.length,i+q.length+post);
  return (a?'…':'')+esc(s.slice(a,i))+'<mark class="fd-m">'+esc(s.slice(i,i+q.length))+'</mark>'+esc(s.slice(i+q.length,b))+(b<s.length?'…':'')}
 /* the typed word first, then (only if it equals one of a person's names exactly) that person's other names */
 function fdTerms(q){const t=[{q,via:''}];if(!fdAliasOn())return t;
@@ -1949,20 +2050,25 @@ function fdFind(q0){const q=q0.trim().toLowerCase();if(!q)return null;const eps=
  return {eps:eps.reverse(),wd}}
 const fdBox=()=>`<div class="fd-box"><svg class="fd-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.2 15.2 20 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input class="fd-in" id="fdq" type="search" enterkeyhint="search" placeholder="搜尋摘要、劇情、吐槽、台詞、人物" value="${esc(FD.q)}" aria-label="搜尋筆記"></div>`;
 const fdSeg=()=>`<div class="wtool fd-wt"><div class="seg2" role="group" aria-label="只看">${FDK.map(([k,t])=>`<button data-fk="${k}" class="${FD.k===k?'on':''}" aria-pressed="${FD.k===k}">${t}</button>`).join('')}</div></div>`;
-const fdKeep=(h,k)=>k==='all'||(k==='su'?['su','ar','lb'].includes(h.f):h.f===k);
-const fdSpk=h=>{const L=(h.sp||[]).map(id=>D.ppl.find(p=>p.id===id)).filter(Boolean);return L.length?`<span class="fd-sp">${L.map(p=>`${wdR(p,22)}<b>${esc(p.name)}</b>`).join('')}</span>`:''};
+const fdSpk=h=>{const L=(h.sp||[]).map(id=>D.ppl.find(p=>p.id===id)).filter(Boolean);return L.length?`<span class="fd-sp">${L.map(p=>`${wdR(p,26)}<b>${esc(p.name)}</b>`).join('')}</span>`:''};
 const fdWd=w=>`<button class="fd-wdi" data-go="${w.t}-${w.i}">${w.t==='person'?wdR(w.p,40):`<i class="ring mono wd-r" style="--z:40px">${esc([...w.p.name][0])}</i>`}<span><b>${esc(w.p.name)}</b><small>${w.t==='person'?'人物':'王國'}${w.p.role?'・'+esc(w.p.role):''}</small></span></button>`;
-function fdHome(){const r=fdFind(FD.q),L=r.eps.map(x=>({...x,h:x.h.filter(h=>fdKeep(h,FD.k))})).filter(x=>x.h.length),wd=FD.k==='all'||FD.k==='wd'?r.wd:[];
- return `<p class="fd-sum">找到 <b>${L.length}</b> 話・<b>${L.reduce((a,x)=>a+x.h.length,0)}</b> 處${r.wd.length?`・人物與王國 <b>${r.wd.length}</b>`:''}</p>${fdSeg()}
- ${wd.length?`<div class="fd-wd">${wd.map(fdWd).join('')}</div>`:''}
- ${L.map(({e,h})=>`<article class="eg-post"><div class="eg-pcard eg-glass eg-go fd-card" data-n="${e.n}" tabindex="0" role="link" aria-label="${nm(e.n)}">${EGC}<div class="eg-ph"><span class="eg-av">${avatar(e.n)}</span><b>${nm(e.n)}</b><span class="eg-lb">${h.length} 處</span></div>
- <ul class="fd-hl">${h.slice(0,3).map(x=>`<li><span class="tg">${FDL[x.f]}</span>${x.via?`<small class="fd-via">（用 ${esc(x.via)} 找到）</small>`:''}${x.f==='qt'?fdSpk(x):''}<span class="${x.f==='qt'?'fd-qt':''}">${x.s}</span></li>`).join('')}</ul>${h.length>3?`<span class="fd-more">還有 ${h.length-3} 處 ›</span>`:''}</div></article>`).join('')}${L.length||wd.length?'':'<p class="spo">沒有找到。換個字試試，例如人物的另一個名字。</p>'}`}
-function fdPaint(){const o=$('#fdtl');if(!o)return;
- if(!FD.q.trim()){const y=scrollY;render(true);scrollTo(0,y);const j=$('#fdq');j&&j.focus({preventScroll:true});return}
- o.innerHTML=hy(fdHome());fdWire(o)}
-function fdBind(){const i=$('#fdq');if(!i)return;i.oninput=()=>{FD.q=i.value;clearTimeout(window._fdt);window._fdt=setTimeout(fdPaint,180)};if(FD.q.trim())fdWire($('#fdtl'))}
+const fdHit=x=>`<div class="eg-glass fd-hit eg-go" data-n="${x.n}" tabindex="0" role="link" aria-label="${nm(x.n)}"><div class="fd-hh">${x.f==='qt'&&fdSpk(x)?fdSpk(x):`<span class="tg">${FDL[x.f]}</span>`}${x.via?`<small class="fd-via">（用 ${esc(x.via)} 找到）</small>`:''}</div><p class="${x.f==='qt'?'fd-qt':''}">${x.s}</p><span class="fd-go">${nm(x.n)} ›</span></div>`;
+const fdSec=(t,n,body)=>`<section class="fd-sec"><h3 class="fd-sh"><span>${t}<b>${n}</b></span></h3>${body}</section>`;
+function fdPage(){const q=FD.q.trim();if(!q)return '<p class="fd-hint">打幾個字，就會從摘要、劇情、吐槽、台詞、人物裡找。</p>';
+ const r=fdFind(q),asc=ordAsc(),eps=asc?[...r.eps].reverse():r.eps,G={su:[],rx:[],qt:[]};
+ for(const {e,h} of eps)for(const x of h)G[x.f==='rx'||x.f==='qt'?x.f:'su'].push({...x,n:e.n});
+ const wd=FD.k==='all'||FD.k==='wd'?r.wd:[],secs=FDS.filter(([g])=>(FD.k==='all'||FD.k===g)&&G[g].length),total=wd.length+secs.reduce((a,[g])=>a+G[g].length,0);
+ return `<p class="fd-sum">共 <b>${total}</b> 筆${asc?'・舊到新':''}</p>${fdSeg()}`
+ +(wd.length?fdSec('人物與王國',wd.length,`<div class="fd-wd">${wd.map(fdWd).join('')}</div>`):'')
+ +secs.map(([g,t])=>{const L=G[g],lim=FD.lim[g]||30;return fdSec(t,L.length,`<div class="fd-hits">${L.slice(0,lim).map(fdHit).join('')}</div>${L.length>lim?`<button class="pillb more fd-mb" data-fm="${g}">再看 30 筆（還有 ${L.length-lim} 筆）</button>`:''}`)}).join('')
+ +(total?'':'<p class="spo">沒有找到。換個字試試，例如人物的另一個名字。</p>')}
+const vSearch=()=>`<div class="pg fd-pg">${fdBox()}<div id="fdres">${fdPage()}</div></div>`;
+function fdPaint(){const o=$('#fdres');if(!o)return;o.innerHTML=hy(fdPage());fdWire(o)}
+function fdBind(){const i=$('#fdq');if(!i)return;i.oninput=()=>{if(FD.q!==i.value)FD.lim={};FD.q=i.value;clearTimeout(window._fdt);window._fdt=setTimeout(fdPaint,180)};fdWire($('#fdres'))}
+function bindSearch(){fdBind();const i=$('#fdq');if(i)i.focus({preventScroll:true})}
 function fdWire(o){o.querySelectorAll('.eg-go').forEach(x=>{x.onclick=()=>go('ep-'+x.dataset.n);x.onkeydown=e=>{if(e.key==='Enter')go('ep-'+x.dataset.n)}});
- o.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));o.querySelectorAll('[data-fk]').forEach(b=>b.onclick=()=>{FD.k=b.dataset.fk;clearTimeout(window._fdt);fdPaint()})}
+ o.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));o.querySelectorAll('[data-fk]').forEach(b=>b.onclick=()=>{FD.k=b.dataset.fk;clearTimeout(window._fdt);fdPaint()});
+ o.querySelectorAll('[data-fm]').forEach(b=>b.onclick=()=>{FD.lim[b.dataset.fm]=(FD.lim[b.dataset.fm]||30)+30;fdPaint()})}
 /* ---- quotes (qv-): display only. A quote stays one string in qt ("中文（한국어）"); it is split here when the last brackets hold Hangul ---- */
 function qvSplit(t){const m=String(t).match(/^([\s\S]*?)\s*[（(]([^（）()]*[가-힯][^（）()]*)[）)]\s*$/);return m?[m[1].trim(),m[2].trim()]:[String(t),'']}
 const qvWho=(n,q)=>qsOf(n,q.k,q).map(id=>D.ppl.find(p=>p.id===id)).filter(Boolean);
@@ -1978,9 +2084,9 @@ function qvPerson(p){const L=qvOf(p);if(!L.length)return '';const sh=(S.qvAll?L:
  return `<section class="wd-sc qv-set"><h3 class="wd-sh">說過的話<span class="qv-n">${L.length}</span></h3><div class="qv-grid">${sh.map(({e,q})=>{const[z,k]=qvSplit(q.x);return `<button class="eg-note eg-glass qv-c" onclick="go('ep-${e.n}')"><p class="qv-z">${esc(z)}</p>${qvKr(k)}<span class="qv-ep">${nm(e.n)} ›</span></button>`}).join('')}</div>${L.length>6&&!S.qvAll?`<button class="pillb qv-all" id="qvAll">看全部 ${L.length} 句</button>`:''}</section>`}
 function render(keep){rebuild();const h=location.hash.slice(1)||'home',m=$('#m'),[r,a]=h.split('-');const n=+a;let full=false,html;
  if(r==='ep'&&n===D.eps.length)D.eps.push(blankEp(n));
- if(r==='tea'){cur='goods';html='<iframe class="sr-entry sr-tea" title="溫室茶會"></iframe><div class="sr-tea-floor" aria-hidden="true"><div class="sr-floor">'+srGarden('left:-45px;bottom:-25px')+srGarden('right:-45px;bottom:-25px;transform:scaleX(-1)')+'</div></div>';full=true}else if(r==='study'){cur='goods';html=a==='summary'?vStudySummary():G.events[n]&&a!==undefined?vStudyBook(n,+h.split('-')[2]||0):vStudy();full=true}else if(r==='ep'&&D.eps[n]){html=vEp(n);full=true;cur='eps'}else if(r==='prize'&&G.prizes[n]){html=vPrize(n);full=true;cur='goods'}else if(r==='slides'){html=vSlides();full=true;cur='goods'}else if(r==='settings'){html=vSettings();cur='settings'}else if(r==='person'&&D.ppl[n]){html=vPerson(n);full=true;cur='world'}else if(r==='nation'&&D.nations[n]){html=vNation(n);full=true;cur='world'}
- else{cur=TABS.some(t=>t[0]===h)?h:'home';html={home:vHome,wall:vWall,line:vLine,goods:vGoods,world:vWorld}[cur]()}
+ if(r==='tea'){cur='goods';html='<iframe class="sr-entry sr-tea" title="溫室茶會"></iframe><div class="sr-tea-floor" aria-hidden="true"><div class="sr-floor">'+srGarden('left:-45px;bottom:-25px')+srGarden('right:-45px;bottom:-25px;transform:scaleX(-1)')+'</div></div>';full=true}else if(r==='study'){cur='goods';html=a==='summary'?vStudySummary():a==='events'?vEvCal():G.events[n]&&a!==undefined?vStudyBook(n,+h.split('-')[2]||0):vStudy();full=true}else if(r==='ep'&&D.eps[n]){html=vEp(n);full=true;cur='eps'}else if(r==='prize'&&G.prizes[n]){html=vPrize(n);full=true;cur='goods'}else if(r==='slides'){html=vSlides();full=true;cur='goods'}else if(r==='settings'){html=vSettings();cur='settings'}else if(r==='person'&&D.ppl[n]){html=vPerson(n);full=true;cur='world'}else if(r==='nation'&&D.nations[n]){html=vNation(n);full=true;cur='world'}
+ else{cur=TABS.some(t=>t[0]===h)?h:'home';html={home:vHome,search:vSearch,wall:vWall,line:vLine,goods:vGoods,world:vWorld}[cur]()}
  const wide=cur==='home'||r==='ep';m.innerHTML=hy((cur==='home'&&!full?hero():'')+(wide?`<div class="shell"><div class="mainc">${html}</div>${side()}</div>`:html));document.body.classList.toggle('full',full);nav();hydrate();if(!keep)window.scrollTo(0,0);
- if(r==='ep'&&full)bindEp(n);else if(full&&$('#wdE'))bindWd(r,n);else if(!full)({home:bindHome,wall:bindWall,line:bindLine,settings:bindSettings,world:bindWorld})[cur]?.()}
-addEventListener('hashchange',()=>{S.edit=null;S.draft=S.cur=null;S.sec=null;S.wdEdit=S.wdNext===location.hash;S.wdNext=null;S.wdAll=S.qvAll=false;if(location.hash!=='#line')S.lnEdit=false;persist();render()});if(!lsGet('edits'))await pull();render();startSync();
+ if(r==='ep'&&full)bindEp(n);else if(full&&$('#wdE'))bindWd(r,n);else if(r==='study'&&a==='events')bindEv();else if(!full)({home:bindHome,search:bindSearch,wall:bindWall,line:bindLine,settings:bindSettings,world:bindWorld})[cur]?.()}
+addEventListener('hashchange',()=>{S.edit=null;S.evOpen=null;S.draft=S.cur=null;S.sec=null;S.wdEdit=S.wdNext===location.hash;S.wdNext=null;S.wdAll=S.qvAll=false;if(location.hash!=='#line')S.lnEdit=false;persist();render()});if(!lsGet('edits'))await pull();render();startSync();
 </script></body></html>
