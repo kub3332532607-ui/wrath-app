@@ -35,10 +35,11 @@ img{display:block;max-width:100%}
 .turn{transition:transform .7s cubic-bezier(.3,1.4,.5,1);transform-origin:50% 50%}
 .view{display:none;min-width:0}
 .view.on{display:block}
-.cfg .cfg-c{display:grid;gap:8px;max-width:640px}
+.cfg .cfg-c{display:grid;gap:8px;align-content:start;max-width:640px}
 .cfg h3{margin:0;font-family:var(--t);font-size:1.05rem}
 .cfg .cfg-c p{margin:0;color:var(--mute);font-size:.92rem}
-@media (min-width:1219px){.cfg{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:18px}.cfg>.hd{grid-column:1/-1}.cfg .cfg-c{max-width:none}.cfg>section:last-child{grid-column:1/-1}}
+@media (min-width:1219px){.cfg{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:18px;align-items:start}.cfg>.hd{grid-column:1/-1}.cfg .cfg-c{max-width:none}.cfg-k{display:grid;gap:18px;align-content:start;min-width:0}}
+@media (max-width:1218.98px){.cfg-k{display:contents}.cfg-r1{order:1}.cfg-r2{order:2}.cfg-r3{order:3}.cfg-r4{order:4}}
 .cfg-l{display:flex;align-items:center;gap:14px;cursor:pointer}
 .cfg-t{flex:1;display:grid;gap:2px}
 .cfg-t small{color:var(--mute);font-size:.84rem;line-height:1.6}
@@ -50,6 +51,15 @@ img{display:block;max-width:100%}
 .cfg-l input:focus-visible+.cfg-s{outline:2px solid var(--acc);outline-offset:2px}
 .cfg-b{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
 .cfg-b small{color:var(--mute)}
+.cfg-bk{gap:14px}
+.cfg-bk .cfg-b,.cfg-pv .cfg-b{display:grid;grid-template-columns:1fr 1fr;gap:10px}.cfg-pv .cfg-b>.chip:only-child{grid-column:1/-1}
+.cfg-bk .chip{justify-content:center;min-height:42px}
+.cfg-bk .cfg-b small{grid-column:1/-1}
+.cfg-w{color:var(--goldt)!important}
+.cfg-pv{display:grid;gap:14px;padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--glass)}
+.cfg-pv .cfg-v{gap:10px 18px;align-items:baseline}.cfg-pv dd b{font-size:1.06rem}
+.cfg-pt{display:grid;gap:2px}.cfg-pt b{font-family:var(--t);font-size:1rem}.cfg-pt small{color:var(--mute);overflow-wrap:anywhere}
+.cfg-pv .chip.pri{background:var(--acc);border-color:var(--acc);color:var(--solid)}
 .cfg-v{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;margin:0;font-size:.92rem}
 .cfg-v dt{color:var(--mute)}
 .cfg-v dd{margin:0;word-break:break-all}
@@ -262,6 +272,9 @@ h3{margin:0 0 8px;font-family:var(--t);font-size:1.02rem;font-weight:400;color:v
  .wd-npg>section:first-of-type>.wd-sh{margin-top:0}
  .wd-star{zoom:1.4}}
 .sr-backnav .edb{font-size:.9rem}
+.cv-pv{display:block;width:100%;aspect-ratio:2/1;object-fit:cover;object-position:50% 45%;border-radius:14px;border:1px solid var(--line)}
+.cv-pw{padding:0 16px 10px}
+.cv-b{min-height:44px;padding:0 16px}
 @media (min-width:900px){.wd-w{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:44px;align-items:start}.wd-w>.hd{grid-column:1/-1}}
 .wd-star{position:relative;width:320px;margin:10px auto 0}
 .wd-star svg,.wd-ln{position:absolute;inset:0;width:100%;height:100%;overflow:visible;fill:none;stroke:color-mix(in srgb,var(--gold) 60%,transparent);stroke-width:1;pointer-events:none}
@@ -302,6 +315,18 @@ h3{margin:0 0 8px;font-family:var(--t);font-size:1.02rem;font-weight:400;color:v
 .wd-rl{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
 .wd-rl input{grid-column:1/-1}
 .wd-ra{margin-left:0;justify-self:start}
+/* org chart arrangement, edit mode (wdo-) */
+.wdo{margin-top:22px}
+.wdo .wd-osc{margin-top:8px}
+.wdo-ls{display:grid;margin-top:8px}
+.wdo-r{display:grid;grid-template-columns:36px minmax(0,1fr) minmax(0,1.35fr);align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.wdo-r .wdo-l{grid-column:2/-1;font-size:.9rem}
+.wdo-mv{grid-column:2/-1;display:flex;gap:8px}
+.wdo-mv .chip{min-height:44px}
+.wdo-mv .chip:disabled{opacity:.4}
+.wdo-r b{font-weight:400;font-size:.92rem;overflow-wrap:anywhere}
+.wdo-r .edi{margin-top:0;min-height:44px;text-align:left;width:100%}
+.wdo .alf .chip{min-height:44px}
 .pillb{min-height:40px;padding:0 15px;border-radius:99px;background:var(--glass);border:1px solid var(--line);font-size:.86rem}
 .round{border-radius:var(--r);width:100%}
 /* goods */
@@ -1078,7 +1103,7 @@ async function dbGet(k){try{const d=await db();return await new Promise((ok,no)=
 async function dbSet(k,v){try{const d=await db();await new Promise((ok,no)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error)})}catch(e){}}
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
 /* private repo: this page holds no notes or pictures, they are read with the device's key */
-const BASE='data/base-4cdad7f21122.json',VER='2026.11.14 12:11 · 7b3b150';
+const BASE='data/base-4cdad7f21122.json',VER='2026.11.14 14:27 · e151692';
 let CFG=null,TK=lsGet('tk');
 const api=(p,o={})=>fetch(`${CFG.api??'https://api.github.com'}/repos/${CFG.owner}/${CFG.repo}/contents/${p}`,{cache:'no-store',...o,headers:{Authorization:`Bearer ${TK}`,...o.headers}});
 const rawGet=p=>api(p,{headers:{Accept:'application/vnd.github.raw+json'}});
@@ -1229,11 +1254,11 @@ let E=ls('edits',{eps:{},kinds:{},read:null}),dirty=ls('dirty',false),upq=ls('up
 const blankEp=n=>({n,lb:'',st:'todo',su:'',pl:[],rx:[],im:[],ar:[],rf:[],tg:[],ai:[],sp:''});
 /* stats on the timeline: the build's lists (BS) are the starting point. An episode that has its own tick list E.eps[n].sg (keys such as "親吻") is decided by that list alone; the others keep the build's lists.
    Home synopsis: E.kinds['@home']={x:text,t}; empty text = the build's original. */
-const BS=D.stats,BY=D.synopsis,sgOf=n=>{const x=E.eps[n];return x&&Array.isArray(x.sg)?x.sg:null};
+const BS=D.stats,BY=D.synopsis,BC=D.cover,sgOf=n=>{const x=E.eps[n];return x&&Array.isArray(x.sg)?x.sg:null};
 const sgNow=n=>{const g=sgOf(n);return BS.filter(t=>g?g.includes(t.k):t.eps.includes(n)).map(t=>t.k)};
 function statsBuild(){D.stats=BS.map(t=>{const s=new Set(t.eps.filter(n=>!sgOf(n)));for(const k in E.eps){const g=sgOf(+k);if(g&&g.includes(t.k))s.add(+k)}return{...t,eps:[...s].sort((a,b)=>a-b)}});
- const h=(E.kinds||{})['@home'];D.synopsis=h&&typeof h.x==='string'&&h.x.trim()?h.x:BY}
-function synSave(v){v=v.trim();if(v===D.synopsis)return;E.kinds['@home']={x:v===BY?'':v,t:Date.now()};touch();persist();rebuild()}
+ const h=(E.kinds||{})['@home'];D.synopsis=h&&typeof h.x==='string'&&h.x.trim()?h.x:BY;D.cover=h&&typeof h.cv==='string'&&/^img\/u-[0-9a-f]+\.jpg$/.test(h.cv)?h.cv:BC}
+function synSave(v){v=v.trim();if(v===D.synopsis)return;E.kinds['@home']={...(E.kinds['@home']||{}),x:v===BY?'':v,t:Date.now()};touch();persist();rebuild()}
 function rebuild(){const len=Math.max(BE.length,...Object.keys(E.eps).map(k=>+k+1));S.av={};
  D.eps=Array.from({length:len},(_,n)=>{const b=BE[n]||blankEp(n),x=E.eps[n];if(!x)return{...b,tg:b.ar};if(x.av)S.av[n]=x.av;const e={...b,...x};e.tg=e.ar||[];e.st=e.rx.length?'has_reactions':e.pl.length||e.su||e.im.length||e.lb?'plot_only':'todo';return e});
  D.wall=D.eps.flatMap(e=>allIm(e).map(src=>({n:e.n,src})));D.noted=D.eps.filter(e=>e.st!=='todo').length;
@@ -1284,7 +1309,7 @@ function wdBuild(){const ed=K=>{const o={};for(const k in E.kinds)if(k.startsWit
  const rel=a=>Array.isArray(a)?a.filter(q=>q&&typeof q.to==='string'&&typeof q.as==='string').map(q=>({to:q.to,as:q.as,...(typeof q.inv==='string'&&q.inv?{inv:q.inv}:{}),...(q.sp?{sp:1}:{})})):[];
  D.ppl=mk(BP.map((p,i)=>({px:'',g:'',h:'',sec:'',al:[],zh:'',kr:'',ja:'',en:'',...p,id:p.id||'p'+i,bn:p.name,rel:rel(p.rel)})),ed(PK),(p,r)=>({al:[],zh:'',kr:'',ja:'',en:'',...p,...Object.fromEntries(PL.filter(([k])=>k in r).map(([k])=>[k,str(r[k])])),...('al' in r?{al:alist(r.al)}:{}),name:r.n,role:str(r.r),x:str(r.x),px:str(r.px),g:str(r.g),h:str(r.h),sec:str(r.sec),rel:rel(r.rel),...(typeof r.av==='string'&&/^img\//.test(r.av)?{img:r.av,av:1}:{})}));
  const ids=new Set(D.ppl.map(p=>p.id));for(const p of D.ppl)p.rel=p.rel.filter(r=>r.to!==p.id&&ids.has(r.to));
- const dk=D.mapGeo?.mk||{};D.nations=mk(BN.map((t,i)=>{const[h,...r]=t.split('：');const d=D.mapGeo?.nm?.['n'+i];return{id:'n'+i,name:h,x:r.join('：'),mg:'',pr:'',kr:d?d[1]:'',ja:'',en:d?d[2]:'',...(dk['n'+i]?{mx:dk['n'+i][0],my:dk['n'+i][1]}:{})}}),ed(NK),(p,r)=>({mg:'',pr:'',kr:'',ja:'',en:'',...p,name:r.n,x:str(r.x),...Object.fromEntries([...NL,'mg','pr'].filter(k=>k in r).map(k=>[k,str(r[k])])),...('mx' in r?(typeof r.mx==='number'&&typeof r.my==='number'?{mx:r.mx,my:r.my}:{mx:null,my:null}):{})}))}
+ const dk=D.mapGeo?.mk||{};D.nations=mk(BN.map((t,i)=>{const[h,...r]=t.split('：');const d=D.mapGeo?.nm?.['n'+i];return{id:'n'+i,name:h,x:r.join('：'),mg:'',pr:'',kr:d?d[1]:'',ja:'',en:d?d[2]:'',og:{},ol:{},or:[],...(dk['n'+i]?{mx:dk['n'+i][0],my:dk['n'+i][1]}:{})}}),ed(NK),(p,r)=>({mg:'',pr:'',kr:'',ja:'',en:'',...p,name:r.n,x:str(r.x),...Object.fromEntries([...NL,'mg','pr'].filter(k=>k in r).map(k=>[k,str(r[k])])),...('og' in r?{og:ogc(r.og)}:{}),...('ol' in r?{ol:ogc(r.ol)}:{}),...('or' in r?{or:Array.isArray(r.or)?r.or.filter(x=>typeof x==='string'):[]}:{}),...('mx' in r?(typeof r.mx==='number'&&typeof r.my==='number'?{mx:r.mx,my:r.my}:{mx:null,my:null}):{})}))}
 function wdPut(K,a,ch){const o=E.kinds[K+a.id]||{};E.kinds[K+a.id]={...o,n:a.name,x:a.x||'',...(K===PK?{r:a.role||'',px:a.px||'',g:a.g||'',h:a.h||'',sec:a.sec||'',rel:(a.rel||[]).map(r=>({...r})),...(o.av?{av:o.av}:{})}:{}),...(K===NK&&a.mx!==undefined?{mx:a.mx,my:a.my}:{}),...(K===NK?Object.fromEntries(NL.filter(k=>k in o).map(k=>[k,o[k]])):{}),...(o.c?{c:o.c}:{}),...ch,t:Date.now()};touch();persist();rebuild()}
 function wdAdd(K,at){const P=K===PK,b=P?'新人物':'新王國';let v=b,i=2;while((P?D.ppl:D.nations).some(x=>x.name===v))v=b+i++;const id='u'+Date.now().toString(36);wdPut(K,{id,name:v,x:'',role:'',...(at?{mx:at[0],my:at[1]}:{})},{c:Date.now()});
  const h=(P?'person-':'nation-')+(P?D.ppl:D.nations).findIndex(x=>x.id===id);S.wdNext='#'+h;go(h)}
@@ -1323,6 +1348,13 @@ async function storeImg(b){const h=[...new Uint8Array(await crypto.subtle.digest
 function epEdit(n){const e=D.eps[n]||blankEp(n);return E.eps[n]||(E.eps[n]={lb:e.lb,su:e.su||'',pl:[...e.pl],rx:e.rx.map(x=>({...x,...(x.im?{im:[...x.im]}:{})})),im:[...e.im],ar:[...(e.tg||[])]})}
 async function addImages(n,files){let fail=0;for(const f of files){try{const p=await storeImg(await shrink(f)),x=epEdit(n);if(!x.im.includes(p))x.im.push(p);x.t=Date.now()}catch(e){fail++}}if(n>S.read)setRead(n);touch();persist();if(fail)sync(`有 ${fail} 張圖讀不出來，換成 JPG 或 PNG 再試`,true)}
 window.setAv=async(n,b)=>{const x=epEdit(n);x.av=b?await storeImg(b):null;x.t=Date.now();touch();persist();const y=scrollY;render(true);scrollTo(0,y)};
+window.setCover=async b=>{const h=E.kinds['@home']||{x:''};E.kinds['@home']={...h,cv:b?await storeImg(b):'',t:Date.now()};touch();persist();const y=scrollY;render(true);scrollTo(0,y)};
+function openCvPick(){const d=document.createElement('dialog');d.className='avx';d.setAttribute('aria-label','換主頁封面');const cur=D.cover!==BC;
+ d.innerHTML=hy(`<h3>換主頁封面</h3><p>選一張橫幅圖，再框出要的範圍。電腦版只會顯示中間較窄的一條，重要的放中間。</p><div class="cv-pw"><img class="cv-pv" src="${D.cover}" alt="目前的封面"></div><div class="av-b"><label class="chip cv-b">從手機選<input type="file" accept="image/*" aria-label="從手機選封面"></label>${cur?'<button class="chip cv-b av-r">改回預設</button>':''}<button class="chip cv-b av-c">取消</button></div>`);
+ let next=null;d.onclick=e=>{if(e.target===d)ovBack()};d.querySelector('.av-c').onclick=ovBack;
+ const rb=d.querySelector('.av-r');if(rb)rb.onclick=()=>{next=()=>setCover(null);ovBack()};
+ d.querySelector('input').onchange=e=>{const f=e.target.files[0];if(!f)return;next=async()=>{const u=URL.createObjectURL(f);try{const b=await openCrop(u,{ratios:['2:1'],title:'框出封面',max:1600});if(b&&b!=='skip')await setCover(b)}catch(_){sync('這張圖讀不出來，換成 JPG 或 PNG 再試',true)}finally{URL.revokeObjectURL(u)}};ovBack()};
+ ovOpen(d,()=>{if(next)setTimeout(next,0)});hydrate()}
 const lastWritten=()=>{for(let n=D.eps.length-1;n>=0;n--)if(D.eps[n].st!=='todo')return n;return 0};
 /* in-place editor on the episode page: the reactions are a thread of posts, like on X — each one can wrap lines and carry up to 4 pictures */
 /* ---- episode edit view (A3c, 2026-11-12) ----
@@ -1471,7 +1503,7 @@ function openLB(list,i,o={}){if(!list.length)return;
  st.onpointerup=up;st.onpointercancel=up;
  ovOpen(d,()=>{LB=null;const a=L.after;if(a)setTimeout(a,0)});show();q('.lb-x').focus()}
 /* cropper: the frame stays still, the picture moves under it (drag, pinch, wheel). Resolves to a JPEG blob, 'skip', or null */
-const RAT={'1:1':1,'16:9':16/9,'9:16':9/16,'3:4':3/4,'4:3':4/3};
+const RAT={'2:1':2,'1:1':1,'16:9':16/9,'9:16':9/16,'3:4':3/4,'4:3':4/3};
 function openCrop(url,o={}){return new Promise(res=>{const R=o.ratios||Object.keys(RAT);let done=false;const fin=v=>{if(done)return;done=true;res(v)};
  const d=document.createElement('dialog');d.className='crx';d.setAttribute('aria-label',o.title||'裁切圖片');
  d.innerHTML=`<div class="lb-top"><span>${esc(o.title||'裁切')}</span><button class="lb-x" aria-label="取消，不裁">✕</button></div><div class="cr-st"><img class="cr-im" alt="要裁切的圖" draggable="false"><div class="cr-f"></div></div><div class="cr-bar"><span class="cr-tip">拖曳移動，雙指或滾輪縮放</span>${R.length>1?`<div class="seg2 cr-r" role="group" aria-label="比例">${R.map((r,k)=>`<button data-r="${r}" class="${k?'':'on'}" aria-pressed="${!k}">${r}</button>`).join('')}</div>`:''}<div class="chips">${o.skip?`<button class="chip cr-skip">${esc(o.skip)}</button>`:''}<button class="chip cr-ok">完成</button></div></div>`;
@@ -1692,30 +1724,49 @@ function wdStar(p){const L=[];for(const r of p.rel)L.push([wdBy(r.to),r.inv||'']
   h+=`<button class="wd-s${up?' wd-su':''}" style="left:${x.toFixed(1)}px;${up?`bottom:${(H-y-z/2).toFixed(1)}`:`top:${(y-z/2).toFixed(1)}`}px" onclick="${wdGo(o)}">${wdR(o,z)}<b>${esc(o.name)}</b></button>${t?`<span class="wd-sl" style="left:${(cx+m*c).toFixed(1)}px;top:${(top+m*q).toFixed(1)}px">${esc(t)}</span>`:''}`});
  return `<div class="wd-star" style="height:${H}px"><svg aria-hidden="true">${ln}</svg>${h}<span class="wd-c" style="left:${cx}px;top:${top}px">${wdR(p,cz)}</span></div>`}
 /* court chart of one nation: rulers on top, the people tied to them below; the lines are drawn after layout by wdLines() */
-function wdOrg(nid){const M=D.ppl.filter(p=>p.g===nid||p.h===nid);if(!M.length)return'';const inM=p=>p.rel.find(r=>M.some(m=>m.id===r.to))||null,lv=new Map();
- const level=(p,st)=>{if(lv.has(p.id))return lv.get(p.id);const r=inM(p);let v=0;if(r&&!st.includes(p.id)){const q=level(wdBy(r.to),[...st,p.id]);v=r.sp?q:q+1}lv.set(p.id,v);return v};M.forEach(p=>level(p,[]));
- const rows=[];for(const p of M){const l=lv.get(p.id),s=l?p.sec:'';let r=rows.find(x=>x.l===l&&x.s===s);if(!r)rows.push(r={l,s,p:[]});r.p.push(p)}
+/* org chart arrangement (2026-11-14): kinds['@nat:<id>'].og = {personId: where}. where '' = top row, 'id' = hangs under that person, '~id' = a pair with that person (same row, joined by a line).
+   A person with no entry is placed by their relations, as before. Only changes that nation's chart; people's relations are not touched. */
+function ogc(v){return v&&typeof v==='object'&&!Array.isArray(v)?Object.fromEntries(Object.entries(v).filter(([,t])=>typeof t==='string')):{}}
+function ogMem(nid){return D.ppl.filter(p=>p.g===nid||p.h===nid)}
+function ogNat(nid){return D.nations.find(n=>n.id===nid)}
+function ogPar(M,og,p){const auto=()=>p.rel.find(r=>M.some(m=>m.id===r.to))||null;if(!(p.id in og))return auto();const t=og[p.id];if(t===''||t==='_')return null;const sp=t[0]==='~',id=sp?t.slice(1):t;if(id===p.id||!M.some(m=>m.id===id))return auto();const r=p.rel.find(q=>q.to===id);return{...(r||{as:''}),to:id,sp:sp?1:0}}
+function ogUnder(M,og,a,b){let x=b,k=0;while(x&&k++<40){if(x.id===a.id)return true;const r=ogPar(M,og,x);x=r?M.find(m=>m.id===r.to):null}return false}
+function ogWhere(M,og,m){if(!(m.id in og))return'';const t=og[m.id];if(t==='')return'^';if(t==='_')return'_';const id=t[0]==='~'?t.slice(1):t;return id!==m.id&&M.some(x=>x.id===id)?t:''}
+function ogSet(nid,id,v){const a=ogNat(nid);if(!a)return;const og={...(a.og||{})};if(v==='')delete og[id];else og[id]=v==='^'?'':v;wdPut(NK,a,{og})}
+function ogOpts(M,og,m){const cur=ogWhere(M,og,m),L=M.filter(x=>x.id!==m.id&&og[x.id]!=='_'&&!ogUnder(M,og,m,x)),o=(v,t)=>`<option value="${esc(v)}"${cur===v?' selected':''}>${esc(t)}</option>`;return o('','自動排')+o('^','最上面')+o('_','最下面（單獨一排，不連線）')+(L.length?`<optgroup label="掛在誰的下面">${L.map(x=>o(x.id,x.name)).join('')}</optgroup><optgroup label="和誰成對（同一排）">${L.map(x=>o('~'+x.id,x.name)).join('')}</optgroup>`:'')}
+function ogUI(p){const M=ogMem(p.id);if(!M.length)return'';const R=ogRows(p.id),og=p.og||{},ol=p.ol||{},rs=Object.keys(og).length||Object.keys(ol).length||(p.or||[]).length?`<div class="alf"><span class="hn">排列與稱呼只改這一國的圖</span><button type="button" class="chip" id="ogReset">全部恢復自動</button></div>`:'';
+ return `<div class="tw-f wdo"><span>組織圖排列（不改人物關係）</span>${wdOrg(p.id,'still')}<div class="wdo-ls">${R.rows.flatMap(r=>r.p.map((m,k)=>[m,r,k])).map(([m,r,k])=>`<div class="wdo-r">${wdR(m,36)}<b>${esc(m.name)}</b><select class="edi" data-og="${esc(m.id)}" aria-label="${esc(m.name)}排在哪裡">${ogOpts(M,og,m)}</select><input class="edi wdo-l" data-ol="${esc(m.id)}" value="${esc(ol[m.id]||'')}" placeholder="這國圖上的稱呼（空白＝${esc(m.role||'不顯示')}）" aria-label="${esc(m.name)}在這國圖上的稱呼">${r.p.length>1?`<div class="wdo-mv"><button type="button" class="chip" data-ogm="${esc(m.id)}:-1"${k?'':' disabled'}>← 往左</button><button type="button" class="chip" data-ogm="${esc(m.id)}:1"${k<r.p.length-1?'':' disabled'}>往右 →</button></div>`:''}</div>`).join('')}</div>${rs}</div>`}
+function ogBind(box,nid,redraw){box.addEventListener('change',e=>{const s=e.target.closest('[data-og]');if(s){ogSet(nid,s.dataset.og,s.value);redraw();return}const l=e.target.closest('[data-ol]');if(l){const a=ogNat(nid);if(!a)return;const ol={...(a.ol||{})},v=l.value.trim();if(v)ol[l.dataset.ol]=v;else delete ol[l.dataset.ol];wdPut(NK,a,{ol});redraw()}});
+ box.addEventListener('click',e=>{const m=e.target.closest('[data-ogm]');if(m){const[id,d]=m.dataset.ogm.split(':');ogMove(nid,id,+d);redraw();return}if(e.target.closest('#ogReset')){const a=ogNat(nid);if(a){wdPut(NK,a,{og:{},ol:{},or:[]});redraw()}}})}
+function ogRows(nid){const M=ogMem(nid);if(!M.length)return null;const nt=ogNat(nid)||{},og=nt.og||{},ord=Array.isArray(nt.or)?nt.or:[],inM=p=>ogPar(M,og,p),lv=new Map();
+ const level=(p,st)=>{if(lv.has(p.id))return lv.get(p.id);const r=inM(p);let v=0;if(r&&!st.includes(p.id)){const q=level(wdBy(r.to),[...st,p.id]);v=r.sp?q:q+1}lv.set(p.id,v);return v};M.forEach(p=>level(p,[]));{const mx=Math.max(0,...M.filter(p=>og[p.id]!=='_').map(p=>lv.get(p.id)));for(const p of M)if(og[p.id]==='_')lv.set(p.id,mx+1)}
+ const rows=[];for(const p of M){const l=lv.get(p.id),s=l&&!(p.id in og)?p.sec:'';let r=rows.find(x=>x.l===l&&x.s===s);if(!r)rows.push(r={l,s,p:[]});r.p.push(p)}
  rows.sort((a,b)=>a.l-b.l||!!a.s-!!b.s);rows[0].p.sort((a,b)=>!!(inM(a)||{}).sp-!!(inM(b)||{}).sp);
- const node=(p,z)=>{const r=inM(p);return `<button class="wd-o${p.g===nid?'':' wdn-out'}" data-id="${esc(p.id)}"${r?` data-par="${esc(r.to)}"${r.sp?' data-sp="1"':''}`:''} onclick="${wdGo(p)}">${wdR(p,z)}<span><b>${esc(p.name)}</b><small>${esc(p.role||(r&&!r.sp?r.as:''))}</small></span></button>`};
+ if(ord.length){const ix=p=>{const k=ord.indexOf(p.id);return k<0?9999:k};for(const r of rows)r.p.sort((a,b)=>ix(a)-ix(b))}
+ for(const r of rows)for(const p of [...r.p]){const q=p.id in og&&inM(p);if(q&&q.sp){const a=r.p.indexOf(p),b=r.p.findIndex(x=>x.id===q.to);if(b>=0&&Math.abs(a-b)!==1){r.p.splice(a,1);r.p.splice(r.p.findIndex(x=>x.id===q.to)+1,0,p)}}}
+ return{M,nt,og,ol:nt.ol||{},inM,rows}}
+function ogMove(nid,id,d){const R=ogRows(nid),a=ogNat(nid);if(!R||!a)return;const r=R.rows.find(x=>x.p.some(p=>p.id===id));if(!r)return;const i=r.p.findIndex(p=>p.id===id),j=i+d;if(j<0||j>=r.p.length)return;[r.p[i],r.p[j]]=[r.p[j],r.p[i]];wdPut(NK,a,{or:R.rows.flatMap(x=>x.p.map(p=>p.id))})}
+function wdOrg(nid,mode){const R=ogRows(nid);if(!R)return'';const{inM,ol,rows}=R,nid0=nid;
+ const node=(p,z)=>{const r=inM(p);return `<button type="button" class="wd-o${p.g===nid0?'':' wdn-out'}" data-id="${esc(p.id)}"${r?` data-par="${esc(r.to)}"${r.sp?' data-sp="1"':''}`:''}${mode==='still'?' tabindex="-1"':` onclick="${wdGo(p)}"`}>${wdR(p,z)}<span><b>${esc(p.name)}</b><small>${esc(ol[p.id]||p.role||(r&&!r.sp?r.as:''))}</small></span></button>`};
  return `<div class="wd-osc" id="wdSc"><div class="wd-org" id="wdOrg"><svg class="wd-ln" aria-hidden="true"></svg>${rows.map(r=>`<div class="wd-row${r.l?'':' wd-top'}"${r.s?` data-s="${esc(r.s)}"`:''}>${r.p.map(p=>node(p,r.l?40:64)).join('')}</div>`).join('')}</div></div>`}
 function wdLines(){const o=$('#wdOrg');if(!o)return;const rows=$$('.wd-row',o);rows.forEach(r=>r.style.translate='');$$('.wd-o',o).forEach(n=>{n.style.marginLeft='';delete n.dataset.gap});
  let B=o.getBoundingClientRect();const rc=e=>{const r=e.getBoundingClientRect();return{l:r.left-B.left,r:r.right-B.left,t:r.top-B.top,b:r.bottom-B.top,x:(r.left+r.right)/2-B.left}};
- const par=c=>o.querySelector(`.wd-o[data-id="${CSS.escape(c.dataset.par)}"]`),rowOf=e=>rows.indexOf(e.parentElement),seen=new Set();
+ const par=c=>o.querySelector(`.wd-o[data-id="${CSS.escape(c.dataset.par)}"]`),rowOf=e=>rows.indexOf(e.parentElement),seen=new Set(),pairOf=p=>{const q=p.dataset.sp?par(p):o.querySelector(`.wd-o[data-sp][data-par="${CSS.escape(p.dataset.id)}"]`);return q&&q.parentElement===p.parentElement?q:null},anc=p=>{const q=pairOf(p),a=rc(p.querySelector('.ring'));if(!q)return{x:a.x,b:rc(p).b+4};const b=rc(q.querySelector('.ring'));return{x:(a.x+b.x)/2,b:Math.max(rc(p).b,rc(q).b)+4}};
  /* a line that has to cross a row in between goes through a gap opened in that row, next to where it comes down */
  for(const c of $$('.wd-o[data-par]',o)){const p=par(c);if(!p||c.dataset.sp)continue;for(let ri=rowOf(p)+1;ri<rowOf(c);ri++){const key=p.dataset.id+'|'+ri;if(seen.has(key))continue;seen.add(key);
-  const px=rc(p.querySelector('.ring')).x,ns=[...rows[ri].children];if(!ns.length||px<=rc(ns[0]).l||px>=rc(ns[ns.length-1]).r)continue;
+  const px=anc(p).x,ns=[...rows[ri].children];if(!ns.length||px<=rc(ns[0]).l||px>=rc(ns[ns.length-1]).r)continue;
   let best=1,bd=1e9;for(let k=1;k<ns.length;k++){const d=Math.abs(rc(ns[k]).l-px);if(d<bd){bd=d;best=k}}ns[best].style.marginLeft='18px';ns[best].dataset.gap=p.dataset.id}}
  /* a one-line row whose people all hang from the same person sits right under that person */
  for(let ri=1;ri<rows.length;ri++){const ns=[...rows[ri].children];if(!ns.length)continue;const ps=new Set(ns.map(n=>n.dataset.sp?'':n.dataset.par||''));if(ps.size!==1)continue;const pid=[...ps][0],p=pid&&o.querySelector(`.wd-o[data-id="${CSS.escape(pid)}"]`);if(!p)continue;
-  const a=rc(ns[0]),z=rc(ns[ns.length-1]);if(z.b-a.t>a.b-a.t+4)continue;const px=rc(p.querySelector('.ring')).x;rows[ri].style.translate=`${Math.max(4-a.l,Math.min(o.clientWidth-4-z.r,px-(a.l+z.r)/2)).toFixed(1)}px 0`}
+  const a=rc(ns[0]),z=rc(ns[ns.length-1]);if(z.b-a.t>a.b-a.t+4)continue;const px=anc(p).x;rows[ri].style.translate=`${Math.max(4-a.l,Math.min(o.clientWidth-4-z.r,px-(a.l+z.r)/2)).toFixed(1)}px 0`}
  B=o.getBoundingClientRect();let d='';
- for(const c of $$('.wd-o[data-par]',o)){const p=par(c);if(!p)continue;const cr=rc(c.querySelector('.ring')),pr=rc(p.querySelector('.ring')),pb=rc(p).b+4;
+ for(const c of $$('.wd-o[data-par]',o)){const p=par(c);if(!p)continue;const cr=rc(c.querySelector('.ring')),pr=rc(p.querySelector('.ring')),A=anc(p),pb=A.b;
   if(c.dataset.sp){d+=`M${pr.x} ${(pr.t+pr.b)/2}H${cr.x}`;continue}
-  const y=cr.t-11,pi=rowOf(p),ci=rowOf(c);if(ci===pi+1){d+=`M${pr.x} ${pb}V${y}H${cr.x}V${cr.t}`;continue}
-  let s=`M${pr.x} ${pb}`,ok=true;for(let ri=pi+1;ri<ci;ri++){const ns=[...rows[ri].children],g=ns.find(n=>n.dataset.gap===p.dataset.id),nx=(ri+1<ci?rc(rows[ri+1]).t:cr.t)-11;
-   if(!g){if(pr.x<rc(ns[0]).l-6||pr.x>rc(ns[ns.length-1]).r+6){s+=`V${nx}`;continue}ok=false;break}
+  const y=cr.t-11,pi=rowOf(p),ci=rowOf(c);if(ci===pi+1){d+=`M${A.x} ${pb}V${y}H${cr.x}V${cr.t}`;continue}
+  let s=`M${A.x} ${pb}`,ok=true;for(let ri=pi+1;ri<ci;ri++){const ns=[...rows[ri].children],g=ns.find(n=>n.dataset.gap===p.dataset.id),nx=(ri+1<ci?rc(rows[ri+1]).t:cr.t)-11;
+   if(!g){if(A.x<rc(ns[0]).l-6||A.x>rc(ns[ns.length-1]).r+6){s+=`V${nx}`;continue}ok=false;break}
    s+=`V${rc(rows[ri]).t-11}H${(rc(g.previousElementSibling).r+rc(g).l)/2}V${nx}`}
-  d+=ok?`${s}H${cr.x}V${cr.t}`:`M${pr.x} ${pb}V${rc(rows[pi+1]).t-11}H3V${y}H${cr.x}V${cr.t}`}
+  d+=ok?`${s}H${cr.x}V${cr.t}`:`M${A.x} ${pb}V${rc(rows[pi+1]).t-11}H3V${y}H${cr.x}V${cr.t}`}
  o.querySelector('svg').innerHTML=`<path d="${d}"/>`;wdOFade()}
 addEventListener('resize',wdLines);
 /* V2b: the whole chart slides sideways as one piece; it opens centred on the rulers, the side that has more fades, and a mouse can drag it (same as the tea table) */
@@ -1762,7 +1813,7 @@ function wdNatHead(p){const sub=NL.map(k=>p[k]).filter(Boolean).join(' · '),k=m
  const mini=k?`<div class="wd-mini"><svg viewBox="${mpV.join(' ')}" aria-hidden="true">${Object.keys(mpG.rg).map(r=>`<path class="mp-r${mpG.un.includes(r)?' mp-u':''}" fill-rule="evenodd" d="${mpG.rg[r]}"/>`).join('')}${mpG.bd.map(d=>`<path class="mp-bd" d="${d}"/>`).join('')}<path class="mp-sl" fill-rule="evenodd" d="${mpG.rg[k]}"/></svg></div>`:'';
  return `<div class="wd-nat${mini?'':' wd-nomap'}">${mini}<div><h2 class="logo">${esc(wdShort(p))}${spray(62,43,23,'')}</h2>${sub?`<small class="wdn-sub">${esc(sub)}${fl}</small>`:fl}</div>${L.length?`<dl class="wdn-dl">${L.map(([f,l])=>`<div><dt class="hn">${l}</dt><dd>${wdIts(p[f])}</dd></div>`).join('')}</dl>`:'<p class="wdn-none">這國還沒有資料。</p>'}</div>`}
 function vNation(i){const p=D.nations[i],org=wdOrg(p.id);
- return wdTop()+`<div class="pg wd-pg${S.wdEdit?'':' wd-npg'}">${S.wdEdit?wdNm(p):''}${S.wdEdit?`<div id="wdBox"><label class="tw-f" style="margin-top:0"><span>國名</span><input class="edi" data-f="n" value="${esc(p.name)}" aria-label="國名"></label>${[['kr','韓文名'],['ja','日文名'],['en','英文名']].map(([f,l])=>`<label class="tw-f"><span>${l}</span><input class="edi" data-f="${f}" value="${esc(p[f]||'')}" placeholder="可空白" aria-label="${l}"${f==='ja'?' lang="ja"':f==='kr'?' lang="ko"':''}></label>`).join('')}${NX.map(([f,l])=>`<label class="tw-f"><span>${l}</span><textarea class="eta" data-f="${f}" rows="${f==='x'?2:1}" placeholder="可空白" aria-label="${l}">${esc(p[f]||'')}</textarea></label>`).join('')}${wdFoot('刪除這國')}</div>`:`${wdNatHead(p)}${org?`<section><h3 class="wd-sh">這國的人</h3>${org}</section>`:''}`}</div>`}
+ return wdTop()+`<div class="pg wd-pg${S.wdEdit?'':' wd-npg'}">${S.wdEdit?wdNm(p):''}${S.wdEdit?`<div id="wdBox"><label class="tw-f" style="margin-top:0"><span>國名</span><input class="edi" data-f="n" value="${esc(p.name)}" aria-label="國名"></label>${[['kr','韓文名'],['ja','日文名'],['en','英文名']].map(([f,l])=>`<label class="tw-f"><span>${l}</span><input class="edi" data-f="${f}" value="${esc(p[f]||'')}" placeholder="可空白" aria-label="${l}"${f==='ja'?' lang="ja"':f==='kr'?' lang="ko"':''}></label>`).join('')}${NX.map(([f,l])=>`<label class="tw-f"><span>${l}</span><textarea class="eta" data-f="${f}" rows="${f==='x'?2:1}" placeholder="可空白" aria-label="${l}">${esc(p[f]||'')}</textarea></label>`).join('')}${ogUI(p)}${wdFoot('刪除這國')}</div>`:`${wdNatHead(p)}${org?`<section><h3 class="wd-sh">這國的人</h3>${org}</section>`:''}`}</div>`}
 /* person / nation page: each field saves when you leave it */
 function bindWd(r,n){const P=r==='person',K=P?PK:NK,id=(P?D.ppl:D.nations)[n].id,cur=()=>(P?D.ppl:D.nations).find(x=>x.id===id),redraw=()=>{const y=scrollY;render(true);scrollTo(0,y)};
  $('#wdE').onclick=()=>{document.activeElement?.blur?.();S.wdEdit=!S.wdEdit;redraw()};
@@ -1775,6 +1826,7 @@ function bindWd(r,n){const P=r==='person',K=P?PK:NK,id=(P?D.ppl:D.nations)[n].id
  box.addEventListener('change',e=>{const el=e.target,f=el.dataset.f,a=cur();if(!a)return;if(el.dataset.rf){wdPut(PK,a,{rel:rels()});return}if(!f)return;const v=el.value.trim();if(f==='n'&&!v){el.value=a.name;return say('名字不能空白')}say('');wdPut(K,a,{[f]:v});if(f==='n'){const t=$('.wd-nm');if(t)t.textContent=v}});
  box.addEventListener('click',e=>{const b=e.target.closest('[data-rd]');if(!b)return;const L=rels();L.splice(+b.dataset.rd,1);wdPut(PK,cur(),{rel:L});redraw()});
  const ra=$('#wdRa');if(ra)ra.onclick=()=>{const o=D.ppl.find(x=>x.id!==id);wdPut(PK,cur(),{rel:[...rels(),{to:o.id,as:''}]});redraw();const rs=$$('#wdBox .wd-rl');rs[rs.length-1]?.querySelector('select').focus()};
+ if(!P)ogBind(box,id,redraw);
  $('#wdD').onclick=()=>{const a=cur();if(!a||!confirm(`刪除「${a.name}」？\n各話的筆記和吐槽不會受影響。`))return;wdPut(K,a,{d:1});S.wdEdit=false;go('world')};
  const f=$('#wdF');if(f)f.onchange=async()=>{const fl=f.files[0];f.value='';if(!fl)return;const u=URL.createObjectURL(fl);try{const b=await openCrop(u,{ratios:['1:1'],title:'框出頭像',max:320});if(b&&b!=='skip'&&cur()){wdPut(PK,cur(),{av:await storeImg(b)});redraw()}}catch(_){sync('這張圖讀不出來，換成 JPG 或 PNG 再試',true)}finally{URL.revokeObjectURL(u)}};
  const rb=$('#wdR');if(rb)rb.onclick=()=>{wdPut(PK,cur(),{av:null});redraw()}}
@@ -1798,11 +1850,28 @@ function medal(k,on){if(!GEMS[k])return pearlMd(on);const G=GEMS[k],N=16,pts=(r,
  return `<svg class="md" viewBox="-30 -30 60 60" aria-hidden="true">${leaf}<g transform="rotate(${G.rot})"><polygon points="${bez.join(' ')}" fill="url(#silver)" stroke="#565a7e" stroke-width=".7" stroke-linejoin="round"/>${f}<polygon points="${line.join(' ')}" fill="${G.tint}" fill-opacity=".2" stroke="#3a3690" stroke-width=".6" stroke-linejoin="round"/><path d="M-8 -5Q-3 -10 4 -8.5Q-2 -6.5 -5 -2Z" fill="#fff" opacity=".88"/>${pr}</g></svg>`}
 /* settings: version, reading lock (this device only), notes backup */
 function vSettings(){const pend=dirty||upq.length;return `<div class="pg cfg"><div class="hd"><h2 class="logo">設定</h2>${spray(110,70,43,'right:-6px;top:-10px')}</div>
-<section class="card cfg-c"><h3>閱讀進度</h3><label class="cfg-l"><span class="cfg-t"><b>固定在最新話</b><small>打開後主頁的手鐲不能拖，每週新話一出就算讀到，不會再誤滑。只影響這台裝置。</small></span><input type="checkbox" id="stLock" role="switch"${LOCK?' checked':''}><i class="cfg-s" aria-hidden="true"></i></label></section>
-<section class="card cfg-c"><h3>備份</h3><p>把這台裝置上的筆記與修改（edits.json）存成一個檔案，放在手機或電腦裡備用。</p><div class="cfg-b"><button class="chip" id="stBk">下載筆記備份</button><small id="stBm" role="status">${pend?'這台還有修改等待上傳；備份會包含它們。':''}</small></div></section>
-<section class="card cfg-c"><h3>版本</h3><dl class="cfg-v"><dt>程式</dt><dd>${esc(VER)}</dd><dt>資料</dt><dd>${esc(BASE.replace(/^data\/base-|\.json$/g,''))}</dd><dt>這台的筆記</dt><dd>${pend?'有修改等待上傳':'已和雲端一致'}</dd></dl></section></div>`}
-function bindSettings(){$('#stLock').onchange=e=>{LOCK=e.target.checked;if(LOCK)lsSet('readLock','1');else lsDel('readLock');S.read=E.read?E.read.v:(+lsGet('read')||9999);if(LOCK)S.read=9999};
- $('#stBk').onclick=()=>{persist();const d=new Date(),p=x=>String(x).padStart(2,'0'),f=`和皇帝一起墮落_筆記備份_${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}.json`,u=URL.createObjectURL(new Blob([JSON.stringify(E,null,1)],{type:'application/json'})),a=document.createElement('a');a.href=u;a.download=f;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);$('#stBm').textContent=`已下載 ${f}`}}
+<div class="cfg-k"><section class="card cfg-c cfg-r1"><h3>閱讀進度</h3><label class="cfg-l"><span class="cfg-t"><b>固定在最新話</b><small>打開後主頁的手鐲不能拖，每週新話一出就算讀到，不會再誤滑。只影響這台裝置。</small></span><input type="checkbox" id="stLock" role="switch"${LOCK?' checked':''}><i class="cfg-s" aria-hidden="true"></i></label></section>
+<section class="card cfg-c cfg-r4"><h3>版本</h3><dl class="cfg-v"><dt>程式</dt><dd>${esc(VER)}</dd><dt>資料</dt><dd>${esc(BASE.replace(/^data\/base-|\.json$/g,''))}</dd><dt>這台的筆記</dt><dd>${pend?'有修改等待上傳':'已和雲端一致'}</dd></dl></section></div><div class="cfg-k">${bkCard(pend)}
+<section class="card cfg-c cfg-r3"><h3>主頁封面</h3><p>換成自己的橫幅圖，也可以改回預設。電腦版只顯示中間較窄的一條。</p><img class="cv-pv" src="${D.cover}" alt="目前的封面"><div class="cfg-b"><button class="chip cv-b" id="stCv">換封面</button>${D.cover!==BC?'<button class="chip cv-b" id="stCvR">改回預設</button>':''}</div></section></div></div>`}
+function bindSettings(){const sc=$('#stCv');if(sc)sc.onclick=openCvPick;const sr=$('#stCvR');if(sr)sr.onclick=()=>setCover(null);
+ $('#stLock').onchange=e=>{LOCK=e.target.checked;if(LOCK)lsSet('readLock','1');else lsDel('readLock');S.read=E.read?E.read.v:(+lsGet('read')||9999);if(LOCK)S.read=9999};
+ $('#stBk').onclick=()=>{const f=bkSave('');BK=null;bkShow(`已下載 ${f}`)};
+ $('#stIm').onclick=()=>$('#stFile').click();
+ $('#stFile').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;let j=null;try{j=JSON.parse(await f.text())}catch(x){}
+  if(!j||typeof j!=='object'||Array.isArray(j)||typeof j.eps!=='object'||!j.eps||(j.kinds!==undefined&&(typeof j.kinds!=='object'||!j.kinds)))BK={bad:f.name};
+  else{j={...j,kinds:j.kinds||{}};BK={name:f.name,imp:j,df:bkDiff(j)}}bkShow()};
+ if($('#bkGo'))$('#bkGo').onclick=bkApply;if($('#bkNo'))$('#bkNo').onclick=()=>{BK=null;bkShow()};
+}
+/* backup import: the file goes through merge() itself, the same rule the cloud sync uses (newer 't' wins, unknown fields kept), never replacing E wholesale. */
+let BK=null;
+function bkSave(tag){persist();const d=new Date(),p=x=>String(x).padStart(2,'0'),f=`和皇帝一起墮落_筆記備份${tag}_${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}.json`,u=URL.createObjectURL(new Blob([JSON.stringify(E,null,1)],{type:'application/json'})),a=document.createElement('a');a.href=u;a.download=f;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);lsSet('lastBk',String(Date.now()));return f}
+function bkShow(msg){const y=scrollY;render(true);scrollTo(0,y);if(msg&&$('#stBm'))$('#stBm').textContent=msg}
+function bkDiff(imp){const s={add:0,upd:0,keep:0,same:0},cmp=(a,b)=>{if(!a)s.add++;else if(JSON.stringify(a)===JSON.stringify(b))s.same++;else s[((b&&b.t)||0)>=((a&&a.t)||0)?'upd':'keep']++};for(const k in imp.eps)cmp(E.eps[k],imp.eps[k]);for(const k in imp.kinds)cmp(E.kinds[k],imp.kinds[k]);if(imp.read)cmp(E.read,imp.read);return s}
+function bkApply(){if(!BK||!BK.imp)return;const f=bkSave('_匯入前'),s=BK.df;E=merge(E,BK.imp);touch();persist();rebuild();BK=null;bkShow(`匯入完成：新增 ${s.add} 筆、更新 ${s.upd} 筆。匯入前的資料已另存為 ${f}`)}
+function bkCard(pend){const t=+lsGet('lastBk')||0,has=Object.keys(E.eps).length+Object.keys(E.kinds).length>0,day=Math.floor((Date.now()-t)/864e5),old=has&&(!t||day>=14),d=new Date(t),last=t?`${d.getMonth()+1}/${d.getDate()}（${day<1?'今天':day+' 天前'}）`:'還沒備份過';
+ let pv='';if(BK&&BK.bad)pv=`<div class="cfg-pv" role="alert"><p>「${esc(BK.bad)}」不是這個 App 的筆記備份檔，沒有動任何資料。</p><div class="cfg-b"><button class="chip" id="bkNo">知道了</button></div></div>`;
+ else if(BK){const s=BK.df,none=!s.add&&!s.upd;pv=`<div class="cfg-pv" role="group" aria-label="匯入預覽"><div class="cfg-pt"><b>準備匯入</b><small>${esc(BK.name)}</small></div>${none?'<p>備份裡沒有比這台新、或這台沒有的內容，不用匯入。</p>':`<dl class="cfg-v"><dt>新增</dt><dd><b>${s.add}</b> 筆・這台沒有的</dd><dt>更新</dt><dd><b>${s.upd}</b> 筆・備份比較新</dd><dt>保留</dt><dd><b>${s.keep}</b> 筆・這台比較新，不動</dd></dl><p>兩邊都有的，留時間較新的那份。按下「確定匯入」時，會先自動下載一份目前的資料。</p>`}<div class="cfg-b">${none?'':'<button class="chip pri" id="bkGo">確定匯入</button>'}<button class="chip" id="bkNo">${none?'知道了':'取消'}</button></div></div>`}
+ return `<section class="card cfg-c cfg-bk cfg-r2"><h3>備份</h3><p>把這台裝置上的筆記與修改存成一個檔案，放在手機或電腦裡備用，需要時可以匯回來。</p><dl class="cfg-v"><dt>上次備份</dt><dd${old?' class="cfg-w"':''}>${last}</dd></dl>${old?`<p class="cfg-w" role="status">${t?`已經 ${day} 天沒備份了`:'還沒備份過'}，建議現在存一份。</p>`:''}<div class="cfg-b"><button class="chip" id="stBk">下載筆記備份</button><button class="chip" id="stIm">從備份檔匯入</button><input type="file" id="stFile" accept=".json,application/json" hidden><small id="stBm" role="status">${pend?'這台還有修改等待上傳；備份會包含它們。':''}</small></div>${pv}</section>`}
 const DM=[['home','主頁'],['line','藤蔓劇情線'],['wall','圖片牆'],['goods','展覽'],['world','人物與王國']];
 function avSmall(){const a=latestAv();return a?`<img src="${a}" alt="">`:`<svg viewBox="-20 -20 40 40" aria-hidden="true">${lily(0,0,18)}</svg>`}
 function reportItem(){let len=D.eps.length;while(len>BE.length&&D.eps[len-1].st==='todo')len--;const t=D.eps.slice(0,len).filter(e=>e.st==='todo');return `<button class="dwr dwrp" aria-expanded="false">${pearlMd(false)}<span>向陛下報告</span></button><div class="dwsub" hidden>${t.length?`<button class="dwj" data-v="ep-${t[0].n}">補${nm(t[0].n)}<small>還有 ${t.length} 話待補</small></button>`:''}<button class="dwj" data-v="ep-${len}">＋ 新增${nm(len)}</button></div>`}
