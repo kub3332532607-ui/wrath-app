@@ -1181,7 +1181,7 @@ async function dbGet(k){try{const d=await db();return await new Promise((ok,no)=
 async function dbSet(k,v){try{const d=await db();await new Promise((ok,no)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error)})}catch(e){}}
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
 /* private repo: this page holds no notes or pictures, they are read with the device's key */
-const BASE='data/base-9493b8ad21a3.json',VER='2026.11.14 22:54 · 9d6dc6b';
+const BASE='data/base-9493b8ad21a3.json',VER='2026.11.15 00:05 · 98afae8';
 let CFG=null,TK=lsGet('tk');
 const api=(p,o={})=>fetch(`${CFG.api??'https://api.github.com'}/repos/${CFG.owner}/${CFG.repo}/contents/${p}`,{cache:'no-store',...o,headers:{Authorization:`Bearer ${TK}`,...o.headers}});
 const rawGet=p=>api(p,{headers:{Accept:'application/vnd.github.raw+json'}});
@@ -1451,7 +1451,7 @@ const seSpk=(n,r)=>{const sel=r.sp,ids=[...new Set([...sel,...epCast(n).map(p=>p
 const seRow=(r,i,all,n)=>{const q=r.t==='q',c=S.cur&&S.cur.n===n&&S.cur.i===i,L=q?r.sp.map(wdBy).filter(Boolean):[],last=i===all.length-1;
  return `<div class="re se-i${c?' on':''}" data-t="${r.t}" data-i="${i}"${q?` data-sps="${esc(JSON.stringify(r.sp))}"`:` data-im="${esc(JSON.stringify(r.im||[]))}"${r.d?` data-d="${r.d}"`:''}${r.nw?' data-nw="1"':''}`}><div class="av">${PRL}${!last?'<i class="ln"></i>':''}</div><div class="se-c">
  ${q?`<button type="button" class="xl-sp se-sp" data-act="sp" aria-label="選說話者">${L.length?L.map(p=>`<span class="xl-s">${wdR(p,30)}<b>${esc(p.name)}</b></span>`).join(''):'<span class="hn">說話者（點這裡選）</span>'}</button>${c&&S.cur.sp?seSpk(n,r):''}`:(r.l?'<span class="tg">回頭補</span>':'')}
- <textarea class="eta ${q?'qxi xl-qi':'rxi'}" rows="1" data-l="${r.l?1:''}" placeholder="${q?'台詞打在這裡':i?'接著寫…':'吐槽打在這裡，可以換行；推文整段貼上也行'}" aria-label="第${i+1}則${q?'台詞':'吐槽'}">${esc(r.x)}</textarea>${q?'':twIm(r.im,true)}
+ <textarea class="eta ${q?'qxi xl-qi':'rxi'}" rows="1" data-l="${r.l?1:''}" placeholder="${q?'台詞打在這裡':i?'接著寫…':'吐槽打在這裡，可以換行；推文整段貼上也行'}" aria-label="第${i+1}則${q?'台詞':'吐槽'}">${esc(r.x)}</textarea>${q?(c?'<p class="hn se-qh">原文放在句尾括號裡，韓文、日文都會變成小字</p>':''):twIm(r.im,true)}
  <div class="se-mn" role="group" aria-label="這一則的操作"><button type="button" class="se-b" data-act="up" aria-label="往上移"${i?'':' disabled'}>↑</button><button type="button" class="se-b" data-act="dn" aria-label="往下移"${last?' disabled':''}>↓</button>${q?'':(r.im||[]).length<4?`<label class="se-b tw-b">加圖<input type="file" accept="image/*" multiple aria-label="替第${i+1}則加圖"></label>`:''}<button type="button" class="se-b" data-act="typ">改類型</button><button type="button" class="se-b" data-act="del">刪除</button></div></div></div>`};
 /* the episode's arcs as chips: × takes it out, the field below adds one; names, from/to and notes are edited on the timeline page */
 const arcField=(e,n)=>`<div class="tw-f"><div class="chips arc-in">${e.ai.map((id,i)=>`<span class="chip arc-c">${esc(e.ar[i])}<button class="arc-x" data-out="${esc(id)}" aria-label="把這話移出「${esc(e.ar[i])}」">×</button></span>`).join('')||'<span class="hn">這話還沒有劇情線</span>'}</div>
@@ -2069,10 +2069,10 @@ function bindSearch(){fdBind();const i=$('#fdq');if(i)i.focus({preventScroll:tru
 function fdWire(o){o.querySelectorAll('.eg-go').forEach(x=>{x.onclick=()=>go('ep-'+x.dataset.n);x.onkeydown=e=>{if(e.key==='Enter')go('ep-'+x.dataset.n)}});
  o.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));o.querySelectorAll('[data-fk]').forEach(b=>b.onclick=()=>{FD.k=b.dataset.fk;clearTimeout(window._fdt);fdPaint()});
  o.querySelectorAll('[data-fm]').forEach(b=>b.onclick=()=>{FD.lim[b.dataset.fm]=(FD.lim[b.dataset.fm]||30)+30;fdPaint()})}
-/* ---- quotes (qv-): display only. A quote stays one string in qt ("中文（한국어）"); it is split here when the last brackets hold Hangul ---- */
-function qvSplit(t){const m=String(t).match(/^([\s\S]*?)\s*[（(]([^（）()]*[가-힯][^（）()]*)[）)]\s*$/);return m?[m[1].trim(),m[2].trim()]:[String(t),'']}
+/* ---- quotes (qv-): display only. A quote stays one string in qt ("中文（한국어）"); it is split here when the last brackets hold Hangul or kana ---- */
+function qvSplit(t){const m=String(t).match(/^([\s\S]*?)\s*[（(]([^（）()]*[가-힯぀-ヿ][^（）()]*)[）)]\s*$/);return m?[m[1].trim(),m[2].trim()]:[String(t),'']}
 const qvWho=(n,q)=>qsOf(n,q.k,q).map(id=>D.ppl.find(p=>p.id===id)).filter(Boolean);
-const qvKr=k=>k?`<p class="qv-kr" lang="ko">${esc(k)}</p>`:'';
+const qvKr=k=>k?`<p class="qv-kr" lang="${/[가-힯]/.test(k)?'ko':'ja'}">${esc(k)}</p>`:'';
 /* episode page: quotes sharing the same slot (q.a) become one chat card; the first speaker sits on the left, everyone else on the right */
 function qvB(L,n){const first=(qvWho(n,L[0])[0]||{}).id;
  return `<article class="eg-note eg-glass qv-dlg">${L.map(q=>{const W=qvWho(n,q),p=W[0],[z,k]=qvSplit(q.x),r=p&&first&&p.id!==first;
