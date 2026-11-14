@@ -227,8 +227,9 @@ h3{margin:0 0 8px;font-family:var(--t);font-size:1.02rem;font-weight:400;color:v
 .wdn-dl,.wd-nat>.wdn-none{grid-column:1/-1}
 .wdn-dl{margin:4px 0 0;display:grid;gap:6px;text-align:left}
 .wdn-dl>div{display:grid;grid-template-columns:5.5em minmax(0,1fr);gap:10px;align-items:baseline}
-.wdn-dl dt{margin:0}
-.wdn-dl dd{margin:0;font-size:.9rem;line-height:1.7;overflow-wrap:anywhere}
+.wdn-dl dt{margin:0;text-align:center}
+.wdn-dl dd{margin:0;font-size:.9rem;line-height:1.7;overflow-wrap:anywhere;text-align:center}
+.wdn-it{display:block}
 .wdn-fl{display:none}
 .wdn-out .ring.wd-r{box-shadow:none;outline:max(1.5px,calc(var(--z)/34)) dashed var(--gold);outline-offset:0;opacity:.8}
 .wdn-out b,.wdn-out small{opacity:.8}
@@ -237,7 +238,7 @@ h3{margin:0 0 8px;font-family:var(--t);font-size:1.02rem;font-weight:400;color:v
 .wd-nat h2>.fl{position:relative;display:inline-block;vertical-align:middle;margin-left:4px;width:62px;height:43px}
 .wd-nat small{display:block;color:var(--mute);font-size:.8rem}
 .wd-nat p{margin:6px 0 0;font-size:.9rem;line-height:1.7}
-.wd-npg>.wd-nat .wdn-dl{max-width:24em;margin-left:auto;margin-right:auto;width:100%}
+.wd-npg>.wd-nat .wdn-dl,.wdp-dl{max-width:24em;margin-left:auto;margin-right:auto;width:100%}
 @media (max-width:899.98px){.wd-nat h2>.fl{display:none}
  .wdn-sub{display:flex;flex-wrap:wrap;align-items:center;column-gap:2px}
  .wdn-fl{display:inline-block;position:relative;width:44px;height:30px;flex:none;vertical-align:middle}
@@ -1077,7 +1078,7 @@ async function dbGet(k){try{const d=await db();return await new Promise((ok,no)=
 async function dbSet(k,v){try{const d=await db();await new Promise((ok,no)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error)})}catch(e){}}
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
 /* private repo: this page holds no notes or pictures, they are read with the device's key */
-const BASE='data/base-b77ae9edde1b.json',VER='2026.11.14 10:32 · f402c6f';
+const BASE='data/base-4cdad7f21122.json',VER='2026.11.14 12:11 · 7b3b150';
 let CFG=null,TK=lsGet('tk');
 const api=(p,o={})=>fetch(`${CFG.api??'https://api.github.com'}/repos/${CFG.owner}/${CFG.repo}/contents/${p}`,{cache:'no-store',...o,headers:{Authorization:`Bearer ${TK}`,...o.headers}});
 const rawGet=p=>api(p,{headers:{Accept:'application/vnd.github.raw+json'}});
@@ -1273,15 +1274,15 @@ function arcLeave(n,id){const a=arcBy(id);if(!a)return false;const s=a.start_ep,
 
 /* people and nations: base list from the build, then edits on top. An edited one is stored whole as E.kinds['@ppl:'+id] / E.kinds['@nat:'+id]
    (people: the id the build gives them; nations: 'n' + place in the base list; added ones: 'u…'). Same rules as arcs: the latest edit wins when two devices change the same one, {d:1} = deleted.
-   People: {n name, r role, x text, px previous life, g nation they belong to, h home nation, sec heading on the family tree,
+   People: {n name, r role, zh/kr/ja/en (Chinese / Korean / Japanese / English name, '' = none; only written once edited), al (other names, one string joined with '、'; a value that is there replaces the build's default list), x text, px previous life, g nation they belong to, h home nation, sec heading on the family tree,
             rel [{to, as: what this person is to them, inv: what they are to this person, sp: spouse}], av avatar path, c added-at, t}. Nations: {n, x, c, t, mx, my (map marker, % of the map width / height; no fields = none; both null = the default marker was removed),
             kr, ja, en (Korean / Japanese / English name; a field that is there wins over the build's default in mapGeo.nm, '' = show none; only written once the user edits that field),
             mg magic, pr products and strengths (x is shown as 'other info'; only written once edited)}. Saving keeps every field already in the record, even ones this version doesn't know. */
-const PK='@ppl:',NK='@nat:',BP=D.ppl,BN=D.nations,NL=['kr','ja','en'],NX=[['mg','魔法'],['pr','特產與優勢'],['x','其他資訊']];
-function wdBuild(){const ed=K=>{const o={};for(const k in E.kinds)if(k.startsWith(K)){const r=E.kinds[k];if(r&&typeof r==='object'&&(r.d||(typeof r.n==='string'&&r.n)))o[k.slice(K.length)]=r}return o},str=v=>typeof v==='string'?v:'';
+const PK='@ppl:',NK='@nat:',BP=D.ppl,BN=D.nations,NL=['kr','ja','en'],PL=[['zh','中文名'],['kr','韓文名'],['ja','日文名'],['en','英文名']],NX=[['mg','魔法'],['pr','特產與優勢'],['x','其他資訊']];
+function wdBuild(){const ed=K=>{const o={};for(const k in E.kinds)if(k.startsWith(K)){const r=E.kinds[k];if(r&&typeof r==='object'&&(r.d||(typeof r.n==='string'&&r.n)))o[k.slice(K.length)]=r}return o},str=v=>typeof v==='string'?v:'',alist=v=>(Array.isArray(v)?v:typeof v==='string'?v.split(/[、,，;；]/):[]).map(q=>typeof q==='string'?q.trim():'').filter(Boolean);
  const mk=(A,e,ap)=>{for(const id of Object.keys(e).sort((a,b)=>(e[a].c||0)-(e[b].c||0))){const r=e[id],i=A.findIndex(x=>x.id===id);if(r.d){if(i>=0)A.splice(i,1);continue}if(i>=0)A[i]=ap(A[i],r);else if(r.c)A.push(ap({id},r))}return A};
  const rel=a=>Array.isArray(a)?a.filter(q=>q&&typeof q.to==='string'&&typeof q.as==='string').map(q=>({to:q.to,as:q.as,...(typeof q.inv==='string'&&q.inv?{inv:q.inv}:{}),...(q.sp?{sp:1}:{})})):[];
- D.ppl=mk(BP.map((p,i)=>({px:'',g:'',h:'',sec:'',al:[],...p,id:p.id||'p'+i,bn:p.name,rel:rel(p.rel)})),ed(PK),(p,r)=>({al:[],...p,name:r.n,role:str(r.r),x:str(r.x),px:str(r.px),g:str(r.g),h:str(r.h),sec:str(r.sec),rel:rel(r.rel),...(typeof r.av==='string'&&/^img\//.test(r.av)?{img:r.av,av:1}:{})}));
+ D.ppl=mk(BP.map((p,i)=>({px:'',g:'',h:'',sec:'',al:[],zh:'',kr:'',ja:'',en:'',...p,id:p.id||'p'+i,bn:p.name,rel:rel(p.rel)})),ed(PK),(p,r)=>({al:[],zh:'',kr:'',ja:'',en:'',...p,...Object.fromEntries(PL.filter(([k])=>k in r).map(([k])=>[k,str(r[k])])),...('al' in r?{al:alist(r.al)}:{}),name:r.n,role:str(r.r),x:str(r.x),px:str(r.px),g:str(r.g),h:str(r.h),sec:str(r.sec),rel:rel(r.rel),...(typeof r.av==='string'&&/^img\//.test(r.av)?{img:r.av,av:1}:{})}));
  const ids=new Set(D.ppl.map(p=>p.id));for(const p of D.ppl)p.rel=p.rel.filter(r=>r.to!==p.id&&ids.has(r.to));
  const dk=D.mapGeo?.mk||{};D.nations=mk(BN.map((t,i)=>{const[h,...r]=t.split('：');const d=D.mapGeo?.nm?.['n'+i];return{id:'n'+i,name:h,x:r.join('：'),mg:'',pr:'',kr:d?d[1]:'',ja:'',en:d?d[2]:'',...(dk['n'+i]?{mx:dk['n'+i][0],my:dk['n'+i][1]}:{})}}),ed(NK),(p,r)=>({mg:'',pr:'',kr:'',ja:'',en:'',...p,name:r.n,x:str(r.x),...Object.fromEntries([...NL,'mg','pr'].filter(k=>k in r).map(k=>[k,str(r[k])])),...('mx' in r?(typeof r.mx==='number'&&typeof r.my==='number'?{mx:r.mx,my:r.my}:{mx:null,my:null}):{})}))}
 function wdPut(K,a,ch){const o=E.kinds[K+a.id]||{};E.kinds[K+a.id]={...o,n:a.name,x:a.x||'',...(K===PK?{r:a.role||'',px:a.px||'',g:a.g||'',h:a.h||'',sec:a.sec||'',rel:(a.rel||[]).map(r=>({...r})),...(o.av?{av:o.av}:{})}:{}),...(K===NK&&a.mx!==undefined?{mx:a.mx,my:a.my}:{}),...(K===NK?Object.fromEntries(NL.filter(k=>k in o).map(k=>[k,o[k]])):{}),...(o.c?{c:o.c}:{}),...ch,t:Date.now()};touch();persist();rebuild()}
@@ -1730,7 +1731,8 @@ function wdOSwipe(){const w=$('#wdSc');if(!w||w.dataset.on)return;w.dataset.on='
 /* episodes whose notes mention this person (by name or the other names the build knows). A guess, not a record. */
 /* who appears in an episode: the ticks the user made (E.eps[n].pp = person ids) when there are any, else the guess above. The person page and the episode page both read this, so they always agree. */
 const ppOf=n=>{const x=E.eps[n];return x&&Array.isArray(x.pp)?x.pp:null};
-const wdGuess=(e,p)=>{if(e.st==='todo')return false;const ks=[...new Set([p.name,p.bn,...(p.al||[])].filter(k=>k&&[...k].length>=2))];if(!ks.length)return false;const t=[e.lb,e.su||'',...e.pl,...e.rx.map(x=>x.x)].join('\n');return ks.some(k=>t.includes(k))};
+const WD1=['辛苦','艱辛','辛辣','辛勤','辛酸','辛香','香辛','辛亥','辛辛'];
+const wdGuess=(e,p)=>{if(e.st==='todo')return false;const ks=[...new Set([p.name,p.bn,p.zh,p.kr,p.ja,p.en,...(p.al||[])].filter(k=>k&&[...k].length>=1))];if(!ks.length)return false;const t=[e.lb,e.su||'',...e.pl,...e.rx.map(x=>x.x)].join('\n');let t1;return ks.some(k=>[...k].length>=2?t.includes(k):t.includes(k)&&(t1??=WD1.reduce((a,w)=>a.split(w).join(' '),t)).includes(k))};
 const epCast=n=>{const g=ppOf(n),e=D.eps[n];return e?(g?D.ppl.filter(p=>g.includes(p.id)):D.ppl.filter(p=>wdGuess(e,p))):[]};
 const wdEps=p=>D.eps.filter(e=>!hidden(e.n)&&(ppOf(e.n)?ppOf(e.n).includes(p.id):wdGuess(e,p))).map(e=>e.n);
 const ecChip=(p,x)=>`<button${x?'':' type="button"'} class="chip ec-c"${x}>${wdR(p,24)}<span>${esc(p.name)}</span></button>`;
@@ -1740,21 +1742,25 @@ const wdBtn=()=>`<button class="edb" id="wdE">${S.wdEdit?'完成':'編輯'}</but
 const wdTop=()=>`<nav class="sr-backnav" aria-label="返回導覽"><button onclick="go('world')">‹ <span>返回人物與王國</span></button>${wdBtn()}</nav>`,wdNm=p=>`<h2 class="wd-nm">${esc(p.name)}</h2>`;
 const wdFoot=t=>`<div class="alf"><span class="hn">改完一格就自動存</span><button class="chip" id="wdD">${t}</button></div>`;
 const wdSel=(f,v,lb)=>`<select class="edi" data-f="${f}" aria-label="${lb}"><option value="">（沒有）</option>${D.nations.map(n=>`<option value="${esc(n.id)}"${n.id===v?' selected':''}>${esc(wdShort(n))}</option>`).join('')}</select>`;
+/* a field typed as 'a / b' shows one item per line */
+const wdIts=v=>String(v).split(/\s+[\/／]\s+/).filter(Boolean).map(t=>`<span class="wdn-it">${esc(t)}</span>`).join('');
+/* the 'names' block on a person page: zh/kr/ja/en names and other names, only the filled ones */
+function wdNames(p){const L=[...PL.map(([f,l])=>[f,l,p[f]]),['al','又名',(p.al||[]).join('、')]].filter(q=>q[2]);return L.length?`<section class="wd-sc"><h3 class="wd-sh">名字</h3><dl class="wdn-dl wdp-dl">${L.map(([f,l,v])=>`<div><dt class="hn">${l}</dt><dd${f==='ja'?' lang="ja"':f==='kr'?' lang="ko"':''}>${wdIts(v)}</dd></div>`).join('')}</dl></section>`:''}
 function vPerson(i){const p=D.ppl[i],g=wdNat(p.g),h=wdNat(p.h);
  if(S.wdEdit)return wdTop()+`<div class="pg wd-pg"><div class="wd-star" style="height:126px"><span class="wd-c" style="left:50%;top:63px">${wdR(p,110)}</span></div>${wdNm(p)}<div class="av-b" style="justify-content:center;padding:0"><label class="chip">換頭像<input type="file" accept="image/*" id="wdF" aria-label="換頭像"></label>${p.av?'<button class="chip" id="wdR">改回預設</button>':''}</div>
- <div id="wdBox"><label class="tw-f"><span>名字</span><input class="edi" data-f="n" value="${esc(p.name)}" aria-label="名字"></label><label class="tw-f"><span>身分</span><input class="edi" data-f="r" value="${esc(p.role)}" placeholder="可空白" aria-label="身分"></label>
+ <div id="wdBox"><label class="tw-f"><span>名字</span><input class="edi" data-f="n" value="${esc(p.name)}" aria-label="名字"></label><label class="tw-f"><span>身分</span><input class="edi" data-f="r" value="${esc(p.role)}" placeholder="可空白" aria-label="身分"></label>${PL.map(([f,l])=>`<label class="tw-f"><span>${l}</span><input class="edi" data-f="${f}" value="${esc(p[f]||'')}" placeholder="可空白" aria-label="${l}"${f==='ja'?' lang="ja"':f==='kr'?' lang="ko"':''}></label>`).join('')}<label class="tw-f"><span>又名（用「、」隔開）</span><input class="edi" data-f="al" value="${esc((p.al||[]).join('、'))}" placeholder="可空白，例：大夫人、一夫人" aria-label="又名"></label>
  <div class="alr wd-two"><label class="tw-f"><span>現在屬於哪一國</span>${wdSel('g',p.g,'現在屬於哪一國')}</label><label class="tw-f"><span>出身（母國）</span>${wdSel('h',p.h,'出身的國家')}</label></div>
  <label class="tw-f"><span>${'介紹（今生）'}</span><textarea class="eta" data-f="x" rows="2" placeholder="可空白" aria-label="介紹">${esc(p.x)}</textarea></label><label class="tw-f"><span>前世</span><textarea class="eta" data-f="px" rows="1" placeholder="可空白" aria-label="前世">${esc(p.px)}</textarea></label>
  <div class="tw-f"><span>關係（填在這位身上，對方那邊會自動出現）</span>${p.rel.map((r,k)=>`<div class="wd-rl"><select class="edi" data-rf="to" aria-label="對方是誰">${D.ppl.filter(o=>o.id!==p.id).map(o=>`<option value="${esc(o.id)}"${o.id===r.to?' selected':''}>${esc(o.name)}</option>`).join('')}</select><button class="chip" data-rd="${k}">移除</button><input class="edi" data-rf="as" value="${esc(r.as)}" placeholder="這位是對方的…（例：秘書）" aria-label="這位是對方的什麼"><input class="edi" data-rf="inv" value="${esc(r.inv||'')}" placeholder="對方是這位的…（可空白）" aria-label="對方是這位的什麼"></div>`).join('')}${D.ppl.length>1?'<button class="tw-next wd-ra" id="wdRa">＋ 加一條關係</button>':''}</div>
  <label class="tw-f"><span>在人物圖上的分區標題（例：情婦）</span><input class="edi" data-f="sec" value="${esc(p.sec)}" placeholder="可空白" aria-label="分區標題"></label>${wdFoot('刪除這位')}</div></div>`;
  const eps=wdEps(p),cut=!S.wdAll&&eps.length>40;
  return wdTop()+`<div class="pg wd-pg"><div class="wd-sw">${spray(150,96,13,'left:50%;top:50%;transform:translate(-50%,-38%);opacity:.75')}${wdStar(p)}</div><div class="wd-nmb"><span class="wd-nmw">${spray(62,43,5,'left:0;transform:translateY(-50%) scaleX(-1)')}${spray(62,43,23,'right:0;transform:translateY(-50%)')}<h2 class="wd-nm logo">${esc(p.name)}</h2></span>${p.role?`<span class="wd-role">${esc(p.role)}</span>`:''}</div><div class="chips wd-tags">${g?`<button class="chip" onclick="${wdGoN(g)}">${esc(wdShort(g))}</button>`:''}${h&&h!==g?`<button class="chip" onclick="${wdGoN(h)}">出身：${esc(wdShort(h))}</button>`:''}</div>
- ${p.x?`<section class="wd-sc"><h3 class="wd-sh">${p.px?'今生':'介紹'}</h3><p>${esc(p.x)}</p></section>`:''}${p.px?`<section class="wd-sc"><h3 class="wd-sh">前世</h3><p>${esc(p.px)}</p></section>`:''}
+ ${p.x?`<section class="wd-sc"><h3 class="wd-sh">${p.px?'今生':'介紹'}</h3><p>${esc(p.x)}</p></section>`:''}${p.px?`<section class="wd-sc"><h3 class="wd-sh">前世</h3><p>${esc(p.px)}</p></section>`:''}${wdNames(p)}
  <section class="wd-sc"><h3 class="wd-sh">出場的話次</h3>${eps.length?`<div class="wd-eps">${(cut?eps.slice(0,40):eps).map(n=>`<button onclick="go('ep-${n}')" aria-label="${nm(n)}">${n>204?'幕'+(n-204):n}</button>`).join('')}${cut?'<button id="wdAll">全部…</button>':''}</div>`:'<p>還沒有出場的話次</p>'}</section></div>`}
 /* nation page head: the whole map with this nation's region outlined, the name, its kr/ja/en names, the description */
 function wdNatHead(p){const sub=NL.map(k=>p[k]).filter(Boolean).join(' · '),k=mpN(p)?mpAt(mpPt(p)):null,L=NX.filter(([f])=>p[f]),fl=`<span class="wdn-fl">${spray(44,30,23,'')}</span>`;
  const mini=k?`<div class="wd-mini"><svg viewBox="${mpV.join(' ')}" aria-hidden="true">${Object.keys(mpG.rg).map(r=>`<path class="mp-r${mpG.un.includes(r)?' mp-u':''}" fill-rule="evenodd" d="${mpG.rg[r]}"/>`).join('')}${mpG.bd.map(d=>`<path class="mp-bd" d="${d}"/>`).join('')}<path class="mp-sl" fill-rule="evenodd" d="${mpG.rg[k]}"/></svg></div>`:'';
- return `<div class="wd-nat${mini?'':' wd-nomap'}">${mini}<div><h2 class="logo">${esc(wdShort(p))}${spray(62,43,23,'')}</h2>${sub?`<small class="wdn-sub">${esc(sub)}${fl}</small>`:fl}</div>${L.length?`<dl class="wdn-dl">${L.map(([f,l])=>`<div><dt class="hn">${l}</dt><dd>${esc(p[f])}</dd></div>`).join('')}</dl>`:'<p class="wdn-none">這國還沒有資料。</p>'}</div>`}
+ return `<div class="wd-nat${mini?'':' wd-nomap'}">${mini}<div><h2 class="logo">${esc(wdShort(p))}${spray(62,43,23,'')}</h2>${sub?`<small class="wdn-sub">${esc(sub)}${fl}</small>`:fl}</div>${L.length?`<dl class="wdn-dl">${L.map(([f,l])=>`<div><dt class="hn">${l}</dt><dd>${wdIts(p[f])}</dd></div>`).join('')}</dl>`:'<p class="wdn-none">這國還沒有資料。</p>'}</div>`}
 function vNation(i){const p=D.nations[i],org=wdOrg(p.id);
  return wdTop()+`<div class="pg wd-pg${S.wdEdit?'':' wd-npg'}">${S.wdEdit?wdNm(p):''}${S.wdEdit?`<div id="wdBox"><label class="tw-f" style="margin-top:0"><span>國名</span><input class="edi" data-f="n" value="${esc(p.name)}" aria-label="國名"></label>${[['kr','韓文名'],['ja','日文名'],['en','英文名']].map(([f,l])=>`<label class="tw-f"><span>${l}</span><input class="edi" data-f="${f}" value="${esc(p[f]||'')}" placeholder="可空白" aria-label="${l}"${f==='ja'?' lang="ja"':f==='kr'?' lang="ko"':''}></label>`).join('')}${NX.map(([f,l])=>`<label class="tw-f"><span>${l}</span><textarea class="eta" data-f="${f}" rows="${f==='x'?2:1}" placeholder="可空白" aria-label="${l}">${esc(p[f]||'')}</textarea></label>`).join('')}${wdFoot('刪除這國')}</div>`:`${wdNatHead(p)}${org?`<section><h3 class="wd-sh">這國的人</h3>${org}</section>`:''}`}</div>`}
 /* person / nation page: each field saves when you leave it */
