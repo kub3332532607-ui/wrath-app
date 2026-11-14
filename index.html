@@ -1103,7 +1103,7 @@ async function dbGet(k){try{const d=await db();return await new Promise((ok,no)=
 async function dbSet(k,v){try{const d=await db();await new Promise((ok,no)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error)})}catch(e){}}
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
 /* private repo: this page holds no notes or pictures, they are read with the device's key */
-const BASE='data/base-4cdad7f21122.json',VER='2026.11.14 14:27 · e151692';
+const BASE='data/base-4cdad7f21122.json',VER='2026.11.14 15:49 · 8d6d81f';
 let CFG=null,TK=lsGet('tk');
 const api=(p,o={})=>fetch(`${CFG.api??'https://api.github.com'}/repos/${CFG.owner}/${CFG.repo}/contents/${p}`,{cache:'no-store',...o,headers:{Authorization:`Bearer ${TK}`,...o.headers}});
 const rawGet=p=>api(p,{headers:{Accept:'application/vnd.github.raw+json'}});
@@ -1754,7 +1754,7 @@ function wdLines(){const o=$('#wdOrg');if(!o)return;const rows=$$('.wd-row',o);r
  const par=c=>o.querySelector(`.wd-o[data-id="${CSS.escape(c.dataset.par)}"]`),rowOf=e=>rows.indexOf(e.parentElement),seen=new Set(),pairOf=p=>{const q=p.dataset.sp?par(p):o.querySelector(`.wd-o[data-sp][data-par="${CSS.escape(p.dataset.id)}"]`);return q&&q.parentElement===p.parentElement?q:null},anc=p=>{const q=pairOf(p),a=rc(p.querySelector('.ring'));if(!q)return{x:a.x,b:rc(p).b+4};const b=rc(q.querySelector('.ring'));return{x:(a.x+b.x)/2,b:Math.max(rc(p).b,rc(q).b)+4}};
  /* a line that has to cross a row in between goes through a gap opened in that row, next to where it comes down */
  for(const c of $$('.wd-o[data-par]',o)){const p=par(c);if(!p||c.dataset.sp)continue;for(let ri=rowOf(p)+1;ri<rowOf(c);ri++){const key=p.dataset.id+'|'+ri;if(seen.has(key))continue;seen.add(key);
-  const px=anc(p).x,ns=[...rows[ri].children];if(!ns.length||px<=rc(ns[0]).l||px>=rc(ns[ns.length-1]).r)continue;
+  const px=anc(p).x,ns=[...rows[ri].children];if(ns.length<2||px<=rc(ns[0]).l||px>=rc(ns[ns.length-1]).r)continue;
   let best=1,bd=1e9;for(let k=1;k<ns.length;k++){const d=Math.abs(rc(ns[k]).l-px);if(d<bd){bd=d;best=k}}ns[best].style.marginLeft='18px';ns[best].dataset.gap=p.dataset.id}}
  /* a one-line row whose people all hang from the same person sits right under that person */
  for(let ri=1;ri<rows.length;ri++){const ns=[...rows[ri].children];if(!ns.length)continue;const ps=new Set(ns.map(n=>n.dataset.sp?'':n.dataset.par||''));if(ps.size!==1)continue;const pid=[...ps][0],p=pid&&o.querySelector(`.wd-o[data-id="${CSS.escape(pid)}"]`);if(!p)continue;
@@ -1818,7 +1818,7 @@ function vNation(i){const p=D.nations[i],org=wdOrg(p.id);
 function bindWd(r,n){const P=r==='person',K=P?PK:NK,id=(P?D.ppl:D.nations)[n].id,cur=()=>(P?D.ppl:D.nations).find(x=>x.id===id),redraw=()=>{const y=scrollY;render(true);scrollTo(0,y)};
  $('#wdE').onclick=()=>{document.activeElement?.blur?.();S.wdEdit=!S.wdEdit;redraw()};
  const all=$('#wdAll');if(all)all.onclick=()=>{S.wdAll=true;redraw()};
- if($('#wdOrg')){wdLines();wdOSwipe();setTimeout(wdLines,400);document.fonts?.ready.then(wdLines)}
+ if($('#wdOrg')){try{wdLines()}catch(e){console.error(e)}wdOSwipe();setTimeout(wdLines,400);document.fonts?.ready.then(wdLines)}
  const box=$('#wdBox');if(!box)return;$$('#wdBox .eta').forEach(grow);
  const say=t=>{let m=box.querySelector('.alm');if(!m){m=document.createElement('p');m.className='alm';m.setAttribute('role','alert');box.append(m)}m.textContent=t;m.hidden=!t};
  const rels=()=>$$('#wdBox .wd-rl').map((d,k)=>{const o=cur().rel[k]||{},to=d.querySelector('[data-rf=to]').value,as=d.querySelector('[data-rf=as]').value.trim(),inv=d.querySelector('[data-rf=inv]').value.trim();return{to,as,...(inv?{inv}:{}),...(o.sp&&o.to===to?{sp:1}:{})}});
