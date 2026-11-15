@@ -638,7 +638,7 @@ select.edi[hidden]{display:none}
 .xl-s b{font-weight:400;font-size:.85rem;color:var(--mute);overflow-wrap:anywhere}
 .xl-l{color:var(--acc);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;white-space:nowrap}
 .eg-photo{width:min(100%,390px);padding:10px;margin:0}
-.eg-photo img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;object-position:50% 14%;border-radius:9px}
+.eg-photo img{display:block;width:100%;height:auto;aspect-ratio:var(--imr-ar,1);object-fit:cover;object-position:50% 14%;border-radius:9px}
 .eg-photo figcaption{font-size:12px;line-height:1.7;padding:9px 6px 3px;color:var(--mute)}
 .eg-tail{position:absolute;left:-7px;width:48px;height:48px;will-change:transform;z-index:3}
 .eg-tail svg{width:48px;height:48px;display:block;filter:none}
@@ -680,14 +680,11 @@ select.edi[hidden]{display:none}
 .eg-hang .eg-bail{left:1px}
 .eg-more{margin-left:60px}}
 /* reactions as a thread of posts (read view and editor) */
-.tw-g{display:grid;gap:4px;margin-top:8px;border-radius:14px;overflow:hidden;max-width:520px}
-.tw-g.n2,.tw-g.n3,.tw-g.n4{grid-template-columns:1fr 1fr}
-.tw-g.n3 .tw-c:first-child{grid-row:span 2}
-.tw-c{position:relative;min-height:0}
-.tw-g img{display:block;width:100%;height:100%;object-fit:cover;max-height:420px}
-.tw-g.n2 img,.tw-g.n4 img{aspect-ratio:1}
-.tw-g.n3 img{aspect-ratio:1}
-.tw-g.n3 .tw-c:first-child img{aspect-ratio:auto}
+/* 貼文圖格（圖片比例 2026-11-15）：每排圖同高、整排同寬，寬高由 irLay() 照圖的原比例算；width 只是 JS 排好前的備用 */
+.tw-g{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;border-radius:14px;overflow:hidden;max-width:520px}
+.tw-c{position:relative;min-height:0;flex:none;overflow:hidden;width:calc(50% - 2px)}
+.tw-g.n1 .tw-c{width:100%}
+.tw-g img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 14%}
 .tw-x{position:absolute;top:6px;right:6px;width:30px;height:30px;border-radius:50%;background:rgba(10,12,40,.62);color:#fff;font-size:18px;line-height:1}
 .tw-b{position:relative;overflow:hidden;font-size:.82rem;color:var(--acc);cursor:pointer;min-height:32px;display:inline-flex;align-items:center}
 .tw-b input{position:absolute;inset:0;opacity:0;font-size:0;cursor:pointer}
@@ -1220,16 +1217,22 @@ html:has(dialog.lbx[open],dialog.crx[open]){overflow:hidden}
 .cmp .lb-bar{position:relative;gap:6px;padding-inline:8px}
 .cmp .lb-bar>.chip{padding:0 12px;font-size:.84rem}
 .cmp .lb-bar>.chip.on{color:#07051d;background:#c9d8ff;border-color:#c9d8ff}
-.cmp-rm,.cmp-sv{position:absolute;left:10px;right:10px;bottom:calc(100% + 6px);z-index:2;padding:8px;border-radius:18px;background:rgba(17,16,60,.94);border:1px solid rgba(205,214,255,.3);box-shadow:0 10px 30px rgba(0,0,0,.45)}
-.cmp-rm{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;max-width:520px;margin-inline:auto}
-.cmp-rm button{min-height:40px;min-width:60px;padding:0 12px;border-radius:99px;font-size:.86rem;color:#c9d8ff;border:1px solid rgba(205,214,255,.26)}
-.cmp-rm button.on{background:#c9d8ff;color:#07051d;border-color:#c9d8ff}
+.cmp-rm,.cmp-sv,.imr-m{position:absolute;left:10px;right:10px;bottom:calc(100% + 6px);z-index:2;padding:8px;border-radius:18px;background:rgba(17,16,60,.94);border:1px solid rgba(205,214,255,.3);box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.cmp-rm,.imr-m{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;max-width:520px;margin-inline:auto}
+.cmp-rm button,.imr-m button{min-height:40px;min-width:60px;padding:0 12px;border-radius:99px;font-size:.86rem;color:#c9d8ff;border:1px solid rgba(205,214,255,.26)}
+.cmp-rm button.on,.imr-m button.on{background:#c9d8ff;color:#07051d;border-color:#c9d8ff}
 .cmp-sv{display:grid;gap:10px;max-width:420px;margin-inline:auto;padding:12px 14px}
 .cmp-sv label{display:grid;gap:6px;font-size:.84rem;color:#b1b6e4}
 .cmp-sv input{min-height:44px;padding:0 14px;border-radius:12px;border:1px solid rgba(205,214,255,.3);background:rgba(170,182,255,.1);color:#eef0ff;font:inherit;font-size:1rem}
 .cmp-sv input::placeholder{color:#8f94c4}
 .cmp-sv .chips{justify-content:flex-end}
-.cmp-rm[hidden],.cmp-sv[hidden]{display:none}
+.cmp-rm[hidden],.cmp-sv[hidden],.imr-m[hidden],.imr-f[hidden],.imr-tip[hidden]{display:none}
+/* 放大圖的「比例」：選單同「尺寸」，框＋小字放在 .lb-tk 裡（跟著換張一起滑） */
+.lb-bar:has(.imr-m){position:relative}
+.imr-m button{min-height:44px}
+.lbx .lb-bar>.chip.lb-ir.on{color:#07051d;background:#c9d8ff;border-color:#c9d8ff}
+.imr-f{position:absolute;pointer-events:none;box-shadow:0 0 0 9999px rgba(7,5,29,.55);outline:1.5px solid #eef0ff;border-radius:2px}
+.imr-tip{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);padding:4px 12px;border-radius:99px;background:rgba(7,5,29,.66);border:1px solid rgba(205,214,255,.26);font-size:.8rem;color:#c9d8ff;white-space:nowrap;pointer-events:none}
 .cmp-sv .cmp-ok{color:#07051d;background:#eef0ff;border-color:#eef0ff}
 .cmp-pk{position:sticky;top:8px;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 14px;padding:8px 8px 8px 16px;border-radius:99px;background:color-mix(in srgb,var(--solid) 90%,transparent);border:1px solid var(--line);box-shadow:0 6px 18px rgba(7,5,29,.28);color:var(--fg);font-size:.9rem;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .cmp-pk .chip{min-height:36px;flex:none}
@@ -1254,12 +1257,19 @@ html:has(dialog.lbx[open],dialog.crx[open]){overflow:hidden}
 .crx .chip.cr-ok{color:#07051d;background:#eef0ff;border-color:#eef0ff}
 .crx .seg2{background:rgba(170,182,255,.12);border-color:rgba(205,214,255,.26)}
 .crx .seg2 button{color:#b1b6e4}
+.crx .cr-r button{padding:0 9px}
 .crx .seg2 button.on{background:#eef0ff;color:#11103c}
 .cr-im{position:absolute;left:50%;top:50%;max-width:none;max-height:none;transform-origin:50% 50%;-webkit-user-drag:none;will-change:transform}
 .cr-f{position:absolute;pointer-events:none;box-shadow:0 0 0 9999px rgba(7,5,29,.66);outline:1.5px solid #eef0ff;border-radius:2px}
 .cr-f::before,.cr-f::after{content:"";position:absolute;inset:33.33% 0;border-block:1px solid rgba(238,240,255,.35)}
 .cr-f::after{inset:0 33.33%;border-block:0;border-inline:1px solid rgba(238,240,255,.35)}
 .cr-tip{width:100%;text-align:center;font-size:.78rem;color:#b1b6e4}
+.cr-hd{position:absolute;width:44px;height:44px;pointer-events:auto;touch-action:none;z-index:2}
+.cr-hd::before{content:"";position:absolute;width:20px;height:20px;border:solid #eef0ff}
+.cr-hd[data-c=tl]{left:-22px;top:-22px;cursor:nwse-resize}.cr-hd[data-c=tl]::before{left:20px;top:20px;border-width:3px 0 0 3px}
+.cr-hd[data-c=tr]{right:-22px;top:-22px;cursor:nesw-resize}.cr-hd[data-c=tr]::before{right:20px;top:20px;border-width:3px 3px 0 0}
+.cr-hd[data-c=bl]{left:-22px;bottom:-22px;cursor:nesw-resize}.cr-hd[data-c=bl]::before{left:20px;bottom:20px;border-width:0 0 3px 3px}
+.cr-hd[data-c=br]{right:-22px;bottom:-22px;cursor:nwse-resize}.cr-hd[data-c=br]::before{right:20px;bottom:20px;border-width:0 3px 3px 0}
 .avx{width:min(560px,100%);max-width:100%;max-height:86vh;margin:auto auto 0;padding:0 0 calc(14px + env(safe-area-inset-bottom,0px));border:1px solid var(--line);border-bottom:0;border-radius:26px 26px 0 0;background:var(--solid);color:var(--fg);overflow:auto}
 @media (min-width:700px){.avx{margin:auto;border-radius:26px;border-bottom:1px solid var(--line)}}
 .avx::backdrop{background:rgba(7,5,29,.6)}
@@ -1312,7 +1322,7 @@ async function dbGet(k){try{const d=await db();return await new Promise((ok,no)=
 async function dbSet(k,v){try{const d=await db();await new Promise((ok,no)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error||new Error('idb error'));t.onabort=()=>no(t.error||new Error('idb abort'))});return true}catch(e){return false}}
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v);return true}catch(e){return false}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
 /* private repo: this page holds no notes or pictures, they are read with the device's key */
-const BASE='data/base-9493b8ad21a3.json',VER='2026.11.15 16:00 · f4f7241';
+const BASE='data/base-9493b8ad21a3.json',VER='2026.11.15 19:28 · d307637';
 let CFG=null,TK=lsGet('tk');
 const api=(p,o={})=>fetch(`${CFG.api??'https://api.github.com'}/repos/${CFG.owner}/${CFG.repo}/contents/${p}`,{cache:'no-store',...o,headers:{Authorization:`Bearer ${TK}`,...o.headers}});
 const rawGet=p=>api(p,{headers:{Accept:'application/vnd.github.raw+json'}});
@@ -1434,7 +1444,7 @@ function vEp(n){const e=D.eps[n],hide=hidden(n)&&e.st!=='todo',edit=!hide&&(S.ed
  if(hide)return `<div class="col">${head}<div class="spo" style="margin-top:20px">防劇透：這話在你的手鐲進度之後。</div></div>`;
  if(edit)return `<div class="col">${head}${edBody(e,n)}</div>`;
  /* summary card, then the thread: first reaction, the episode's pictures, the rest of the reactions — each hung on the chain */
- const qs=(e.qt||[]).map((q,k)=>({...q,k})),xq=f=>qvItems(qs.filter(q=>f(q.a)),n),ph=pics.map(s=>`<figure class="eg-photo eg-glass"><img src="${s}" alt="${nm(n)}的圖"><figcaption>${nm(n)}附圖</figcaption></figure>`),
+ const qs=(e.qt||[]).map((q,k)=>({...q,k})),xq=f=>qvItems(qs.filter(q=>f(q.a)),n),ph=pics.map(s=>`<figure class="eg-photo eg-glass" data-ir="${irGet(s)}"><img src="${s}" alt="${nm(n)}的圖"><figcaption>${nm(n)}附圖</figcaption></figure>`),
  items=r.length?[...r.flatMap((x,i)=>[...xq(a=>a===i),egNote(x,rvShow(e,i)),...(i?[]:ph)]),...xq(a=>a>=r.length)]:[...xq(()=>true),...ph];
  return `<div class="col">${head}<article class="eg-summary eg-glass">${EGC}
  ${(()=>{const L=e.su?e.su.split(String.fromCharCode(10)).filter(Boolean):e.pl;return L.length?L.map(x=>`<p class="bd2 full">${lk(x)}</p>`).join(''):'<p class="bd2 full" style="color:var(--mute)">這話還沒寫。</p>'})()}
@@ -1549,7 +1559,7 @@ function persist(){const a=lsSet('edits',JSON.stringify(E)),b=lsSet('dirty',JSON
 function touch(){dirty=true;gen++;clearTimeout(_ps);_ps=setTimeout(persist,300);sync('存在這台，等待上傳…');clearTimeout(_pt);_pt=setTimeout(push,4000)}
 function setRead(v){if(LOCK)return;S.read=v;E.read={v,t:Date.now()};touch()}
 /* arc, people and nation edits (kinds['@arc:…'], ['@ppl:…'], ['@nat:…']) go by time like episodes; any other field this version doesn't know is kept */
-function merge(r,l){if(!r)return l;const eps={...r.eps};for(const k in l.eps)if(!eps[k]||(l.eps[k].t||0)>=(eps[k].t||0))eps[k]=l.eps[k];const rk=r.kinds||{},lk=l.kinds||{},kinds={...rk,...lk};for(const k in rk)if(/^@(arc|ppl|nat|ev|part|shop):|^@(home|cmp)$/.test(k)&&lk[k]&&((rk[k]&&rk[k].t)||0)>((lk[k]&&lk[k].t)||0))kinds[k]=rk[k];return{...r,...l,eps,kinds,read:!r.read||(l.read&&l.read.t>=r.read.t)?l.read:r.read}}
+function merge(r,l){if(!r)return l;const eps={...r.eps};for(const k in l.eps)if(!eps[k]||(l.eps[k].t||0)>=(eps[k].t||0))eps[k]=l.eps[k];const rk=r.kinds||{},lk=l.kinds||{},kinds={...rk,...lk};for(const k in rk)if(/^@(arc|ppl|nat|ev|part|shop|imr):|^@(home|cmp)$/.test(k)&&lk[k]&&((rk[k]&&rk[k].t)||0)>((lk[k]&&lk[k].t)||0))kinds[k]=rk[k];return{...r,...l,eps,kinds,read:!r.read||(l.read&&l.read.t>=r.read.t)?l.read:r.read}}
 /* status line */
 function sync(t,sticky){const y=$('#sy');if(!y)return;y.textContent=t;y.classList.toggle('on',!!t);y.classList.toggle('bad',!!sticky);clearTimeout(sync.t);if(t&&t==='已同步')sync.t=setTimeout(()=>y.classList.remove('on'),1800)}
 /* base64 */
@@ -1573,7 +1583,7 @@ const hy=h=>h.replace(/src="(img\/[^"]+)"/g,(_,p)=>URLS.has(p)?`src="${URLS.get(
 const slot=()=>_act<6?(_act++,Promise.resolve()):new Promise(ok=>_wq.push(ok)),free=()=>{const n=_wq.shift();n?n():_act--};
 function loadImg(p){if(URLS.has(p))return Promise.resolve(URLS.get(p));if(INF.has(p))return INF.get(p);const w=(async()=>{let b=await dbGet('img:'+p);if(!b){await slot();try{const r=await rawGet(p);if(!r.ok)throw r;b=await r.blob();b=new Blob([b],{type:p.endsWith('.png')?'image/png':'image/jpeg'});dbSet('img:'+p,b)}finally{free()}}const u=URL.createObjectURL(b);URLS.set(p,u);return u})().catch(()=>null).finally(()=>INF.delete(p));INF.set(p,w);return w}
 const IO=new IntersectionObserver(es=>es.forEach(x=>{if(!x.isIntersecting)return;IO.unobserve(x.target);const el=x.target,p=el.dataset.p||el.dataset.bg;loadImg(p).then(u=>{if(!u)return;if(el.dataset.p){el.src=u;delete el.dataset.p}else{el.style.backgroundImage=`url(${u})`;delete el.dataset.bg}})}),{rootMargin:'800px'});
-function hydrate(){attachStudyEntrance();attachStudyTea();$$('[data-p],[data-bg]').forEach(el=>IO.observe(el))}
+function hydrate(){irAll();attachStudyEntrance();attachStudyTea();$$('[data-p],[data-bg]').forEach(el=>IO.observe(el))}
 /* adding pictures: phone photos shrink to 1600px, name comes from the content so re-adding never doubles */
 async function shrink(f){const u=URL.createObjectURL(f);try{const im=await new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=no;i.src=u}),k=Math.min(1,1600/Math.max(im.naturalWidth,im.naturalHeight)),c=document.createElement('canvas');c.width=Math.round(im.naturalWidth*k);c.height=Math.round(im.naturalHeight*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);return await new Promise(ok=>c.toBlob(ok,'image/jpeg',.84))}finally{URL.revokeObjectURL(u)}}
 const IMG_FAIL='這張圖沒存成功（手機空間可能不夠），請再加一次';
@@ -1593,7 +1603,7 @@ const lastWritten=()=>{for(let n=D.eps.length-1;n>=0;n--)if(D.eps[n].st!=='todo'
 /* ---- episode edit view (A3c, 2026-11-12) ----
    One chain of cards: reactions (E.eps[n].rx) and quotes (E.eps[n].qt=[{a,x}], a = how many reactions come before it; speakers E.eps[n].qs={quoteIndex:[personId]}) in the order they are read.
    Tap a card to get its menu (↑ ↓ insert-above, picture, change type, delete). The top line opens one of: summary, arcs, cast, more. */
-const twIm=(im,ed)=>im&&im.length?`<div class="tw-g n${Math.min(im.length,4)}">${im.map((s,j)=>`<div class="tw-c"><img src="${s}" alt="" loading="lazy">${ed?`<button class="tw-x" data-x="${j}" aria-label="移除這張">×</button>`:''}</div>`).join('')}</div>`:'';
+const twIm=(im,ed)=>im&&im.length?`<div class="tw-g n${Math.min(im.length,4)}">${im.map((s,j)=>`<div class="tw-c" data-ir="${irGet(s)}"><img src="${s}" alt="" loading="lazy">${ed?`<button class="tw-x" data-x="${j}" aria-label="移除這張">×</button>`:''}</div>`).join('')}</div>`:'';
 /* the chain as one list: quotes with a===i come just before reaction i, the ones with a>=count at the end (same order as the episode page) */
 const seRows=(e,n)=>{const r=e.rx,q=(e.qt||[]).map((x,k)=>({t:'q',x:x.x,a:x.a,sp:[...qsOf(n,k,x)]})),o=[];
  r.forEach((x,i)=>{o.push(...q.filter(z=>z.a===i),{t:'r',x:x.x,l:!!x.l,im:x.im?[...x.im]:[],...(x.d?{d:x.d}:{})})});o.push(...q.filter(z=>z.a>=r.length));return o};
@@ -1729,12 +1739,12 @@ function gest(el,h){const P=new Map(),T=()=>performance.now();let g=null,lastTap
    Arrows and keys use the same slide; a press while a slide runs carries on from where the strip is. */
 function openLB(list,i,o={}){if(!list.length)return;
  const d=document.createElement('dialog');d.className='lbx';d.setAttribute('aria-label','圖片放大檢視，左右滑換張，按 ✕ 關閉');
- d.innerHTML=`<div class="lb-top"><span class="lb-c" aria-live="polite"></span><button class="lb-x" aria-label="關閉">✕</button></div><div class="lb-st"><div class="lb-tk">${'<img class="lb-im" alt="" draggable="false">'.repeat(3)}</div><button class="lb-a lb-p" aria-label="上一張">‹</button><button class="lb-a lb-n" aria-label="下一張">›</button></div><div class="lb-bar">${o.go?'<button class="chip lb-go"></button>':''}${o.crop?'<button class="chip lb-cr">裁切</button>':''}<button class="chip lb-cmp">拿來比較</button></div>`;
+ d.innerHTML=`<div class="lb-top"><span class="lb-c" aria-live="polite"></span><button class="lb-x" aria-label="關閉">✕</button></div><div class="lb-st"><div class="lb-tk">${'<img class="lb-im" alt="" draggable="false">'.repeat(3)}${o.crop&&!o.go?'<div class="imr-f" hidden></div><span class="imr-tip" hidden></span>':''}</div><button class="lb-a lb-p" aria-label="上一張">‹</button><button class="lb-a lb-n" aria-label="下一張">›</button></div><div class="lb-bar">${o.crop&&!o.go?irMenu():''}${o.go?'<button class="chip lb-go"></button>':''}${o.crop?'<button class="chip lb-cr">裁切</button>':''}${o.crop&&!o.go?'<button class="chip lb-ir" aria-expanded="false"></button>':''}<button class="chip lb-cmp">拿來比較</button></div>`;
  const GAP=16,q=s=>d.querySelector(s),st=q('.lb-st'),tk=q('.lb-tk'),IM=[...d.querySelectorAll('.lb-im')];   // IM: [previous, this one, next]
  const L=LB={d,list,i,s:1,x:0,y:0,T:0,anim:null,tok:0,after:null},W=()=>st.clientWidth+GAP;
- const put=ease=>IM.forEach((im,k)=>{const c=k===1;im.classList.toggle('on',c);im.classList.toggle('ease',c&&!!ease);im.style.transform=`translate(calc(-50% + ${(k-1)*W()+(c?L.x:0)}px),calc(-50% + ${c?L.y:0}px)) scale(${c?L.s:1})`});
+ const put=ease=>{IM.forEach((im,k)=>{const c=k===1;im.classList.toggle('on',c);im.classList.toggle('ease',c&&!!ease);im.style.transform=`translate(calc(-50% + ${(k-1)*W()+(c?L.x:0)}px),calc(-50% + ${c?L.y:0}px)) scale(${c?L.s:1})`});if(L.irF)L.irF()};
  const trk=(ms,ez)=>{tk.style.transition=ms?`transform ${ms}ms ${ez||'cubic-bezier(.22,.8,.3,1)'}`:'none';tk.style.transform=`translateX(${L.T}px)`};
- const label=()=>{const it=L.list[L.i];q('.lb-c').textContent=`${nm(it.n)}　${L.i+1} / ${L.list.length}`;q('.lb-p').disabled=L.i===0;q('.lb-n').disabled=L.i===L.list.length-1;if(q('.lb-go'))q('.lb-go').textContent=`去${nm(it.n)}`;IM.forEach((im,k)=>{const j=L.i+k-1,z=L.list[j];im.alt=z?`${nm(z.n)}的圖，第 ${j+1} 張`:''})};
+ const label=()=>{if(L.irSync)L.irSync();const it=L.list[L.i];q('.lb-c').textContent=`${nm(it.n)}　${L.i+1} / ${L.list.length}`;q('.lb-p').disabled=L.i===0;q('.lb-n').disabled=L.i===L.list.length-1;if(q('.lb-go'))q('.lb-go').textContent=`去${nm(it.n)}`;IM.forEach((im,k)=>{const j=L.i+k-1,z=L.list[j];im.alt=z?`${nm(z.n)}的圖，第 ${j+1} 張`:''})};
  const slot=async k=>{const im=IM[k],it=L.list[L.i+k-1],p=it?it.p:'';if(im._p===p)return;im._p=p;im.removeAttribute('src');im.hidden=!it;if(!it)return;const u=await picURL(p);if(im._p===p&&u)im.src=u};
  const fill=()=>{[1,2,0].forEach(slot);[L.i-2,L.i+2].forEach(j=>L.list[j]&&picURL(L.list[j].p));label()};
  const turn=dv=>{L.i+=dv;if(dv>0)IM.push(IM.shift());else IM.unshift(IM.pop());L.T+=dv*W();L.s=1;L.x=L.y=0;trk(0);put();fill()};
@@ -1744,7 +1754,7 @@ function openLB(list,i,o={}){if(!list.length)return;
   const ms=dist<1?0:Math.round(btn?clampN(360*dist/w,160,360):clampN(4*dist/Math.max(Math.abs(sp||0),1.2),180,420));L.anim=ms?dv:null;trk(ms);
   const done=()=>{if(L.tok!==tok)return;L.anim=null;if(dv)turn(dv)};if(ms)setTimeout(done,ms+20);else done()};
  const step=dv=>{const f=freeze();if(f&&f.dv===dv&&!f.past)turn(dv);if(L.s>1){L.s=1;L.x=L.y=0;put(true)}settle(dv,0,true)};   /* a press while sliding the same way counts the slide as done and goes one more */
- q('.lb-x').onclick=ovBack;q('.lb-p').onclick=()=>step(-1);q('.lb-n').onclick=()=>step(1);
+ irLB(L,q,IM);q('.lb-x').onclick=ovBack;q('.lb-p').onclick=()=>step(-1);q('.lb-n').onclick=()=>step(1);
  if(q('.lb-go'))q('.lb-go').onclick=()=>{const n=L.list[L.i].n;L.after=()=>go('ep-'+n);ovBack()};
  q('.lb-cmp').onclick=()=>{const it=L.list[L.i];L.after=()=>cmpStart(it);ovBack()};
  if(q('.lb-cr'))q('.lb-cr').onclick=async()=>{const it=L.list[L.i],u=await picURL(it.p);if(!u)return;const b=await openCrop(u,{title:'裁切這張圖'});if(!b||b==='skip')return;
@@ -1848,20 +1858,63 @@ function openCmp(a,b,sv){
  CMP.ctx=null;saLabel();size(R);fill();mode(CMP.v);q('.lb-x').focus();return d}
 /* cropper: the frame stays still, the picture moves under it (drag, pinch, wheel). Resolves to a JPEG blob, 'skip', or null */
 const RAT={'2:1':2,'1:1':1,'16:9':16/9,'9:16':9/16,'3:4':3/4,'4:3':4/3};
-function openCrop(url,o={}){return new Promise(res=>{const R=o.ratios||Object.keys(RAT);let done=false;const fin=v=>{if(done)return;done=true;res(v)};
+function openCrop(url,o={}){return new Promise(res=>{const R=o.ratios||[...Object.keys(RAT),'自由'],FREE=R.includes('自由');let done=false;const fin=v=>{if(done)return;done=true;res(v)};
  const d=document.createElement('dialog');d.className='crx';d.setAttribute('aria-label',o.title||'裁切圖片');
- d.innerHTML=`<div class="lb-top"><span>${esc(o.title||'裁切')}</span><button class="lb-x" aria-label="取消，不裁">✕</button></div><div class="cr-st"><img class="cr-im" alt="要裁切的圖" draggable="false"><div class="cr-f"></div></div><div class="cr-bar"><span class="cr-tip">拖曳移動，雙指或滾輪縮放</span>${R.length>1?`<div class="seg2 cr-r" role="group" aria-label="比例">${R.map((r,k)=>`<button data-r="${r}" class="${k?'':'on'}" aria-pressed="${!k}">${r}</button>`).join('')}</div>`:''}<div class="chips">${o.skip?`<button class="chip cr-skip">${esc(o.skip)}</button>`:''}<button class="chip cr-ok">完成</button></div></div>`;
- const q=s=>d.querySelector(s),st=q('.cr-st'),im=q('.cr-im'),fr=q('.cr-f');let r=RAT[R[0]],iw=0,ih=0,fw=0,fh=0,s=1,smin=1,x=0,y=0;
+ d.innerHTML=`<div class="lb-top"><span>${esc(o.title||'裁切')}</span><button class="lb-x" aria-label="取消，不裁">✕</button></div><div class="cr-st"><img class="cr-im" alt="要裁切的圖" draggable="false"><div class="cr-f">${FREE?['tl','tr','bl','br'].map(c=>`<span class="cr-hd" data-c="${c}" hidden></span>`).join(''):''}</div></div><div class="cr-bar"><span class="cr-tip">拖曳移動，雙指或滾輪縮放</span>${R.length>1?`<div class="seg2 cr-r" role="group" aria-label="比例">${R.map((r,k)=>`<button data-r="${r}" class="${k?'':'on'}" aria-pressed="${!k}">${r}</button>`).join('')}</div>`:''}<div class="chips">${o.skip?`<button class="chip cr-skip">${esc(o.skip)}</button>`:''}<button class="chip cr-ok">完成</button></div></div>`;
+ const q=s=>d.querySelector(s),st=q('.cr-st'),im=q('.cr-im'),fr=q('.cr-f'),tip=q('.cr-tip');let r=RAT[R[0]],iw=0,ih=0,fw=0,fh=0,s=1,smin=1,x=0,y=0;   /* r = 0 means 自由: the frame's size comes from its four corners */
  const clamp=()=>{s=clampN(s,smin,smin*6);const mx=Math.max(0,(iw*s-fw)/2),my=Math.max(0,(ih*s-fh)/2);x=clampN(x,-mx,mx);y=clampN(y,-my,my)};
  const put=()=>{clamp();im.style.transform=`translate(calc(-50% + ${x}px),calc(-50% + ${y}px)) scale(${s})`};
- const lay=()=>{if(!iw)return;const W=st.clientWidth-28,H=st.clientHeight-28;if(W/H>r){fh=H;fw=H*r}else{fw=W;fh=W/r}Object.assign(fr.style,{width:fw+'px',height:fh+'px',left:(st.clientWidth-fw)/2+'px',top:(st.clientHeight-fh)/2+'px'});const k=s/smin;smin=Math.max(fw/iw,fh/ih);s=smin*(k||1);put()};
+ const place=()=>Object.assign(fr.style,{width:fw+'px',height:fh+'px',left:(st.clientWidth-fw)/2+'px',top:(st.clientHeight-fh)/2+'px'});
+ const lay=()=>{if(!iw)return;const W=st.clientWidth-28,H=st.clientHeight-28;if(!r){fw=clampN(fw||W*.8,60,W);fh=clampN(fh||H*.8,60,H)}else if(W/H>r){fh=H;fw=H*r}else{fw=W;fh=W/r}place();const k=s/smin;smin=Math.max(fw/iw,fh/ih);s=smin*(k||1);put()};
  im.onload=()=>{iw=im.naturalWidth;ih=im.naturalHeight;im.style.width=iw+'px';im.style.height=ih+'px';s=0;smin=1;lay();s=smin;y=(ih*s-fh)/2*.72;put()};im.src=url;
  const ro=new ResizeObserver(lay);ro.observe(st);
- if(q('.cr-r'))q('.cr-r').onclick=e=>{const b=e.target.closest('button');if(!b)return;q('.cr-r').querySelectorAll('button').forEach(z=>{z.classList.toggle('on',z===b);z.setAttribute('aria-pressed',z===b)});r=RAT[b.dataset.r];lay()};
+ if(q('.cr-r'))q('.cr-r').onclick=e=>{const b=e.target.closest('button');if(!b)return;q('.cr-r').querySelectorAll('button').forEach(z=>{z.classList.toggle('on',z===b);z.setAttribute('aria-pressed',z===b)});r=b.dataset.r==='自由'?0:RAT[b.dataset.r];fr.querySelectorAll('.cr-hd').forEach(h=>h.hidden=!!r);tip.textContent=r?'拖曳移動，雙指或滾輪縮放':'拖四個角改框的大小';lay()};
+ fr.querySelectorAll('.cr-hd').forEach(h=>h.addEventListener('pointerdown',e=>{e.stopPropagation();e.preventDefault();try{h.setPointerCapture(e.pointerId)}catch(_){}
+  const b=st.getBoundingClientRect(),ox=b.left+st.clientWidth/2,oy=b.top+st.clientHeight/2,gx=Math.abs(e.clientX-ox)-fw/2,gy=Math.abs(e.clientY-oy)-fh/2;   /* gx/gy: where on the corner she grabbed, so the frame doesn't jump */
+  const mv=ev=>{fw=clampN((Math.abs(ev.clientX-ox)-gx)*2,60,st.clientWidth-28);fh=clampN((Math.abs(ev.clientY-oy)-gy)*2,60,st.clientHeight-28);place();smin=Math.max(fw/iw,fh/ih);s=Math.max(s,smin);put()};
+  const up=()=>{h.removeEventListener('pointermove',mv);h.removeEventListener('pointerup',up);h.removeEventListener('pointercancel',up)};h.addEventListener('pointermove',mv);h.addEventListener('pointerup',up);h.addEventListener('pointercancel',up)}));
   gest(st,{start:G=>{G.sx=x;G.sy=y;G.s0=s},pan:(dx,dy,G)=>{x=G.sx+dx;y=G.sy+dy;put()},pinch:(k,G)=>{s=G.s0*k;put()},wheel:k=>{s*=k>1?1.1:1/1.1;put()}});
  const out=()=>{const sw=fw/s,sh=fh/s,sx=iw/2-x/s-sw/2,sy=ih/2-y/s-sh/2,mx=o.max||1600,k=Math.min(1,mx/Math.max(sw,sh)),c=document.createElement('canvas');c.width=Math.round(sw*k);c.height=Math.round(sh*k);c.getContext('2d').drawImage(im,sx,sy,sw,sh,0,0,c.width,c.height);c.toBlob(b=>{fin(b);ovBack()},'image/jpeg',.88)};
  q('.lb-x').onclick=ovBack;q('.cr-ok').onclick=()=>{if(iw)out()};if(q('.cr-skip'))q('.cr-skip').onclick=()=>{fin('skip');ovBack()};
  ovOpen(d,()=>{ro.disconnect();fin(null)})})}
+/* ---- 圖片比例（2026-11-15 xin-img-ratio）----
+   A 貼文圖格（.tw-g）與整話大圖（.eg-photo）照圖本身的比例；圖沒存寬高，等 <img> 載入後量 naturalWidth/Height 再排（document 的 load 事件，不經過 loadImg／hy）。
+   B 每張圖的顯示比例存在 E.kinds['@imr:<檔名>']={r,t}；r：''＝自動、'o'＝原圖、'1:1' '3:4' '4:3' '9:16' '16:9'（同並排比較的 CMPR）。圖片牆不吃這個設定。 */
+function irKey(p){const m=/^img\/([\w-]+)\.(jpg|png)$/.exec(p||'');return m?m[1]:''}
+function irGet(p){const k=irKey(p),o=k&&E.kinds['@imr:'+k];return o&&typeof o.r==='string'&&(o.r==='o'||CMPR[o.r])?o.r:''}
+function irSet(p,r){const k=irKey(p);if(!k)return;E.kinds['@imr:'+k]={r,t:Date.now()};touch();persist()}
+function irOpts(){return [['','自動'],['o','原圖'],...Object.keys(CMPR).map(r=>[r,r])]}
+function irNat(im){return im&&!im.dataset.p&&im.naturalWidth?im.naturalWidth/im.naturalHeight:0}
+/* one picture's shape in a post: her setting first, else the picture itself (too thin or too wide ones are trimmed a little); 3:4 until it has loaded */
+function irAr(c,im,one){const r=c.dataset.ir||'',n=irNat(im)||.75;if(r&&r!=='o')return CMPR[r];if(r==='o')return clampN(n,.2,5);return one?clampN(n,.4,2.5):clampN(n,.5,2.2)}
+/* rows of whole pictures, same height in a row, all rows the same width, her order. Ways to split: 2: 2 / 1+1; 3: 3 / 1+2 / 2+1; 4: 2+2 / 4 / 1+3 / 3+1;
+   the first one whose smallest row is at least 120px (and 45% of the width) tall wins, else the one whose smallest row is tallest; a post stays under 2.2 × its width. */
+const IRP={1:[[1]],2:[[2],[1,1]],3:[[3],[1,2],[2,1]],4:[[2,2],[4],[1,3],[3,1]]};
+function irLay(g){const C=[...g.children].filter(x=>x.classList.contains('tw-c'));if(!C.length)return;g.style.width='';const one=C.length===1,W=g.clientWidth;if(W<=0)return;
+ const GAP=4,cap=one?Math.min(460,innerHeight*.62):360,A=C.map(c=>irAr(c,c.querySelector('img'),one));
+ const plan=sizes=>{let i=0;const rows=sizes.map(n=>{const r=[];for(let k=0;k<n;k++)r.push(i++);return r}),sum=r=>r.reduce((a,k)=>a+A[k],0),Wr=Math.min(W,...rows.map(r=>cap*sum(r)+GAP*(r.length-1))),hs=rows.map(r=>(Wr-GAP*(r.length-1))/sum(r));
+  return {rows,Wr,hs,min:Math.min(...hs),tot:hs.reduce((a,h)=>a+h,0)+GAP*(rows.length-1)}};
+ const ps=(IRP[C.length]||[[2,2]]).map(plan),ok=ps.filter(p=>p.tot<=2.2*W),L=ok.length?ok:ps,best=L.find(p=>p.min>=Math.max(120,.45*W))||L.reduce((a,p)=>p.min>a.min+1?p:a);
+ best.rows.forEach((r,ri)=>{const hx=best.hs[ri];let edge=0,prev=0;r.forEach((k,j)=>{const c=C[k];edge+=A[k]*hx;const e=Math.round(edge),w=e-prev;prev=e;c.style.width=w+'px';c.style.height=Math.round(hx)+'px'})});   /* widths from running edges (every pixel error ≤ 1), so a picture keeps its shape within about 1% and every row ends on the same pixel */
+ g.style.width=Math.round(best.Wr)+'px'}
+/* 整話大圖: the whole picture (or her shape), at most 62% of the screen tall */
+function irPh(f){const im=f.querySelector('img');if(!im)return;const r=f.dataset.ir||'',ar=r&&r!=='o'?CMPR[r]:clampN(irNat(im)||1,.2,5);f.style.width='';const cs=getComputedStyle(f),pad=parseFloat(cs.paddingLeft)+parseFloat(cs.paddingRight),avail=f.clientWidth-pad;if(avail<=0)return;
+ im.style.setProperty('--imr-ar',ar);f.style.width=Math.round(Math.min(avail,Math.min(460,innerHeight*.62)*ar)+pad)+'px'}
+const IRO=new ResizeObserver(es=>es.forEach(x=>{const t=x.target,w=Math.round(t.parentElement.clientWidth);if(t._irw===w)return;t._irw=w;t.classList.contains('tw-g')?irLay(t):irPh(t)}));
+function irAll(){document.querySelectorAll('.tw-g').forEach(g=>{irLay(g);IRO.observe(g)});document.querySelectorAll('.eg-photo').forEach(f=>{irPh(f);IRO.observe(f)})}
+document.addEventListener('load',e=>{const t=e.target;if(!t||t.tagName!=='IMG')return;const g=t.closest('.tw-g');if(g)irLay(g);const f=t.closest('.eg-photo');if(f)irPh(f)},true);
+function irMenu(){return `<div class="imr-m" role="group" aria-label="比例" hidden>${irOpts().map(([r,t])=>`<button data-ir="${r}" aria-pressed="false">${t}</button>`).join('')}</div>`}
+/* 放大圖：「比例」晶片開收起的選單（同並排比較的「尺寸」）；選了固定比例，圖上出現一個框＝貼文裡看得到的部分（框在 .lb-tk 裡，換張時跟著滑） */
+function irLB(L,q,IM){const rb=q('.lb-ir'),rm=q('.imr-m'),fr=q('.imr-f'),tip=q('.imr-tip'),tk=q('.lb-tk');if(!rb)return;const cur=()=>L.list[L.i];
+ const frame=()=>{const r=irGet(cur().p),im=IM[1];if(!r||r==='o'||!im.naturalWidth||L.s>1){fr.hidden=tip.hidden=true;return}
+  const a=im.getBoundingClientRect(),s=tk.getBoundingClientRect(),R=CMPR[r];if(!a.width||!a.height)return;let w=a.width,h=a.height;if(R<w/h)w=h*R;else h=w/R;
+  Object.assign(fr.style,{width:w+'px',height:h+'px',left:(a.left-s.left+(a.width-w)/2)+'px',top:(a.top-s.top+(a.height-h)*.14)+'px'});fr.hidden=tip.hidden=false;tip.textContent=`貼文裡顯示框內（${r}）`};
+ const sync=()=>{const r=irGet(cur().p),t=(irOpts().find(z=>z[0]===r)||['','自動'])[1];rb.innerHTML='比例<i class="cmp-cv" aria-hidden="true"></i>';rb.setAttribute('aria-label',`比例，目前：${t}`);rb.classList.toggle('on',!!r);
+  rm.querySelectorAll('[data-ir]').forEach(b=>{b.classList.toggle('on',b.dataset.ir===r);b.setAttribute('aria-pressed',b.dataset.ir===r)});frame()};
+ const menu=on=>{rm.hidden=!on;rb.setAttribute('aria-expanded',on)};
+ rb.onclick=()=>menu(rm.hidden);
+ rm.querySelectorAll('[data-ir]').forEach(b=>b.onclick=()=>{irSet(cur().p,b.dataset.ir);menu(false);sync();const y=scrollY;render(true);scrollTo(0,y)});
+ IM.forEach(im=>im.addEventListener('load',()=>{if(im===IM[1])frame()}));L.irSync=sync;L.irF=frame}
 /* phone photos picked to add: crop each one first (or keep it whole); ✕ leaves that one out */
 async function cropSeq(files){const out=[];for(let k=0;k<files.length;k++){const f=files[k],u=URL.createObjectURL(f);try{const b=await openCrop(u,{title:files.length>1?`裁切（${k+1} / ${files.length}）`:'裁切',skip:'不裁，用原圖'});if(b==='skip')out.push(f);else if(b)out.push(b)}finally{URL.revokeObjectURL(u)}}return out}
 /* episode avatar: pick from this episode's pictures (or the phone), then choose the square */
