@@ -1113,11 +1113,73 @@ html:has(dialog.lbx[open],dialog.crx[open]){overflow:hidden}
 .lb-st,.cr-st{position:relative;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
 .lb-im{position:absolute;left:50%;top:50%;max-width:100%;max-height:100%;transform:translate(-50%,-50%);transform-origin:50% 50%;-webkit-user-drag:none;will-change:transform}
 .lb-im.ease{transition:transform .22s ease,opacity .22s ease}
+.lb-tk{position:absolute;inset:0;will-change:transform}
 .lb-a{position:absolute;top:50%;margin-top:-26px;width:52px;height:52px;border-radius:50%;font-size:1.9rem;line-height:1;color:#eef0ff;background:rgba(7,5,29,.55);border:1px solid rgba(205,214,255,.26);display:none;place-items:center}
 .lb-p{left:14px}
 .lb-n{right:14px}
 @media (hover:hover) and (pointer:fine){.lb-a{display:grid}
 .lb-a[disabled]{opacity:.25}}
+.cmp .lb-top{padding-left:16px}
+.cmp .lb-c{flex:none;font-family:var(--t);font-size:1rem;letter-spacing:.12em;color:#c9d8ff}
+.cmp .seg2{background:rgba(170,182,255,.12);border-color:rgba(205,214,255,.26)}
+.cmp-sg{flex:0 1 210px}
+.cmp-sg button{flex:1;color:#b1b6e4}
+.cmp-sg button.on{background:#c9d8ff;color:#07051d}
+.cmp-st{position:relative;display:grid;gap:10px;padding:0 10px;min-height:0;min-width:0}
+.cmp[data-v=lr] .cmp-st{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.cmp[data-v=tb] .cmp-st{grid-template-rows:minmax(0,1fr) minmax(0,1fr)}
+.cmp-p{margin:0;display:grid;grid-template-rows:minmax(0,1fr) auto;min-height:0;min-width:0}
+.cmp-w{display:grid;place-items:center;min-height:0;min-width:0;overflow:hidden}
+.cmp-f{position:relative;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;border-radius:12px;background:rgba(170,182,255,.06);border:1px solid rgba(205,214,255,.16);box-sizing:border-box}
+.cmp-im{position:absolute;left:50%;top:50%;max-width:none;max-height:none;transform:translate(-50%,-50%);transform-origin:50% 50%;-webkit-user-drag:none;will-change:transform}
+.cmp-miss{position:absolute;inset:0;display:grid;place-items:center;margin:0;padding:12px;text-align:center;font-size:.84rem;line-height:1.7;color:#b1b6e4}
+.cmp-miss[hidden]{display:none}
+.cmp-p figcaption{text-align:center;font-family:var(--t);font-size:.92rem;letter-spacing:.1em;color:#c9d8ff;padding:7px 0 0}
+.cmp[data-v=tb] .cmp-p{grid-template-columns:minmax(0,1fr) auto;grid-template-rows:minmax(0,1fr)}
+.cmp[data-v=tb] .cmp-p figcaption{writing-mode:vertical-rl;padding:0 0 0 7px;align-self:center}
+.cmp[data-v=sl] .cmp-st{display:block}
+.cmp[data-v=sl] .cmp-p{position:absolute;left:50%;top:50%;width:var(--bw,calc(100% - 20px));height:var(--bh,100%);transform:translate(-50%,-50%);grid-template-rows:minmax(0,1fr)}
+.cmp[data-v=sl] .cmp-w,.cmp[data-v=sl] .cmp-f{width:100%;height:100%}
+.cmp[data-v=sl] .cmp-p[data-k="1"] .cmp-f{clip-path:inset(0 0 0 calc(var(--x,.5) * 100%));background:none;border-color:transparent}
+.cmp[data-v=sl] .cmp-p figcaption{position:absolute;bottom:10px;left:10px;padding:4px 12px;border-radius:99px;background:rgba(7,5,29,.66);border:1px solid rgba(205,214,255,.26);font-size:.84rem;pointer-events:none}
+.cmp[data-v=sl] .cmp-p[data-k="1"] figcaption{left:auto;right:10px}
+.cmp-h{display:none}
+.cmp[data-v=sl] .cmp-h{display:block;position:absolute;top:calc(50% - var(--bh,100%) / 2);height:var(--bh,100%);left:calc(50% - var(--bw,100%) / 2 + var(--bw,100%) * var(--x,.5));width:0;pointer-events:none}
+.cmp[data-v=sl] .cmp-h::before{content:"";position:absolute;top:0;bottom:0;left:-1px;width:2px;background:rgba(238,240,255,.85);box-shadow:0 0 8px rgba(7,5,29,.6)}
+.cmp[data-v=sl] .cmp-h i{position:absolute;top:50%;left:-22px;width:44px;height:44px;margin-top:-22px;border-radius:50%;background:rgba(7,5,29,.7);border:1px solid rgba(238,240,255,.8);pointer-events:auto;touch-action:none;cursor:ew-resize}
+.cmp[data-v=sl] .cmp-h i::before{content:"‹ ›";position:absolute;inset:0;display:grid;place-items:center;color:#eef0ff;font-style:normal;font-size:1.1rem;letter-spacing:.1em}
+.cmp .lb-bar{position:relative;gap:6px;padding-inline:8px}
+.cmp .lb-bar>.chip{padding:0 12px;font-size:.84rem}
+.cmp .lb-bar>.chip.on{color:#07051d;background:#c9d8ff;border-color:#c9d8ff}
+.cmp-rm,.cmp-sv{position:absolute;left:10px;right:10px;bottom:calc(100% + 6px);z-index:2;padding:8px;border-radius:18px;background:rgba(17,16,60,.94);border:1px solid rgba(205,214,255,.3);box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.cmp-rm{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;max-width:520px;margin-inline:auto}
+.cmp-rm button{min-height:40px;min-width:60px;padding:0 12px;border-radius:99px;font-size:.86rem;color:#c9d8ff;border:1px solid rgba(205,214,255,.26)}
+.cmp-rm button.on{background:#c9d8ff;color:#07051d;border-color:#c9d8ff}
+.cmp-sv{display:grid;gap:10px;max-width:420px;margin-inline:auto;padding:12px 14px}
+.cmp-sv label{display:grid;gap:6px;font-size:.84rem;color:#b1b6e4}
+.cmp-sv input{min-height:44px;padding:0 14px;border-radius:12px;border:1px solid rgba(205,214,255,.3);background:rgba(170,182,255,.1);color:#eef0ff;font:inherit;font-size:1rem}
+.cmp-sv input::placeholder{color:#8f94c4}
+.cmp-sv .chips{justify-content:flex-end}
+.cmp-rm[hidden],.cmp-sv[hidden]{display:none}
+.cmp-sv .cmp-ok{color:#07051d;background:#eef0ff;border-color:#eef0ff}
+.cmp-pk{position:sticky;top:8px;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 14px;padding:8px 8px 8px 16px;border-radius:99px;background:color-mix(in srgb,var(--solid) 90%,transparent);border:1px solid var(--line);box-shadow:0 6px 18px rgba(7,5,29,.28);color:var(--fg);font-size:.9rem;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.cmp-pk .chip{min-height:36px;flex:none}
+.cmp-tw{display:grid;gap:8px;grid-column:1/-1}
+.cmp-tg{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:44px;border-radius:99px;border:1px solid color-mix(in srgb,var(--gold) 55%,transparent);font-family:var(--t);letter-spacing:.06em;font-size:.84rem;color:var(--mute)}
+.cmp-tg[aria-expanded=true]{color:var(--goldt);background:color-mix(in srgb,var(--gold) 14%,transparent)}
+.cmp-cv{display:inline-block;width:7px;height:7px;margin-left:8px;border:solid currentColor;border-width:0 1.5px 1.5px 0;transform:translateY(-2px) rotate(45deg)}
+[aria-expanded=true]>.cmp-cv{transform:translateY(2px) rotate(-135deg)}
+.cmp-ls{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;overscroll-behavior-x:contain}
+.cmp-ls::-webkit-scrollbar{display:none}
+.cmp-c{position:relative;flex:none;width:150px;padding:8px;border-radius:16px;background:var(--glass);border:1px solid var(--line)}
+.cmp-o{display:grid;gap:8px;width:100%;text-align:left;color:var(--fg)}
+.cmp-th{display:flex;gap:4px}
+.cmp-th img{width:65px;height:86px;object-fit:cover;object-position:50% 14%;border-radius:9px;display:block}
+.cmp-tx{min-width:0;display:grid;gap:2px}
+.cmp-tx b{font-weight:500;font-size:.88rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cmp-tx small{font-size:.74rem;color:var(--mute)}
+.cmp-dl{position:absolute;top:2px;right:2px;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:.9rem;color:#eef0ff;background:rgba(7,5,29,.55)}
+.cmp-none{margin:0;padding:6px 4px;font-size:.84rem;color:var(--mute)}
 .lb-bar,.cr-bar{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;padding:10px 14px calc(14px + env(safe-area-inset-bottom,0px));min-height:20px}
 .lbx .chip,.crx .chip{color:#c9d8ff;background:rgba(170,182,255,.14);border-color:rgba(205,214,255,.3);min-height:42px;padding:0 18px}
 .crx .chip.cr-ok{color:#07051d;background:#eef0ff;border-color:#eef0ff}
@@ -1181,7 +1243,7 @@ async function dbGet(k){try{const d=await db();return await new Promise((ok,no)=
 async function dbSet(k,v){try{const d=await db();await new Promise((ok,no)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error||new Error('idb error'));t.onabort=()=>no(t.error||new Error('idb abort'))});return true}catch(e){return false}}
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v);return true}catch(e){return false}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
 /* private repo: this page holds no notes or pictures, they are read with the device's key */
-const BASE='data/base-9493b8ad21a3.json',VER='2026.11.15 10:16 · 1293c50';
+const BASE='data/base-9493b8ad21a3.json',VER='2026.11.15 12:07 · c0815fd';
 let CFG=null,TK=lsGet('tk');
 const api=(p,o={})=>fetch(`${CFG.api??'https://api.github.com'}/repos/${CFG.owner}/${CFG.repo}/contents/${p}`,{cache:'no-store',...o,headers:{Authorization:`Bearer ${TK}`,...o.headers}});
 const rawGet=p=>api(p,{headers:{Accept:'application/vnd.github.raw+json'}});
@@ -1404,7 +1466,7 @@ function persist(){const a=lsSet('edits',JSON.stringify(E)),b=lsSet('dirty',JSON
 function touch(){dirty=true;gen++;clearTimeout(_ps);_ps=setTimeout(persist,300);sync('存在這台，等待上傳…');clearTimeout(_pt);_pt=setTimeout(push,4000)}
 function setRead(v){if(LOCK)return;S.read=v;E.read={v,t:Date.now()};touch()}
 /* arc, people and nation edits (kinds['@arc:…'], ['@ppl:…'], ['@nat:…']) go by time like episodes; any other field this version doesn't know is kept */
-function merge(r,l){if(!r)return l;const eps={...r.eps};for(const k in l.eps)if(!eps[k]||(l.eps[k].t||0)>=(eps[k].t||0))eps[k]=l.eps[k];const rk=r.kinds||{},lk=l.kinds||{},kinds={...rk,...lk};for(const k in rk)if(/^@(arc|ppl|nat|ev):|^@home$/.test(k)&&lk[k]&&((rk[k]&&rk[k].t)||0)>((lk[k]&&lk[k].t)||0))kinds[k]=rk[k];return{...r,...l,eps,kinds,read:!r.read||(l.read&&l.read.t>=r.read.t)?l.read:r.read}}
+function merge(r,l){if(!r)return l;const eps={...r.eps};for(const k in l.eps)if(!eps[k]||(l.eps[k].t||0)>=(eps[k].t||0))eps[k]=l.eps[k];const rk=r.kinds||{},lk=l.kinds||{},kinds={...rk,...lk};for(const k in rk)if(/^@(arc|ppl|nat|ev):|^@(home|cmp)$/.test(k)&&lk[k]&&((rk[k]&&rk[k].t)||0)>((lk[k]&&lk[k].t)||0))kinds[k]=rk[k];return{...r,...l,eps,kinds,read:!r.read||(l.read&&l.read.t>=r.read.t)?l.read:r.read}}
 /* status line */
 function sync(t,sticky){const y=$('#sy');if(!y)return;y.textContent=t;y.classList.toggle('on',!!t);y.classList.toggle('bad',!!sticky);clearTimeout(sync.t);if(t&&t==='已同步')sync.t=setTimeout(()=>y.classList.remove('on'),1800)}
 /* base64 */
@@ -1560,41 +1622,147 @@ let LB=null,OV=[];
 function ovOpen(d,close){d.addEventListener('cancel',e=>{e.preventDefault();ovBack()});document.body.append(d);d.showModal();history.pushState({ov:OV.length+1},'');OV.push({d,close})}
 function ovBack(){if(OV.length)history.back()}
 addEventListener('popstate',()=>{const o=OV.pop();if(o){o.d.close();o.d.remove();o.close&&o.close()}});
-/* list: [{p:path,n:episode}] ; o.go: show "go to this episode", o.crop: allow cropping in place */
+/* shared touch helper (2026-11-15 cmp-swipe; used by the lightbox, the compare view and the cropper).
+   h.down(e) -> false ignores that press; h.start(g) a drag or pinch begins (again when a finger is added or lifted; g.m 1 = drag, 2 = pinch, g.pinched = a pinch came first);
+   h.pan(dx,dy,g) one finger moved (g.x0+dx = where it is); h.pinch(k,g) k = finger distance / distance at start;
+   h.end(dx,dy,vx,vy,g) the last finger left after moving or pinching (v = speed over the last 100ms, px/ms); h.tap(e,g) / h.dtap(e,g) (two taps within 320ms); h.wheel(k,e) k>1 = zoom in */
+function gest(el,h){const P=new Map(),T=()=>performance.now();let g=null,lastTap=0,tr=[];
+ const begin=()=>{const v=[...P.values()],was=!!(g&&(g.pinched||g.m===2));g=v.length>=2?{m:2,d0:Math.hypot(v[0].x-v[1].x,v[0].y-v[1].y)||1,moved:true,pinched:true}:{m:1,x0:v[0].x,y0:v[0].y,t:T(),moved:was,pinched:was};tr=[];h.start&&h.start(g)};
+ const vel=()=>{const n=T(),z=tr.filter(p=>n-p.t<=100);if(z.length<2)return[0,0];const a=z[0],b=z[z.length-1],dt=Math.max(16,b.t-a.t);return[(b.x-a.x)/dt,(b.y-a.y)/dt]};
+ el.addEventListener('pointerdown',e=>{if(h.down&&h.down(e)===false)return;try{el.setPointerCapture(e.pointerId)}catch(_){}P.set(e.pointerId,{x:e.clientX,y:e.clientY});if(P.size<=2)begin()});
+ el.addEventListener('pointermove',e=>{if(!P.has(e.pointerId)||!g)return;P.set(e.pointerId,{x:e.clientX,y:e.clientY});const v=[...P.values()];
+  if(g.m===2){if(v.length>=2&&h.pinch)h.pinch(Math.hypot(v[0].x-v[1].x,v[0].y-v[1].y)/g.d0,g);return}
+  const dx=e.clientX-g.x0,dy=e.clientY-g.y0;if(!g.moved&&Math.abs(dx)+Math.abs(dy)>8)g.moved=true;tr.push({t:T(),x:e.clientX,y:e.clientY});if(tr.length>16)tr.shift();h.pan&&h.pan(dx,dy,g)});
+ const up=e=>{if(!P.has(e.pointerId))return;P.delete(e.pointerId);if(!g)return;
+  if(P.size){begin();return}
+  const G=g;g=null;if(G.m===2){h.end&&h.end(0,0,0,0,G);return}
+  if(!G.moved&&T()-G.t<300){const n=T();if(n-lastTap<320){lastTap=0;h.dtap&&h.dtap(e,G)}else{lastTap=n;h.tap&&h.tap(e,G)}return}
+  const[vx,vy]=e.type==='pointercancel'?[0,0]:vel();h.end&&h.end(e.clientX-G.x0,e.clientY-G.y0,vx,vy,G)};
+ el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up);
+ if(h.wheel)el.addEventListener('wheel',e=>{e.preventDefault();h.wheel(e.deltaY<0?1.15:1/1.15,e)},{passive:false})}
+/* list: [{p:path,n:episode}] ; o.go: show "go to this episode", o.crop: allow cropping in place.
+   2026-11-15 cmp-swipe: like a phone gallery. Three pictures sit on one strip (previous, this one, next; 16px apart) and the strip follows the finger,
+   so the neighbour is already showing while you drag. On release, speed and distance decide: slide on to the neighbour or ease back, one ease-out, no overshoot.
+   Arrows and keys use the same slide; a press while a slide runs carries on from where the strip is. */
 function openLB(list,i,o={}){if(!list.length)return;
  const d=document.createElement('dialog');d.className='lbx';d.setAttribute('aria-label','圖片放大檢視，左右滑換張，按 ✕ 關閉');
- d.innerHTML=`<div class="lb-top"><span class="lb-c" aria-live="polite"></span><button class="lb-x" aria-label="關閉">✕</button></div><div class="lb-st"><img class="lb-im" alt="" draggable="false"><button class="lb-a lb-p" aria-label="上一張">‹</button><button class="lb-a lb-n" aria-label="下一張">›</button></div><div class="lb-bar">${o.go?'<button class="chip lb-go"></button>':''}${o.crop?'<button class="chip lb-cr">裁切</button>':''}</div>`;
- const L=LB={d,list,i,s:1,x:0,y:0,after:null},st=d.querySelector('.lb-st'),im=d.querySelector('.lb-im'),q=s=>d.querySelector(s);
- const put=(ease)=>{im.classList.toggle('ease',!!ease);im.style.transform=`translate(calc(-50% + ${L.x}px),calc(-50% + ${L.y}px)) scale(${L.s})`};
- const show=async dv=>{const it=L.list[L.i],tk=L.tk=(L.tk||0)+1;L.s=1;L.x=L.y=0;if(dv){L.x=dv*innerWidth;im.style.opacity=1}else im.style.opacity=0;put();q('.lb-c').textContent=`${nm(it.n)}　${L.i+1} / ${L.list.length}`;q('.lb-p').disabled=L.i===0;q('.lb-n').disabled=L.i===L.list.length-1;if(q('.lb-go'))q('.lb-go').textContent=`去${nm(it.n)}`;
-  const k=L.i;[k-1,k+1].forEach(j=>L.list[j]&&picURL(L.list[j].p));
-  try{const u=await picURL(it.p);if(L.tk!==tk||!u)return;im.src=u;im.alt=`${nm(it.n)}的圖，第 ${k+1} 張`;
-   if(dv){try{await im.decode()}catch(_){}if(L.tk!==tk)return;void im.offsetWidth;await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));if(L.tk!==tk)return;L.x=0;put(true)}
-   else{im.classList.add('ease');im.style.opacity=1}}finally{if(L.tk===tk)setTimeout(()=>{if(L.tk===tk)L.busy=0},dv?240:0)}};
- const step=dv=>{if(L.busy)return;const j=L.i+dv;if(j<0||j>=L.list.length){L.x=0;put(true);return}L.busy=1;L.x=-dv*innerWidth;put(true);setTimeout(()=>{L.i=j;show(dv)},240)};
+ d.innerHTML=`<div class="lb-top"><span class="lb-c" aria-live="polite"></span><button class="lb-x" aria-label="關閉">✕</button></div><div class="lb-st"><div class="lb-tk">${'<img class="lb-im" alt="" draggable="false">'.repeat(3)}</div><button class="lb-a lb-p" aria-label="上一張">‹</button><button class="lb-a lb-n" aria-label="下一張">›</button></div><div class="lb-bar">${o.go?'<button class="chip lb-go"></button>':''}${o.crop?'<button class="chip lb-cr">裁切</button>':''}<button class="chip lb-cmp">拿來比較</button></div>`;
+ const GAP=16,q=s=>d.querySelector(s),st=q('.lb-st'),tk=q('.lb-tk'),IM=[...d.querySelectorAll('.lb-im')];   // IM: [previous, this one, next]
+ const L=LB={d,list,i,s:1,x:0,y:0,T:0,anim:null,tok:0,after:null},W=()=>st.clientWidth+GAP;
+ const put=ease=>IM.forEach((im,k)=>{const c=k===1;im.classList.toggle('on',c);im.classList.toggle('ease',c&&!!ease);im.style.transform=`translate(calc(-50% + ${(k-1)*W()+(c?L.x:0)}px),calc(-50% + ${c?L.y:0}px)) scale(${c?L.s:1})`});
+ const trk=(ms,ez)=>{tk.style.transition=ms?`transform ${ms}ms ${ez||'cubic-bezier(.22,.8,.3,1)'}`:'none';tk.style.transform=`translateX(${L.T}px)`};
+ const label=()=>{const it=L.list[L.i];q('.lb-c').textContent=`${nm(it.n)}　${L.i+1} / ${L.list.length}`;q('.lb-p').disabled=L.i===0;q('.lb-n').disabled=L.i===L.list.length-1;if(q('.lb-go'))q('.lb-go').textContent=`去${nm(it.n)}`;IM.forEach((im,k)=>{const j=L.i+k-1,z=L.list[j];im.alt=z?`${nm(z.n)}的圖，第 ${j+1} 張`:''})};
+ const slot=async k=>{const im=IM[k],it=L.list[L.i+k-1],p=it?it.p:'';if(im._p===p)return;im._p=p;im.removeAttribute('src');im.hidden=!it;if(!it)return;const u=await picURL(p);if(im._p===p&&u)im.src=u};
+ const fill=()=>{[1,2,0].forEach(slot);[L.i-2,L.i+2].forEach(j=>L.list[j]&&picURL(L.list[j].p));label()};
+ const turn=dv=>{L.i+=dv;if(dv>0)IM.push(IM.shift());else IM.unshift(IM.pop());L.T+=dv*W();L.s=1;L.x=L.y=0;trk(0);put();fill()};
+ const at=()=>{const m=getComputedStyle(tk).transform;return m&&m!=='none'?new DOMMatrixReadOnly(m).m41:L.T};
+ const freeze=()=>{if(L.anim===null)return null;const pos=at(),dv=L.anim,past=!!dv&&Math.abs(pos)>W()/2;L.tok++;L.anim=null;L.T=pos;trk(0);if(past)turn(dv);return{dv,past}};
+ const settle=(dv,sp,btn)=>{if(dv&&!L.list[L.i+dv])dv=0;const w=W(),to=-dv*w,dist=Math.abs(to-L.T),tok=++L.tok;L.T=to;
+  const ms=dist<1?0:Math.round(btn?clampN(360*dist/w,160,360):clampN(4*dist/Math.max(Math.abs(sp||0),1.2),180,420));L.anim=ms?dv:null;trk(ms);
+  const done=()=>{if(L.tok!==tok)return;L.anim=null;if(dv)turn(dv)};if(ms)setTimeout(done,ms+20);else done()};
+ const step=dv=>{const f=freeze();if(f&&f.dv===dv&&!f.past)turn(dv);if(L.s>1){L.s=1;L.x=L.y=0;put(true)}settle(dv,0,true)};   /* a press while sliding the same way counts the slide as done and goes one more */
  q('.lb-x').onclick=ovBack;q('.lb-p').onclick=()=>step(-1);q('.lb-n').onclick=()=>step(1);
  if(q('.lb-go'))q('.lb-go').onclick=()=>{const n=L.list[L.i].n;L.after=()=>go('ep-'+n);ovBack()};
+ q('.lb-cmp').onclick=()=>{const it=L.list[L.i];L.after=()=>cmpStart(it);ovBack()};
  if(q('.lb-cr'))q('.lb-cr').onclick=async()=>{const it=L.list[L.i],u=await picURL(it.p);if(!u)return;const b=await openCrop(u,{title:'裁切這張圖'});if(!b||b==='skip')return;
-  const np=await storeImg(b),x=epEdit(it.n),sw=a=>a&&a.map(p=>p===it.p?np:p);x.im=sw(x.im);x.rx.forEach(r=>{if(r.im)r.im=sw(r.im)});x.t=Date.now();touch();persist();
-  L.list.forEach(z=>{if(z.p===it.p)z.p=np});show();const y=scrollY;render(true);scrollTo(0,y)};
+  const np=await storeImg(b),x=epEdit(it.n),sw=a=>a&&a.map(p=>p===it.p?np:p);x.im=sw(x.im);x.rx.forEach(r=>{if(r.im)r.im=sw(r.im)});x.t=Date.now();cmpRepath(it.p,np);touch();persist();
+  L.list.forEach(z=>{if(z.p===it.p)z.p=np});IM.forEach(im=>{if(im._p===it.p)im._p=null});fill();const y=scrollY;render(true);scrollTo(0,y)};
  d.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')step(-1);if(e.key==='ArrowRight')step(1)});
- st.addEventListener('wheel',e=>{e.preventDefault();L.s=clampN(L.s*(e.deltaY<0?1.15:1/1.15),1,5);if(L.s===1)L.x=L.y=0;put()},{passive:false});
- const P=new Map();let g=null,lastTap=0;
- st.onpointerdown=e=>{if(L.busy||e.target.closest('button'))return;st.setPointerCapture(e.pointerId);P.set(e.pointerId,{x:e.clientX,y:e.clientY});
-  if(P.size===1)g={m:1,x0:e.clientX,y0:e.clientY,sx:L.x,sy:L.y,t:Date.now(),moved:false,bg:e.target===st};
-  else if(P.size===2){const[a,b]=[...P.values()];g={m:2,d0:Math.hypot(a.x-b.x,a.y-b.y)||1,s0:L.s,sx:L.x,sy:L.y}}};
- st.onpointermove=e=>{if(!P.has(e.pointerId)||!g)return;P.set(e.pointerId,{x:e.clientX,y:e.clientY});
-  if(g.m===2&&P.size>=2){const[a,b]=[...P.values()];L.s=clampN(g.s0*Math.hypot(a.x-b.x,a.y-b.y)/g.d0,1,5);L.x=g.sx;L.y=g.sy;put();return}
-  if(g.m!==1)return;const dx=e.clientX-g.x0,dy=e.clientY-g.y0;if(Math.abs(dx)+Math.abs(dy)>8)g.moved=true;
-  if(L.s>1){L.x=g.sx+dx;L.y=g.sy+dy}else{L.x=dx;L.y=0}put()};
- const up=e=>{if(!P.has(e.pointerId))return;P.delete(e.pointerId);if(!g)return;
-  if(g.m===2){if(!P.size){if(L.s<1.05){L.s=1;L.x=L.y=0;put(true)}g=null}return}
-  const dx=e.clientX-g.x0,dy=e.clientY-g.y0;
-  if(!g.moved&&Date.now()-g.t<300){const now=Date.now();if(now-lastTap<320){L.s=L.s>1?1:2.5;L.x=L.y=0;put(true);lastTap=0}else{lastTap=now}}
-  else if(L.s===1){if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy))step(dx<0?1:-1);else{L.x=0;put(true)}}
-  g=null};
- st.onpointerup=up;st.onpointercancel=up;
- ovOpen(d,()=>{LB=null;const a=L.after;if(a)setTimeout(a,0)});show();q('.lb-x').focus()}
+ gest(st,{down:e=>!e.target.closest('button'),
+  start:G=>{G.sx=L.x;G.sy=L.y;G.s0=L.s;G.sw=L.s===1&&!G.pinched;G.fz=0;G.T0=L.T;if(G.m===2){freeze();if(L.T)settle(0)}},
+  pan:(dx,dy,G)=>{if(G.sw){if(!G.fz){G.fz=1;if(L.anim!==null){freeze();G.T0=L.T-dx}}let t=G.T0+dx;if((t<0&&!L.list[L.i+1])||(t>0&&!L.list[L.i-1]))t*=.3;L.T=t;trk(0);return}
+   if(L.s>1){L.x=G.sx+dx;L.y=G.sy+dy;put()}},
+  pinch:(k,G)=>{L.s=clampN(G.s0*k,1,5);L.x=G.sx;L.y=G.sy;put()},
+  end:(dx,dy,vx,vy,G)=>{if(G.sw&&G.fz){const w=W(),dv=Math.abs(vx)>.35&&Math.abs(vx)>Math.abs(vy)?(vx<0?1:-1):L.T<-w*.33?1:L.T>w*.33?-1:0;settle(dv,vx);return}
+   if(L.s<1.05){L.s=1;L.x=L.y=0;put(true)}},
+  dtap:()=>{L.s=L.s>1?1:2.5;L.x=L.y=0;put(true)},
+  wheel:k=>{L.s=clampN(L.s*k,1,5);if(L.s===1)L.x=L.y=0;put()}});
+ const rz=()=>{freeze();if(L.T)settle(0);put()};addEventListener('resize',rz);
+ const f0=IM[1];f0.style.opacity=0;f0.addEventListener('load',()=>{f0.style.transition='opacity .22s ease';f0.style.opacity=1;setTimeout(()=>{f0.style.transition=''},260)},{once:true});
+ ovOpen(d,()=>{LB=null;removeEventListener('resize',rz);const a=L.after;if(a)setTimeout(a,0)});trk(0);put();fill();q('.lb-x').focus()}
+/* ---- compare two pictures (2026-11-15 cmp-swipe) ----
+   Pick the first picture in the lightbox (拿來比較), tap the second on the wall. 左右 / 上下 / 滑桿; each picture zooms and moves on its own (滑桿: both together).
+   尺寸 menu R: '' = each picture's own shape, 'eq' = own shape at the same height, or a frame ratio (CMPR) that both pictures fill.
+   Saved groups: E.kinds['@cmp'] = {t, g:[{id, nm, d, a:{p,n}, b:{p,n}, v:'lr'|'tb'|'sl', z:[[s,u,v],[s,u,v]], x, r?}]}
+   z = zoom and the point on the picture (0..1 across / down) at the frame centre, so a phone and a desktop line up on the same spot; x = slider line (0..1); r = 尺寸 (left out for 原圖). */
+const CMPR={'1:1':1,'3:4':3/4,'4:3':4/3,'9:16':9/16,'16:9':16/9},CMPS=[['','原圖'],['eq','一樣大'],...Object.keys(CMPR).map(r=>[r,r])];
+const CMP={a:null,ctx:null,v:/^(lr|tb|sl)$/.test(lsGet('cmpv')||'')?lsGet('cmpv'):'lr',open:false};
+const cmpAll=()=>{const c=E.kinds['@cmp'];return c&&Array.isArray(c.g)?c.g:[]};
+const cmpRe=()=>{const y=scrollY;render(true);scrollTo(0,y)};
+const cmpT=()=>Math.max(Date.now(),((E.kinds['@cmp']||{}).t||0)+1);   /* never older than what is there, so a write always wins the next merge */
+const cmpDay=t=>{const d=new Date(t);return `${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}`};
+/* a cropped picture gets a new path: groups that hold the old one follow it */
+function cmpRepath(o,n){const g=cmpAll();if(!g.some(c=>c.a.p===o||c.b.p===o))return;E.kinds['@cmp']={t:cmpT(),g:g.map(c=>({...c,a:c.a.p===o?{...c.a,p:n}:c.a,b:c.b.p===o?{...c.b,p:n}:c.b}))}}
+const cmpBanner=()=>CMP.a?`<div class="cmp-pk" role="status"><span>已選${nm(CMP.a.n)}的圖・再點一張來比較</span><button class="chip" id="cmpNo">取消</button></div>`:'';
+const cmpCard=c=>`<div class="cmp-c"><button class="cmp-o" data-ci="${esc(c.id)}" aria-label="打開比較組「${esc(c.nm)}」"><span class="cmp-th"><img src="${esc(c.a.p)}" alt="" loading="lazy"><img src="${esc(c.b.p)}" alt="" loading="lazy"></span><span class="cmp-tx"><b>${esc(c.nm)}</b><small>${cmpDay(c.d)}</small></span></button><button class="cmp-dl" data-cd="${esc(c.id)}" aria-label="刪除比較組「${esc(c.nm)}」">✕</button></div>`;
+const cmpListHtml=()=>{const g=cmpAll().slice().sort((a,b)=>b.d-a.d);return g.length?`<div class="cmp-ls">${g.map(cmpCard).join('')}</div>`:'<p class="cmp-none">還沒有存過比較組。放大一張圖，按「拿來比較」就能開始。</p>'};
+/* the row in the wall's toolbar: 比較組（N）, opens the list underneath */
+const cmpTool=()=>`<div class="cmp-tw"><button class="cmp-tg" id="cmpTg" aria-expanded="${CMP.open}">比較組（${cmpAll().length}）<i class="cmp-cv" aria-hidden="true"></i></button>${CMP.open?cmpListHtml():''}</div>`;
+function cmpBind(){const b=$('#cmpNo');if(b)b.onclick=()=>{CMP.a=CMP.ctx=null;cmpRe()};
+ const t=$('#cmpTg');if(t)t.onclick=()=>{CMP.open=!CMP.open;cmpRe()};
+ $$('[data-ci]').forEach(x=>x.onclick=()=>{const c=cmpAll().find(z=>z.id===x.dataset.ci);if(c)openCmp(c.a,c.b,c)});
+ $$('[data-cd]').forEach(x=>x.onclick=()=>cmpDel(x.dataset.cd))}
+function cmpDel(id){const c=cmpAll().find(z=>z.id===id);if(!c||!confirm(`刪掉比較組「${c.nm}」？\n兩張圖本身不會被刪。`))return;E.kinds['@cmp']={t:cmpT(),g:cmpAll().filter(z=>z.id!==id)};touch();persist();cmpRe()}
+function cmpStart(it){CMP.a={p:it.p,n:it.n};CMP.ctx=null;if(cur!=='wall')go('wall');else cmpRe()}
+function openCmp(a,b,sv){
+ const ctx=sv||CMP.ctx||{},d=document.createElement('dialog');d.className='lbx cmp';d.setAttribute('aria-label','兩張圖比較');
+ if(sv&&/^(lr|tb|sl)$/.test(sv.v))CMP.v=sv.v;
+ const n01=(v,f)=>isFinite(v)&&v!==null&&v!==''?clampN(+v,0,1):f;
+ let it=[{p:a.p,n:a.n},{p:b.p,n:b.n}],gid=ctx.id&&cmpAll().some(c=>c.id===ctx.id)?ctx.id:'',R=CMPR[ctx.r]||ctx.r==='eq'?ctx.r:'',X=n01(ctx.x,.5),again=false;
+ const Z=[0,1].map(k=>{const z=ctx.z&&ctx.z[k];return z?{s:isFinite(z[0])?clampN(+z[0],1,6):1,u:n01(z[1],.5),v:n01(z[2],.5)}:{s:1,u:.5,v:.5}});
+ const pane=k=>`<figure class="cmp-p" data-k="${k}"><div class="cmp-w"><div class="cmp-f"><img class="cmp-im" alt="" draggable="false"><p class="cmp-miss" hidden>這張圖已不在，<br>可以按「換第二張」換一張</p></div></div><figcaption></figcaption></figure>`;
+ d.innerHTML=`<div class="lb-top"><span class="lb-c">比較</span><div class="seg2 cmp-sg" role="group" aria-label="排法">${[['lr','左右'],['tb','上下'],['sl','滑桿']].map(([v,t])=>`<button data-cv="${v}">${t}</button>`).join('')}</div><button class="lb-x" aria-label="關閉">✕</button></div>
+<div class="cmp-st">${pane(0)}${pane(1)}<div class="cmp-h" aria-hidden="true"><i></i></div></div>
+<div class="lb-bar"><div class="cmp-rm" role="group" aria-label="尺寸" hidden>${CMPS.map(([r,t])=>`<button data-cr="${r}">${t}</button>`).join('')}</div><div class="cmp-sv" hidden><label>這組的名字<input class="cmp-nm" maxlength="40" autocomplete="off" enterkeyhint="done"></label><div class="chips"><button class="chip cmp-ok">存下</button><button class="chip cmp-no">取消</button></div></div><button class="chip cmp-sw">兩張對調</button><button class="chip cmp-ag">換第二張</button><button class="chip cmp-rb" aria-expanded="false"></button><button class="chip cmp-sa"></button></div>`;
+ const q=s=>d.querySelector(s),st=q('.cmp-st'),P=[...d.querySelectorAll('.cmp-p')],F=P.map(p=>p.querySelector('.cmp-f')),I=P.map(p=>p.querySelector('.cmp-im')),B=[{},{}];
+ const nr=k=>I[k].naturalWidth?I[k].naturalWidth/I[k].naturalHeight:0,zk=k=>CMP.v==='sl'?Z[0]:Z[k],bk=k=>CMP.v==='sl'?0:k;
+ /* frame (fw x fh) and the picture's size at zoom 1 (w x h) for each side */
+ const lay=()=>{const fr=CMPR[R];
+  if(CMP.v==='sl'){const r0=fr||nr(0)||1,W=st.clientWidth-20,H=st.clientHeight,[bw,bh]=W/H>r0?[H*r0,H]:[W,W/r0];st.style.setProperty('--bw',bw+'px');st.style.setProperty('--bh',bh+'px');
+   [0,1].forEach(k=>{const r=nr(k)||r0;B[k]={fw:bw,fh:bh,...(r>bw/bh?{w:bh*r,h:bh}:{w:bw,h:bw/r})};F[k].style.width=F[k].style.height=''})}
+  else{const C=P.map(p=>p.querySelector('.cmp-w')),cw=Math.min(...C.map(c=>c.clientWidth)),ch=Math.min(...C.map(c=>c.clientHeight));
+   if(fr){const[fw,fh]=cw/ch>fr?[ch*fr,ch]:[cw,cw/fr];[0,1].forEach(k=>{const r=nr(k)||fr;B[k]={fw,fh,...(r>fr?{w:fh*r,h:fh}:{w:fw,h:fw/r})}})}
+   else{const hs=[0,1].map(k=>Math.min(ch,cw/(nr(k)||1))),hc=Math.min(...hs);[0,1].forEach(k=>{const r=nr(k)||1,h=R==='eq'?hc:hs[k];B[k]={fw:cw,fh:ch,w:h*r,h}})}
+   [0,1].forEach(k=>{F[k].style.width=B[k].fw+'px';F[k].style.height=B[k].fh+'px'})}
+  [0,1].forEach(k=>{I[k].style.width=B[k].w+'px';I[k].style.height=B[k].h+'px'});put()};
+ /* zoom + point -> pixels; the picture may not leave an empty edge inside its frame (when it is bigger than the frame) */
+ const room=(k,s)=>[Math.max(0,(B[k].w*s-B[k].fw)/2),Math.max(0,(B[k].h*s-B[k].fh)/2)];
+ const tf=(k,x,y,s)=>{I[k].style.transform=`translate(calc(-50% + ${x}px),calc(-50% + ${y}px)) scale(${s})`};
+ const put=()=>{st.style.setProperty('--x',X);
+  if(CMP.v==='sl'){const z=Z[0];if(!nr(0)||!B[0].w){tf(0,0,0,z.s);tf(1,0,0,z.s);return}const r0=room(0,z.s),r1=nr(1)?room(1,z.s):r0,mx=Math.min(r0[0],r1[0]),my=Math.min(r0[1],r1[1]);
+   const x=clampN((.5-z.u)*B[0].w*z.s,-mx,mx),y=clampN((.5-z.v)*B[0].h*z.s,-my,my);z.u=.5-x/(B[0].w*z.s);z.v=.5-y/(B[0].h*z.s);tf(0,x,y,z.s);tf(1,x,y,z.s);return}
+  [0,1].forEach(k=>{const z=Z[k];if(!nr(k)||!B[k].w){tf(k,0,0,z.s);return}const[mx,my]=room(k,z.s),x=clampN((.5-z.u)*B[k].w*z.s,-mx,mx),y=clampN((.5-z.v)*B[k].h*z.s,-my,my);z.u=.5-x/(B[k].w*z.s);z.v=.5-y/(B[k].h*z.s);tf(k,x,y,z.s)})};
+ const fill=()=>P.forEach((p,k)=>{const x=it[k],im=I[k],miss=p.querySelector('.cmp-miss');p.querySelector('figcaption').textContent=nm(x.n);im.alt=`${nm(x.n)}的圖`;miss.hidden=true;im.hidden=false;im.removeAttribute('src');
+  const bad=()=>{if(it[k]!==x)return;im.hidden=true;miss.hidden=false};im.onload=()=>lay();im.onerror=bad;picURL(x.p).then(u=>{if(it[k]!==x)return;if(u)im.src=u;else bad()},bad)});
+ const mode=v=>{CMP.v=v;lsSet('cmpv',v);d.dataset.v=v;d.querySelectorAll('[data-cv]').forEach(b=>{b.classList.toggle('on',b.dataset.cv===v);b.setAttribute('aria-pressed',b.dataset.cv===v)});lay()};
+ const size=r=>{R=r;d.dataset.r=r||'o';const t=(CMPS.find(z=>z[0]===r)||CMPS[0])[1];const rb=q('.cmp-rb');rb.innerHTML='尺寸<i class="cmp-cv" aria-hidden="true"></i>';rb.setAttribute('aria-label',`尺寸，目前：${t}`);rb.classList.toggle('on',!!r);d.querySelectorAll('[data-cr]').forEach(b=>{b.classList.toggle('on',b.dataset.cr===r);b.setAttribute('aria-pressed',b.dataset.cr===r)});lay()};
+ const menu=on=>{q('.cmp-rm').hidden=!on;q('.cmp-rb').setAttribute('aria-expanded',on)};
+ const saLabel=()=>{q('.cmp-sa').textContent=gid?'更新這組':'存下這組'};
+ const line=cx=>{const r=F[0].getBoundingClientRect();if(!r.width)return;X=clampN((cx-r.left)/r.width,0,1);put()};
+ d.querySelectorAll('[data-cv]').forEach(b=>b.onclick=()=>mode(b.dataset.cv));
+ d.querySelectorAll('[data-cr]').forEach(b=>b.onclick=()=>{size(b.dataset.cr);menu(false)});
+ q('.cmp-rb').onclick=()=>menu(q('.cmp-rm').hidden);
+ q('.lb-x').onclick=ovBack;q('.cmp-sw').onclick=()=>{it.reverse();Z.reverse();fill();lay()};
+ q('.cmp-ag').onclick=()=>{again=true;ovBack()};
+ q('.cmp-sa').onclick=()=>{menu(false);const c=cmpAll().find(z=>z.id===gid),nmx=q('.cmp-nm');nmx.value=c?c.nm:'';nmx.placeholder=`${nm(it[0].n)} vs ${nm(it[1].n)}`;q('.cmp-sv').hidden=false;nmx.focus()};
+ q('.cmp-no').onclick=()=>{q('.cmp-sv').hidden=true};
+ const save=()=>{const now=Date.now(),g=cmpAll().slice(),old=g.find(z=>z.id===gid),r3=v=>Math.round(v*1000)/1000,
+   rec={id:old?old.id:'c-'+now.toString(36),nm:q('.cmp-nm').value.trim()||`${nm(it[0].n)} vs ${nm(it[1].n)}`,d:old?old.d:now,a:{...it[0]},b:{...it[1]},v:CMP.v,z:Z.map(z=>[r3(z.s),r3(z.u),r3(z.v)]),x:r3(X)};
+  if(R)rec.r=R;if(old)g[g.indexOf(old)]=rec;else g.push(rec);E.kinds['@cmp']={t:cmpT(),g};gid=rec.id;touch();persist();q('.cmp-sv').hidden=true;
+  const sa=q('.cmp-sa');sa.textContent='已存下 ✓';setTimeout(()=>{if(sa.isConnected)saLabel()},1600)};
+ q('.cmp-ok').onclick=save;q('.cmp-nm').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();save()}};
+ /* each picture zooms and moves on its own (滑桿: together; at zoom 1 a drag there moves the line); two taps zoom 2.5x on that spot / back */
+ F.forEach((f,k)=>gest(f,{
+  start:G=>{const z=zk(k);G.u=z.u;G.v=z.v;G.s0=z.s;G.line=CMP.v==='sl'&&z.s===1&&!G.pinched},
+  pan:(dx,dy,G)=>{if(G.line){line(G.x0+dx);return}const z=zk(k),j=bk(k);if(!B[j].w)return;z.u=G.u-dx/(B[j].w*z.s);z.v=G.v-dy/(B[j].h*z.s);put()},
+  pinch:(m,G)=>{zk(k).s=clampN(G.s0*m,1,6);put()},
+  tap:e=>{if(CMP.v==='sl'&&zk(k).s===1)line(e.clientX)},
+  dtap:e=>{const z=zk(k),j=bk(k);if(z.s>1){z.s=1;z.u=z.v=.5}else if(B[j].w){const r=f.getBoundingClientRect();z.u+=(e.clientX-(r.left+r.width/2))/(B[j].w*z.s);z.v+=(e.clientY-(r.top+r.height/2))/(B[j].h*z.s);z.u=clampN(z.u,0,1);z.v=clampN(z.v,0,1);z.s=2.5}put()},
+  wheel:m=>{zk(k).s=clampN(zk(k).s*m,1,6);put()}}));
+ gest(q('.cmp-h i'),{pan:(dx,dy,G)=>line(G.x0+dx)});
+ const ro=new ResizeObserver(()=>lay());ro.observe(st);
+ ovOpen(d,()=>{ro.disconnect();if(again){CMP.a={...it[0]};CMP.ctx={id:gid,r:R,x:X,z:[[Z[0].s,Z[0].u,Z[0].v]]}}else CMP.a=CMP.ctx=null;cmpRe()});
+ CMP.ctx=null;saLabel();size(R);fill();mode(CMP.v);q('.lb-x').focus();return d}
 /* cropper: the frame stays still, the picture moves under it (drag, pinch, wheel). Resolves to a JPEG blob, 'skip', or null */
 const RAT={'2:1':2,'1:1':1,'16:9':16/9,'9:16':9/16,'3:4':3/4,'4:3':4/3};
 function openCrop(url,o={}){return new Promise(res=>{const R=o.ratios||Object.keys(RAT);let done=false;const fin=v=>{if(done)return;done=true;res(v)};
@@ -1607,11 +1775,7 @@ function openCrop(url,o={}){return new Promise(res=>{const R=o.ratios||Object.ke
  im.onload=()=>{iw=im.naturalWidth;ih=im.naturalHeight;im.style.width=iw+'px';im.style.height=ih+'px';s=0;smin=1;lay();s=smin;y=(ih*s-fh)/2*.72;put()};im.src=url;
  const ro=new ResizeObserver(lay);ro.observe(st);
  if(q('.cr-r'))q('.cr-r').onclick=e=>{const b=e.target.closest('button');if(!b)return;q('.cr-r').querySelectorAll('button').forEach(z=>{z.classList.toggle('on',z===b);z.setAttribute('aria-pressed',z===b)});r=RAT[b.dataset.r];lay()};
- st.addEventListener('wheel',e=>{e.preventDefault();s*=e.deltaY<0?1.1:1/1.1;put()},{passive:false});
- const P=new Map();let g=null;
- st.onpointerdown=e=>{st.setPointerCapture(e.pointerId);P.set(e.pointerId,{x:e.clientX,y:e.clientY});const v=[...P.values()];g=P.size===1?{m:1,x0:e.clientX,y0:e.clientY,sx:x,sy:y}:{m:2,d0:Math.hypot(v[0].x-v[1].x,v[0].y-v[1].y)||1,s0:s}};
- st.onpointermove=e=>{if(!P.has(e.pointerId)||!g)return;P.set(e.pointerId,{x:e.clientX,y:e.clientY});const v=[...P.values()];if(g.m===2&&v.length>=2)s=g.s0*Math.hypot(v[0].x-v[1].x,v[0].y-v[1].y)/g.d0;else if(g.m===1){x=g.sx+e.clientX-g.x0;y=g.sy+e.clientY-g.y0}put()};
- st.onpointerup=st.onpointercancel=e=>{P.delete(e.pointerId);const v=[...P.values()];g=v.length===1?{m:1,x0:v[0].x,y0:v[0].y,sx:x,sy:y}:null};
+  gest(st,{start:G=>{G.sx=x;G.sy=y;G.s0=s},pan:(dx,dy,G)=>{x=G.sx+dx;y=G.sy+dy;put()},pinch:(k,G)=>{s=G.s0*k;put()},wheel:k=>{s*=k>1?1.1:1/1.1;put()}});
  const out=()=>{const sw=fw/s,sh=fh/s,sx=iw/2-x/s-sw/2,sy=ih/2-y/s-sh/2,mx=o.max||1600,k=Math.min(1,mx/Math.max(sw,sh)),c=document.createElement('canvas');c.width=Math.round(sw*k);c.height=Math.round(sh*k);c.getContext('2d').drawImage(im,sx,sy,sw,sh,0,0,c.width,c.height);c.toBlob(b=>{fin(b);ovBack()},'image/jpeg',.88)};
  q('.lb-x').onclick=ovBack;q('.cr-ok').onclick=()=>{if(iw)out()};if(q('.cr-skip'))q('.cr-skip').onclick=()=>{fin('skip');ovBack()};
  ovOpen(d,()=>{ro.disconnect();fin(null)})})}
@@ -1636,8 +1800,8 @@ function vWall(){const all=wallList(),seg=(k,opts)=>`<div class="seg2" role="gro
  tile=(w,k)=>`<button class="tile" data-k="${k}" aria-label="放大${nm(w.n)}的圖"><img src="${w.src}" alt="${nm(w.n)}的圖" loading="lazy"><em>${w.n}</em></button>`;
  let body;if(WV.g){const gs=[];all.forEach((w,k)=>{const l=gs[gs.length-1];if(l&&l.n===w.n)l.t.push(tile(w,k));else gs.push({n:w.n,t:[tile(w,k)]})});body=gs.map(x=>`<section class="wgp"><h3 class="wgh"><button data-go="${x.n}">${nm(x.n)}</button><span>${x.t.length} 張</span></h3>${wallBox(x.t)}</section>`).join('')}
  else body=wallBox(all.map(tile));
- return `<div class="pg"><div class="hd"><h2 class="logo">圖片牆</h2><span>${all.length} 張・點一張放大</span>${spray(110,70,41,'right:-12px;top:-12px')}<button class="wl-gem" id="wvt" aria-label="排序與瀏覽方式" aria-expanded="${!!S.wtOpen}">${medal('wall',!!S.wtOpen)}</button></div>${S.addOpen?`<div class="addf"><label>選圖<input id="af" type="file" accept="image/*" multiple></label><label>這張是第幾話<input id="an" type="number" min="0" max="${D.eps.length}" inputmode="numeric" value="${lastWritten()}"></label><div class="chips"><button class="chip" id="ag">加到圖片牆</button><button class="chip" id="ac">取消</button></div></div>`:''}${S.wtOpen?`<div class="wtool">${seg('o',[['old','舊話在前'],['new','新話在前']])}${seg('v',[['grid','方格'],['fall','瀑布'],['big','大圖']])}${seg('g',[[0,'不分組'],[1,'按話分組']])}</div>`:''}${body}</div><button class="fab wl-pearl" id="add" aria-label="加一張圖" title="加一張圖">${pearlMd(false)}</button>`}
-function bindWall(){const L=wallList().map(w=>({p:w.src,n:w.n}));$$('.tile').forEach(b=>b.onclick=()=>openLB(L,+b.dataset.k,{go:true,crop:true}));$$('[data-go]').forEach(b=>b.onclick=()=>go('ep-'+b.dataset.go));
+ return `<div class="pg"><div class="hd"><h2 class="logo">圖片牆</h2><span>${all.length} 張・點一張放大</span>${spray(110,70,41,'right:-12px;top:-12px')}<button class="wl-gem" id="wvt" aria-label="排序與瀏覽方式" aria-expanded="${!!S.wtOpen}">${medal('wall',!!S.wtOpen)}</button></div>${cmpBanner()}${S.addOpen?`<div class="addf"><label>選圖<input id="af" type="file" accept="image/*" multiple></label><label>這張是第幾話<input id="an" type="number" min="0" max="${D.eps.length}" inputmode="numeric" value="${lastWritten()}"></label><div class="chips"><button class="chip" id="ag">加到圖片牆</button><button class="chip" id="ac">取消</button></div></div>`:''}${S.wtOpen?`<div class="wtool">${seg('o',[['old','舊話在前'],['new','新話在前']])}${seg('v',[['grid','方格'],['fall','瀑布'],['big','大圖']])}${seg('g',[[0,'不分組'],[1,'按話分組']])}${cmpTool()}</div>`:''}${body}</div><button class="fab wl-pearl" id="add" aria-label="加一張圖" title="加一張圖">${pearlMd(false)}</button>`}
+function bindWall(){const L=wallList().map(w=>({p:w.src,n:w.n}));$$('.tile').forEach(b=>b.onclick=()=>CMP.a?openCmp(CMP.a,L[+b.dataset.k]):openLB(L,+b.dataset.k,{go:true,crop:true}));cmpBind();$$('[data-go]').forEach(b=>b.onclick=()=>go('ep-'+b.dataset.go));
  $$('[data-wk]').forEach(b=>b.onclick=()=>{const k=b.dataset.wk,v=b.dataset.wv;WV[k]=k==='g'?+v:v;lsSet('wallv',JSON.stringify(WV));const y=scrollY;render(true);scrollTo(0,y)});
  $('#wvt').onclick=()=>{S.wtOpen=!S.wtOpen;const y=scrollY;render(true);scrollTo(0,y)};$('#add').onclick=()=>{S.addOpen=true;render()};const g=$('#ag');if(g){g.onclick=async()=>{const f=await cropSeq([...$('#af').files]);if(!f.length)return;const n=Math.min(+$('#an').value||0,D.eps.length);S.addOpen=false;await addImages(n,f);render(true)};$('#ac').onclick=()=>{S.addOpen=false;render()}}}
 /* timeline */
