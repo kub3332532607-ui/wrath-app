@@ -487,7 +487,7 @@ button.tr:hover .tl1 b{color:var(--acc)}
 .stg{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
 .st b{font-size:1.7rem}}
 @media (min-width:1219px){.lg{grid-template-columns:270px minmax(0,1fr);justify-content:stretch;gap:36px}
-.vn{display:block;columns:2;column-gap:48px}.vn .tr{break-inside:avoid}.vn .lnb{column-span:all}}
+.vn{display:block}.vn:not(.a3){columns:2;column-gap:48px}.vn .tr{break-inside:avoid}.vn .lnb{column-span:all}.a3-col.a3-two{columns:2;column-gap:48px}.a3-col:not(.a3-two){max-width:calc(50% - 24px)}}
 /* day version */
 [data-mode=light] .ic,[data-mode=light] .av svg,[data-mode=light] .chap svg,[data-mode=light] .tt svg,[data-mode=light] .pav svg,[data-mode=light] .nav [data-v=home] svg,[data-mode=light] .brace svg{filter:drop-shadow(0 1px 2px rgba(50,50,150,.45))}
 [data-mode=light] #pearl stop:nth-child(2){stop-color:#f6e7f1}
@@ -789,6 +789,17 @@ select.edi[hidden]{display:none}
 .arc-add .chip{flex:none}
 .arc-go{justify-self:start;min-height:34px;margin-top:4px;text-align:left}
 .lnb{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:42px}
+.a3-ph{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 12px;margin:22px 0 6px;padding-bottom:6px;border-bottom:1px solid var(--line);column-span:all}
+.vn>.lnb+.a3-ph{margin-top:4px}
+.a3-ph h3{margin:0;font-size:1.5rem;font-weight:400;letter-spacing:.06em}
+.a3-ph span{font-size:.82rem;color:var(--mute)}
+.alp{padding-bottom:16px}
+.alp .tw-f{margin-top:8px}
+.alp>label.tw-f:first-of-type{margin-top:0}
+.alp [data-pf=n]{font-family:var(--t);font-size:1.28rem;color:var(--fg)}
+.alp .alr{grid-template-columns:repeat(2,minmax(0,1fr))}
+.alp .alr .edi{-moz-appearance:textfield}
+.alp .alr .edi::-webkit-inner-spin-button,.alp .alr .edi::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 .ale{padding-bottom:16px}
 .ale .tw-f{margin-top:8px}
 .ale>label.tw-f:first-of-type{margin-top:0}
@@ -1243,7 +1254,7 @@ async function dbGet(k){try{const d=await db();return await new Promise((ok,no)=
 async function dbSet(k,v){try{const d=await db();await new Promise((ok,no)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error||new Error('idb error'));t.onabort=()=>no(t.error||new Error('idb abort'))});return true}catch(e){return false}}
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v);return true}catch(e){return false}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
 /* private repo: this page holds no notes or pictures, they are read with the device's key */
-const BASE='data/base-9493b8ad21a3.json',VER='2026.11.15 12:07 · c0815fd';
+const BASE='data/base-9493b8ad21a3.json',VER='2026.11.15 12:33 · ca36636';
 let CFG=null,TK=lsGet('tk');
 const api=(p,o={})=>fetch(`${CFG.api??'https://api.github.com'}/repos/${CFG.owner}/${CFG.repo}/contents/${p}`,{cache:'no-store',...o,headers:{Authorization:`Bearer ${TK}`,...o.headers}});
 const rawGet=p=>api(p,{headers:{Accept:'application/vnd.github.raw+json'}});
@@ -1294,7 +1305,14 @@ const bracelet=(()=>{const C=['#eeeaff','#9a97e0','#c9cdfb','#7f7bd6','#b7b3ee',
 /* twisted silver chain tile for the reply thread */
 (()=>{const P=(y0,y1,k)=>{let d='';for(let y=y0;y<=y1+.01;y+=1){d+=`${d?'L':'M'}${(7+k*3.4*Math.sin(Math.PI*y/14)).toFixed(2)} ${y}`}return d},draw=d=>`<path d="${d}" fill="none" stroke="#565a7e" stroke-width="3.2" stroke-linecap="round"/><path d="${d}" fill="none" stroke="#d6d9ea" stroke-width="2.1" stroke-linecap="round"/><path d="${d}" fill="none" stroke="#fff" stroke-width=".7" stroke-linecap="round"/>`,u=[[-7,7,-1],[7,21,1],[21,35,-1]].map(a=>draw(P(...a))).join(''),o=[[-7,7,1],[7,21,-1],[21,35,1]].map(a=>draw(P(...a))).join('');document.documentElement.style.setProperty('--chain',`url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="14" height="28" viewBox="0 0 14 28">${u}${o}</svg>`)}")`);document.documentElement.style.setProperty('--chainh',`url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="28" height="14" viewBox="0 0 28 14"><g transform="translate(0 14) rotate(-90)">${u}${o}</g></svg>`)}")`)})();
 const PRL=`<svg class="prl" viewBox="-11 -11 22 22" aria-hidden="true"><circle cy="1.2" r="9" fill="#34265f" opacity=".42"/><circle r="8.5" fill="url(#pearl)" stroke="#8d88ab" stroke-width=".35"/><circle cx="-2.8" cy="-3.1" r="2.2" fill="#fff"/><path d="M-5.3 3.9Q0 7.5 5.6 3.2" fill="none" stroke="#f3b9dd" stroke-width="1"/></svg>`;
-const nm=n=>n===0?'序章':n>204?`幕間 第${n-204}話`:`第${n}話`;
+/* parts ("部"): the top layer of the story page. Base list below, then edits on top (E.kinds['@part:'+id], see partsBuild). nm() counts 幕間 from the start of the open-ended part named 幕間 (205 unless edited). */
+const PTK='@part:',PART0=[{id:'p1',n:'第一部',s:0,e:204,x:'第一部完結'},{id:'p2',n:'幕間',s:205,e:null,x:''}];
+const partsNow=()=>D.parts&&D.parts.length?D.parts:PART0;
+const actStart=()=>{const p=partsNow().find(p=>p.e==null&&p.n.includes('幕間'));return p?p.s:205};
+const nm=n=>n===0?'序章':n>=actStart()?`幕間 第${n-actStart()+1}話（第${n}話）`:`第${n}話`;
+const nmM=n=>n===0?'序章':n>=actStart()?`幕間 第${n-actStart()+1}話`:`第${n}話`;
+const nmS=n=>n>=actStart()?'幕'+(n-actStart()+1):n;
+const partOf=n=>{const P=partsNow();return P.find(p=>n>=p.s&&(p.e==null||n<=p.e))||[...P].reverse().find(p=>p.s<=n)||P[0]};
 let LOCK=lsGet('readLock')==='1';
 const rdl=()=>LOCK?'固定在最新話':S.read>=205?'全部讀完':S.read?`讀到第${S.read}話`:'讀到序章';
 const hidden=n=>n>S.read;
@@ -1338,7 +1356,7 @@ function vHome(){const vis=ordList(D.eps.filter(e=>e.st!=='todo'&&!hidden(e.n)))
  const rows=vis.slice(0,S.shown).map(e=>{const h=post(e,prev);prev=tail(e)||prev;return h}).join('');
  return `<div class="col"><div class="pf"><div class="pfc"><div class="pfh"><button class="pav" id="pav" aria-label="打開選單" aria-haspopup="dialog">${la?`<img src="${la}" alt="目前頭像">`:`<svg viewBox="-20 -20 40 40" aria-hidden="true">${lily(0,0,18)}</svg>`}</button>
  ${S.synE?`<div class="sy-w"><textarea class="eta bio sy-t" id="syT" rows="4" aria-label="主頁簡介">${esc(D.synopsis)}</textarea><div class="sy-r">${D.synopsis!==BY?'<button class="chip" id="syR">恢復原文</button>':''}<button class="edb" id="syE">完成</button></div></div>`:`<div class="sy-w"><p class="bio">${esc(D.synopsis)}</p><div class="sy-r"><button class="edb" id="syE">編輯簡介</button></div></div>`}</div>
- <p class="fo"><span><b>204</b> 話第一部　<b>${D.eps.length-205}</b> 話幕間　<b>${D.noted}</b> 話已寫</span>${ordBtn()}<button class="mode" id="mode" aria-label="切換成${document.documentElement.dataset.mode==='light'?'夜':'日'}版" title="切換成${document.documentElement.dataset.mode==='light'?'夜':'日'}版"><svg viewBox="0 0 256 256" fill="currentColor">${document.documentElement.dataset.mode==='light'?ICON.moon:ICON.sun}</svg></button></p></div>
+ <p class="fo"><span>${partCnt()}<b>${D.noted}</b> 話已寫</span>${ordBtn()}<button class="mode" id="mode" aria-label="切換成${document.documentElement.dataset.mode==='light'?'夜':'日'}版" title="切換成${document.documentElement.dataset.mode==='light'?'夜':'日'}版"><svg viewBox="0 0 256 256" fill="currentColor">${document.documentElement.dataset.mode==='light'?ICON.moon:ICON.sun}</svg></button></p></div>
  ${aboutBlock()}
  <div class="brace"><span id="bw">${bracelet(braceFull())}</span><input id="rd" type="range" min="0" max="${D.eps.length-1}" value="${Math.min(S.read,D.eps.length-1)}" aria-label="我目前讀到第幾話"${LOCK?' disabled title="已固定在最新話，可到設定解除"':''}></div><div class="rl" id="rl">${rdl()}</div></div>
  <div class="tl">
@@ -1354,7 +1372,7 @@ $('#rd').oninput=e=>{setRead(+e.target.value);$('#bw').innerHTML=bracelet(braceF
 function vEp(n){const e=D.eps[n],hide=hidden(n)&&e.st!=='todo',edit=!hide&&(S.edit===n||e.st==='todo'),pics=(edit&&(S.edit=n),e.im),r=e.rx,u=hide?null:avOf(n),fl=c=>`<svg id="epf" class="${c} turn" viewBox="-20 -20 40 40" style="transform:rotate(${S.pa}deg)" aria-hidden="true">${lily(0,0,18)}</svg>`;
  const ava=hide?fl('ehf'):`<button class="avbtn ehav" id="avb" title="換這話的頭像" aria-label="換這話的頭像">${u?`<img class="ehi" src="${u}" alt="">${fl('ehb')}`:fl('ehf')}</button>`;
  const sub=hide?'':`${e.lb?`<p class="ehlb">${esc(e.lb)}</p>`:''}${edit?`<button type="button" class="se-e se-hs" data-sec="arc" aria-expanded="${S.sec==='arc'}">${e.ar.length?esc(e.ar.join('・')):'劇情線'}</button>`:e.ar.length?`<span class="hn">${esc(e.ar.join('・'))}</span>`:''}${S.av[n]?'<button class="rs" id="avr">改回預設</button>':''}`;
- const head=`<header class="ehd${edit?' se-hd':''}"><div class="ehl"><button class="ib" onclick="bk('home')" aria-label="返回上一頁">←</button><button class="ib" id="ep" aria-label="上一話" ${n?'':'disabled'}>‹</button></div><div class="ehc">${ava}<b class="ehn">${nm(n)}</b></div><div class="ehr"><button class="ib" id="en" aria-label="下一話" ${n<D.eps.length-1?'':'disabled'}>›</button>${hide?'':`<button class="edb" id="edt">${edit?'完成':'編輯'}</button>`}</div>${sub?`<div class="ehs">${sub}</div>`:''}</header>`;
+ const head=`<header class="ehd${edit?' se-hd':''}"><div class="ehl"><button class="ib" onclick="bk('home')" aria-label="返回上一頁">←</button><button class="ib" id="ep" aria-label="上一話" ${n?'':'disabled'}>‹</button></div><div class="ehc">${ava}<b class="ehn">${nmM(n)}</b></div><div class="ehr"><button class="ib" id="en" aria-label="下一話" ${n<D.eps.length-1?'':'disabled'}>›</button>${hide?'':`<button class="edb" id="edt">${edit?'完成':'編輯'}</button>`}</div>${sub?`<div class="ehs">${sub}</div>`:''}</header>`;
  if(hide)return `<div class="col">${head}<div class="spo" style="margin-top:20px">防劇透：這話在你的手鐲進度之後。</div></div>`;
  if(edit)return `<div class="col">${head}${edBody(e,n)}</div>`;
  /* summary card, then the thread: first reaction, the episode's pictures, the rest of the reactions — each hung on the chain */
@@ -1410,7 +1428,7 @@ function synSave(v){v=v.trim();if(v===D.synopsis)return;E.kinds['@home']={...(E.
 function rebuild(){const len=Math.max(BE.length,...Object.keys(E.eps).map(k=>+k+1));S.av={};
  D.eps=Array.from({length:len},(_,n)=>{const b=BE[n]||blankEp(n),x=E.eps[n];if(!x)return{...b,tg:b.ar};if(x.av)S.av[n]=x.av;const e={...b,...x};e.tg=e.ar||[];e.st=e.rx.length?'has_reactions':e.pl.length||e.su||e.im.length||e.lb?'plot_only':'todo';return e});
  D.wall=D.eps.flatMap(e=>allIm(e).map(src=>({n:e.n,src})));D.noted=D.eps.filter(e=>e.st!=='todo').length;
- arcsBuild(len);wdBuild();statsBuild();
+ arcsBuild(len);partsBuild();wdBuild();statsBuild();
  if(E.read)S.read=E.read.v;if(LOCK)S.read=9999}
 /* story arcs. Base list from the notes, then edits on top. An edited arc is stored whole as E.kinds['@arc:'+id] —
    kinds is the one part of edits.json that older versions of this app keep as-is when they sync, so nothing is lost on a device that has not reloaded yet.
@@ -1428,7 +1446,14 @@ function arcsBuild(len){const A=BA.map(a=>({id:a.name,name:a.name,kind:a.kind,st
  /* each episode lists its arcs from the widest to the narrowest; the feed's chapter title uses the narrowest (the most specific event) */
  for(const e of D.eps){const c=A.filter(a=>a.start_ep<=e.n&&e.n<=a.to);e.ar=c.map(a=>a.name);e.ai=c.map(a=>a.id);let s=null;for(const a of c)if(!s||a.to-a.start_ep<=s.to-s.start_ep)s=a;e.sp=s?s.name:''}}
 const arcBy=id=>D.arcs.find(a=>a.id===id),arcByName=v=>D.arcs.find(a=>a.name===v);
-const arcSpan=a=>a.end_ep==null?`${nm(a.start_ep)}起`:a.end_ep===a.start_ep?nm(a.start_ep):`${nm(a.start_ep)}～${nm(a.end_ep)}`;
+const arcSpan=a=>a.end_ep==null?`${nmM(a.start_ep)}起`:a.end_ep===a.start_ep?nmM(a.start_ep):`${nmM(a.start_ep)}～${nmM(a.end_ep)}`;
+function partsBuild(){const P=PART0.map(p=>({...p})),ed={};
+ for(const k in E.kinds)if(k.startsWith(PTK)){const r=E.kinds[k];if(r&&typeof r==='object'&&(r.d||(typeof r.n==='string'&&r.n.trim()&&Number.isInteger(r.s))))ed[k.slice(PTK.length)]=r}
+ for(const id in ed){const r=ed[id],i=P.findIndex(x=>x.id===id);if(r.d){if(i>=0)P.splice(i,1);continue}const p=i>=0?P[i]:(P.push({id}),P[P.length-1]);Object.assign(p,{n:r.n.trim(),s:r.s,e:Number.isInteger(r.e)?r.e:null,x:typeof r.x==='string'?r.x:''})}
+ P.sort((a,b)=>a.s-b.s);D.parts=P.length?P:[{id:'p0',n:'全部',s:0,e:null,x:''}]}
+function partPut(p,ch){E.kinds[PTK+p.id]={n:p.n,s:p.s,e:p.e??null,x:p.x||'',...ch,t:Date.now()};touch();persist();rebuild()}
+const partByName=v=>D.parts.find(p=>p.n===v);
+const partCnt=()=>partsNow().map(p=>({p,c:Math.min(p.e==null?D.eps.length-1:p.e,D.eps.length-1)-Math.max(p.s,1)+1})).filter(x=>x.c>0).map(x=>`<b>${x.c}</b> 話${esc(x.p.n)}　`).join('');
 const arcsDone=()=>D.arcs.reduce((m,a)=>Math.max(m,a.to),-1);
 function arcPut(a,ch){E.kinds[AK+a.id]={n:a.name,k:a.kind,s:a.start_ep,e:a.end_ep??null,o:a.note||'',...ch,t:Date.now()};touch();persist();rebuild()}
 /* add episode n to the arc named v (a new name makes a new arc of that one episode) */
@@ -1466,7 +1491,7 @@ function persist(){const a=lsSet('edits',JSON.stringify(E)),b=lsSet('dirty',JSON
 function touch(){dirty=true;gen++;clearTimeout(_ps);_ps=setTimeout(persist,300);sync('存在這台，等待上傳…');clearTimeout(_pt);_pt=setTimeout(push,4000)}
 function setRead(v){if(LOCK)return;S.read=v;E.read={v,t:Date.now()};touch()}
 /* arc, people and nation edits (kinds['@arc:…'], ['@ppl:…'], ['@nat:…']) go by time like episodes; any other field this version doesn't know is kept */
-function merge(r,l){if(!r)return l;const eps={...r.eps};for(const k in l.eps)if(!eps[k]||(l.eps[k].t||0)>=(eps[k].t||0))eps[k]=l.eps[k];const rk=r.kinds||{},lk=l.kinds||{},kinds={...rk,...lk};for(const k in rk)if(/^@(arc|ppl|nat|ev):|^@(home|cmp)$/.test(k)&&lk[k]&&((rk[k]&&rk[k].t)||0)>((lk[k]&&lk[k].t)||0))kinds[k]=rk[k];return{...r,...l,eps,kinds,read:!r.read||(l.read&&l.read.t>=r.read.t)?l.read:r.read}}
+function merge(r,l){if(!r)return l;const eps={...r.eps};for(const k in l.eps)if(!eps[k]||(l.eps[k].t||0)>=(eps[k].t||0))eps[k]=l.eps[k];const rk=r.kinds||{},lk=l.kinds||{},kinds={...rk,...lk};for(const k in rk)if(/^@(arc|ppl|nat|ev|part):|^@(home|cmp)$/.test(k)&&lk[k]&&((rk[k]&&rk[k].t)||0)>((lk[k]&&lk[k].t)||0))kinds[k]=rk[k];return{...r,...l,eps,kinds,read:!r.read||(l.read&&l.read.t>=r.read.t)?l.read:r.read}}
 /* status line */
 function sync(t,sticky){const y=$('#sy');if(!y)return;y.textContent=t;y.classList.toggle('on',!!t);y.classList.toggle('bad',!!sticky);clearTimeout(sync.t);if(t&&t==='已同步')sync.t=setTimeout(()=>y.classList.remove('on'),1800)}
 /* base64 */
@@ -1814,21 +1839,48 @@ const arcCard=a=>`<div class="tr ${a.kind==='main'?'mn':'sd'} ale" data-id="${es
  <div class="alr"><label class="tw-f"><span>從第幾話</span><input class="edi" data-f="s" type="number" inputmode="numeric" min="0" max="${D.eps.length-1}" value="${a.start_ep}" aria-label="從第幾話"></label><label class="tw-f"><span>到第幾話</span><input class="edi" data-f="e" type="number" inputmode="numeric" min="0" max="${D.eps.length-1}" value="${a.end_ep??''}" placeholder="還沒結束" aria-label="到第幾話，空白是還沒結束"></label><label class="tw-f"><span>種類</span><select class="edi" data-f="k" aria-label="主線或支線"><option value="main"${a.kind==='main'?' selected':''}>主線</option><option value="side"${a.kind==='main'?'':' selected'}>支線</option></select></label></div>
  <label class="tw-f"><span>說明</span><input class="edi" data-f="o" value="${esc(a.note)}" placeholder="可空白" aria-label="說明"></label>
  <div class="alf"><span class="hn alc">${arcCov(a)}</span><button class="chip ald">刪除這條</button></div></div>`;
-function vLineEdit(){return `<div class="pg"><div class="hd"><h2 class="logo">時間線</h2><span>改完一格就自動存，序章是 0，幕間從 205 起</span>${spray(110,70,21,'right:-6px;top:-10px')}</div>
- <div class="lg">${statsBar()}<div class="vn" id="aled"><div class="lnb"><span class="hn">${D.arcs.length} 條劇情線</span><button class="edb" id="lne">完成</button></div>${D.arcs.map(arcCard).join('')}<button class="tw-next aln" id="lnadd">＋ 新增劇情線</button></div></div></div>`}
+const partCov=p=>{const o=D.parts.filter(q=>q!==p&&q.s<=(p.e==null?1e9:p.e)&&p.s<=(q.e==null?1e9:q.e));return `${p.e==null?`${nm(p.s)}起，還在連載`:p.e===p.s?nm(p.s):`${nm(p.s)}～${nm(p.e)}`}${o.length?`　和「${esc(o[0].n)}」重疊`:''}`};
+const partCard=p=>`<div class="tr mn alp" data-pid="${esc(p.id)}"><svg class="ic" viewBox="0 0 60 60" aria-hidden="true">${lily(30,30,23,p.s*7)}</svg>
+ <label class="tw-f"><span>名字</span><input class="edi" data-pf="n" value="${esc(p.n)}" aria-label="部的名字"></label>
+ <div class="alr"><label class="tw-f"><span>從第幾話</span><input class="edi" data-pf="s" type="number" inputmode="numeric" min="0" max="${D.eps.length-1}" value="${p.s}" aria-label="部從第幾話"></label><label class="tw-f"><span>到第幾話</span><input class="edi" data-pf="e" type="number" inputmode="numeric" min="0" max="${D.eps.length-1}" value="${p.e??''}" placeholder="還在連載" aria-label="部到第幾話，空白是還在連載"></label></div>
+ <label class="tw-f"><span>結尾那行字</span><input class="edi" data-pf="x" value="${esc(p.x)}" placeholder="可空白，例如「第一部完結」" aria-label="部結尾那行字"></label>
+ <div class="alf"><span class="hn alc">${partCov(p)}</span><button class="chip alpd">刪除這一部</button></div></div>`;
+function vLineEdit(){return `<div class="pg"><div class="hd"><h2 class="logo">時間線</h2><span id="alsub">改完一格就自動存，序章是 0，幕間從 ${actStart()} 起</span>${spray(110,70,21,'right:-6px;top:-10px')}</div>
+ <div class="lg">${statsBar()}<div class="vn" id="aled"><div class="lnb"><span class="hn">${D.parts.length} 個部・${D.arcs.length} 條劇情線</span><button class="edb" id="lne">完成</button></div>
+ <div class="a3-ph"><h3 class="logo">部</h3><span>劇情頁最上層的大標題</span></div>${D.parts.map(partCard).join('')}<button class="tw-next aln" id="ptadd">＋ 新增一部</button>
+ <div class="a3-ph"><h3 class="logo">劇情線</h3><span>主線與支線</span></div>${D.arcs.map(arcCard).join('')}<button class="tw-next aln" id="lnadd">＋ 新增劇情線</button></div></div></div>`}
 function vLine(){if(S.lnEdit)return vLineEdit();const sel=D.stats.find(t=>t.k===S.stat),say={};if(sel)for(const m of sel.note.matchAll(/([\d、]+)：([^。]+)。/g))m[1].split('、').forEach(n=>say[n]=m[2]);
- const arcs=D.arcs.filter(a=>!hidden(a.start_ep)),hid=D.arcs.length-arcs.length,marks=sel?sel.eps.filter(n=>!hidden(n)):[];
- const items=[...arcs.map(a=>({ep:a.start_ep,o:0,a})),...marks.map(n=>({ep:n,o:1,n}))].sort((x,y)=>x.ep-y.ep||x.o-y.o);
- const rows=items.map(({a,n},i)=>{if(a){const main=a.kind==='main',ic=arcIc(a);
-   return `<button class="tr ${main?'mn':'sd'}" data-n="${a.start_ep}">${ic}<span class="tl1"><b>${esc(a.name)}</b><span>${arcSpan(a)}</span></span>${a.note?`<span class="tn">${esc(a.note)}</span>`:''}</button>`}
-  const x=say[n]||D.eps[n].lb||'';return `<button class="tr mk" data-n="${n}"><svg class="ic" viewBox="0 0 60 60" aria-hidden="true">${blossom(30,26,12,n*5,'gd')}</svg><span class="tl1"><b>${nm(n)}</b></span>${x?`<span class="tn">${esc(x)}</span>`:''}</button>`}).join('');
- const end=hid?`<div class="tr dim"><span class="tl1"><span>防劇透：還有 ${hid} 段已收起</span></span></div>`:`${arcsDone()<204?`<div class="tr dim"><span class="tl1"><span>${nm(arcsDone()+1)}之後的劇情線還沒整理</span></span></div>`:''}<div class="tr dim mn"><svg class="ic" viewBox="0 0 60 60" aria-hidden="true">${lily(30,30,18,40)}</svg><span class="tl1"><span>第204話　第一部完結</span></span></div>`;
+ const marks=sel?sel.eps.filter(n=>!hidden(n)):[],last=D.eps.length-1,spoil=h=>`<div class="tr dim"><span class="tl1"><span>防劇透：還有 ${h} 段已收起</span></span></div>`;
+ const body=partsNow().filter(p=>p.s<=last).map(p=>{
+  const R={s:p.s,e:Math.min(p.e==null?last:p.e,last)},all=D.arcs.filter(a=>partOf(a.start_ep)===p),arcs=all.filter(a=>!hidden(a.start_ep)),hid=all.length-arcs.length;
+  if(hidden(p.s))return '';/* she chose: a part that starts after the reading progress is not shown at all */
+  const mk=marks.filter(n=>partOf(n)===p),items=[...arcs.map(a=>({ep:a.start_ep,o:0,a})),...mk.map(n=>({ep:n,o:1,n}))].sort((x,y)=>x.ep-y.ep||x.o-y.o);
+  const rows=items.map(({a,n})=>{if(a){const main=a.kind==='main',ic=arcIc(a);
+    return `<button class="tr ${main?'mn':'sd'}" data-n="${a.start_ep}">${ic}<span class="tl1"><b>${esc(a.name)}</b><span>${arcSpan(a)}</span></span>${a.note?`<span class="tn">${esc(a.note)}</span>`:''}</button>`}
+   const x=say[n]||D.eps[n].lb||'';return `<button class="tr mk" data-n="${n}"><svg class="ic" viewBox="0 0 60 60" aria-hidden="true">${blossom(30,26,12,n*5,'gd')}</svg><span class="tl1"><b>${nm(n)}</b></span>${x?`<span class="tn">${esc(x)}</span>`:''}</button>`}).join('');
+  let tail='';
+  if(hid)tail=spoil(hid);
+  else if(!hidden(R.e)){const done=Math.min(arcs.reduce((m,a)=>Math.max(m,a.to),p.s-1),R.e);
+   tail=(done<R.e?`<div class="tr dim"><span class="tl1"><span>${done+1===R.e?nm(R.e):`${nm(done+1)}～${nm(R.e)}`}的劇情線還沒整理</span></span></div>`:'')+
+    (p.e!=null&&p.e<=last?`<div class="tr dim mn"><svg class="ic" viewBox="0 0 60 60" aria-hidden="true">${lily(30,30,18,40)}</svg><span class="tl1"><span>${nm(p.e)}${p.x?'　'+esc(p.x):''}</span></span></div>`:`<div class="tr dim"><span class="tl1"><span>目前到${nm(R.e)}，還在連載</span></span></div>`)}
+  return `<div class="a3-ph"><h3 class="logo">${esc(p.n)}</h3><span>${nmM(R.s)}${p.e==null?'起':'～'+nmM(R.e)}・${arcs.length} 條劇情線</span></div><div class="a3-col${arcs.length>3?' a3-two':''}">${rows}${tail}</div>`}).join('');
  return `<div class="pg"><div class="hd"><h2 class="logo">時間線</h2><span>由上往下讀，點一段就到那一話</span>${spray(110,70,21,'right:-6px;top:-10px')}</div>
- <div class="lg">${statsBar()}<div class="vn"><div class="lnb"><span></span><button class="edb" id="lne">編輯劇情線</button></div>${rows}${end}</div></div></div>`}
+ <div class="lg">${statsBar()}<div class="vn a3"><div class="lnb"><span></span><button class="edb" id="lne">編輯劇情線</button></div>${body}</div></div></div>`}
 function bindLine(){const t=$('#lne');if(t)t.onclick=()=>{if(S.lnEdit)document.activeElement?.blur?.();S.lnEdit=!S.lnEdit;const y=scrollY;render(true);scrollTo(0,y)};
  $$('[data-st]').forEach(b=>b.onclick=()=>{S.stat=S.stat===b.dataset.st?null:b.dataset.st;const y=scrollY;render();scrollTo(0,y)});if(S.lnEdit)return bindLineEdit();
  $$('button.tr').forEach(b=>b.onclick=()=>go('ep-'+b.dataset.n))}
 function bindLineEdit(){const box=$('#aled'),len=D.eps.length;
+ const arcSync=()=>{$$('.ale').forEach(c=>{const a=arcBy(c.dataset.id),m=c.querySelector('.alc');if(a&&m)m.textContent=arcCov(a)});const t=$('#alsub');if(t)t.textContent=`改完一格就自動存，序章是 0，幕間從 ${actStart()} 起`;$$('.alp').forEach(c=>{const p=D.parts.find(x=>x.id===c.dataset.pid);if(p)c.querySelector('.alc').innerHTML=partCov(p)})};
+ box.addEventListener('change',ev=>{const el=ev.target,f=el.dataset.pf,c=el.closest('.alp');if(!f||!c)return;const p=D.parts.find(x=>x.id===c.dataset.pid);if(!p)return;const v=el.value.trim(),
+  back=t=>{el.value=f==='n'?p.n:f==='s'?p.s:f==='e'?(p.e??''):p.x;say(c,t)};let ch;
+  if(f==='n'){if(!v)return back('名字不能空白');if(v!==p.n&&partByName(v))return back(`已經有一部叫「${v}」`);ch={n:v}}
+  else if(f==='s'||f==='e'){if(f==='e'&&v==='')ch={e:null};else{const x=Number(v);if(v===''||!Number.isInteger(x)||x<0||x>=len)return back(`請填 0～${len-1} 的整數`);const s2=f==='s'?x:p.s,e2=f==='e'?x:p.e;if(e2!=null&&e2<s2)return back('結束的話數不能比開始早');ch={[f]:x}}}
+  else ch={x:v};
+  say(c,'');partPut(p,ch);arcSync()});
+ box.addEventListener('click',ev=>{const d=ev.target.closest('.alpd');if(!d)return;const c=d.closest('.alp'),p=D.parts.find(x=>x.id===c.dataset.pid);if(!p)return;
+  if(D.parts.length<2)return say(c,'至少要留一部');if(!confirm(`刪除「${p.n}」這一部？\n劇情線和筆記不會受影響，只是少一個大標題。`))return;partPut(p,{d:1});const y=scrollY;render(true);scrollTo(0,y)});
+ $('#ptadd').onclick=()=>{document.activeElement?.blur?.();let v='新的一部',i=2;while(partByName(v))v='新的一部'+i++;const id='u'+Date.now().toString(36);
+  partPut({id,n:v,s:Math.min(D.parts.reduce((m,q)=>Math.max(m,q.e??q.s),0)+1,len-1),e:null,x:''},{});const y=scrollY;render(true);scrollTo(0,y);const c=$(`.alp[data-pid="${id}"]`);if(c){c.scrollIntoView({block:'center'});const f=c.querySelector('[data-pf=n]');f.focus({preventScroll:true});f.select()}};
  const say=(c,t)=>{let m=c.querySelector('.alm');if(!m){m=document.createElement('p');m.className='alm';m.setAttribute('role','alert');c.append(m)}m.textContent=t;m.hidden=!t};
  box.addEventListener('change',ev=>{const el=ev.target,f=el.dataset.f,c=el.closest('.ale');if(!f||!c)return;const a=arcBy(c.dataset.id);if(!a)return;const v=el.value.trim(),back=t=>{el.value=f==='n'?a.name:f==='s'?a.start_ep:f==='e'?(a.end_ep??''):el.value;say(c,t)};let ch;
   if(f==='n'){if(!v)return back('名字不能空白');if(v!==a.name&&arcByName(v))return back(`已經有一條叫「${v}」`);ch={n:v}}
@@ -2122,7 +2174,7 @@ function vPerson(i){const p=D.ppl[i],g=wdNat(p.g),h=wdNat(p.h);
  const eps=wdEps(p),cut=!S.wdAll&&eps.length>40;
  return wdTop()+`<div class="pg wd-pg"><div class="wd-sw">${spray(150,96,13,'left:50%;top:50%;transform:translate(-50%,-38%);opacity:.75')}${wdStar(p)}</div><div class="wd-nmb"><span class="wd-nmw">${spray(62,43,5,'left:0;transform:translateY(-50%) scaleX(-1)')}${spray(62,43,23,'right:0;transform:translateY(-50%)')}<h2 class="wd-nm logo">${esc(p.name)}</h2></span>${p.role?`<span class="wd-role">${wdIts(p.role)}</span>`:''}</div><div class="chips wd-tags">${g?`<button class="chip" onclick="${wdGoN(g)}">${esc(wdShort(g))}</button>`:''}${h&&h!==g?`<button class="chip" onclick="${wdGoN(h)}">出身：${esc(wdShort(h))}</button>`:''}</div>
  ${p.x?`<section class="wd-sc"><h3 class="wd-sh">${p.px?'今生':'介紹'}</h3><p>${wdIts(p.x)}</p></section>`:''}${p.px?`<section class="wd-sc"><h3 class="wd-sh">前世</h3><p>${esc(p.px)}</p></section>`:''}${wdNames(p)}${qvPerson(p)}
- <section class="wd-sc"><h3 class="wd-sh">出場的話次</h3>${eps.length?`<div class="wd-eps">${(cut?eps.slice(0,40):eps).map(n=>`<button onclick="go('ep-${n}')" aria-label="${nm(n)}">${n>204?'幕'+(n-204):n}</button>`).join('')}${cut?'<button id="wdAll">全部…</button>':''}</div>`:'<p>還沒有出場的話次</p>'}</section></div>`}
+ <section class="wd-sc"><h3 class="wd-sh">出場的話次</h3>${eps.length?`<div class="wd-eps">${(cut?eps.slice(0,40):eps).map(n=>`<button onclick="go('ep-${n}')" aria-label="${nm(n)}">${nmS(n)}</button>`).join('')}${cut?'<button id="wdAll">全部…</button>':''}</div>`:'<p>還沒有出場的話次</p>'}</section></div>`}
 /* nation page head: the whole map with this nation's region outlined, the name, its kr/ja/en names, the description */
 function wdNatHead(p){const sub=NL.map(k=>p[k]).filter(Boolean).join(' · '),k=mpN(p)?mpAt(mpPt(p)):null,L=NX.filter(([f])=>p[f]),fl=`<span class="wdn-fl">${spray(44,30,23,'')}</span>`;
  const mini=k?`<div class="wd-mini"><svg viewBox="${mpV.join(' ')}" aria-hidden="true">${Object.keys(mpG.rg).map(r=>`<path class="mp-r${mpG.un.includes(r)?' mp-u':''}" fill-rule="evenodd" d="${mpG.rg[r]}"/>`).join('')}${mpG.bd.map(d=>`<path class="mp-bd" d="${d}"/>`).join('')}<path class="mp-sl" fill-rule="evenodd" d="${mpG.rg[k]}"/></svg></div>`:'';
