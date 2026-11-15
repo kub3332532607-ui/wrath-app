@@ -788,6 +788,64 @@ select.edi[hidden]{display:none}
 .arc-add .edi{flex:1;min-width:0}
 .arc-add .chip{flex:none}
 .arc-go{justify-self:start;min-height:34px;margin-top:4px;text-align:left}
+/* study shop (shp-): collection shelf, one-item detail/edit, cost editor */
+button.sr-item.shp-row-b{width:100%;text-align:left;color:inherit;font:inherit}
+button.sr-item.shp-row-b.on{background:linear-gradient(90deg,transparent,var(--glass),transparent)}
+.shp-sm{opacity:.8}
+.shp-new{margin:14px 0 0}
+.shp-left{gap:6px}
+.shp-pic{display:flex;flex-direction:column;align-items:center;gap:4px;margin:14px 0 4px}
+.shp-big{max-width:100%;height:200px;object-fit:contain}
+.shp-big.shp-none{width:120px;height:120px}
+.shp-pic small{font-size:.78rem;opacity:.7}
+.shp-n{font-family:var(--t);font-weight:400;font-size:1.2rem;line-height:1.5;margin:8px 0 10px}
+.shp-f{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px;margin:0 0 18px}
+.shp-f div{min-width:0}
+.shp-f dt{font-size:.75rem;opacity:.7}
+.shp-f dd{margin:0;overflow-wrap:anywhere}
+.shp-st{min-height:30px}
+.shp-hint{opacity:.65;font-size:.88rem}
+.shp-left .blk h3,.shp-one .blk h3{font-family:var(--t);font-weight:400;font-size:1rem;margin:0 0 6px}
+.shp-act{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:auto;padding-top:10px}
+.shp-ims{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.shp-ims img,.shp-add{width:72px;height:72px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
+.shp-add{font-size:1.4rem;color:var(--acc)}
+.shp-row{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+.shp-left .tw-f,.shp-one .tw-f{display:block;margin:0 0 12px}
+.shp-left .edi,.shp-one .edi{width:100%;text-align:left}
+.shp-x{min-height:80px;resize:vertical}
+.shp-seg{display:flex;width:100%;margin-top:6px}
+.shp-seg button{flex:1 1 0}
+.shp-fil{display:grid;gap:10px;margin:6px 0 18px}
+.shp-one{margin:0 0 22px}
+.shp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:12px}
+.shp-card{display:flex;flex-direction:column;gap:4px;padding:10px;border-radius:14px;background:var(--glass);border:1px solid var(--line);text-align:left;color:inherit;min-width:0}
+.shp-card.on{border-color:var(--acc)}
+.shp-card b{font-weight:400;font-size:.88rem;line-height:1.45;overflow-wrap:anywhere}
+.shp-card small{font-size:.76rem;color:var(--mute)}
+.shp-th{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;background:#0002}
+.shp-th.shp-none{padding:22%;box-sizing:border-box}
+.shp-plus{align-items:center;justify-content:center;font-size:1.6rem;color:var(--acc);min-height:160px}
+@media (min-width:900px){.shp-grid{grid-template-columns:repeat(auto-fill,minmax(168px,1fr))}.shp-fil{grid-template-columns:1fr 1fr}}
+.shp-dts .chip{gap:4px}
+.shp-dadd{position:relative;overflow:hidden;cursor:pointer}
+.shp-dadd input{position:absolute;inset:0;opacity:0}
+.shp-sug{display:block;width:100%;text-align:left;margin:4px 0 14px;padding:10px 14px;border:1px dashed var(--line);border-radius:12px;color:inherit;line-height:1.6}
+.shp-sug small{display:block;font-size:.74rem;opacity:.7}
+.shp-sug span{display:block;font-size:.78rem;color:var(--acc)}
+.shp-clr .edi{font-size:.9rem}
+.shp-clr{display:grid;grid-template-columns:minmax(0,1fr) 84px 28px;gap:0 8px;margin-bottom:6px;align-items:center}
+.shp-clr .edi{text-align:left}
+.shp-cbtn{display:block;margin:10px 0 0 auto}
+.shp-big-b{display:block;max-width:100%}
+.shp-nav{display:flex;align-items:center;gap:12px;font-size:.8rem;color:var(--mute)}
+.shp-nav button{min-width:40px;min-height:36px;font-size:1.2rem;color:var(--acc)}
+.shp-im{position:relative;display:inline-block}
+.shp-imx{position:absolute;top:-6px;right:-6px;width:24px;height:24px;border-radius:99px;background:var(--solid);color:var(--fg);border:1px solid var(--line);font-size:.9rem;line-height:1}
+.shp-add{display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+.shp-sug[hidden]{display:none}
+.shp-evseg{overflow-x:auto}
+.shp-act .chip,.shp-act .edb{flex:none}
 .lnb{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:42px}
 .a3-ph{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 12px;margin:22px 0 6px;padding-bottom:6px;border-bottom:1px solid var(--line);column-span:all}
 .vn>.lnb+.a3-ph{margin-top:4px}
@@ -1254,7 +1312,7 @@ async function dbGet(k){try{const d=await db();return await new Promise((ok,no)=
 async function dbSet(k,v){try{const d=await db();await new Promise((ok,no)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error||new Error('idb error'));t.onabort=()=>no(t.error||new Error('idb abort'))});return true}catch(e){return false}}
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v);return true}catch(e){return false}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
 /* private repo: this page holds no notes or pictures, they are read with the device's key */
-const BASE='data/base-9493b8ad21a3.json',VER='2026.11.15 12:33 · ca36636';
+const BASE='data/base-9493b8ad21a3.json',VER='2026.11.15 16:00 · f4f7241';
 let CFG=null,TK=lsGet('tk');
 const api=(p,o={})=>fetch(`${CFG.api??'https://api.github.com'}/repos/${CFG.owner}/${CFG.repo}/contents/${p}`,{cache:'no-store',...o,headers:{Authorization:`Bearer ${TK}`,...o.headers}});
 const rawGet=p=>api(p,{headers:{Accept:'application/vnd.github.raw+json'}});
@@ -1314,7 +1372,7 @@ const nmM=n=>n===0?'序章':n>=actStart()?`幕間 第${n-actStart()+1}話`:`第$
 const nmS=n=>n>=actStart()?'幕'+(n-actStart()+1):n;
 const partOf=n=>{const P=partsNow();return P.find(p=>n>=p.s&&(p.e==null||n<=p.e))||[...P].reverse().find(p=>p.s<=n)||P[0]};
 let LOCK=lsGet('readLock')==='1';
-const rdl=()=>LOCK?'固定在最新話':S.read>=205?'全部讀完':S.read?`讀到第${S.read}話`:'讀到序章';
+const rdl=()=>LOCK?'固定在最新話':S.read>=lastWritten()?'全部讀完':S.read?`讀到第${S.read}話`:'讀到序章';
 const hidden=n=>n>S.read;
 function go(h){location.hash=h}
 window.go=go;
@@ -1491,7 +1549,7 @@ function persist(){const a=lsSet('edits',JSON.stringify(E)),b=lsSet('dirty',JSON
 function touch(){dirty=true;gen++;clearTimeout(_ps);_ps=setTimeout(persist,300);sync('存在這台，等待上傳…');clearTimeout(_pt);_pt=setTimeout(push,4000)}
 function setRead(v){if(LOCK)return;S.read=v;E.read={v,t:Date.now()};touch()}
 /* arc, people and nation edits (kinds['@arc:…'], ['@ppl:…'], ['@nat:…']) go by time like episodes; any other field this version doesn't know is kept */
-function merge(r,l){if(!r)return l;const eps={...r.eps};for(const k in l.eps)if(!eps[k]||(l.eps[k].t||0)>=(eps[k].t||0))eps[k]=l.eps[k];const rk=r.kinds||{},lk=l.kinds||{},kinds={...rk,...lk};for(const k in rk)if(/^@(arc|ppl|nat|ev|part):|^@(home|cmp)$/.test(k)&&lk[k]&&((rk[k]&&rk[k].t)||0)>((lk[k]&&lk[k].t)||0))kinds[k]=rk[k];return{...r,...l,eps,kinds,read:!r.read||(l.read&&l.read.t>=r.read.t)?l.read:r.read}}
+function merge(r,l){if(!r)return l;const eps={...r.eps};for(const k in l.eps)if(!eps[k]||(l.eps[k].t||0)>=(eps[k].t||0))eps[k]=l.eps[k];const rk=r.kinds||{},lk=l.kinds||{},kinds={...rk,...lk};for(const k in rk)if(/^@(arc|ppl|nat|ev|part|shop):|^@(home|cmp)$/.test(k)&&lk[k]&&((rk[k]&&rk[k].t)||0)>((lk[k]&&lk[k].t)||0))kinds[k]=rk[k];return{...r,...l,eps,kinds,read:!r.read||(l.read&&l.read.t>=r.read.t)?l.read:r.read}}
 /* status line */
 function sync(t,sticky){const y=$('#sy');if(!y)return;y.textContent=t;y.classList.toggle('on',!!t);y.classList.toggle('bad',!!sticky);clearTimeout(sync.t);if(t&&t==='已同步')sync.t=setTimeout(()=>y.classList.remove('on'),1800)}
 /* base64 */
@@ -1965,12 +2023,13 @@ function srGarden(style){return `<svg class="sr-garden" style="${style}" viewBox
 function srEmblem(i){if(i===0)return srBloom(40,40,29,12);if(i===1)return `<g transform="translate(40 42)"><path d="M0 -32L18 -10L14 15L0 30L-14 15L-18 -10Z" fill="var(--sr-petal)" stroke="var(--sr-gold)"/><path d="M0 -32L-8 -6L0 30L8 -6ZM-18 -10L8 -6L14 15L-8 -6Z" fill="var(--sr-facet)" stroke="var(--sr-vein)" stroke-width=".6"/><circle cy="-36" r="3" fill="url(#pearl)"/></g>`;return `${srFrond(40,69,-27,.42)}${srFrond(40,69,27,.42)}${srBloom(40,35,17,0)}<circle cx="40" cy="71" r="3" fill="url(#pearl)"/>`}
 
 function studyFlowers(style){return srGarden(style)}
-function vStudy(){return studyTop('展覽　／　書房','goods')+`<section class="sr-room"><div class="sr-floor" aria-hidden="true">${srGarden('left:-45px;bottom:-25px')}${srGarden('right:-45px;bottom:-25px;transform:scaleX(-1)')}</div><div class="sr-heading"><h1 class="logo">陛下，這筆我也要買！</h1><p>嘻嘻</p></div><div class="sr-library"><div class="sr-portrait"><img src="${STUDY_EMPEROR}" alt="Emperor">${studyFlowers('left:-36px;bottom:-30px;width:300px;height:auto')}${srGarden('right:-65px;bottom:-25px;width:240px;height:auto;transform:scaleX(-1)')}</div><div class="sr-volumes">${G.events.map((e,i)=>`<button class="sr-volume sr-volume-${i}" onclick="go('study-${i}-0')" aria-label="翻開${esc(e.t)}"><span class="sr-spine">2026 · ${e.date.split('.')[1]}</span><span class="sr-cover"><small>收藏紀事　${['壹','貳','參'][i]}</small><svg class="sr-seal" viewBox="0 0 80 80" aria-hidden="true">${srEmblem(i)}</svg><b>${STUDY_NAMES[i]}</b><em>${STUDY_SUB[i]}</em><span class="sr-cover-date">${e.date.split('.')[1]}<i>月</i></span><span class="sr-open">翻開藏冊　›</span></span></button>`).join('')}</div></div><div class="sr-ledger-link"><div><small>三場收藏 · 目前合計</small><strong><span>NT$</span> ${esc(G.total)}</strong></div><button onclick="go('study-summary')">查閱支出總覽 <span>→</span></button></div><div class="sr-ledger-link"><div><small>現實活動 · ${evAll().length} 場</small>活動月曆</div><button onclick="go('study-events')">打開月曆 <span>→</span></button></div><div class="sr-ledger-link"><div><small>週邊選圖</small>我的評價</div><button onclick="go('slides')">查看選圖評價 <span>→</span></button></div><p class="sr-total-note">${esc(G.totalNote)}</p></section>`}
+function vStudy(){return studyTop('展覽　／　書房','goods')+`<section class="sr-room"><div class="sr-floor" aria-hidden="true">${srGarden('left:-45px;bottom:-25px')}${srGarden('right:-45px;bottom:-25px;transform:scaleX(-1)')}</div><div class="sr-heading"><h1 class="logo">陛下，這筆我也要買！</h1><p>嘻嘻</p></div><div class="sr-library"><div class="sr-portrait"><img src="${STUDY_EMPEROR}" alt="Emperor">${studyFlowers('left:-36px;bottom:-30px;width:300px;height:auto')}${srGarden('right:-65px;bottom:-25px;width:240px;height:auto;transform:scaleX(-1)')}</div><div class="sr-volumes">${G.events.map((e,i)=>`<button class="sr-volume sr-volume-${i}" onclick="go('study-${i}-0')" aria-label="翻開${esc(e.t)}"><span class="sr-spine">2026 · ${e.date.split('.')[1]}</span><span class="sr-cover"><small>收藏紀事　${['壹','貳','參'][i]}</small><svg class="sr-seal" viewBox="0 0 80 80" aria-hidden="true">${srEmblem(i)}</svg><b>${STUDY_NAMES[i]}</b><em>${STUDY_SUB[i]}</em><span class="sr-cover-date">${e.date.split('.')[1]}<i>月</i></span><span class="sr-open">翻開藏冊　›</span></span></button>`).join('')}</div></div><div class="sr-ledger-link"><div><small>三場收藏 · 目前合計</small><strong><span>NT$</span> ${esc(costTotal())}</strong></div><button onclick="go('study-summary')">查閱支出總覽 <span>→</span></button></div><div class="sr-ledger-link"><div><small>週邊 · ${shopAll().length} 項</small>收藏櫃</div><button onclick="go('study-shop')">打開收藏櫃 <span>→</span></button></div><div class="sr-ledger-link"><div><small>現實活動 · ${evAll().length} 場</small>活動月曆</div><button onclick="go('study-events')">打開月曆 <span>→</span></button></div><div class="sr-ledger-link"><div><small>週邊選圖</small>我的評價</div><button onclick="go('slides')">查看選圖評價 <span>→</span></button></div><p class="sr-total-note">${esc(costNote())}</p></section>`}
 function studyPages(e){const pages=[];if(e.groups.length){e.groups.forEach((g,gi)=>{for(let off=0;off<g.rows.length;off+=6)pages.push({kind:'items',title:g.t,rows:g.rows.slice(off,off+6),group:gi,part:off/6})})}else pages.push({kind:'kuji',title:'抽賞紀錄'});pages.push({kind:'cost',title:'費用紀錄'});return pages}
-function studyRows(rows){return rows.map((r,i)=>`<div class="sr-item"><span class="sr-item-number">${String(i+1).padStart(2,'0')}</span><div>${esc(r[0])}${r[2]?`<small>${esc(r[2])}</small>`:''}</div><b>${esc(r[1])}</b></div>`).join('')}
-function vStudyBook(index,at){const e=G.events[index],pages=studyPages(e);at=Math.max(0,Math.min(at||0,pages.length-1));const p=pages[at],images=e.imgs||[],pic=images[(studyPic[index]||0)%Math.max(images.length,1)];const contents=p.kind==='cost'?`<p class="sr-page-intro">${esc(e.after||e.short)}</p><div class="sr-calcs">${e.calc.map(r=>`<div><span>${esc(r[0])}</span><b>${esc(r[1])}</b></div>`).join('')}</div><div class="sr-page-total"><small>${esc(e.sumL)}</small><strong><span>NT$</span> ${esc(e.c)}</strong></div>${e.buyer?`<p class="sr-page-note">代購：${esc(e.buyer)}</p>`:''}${index===2?`<p class="sr-page-note">${esc(G.totalNote)}</p>`:''}`:p.kind==='kuji'?`<div class="sr-kuji-number"><b>${esc((e.short.match(/^\d+/)||['—'])[0])}</b><span>項收藏</span></div><p class="sr-page-intro">${esc(e.short)}</p><div class="sr-kuji-dates">${G.kuji.map(s=>`<p>${esc(s)}</p>`).join('')}</div><div class="sr-other-volumes" style="margin-top:12px">${G.prizes.map((q,j)=>`<button onclick="go('prize-${j}')">${esc(q.id)}</button>`).join('')}</div>`:`<div class="sr-items">${studyRows(p.rows)}</div>${p.title.includes('另列')?'<p class="sr-page-note">本組另列，不計入本場合計。</p>':''}`;
-return studyTop('書房　／　'+STUDY_NAMES[index])+`<section class="sr-reader"><div class="sr-reader-heading"><span>${esc(e.date)}　／　${esc(e.short)}</span><h1>${esc(e.t)}</h1></div><div class="sr-reader-tabs" aria-label="藏冊內容">${pages.map((x,i)=>`<button onclick="go('study-${index}-${i}')" ${i===at?'aria-current="page"':''}>${x.kind==='cost'?'費用紀錄':x.kind==='kuji'?'抽賞紀錄':(e.groups.length>1?['本作收藏','其他作品','另列收藏'][x.group]:'收藏清單')+(x.part?' · 續':'')}</button>`).join('')}</div><div class="sr-book"><section class="sr-leftpage"><div class="sr-page-running">${STUDY_NAMES[index]} <span>2026</span></div>${pic?`<button class="sr-photo" onclick="studyZoom(${index})" aria-label="放大${esc(e.t)}收藏圖片"><img src="${pic}" alt="${esc(e.t)}的收藏圖片"></button><div class="sr-photo-nav"><span>收藏留影　${(studyPic[index]||0)+1} / ${images.length}</span>${images.length>1?`<button onclick="studyPhoto(${index},${at},-1)" aria-label="上一張收藏圖片">‹</button><button onclick="studyPhoto(${index},${at},1)" aria-label="下一張收藏圖片">›</button>`:''}<span>點圖放大</span></div>`:`<div class="sr-unpictured"><svg viewBox="0 0 150 150" aria-hidden="true">${lily(75,75,58)}</svg><h2>秋日的收藏</h2><p>Romance Fantasy Festival</p><small>這一篇尚未附上收藏照片</small></div>`}<div class="sr-left-caption"><span>${['一月 · 空島浪漫譚','四月 · ピッコマくじ','十月 · Romance Fantasy Festival'][index]}</span>${spray(110,80,27,'right:-10px;bottom:-15px')}</div></section><section class="sr-rightpage"><div class="sr-page-running">${p.kind==='cost'?'支出紀錄':'收藏目錄'}<span>${String(at+1).padStart(2,'0')} / ${String(pages.length).padStart(2,'0')}</span></div><h2>${esc(p.title)}${p.part?' <small>續</small>':''}</h2>${contents}<div class="sr-page-bottom">${pearlMd(false)}<span>${at+1}</span></div></section></div><div class="sr-book-controls"><button onclick="go('study-${index}-${at-1}')" ${at===0?'disabled':''}>‹ 上一頁</button><button onclick="go('study')">收起藏冊</button><button onclick="go('study-${index}-${at+1}')" ${at===pages.length-1?'disabled':''}>下一頁 ›</button></div></section>`}
-function vStudySummary(){return studyTop('書房　／　支出總覽')+`<section class="sr-summary"><div class="sr-heading"><span class="sr-kicker">二〇二六 · 支出紀錄</span><h1 class="logo">收藏總覽</h1><p>每一筆，都是留下來的喜歡。</p>${spray(180,130,41,'right:0;top:10px')}</div><div class="sr-summary-paper"><div class="sr-page-running">收藏紀事<span>2026</span></div>${G.events.map((e,i)=>`<button class="sr-summary-row" onclick="go('study-${i}-${studyPages(e).length-1}')"><span class="sr-summary-month">${e.date.split('.')[1]}<small>月</small></span><span><b>${STUDY_NAMES[i]}</b><small>${esc(e.short)}</small></span><strong><small>NT$</small>${esc(e.c)} <i>›</i></strong></button>`).join('')}<div class="sr-summary-total"><span>目前合計</span><strong><small>NT$</small> ${esc(G.total)}</strong></div><p class="sr-page-note">${esc(G.totalNote)}</p></div><button class="sr-return" onclick="bk('study')">‹ 返回書房</button></section>`}
+function studyRows(rows,ev,gi,off){const L=shopAll();return rows.map((r,i)=>{const id=`b${ev}-${gi}-${off+i}`,it=L.find(x=>x.id===id),on=it&&S.shopSel===id;return `<button class="sr-item shp-row-b${on?' on':''}" data-shop="${id}" aria-label="看這一件：${esc(it?it.n:r[0])}"><span class="sr-item-number">${String(off+i+1).padStart(2,'0')}</span><div>${esc(it?it.n:r[0])}${(it?it.q:r[2])?`<small>${esc(it?it.q:r[2])}</small>`:''}<small class="shp-sm">${it?shSt(it.st):''}${it&&it.x?'・有吐槽':''}</small></div><b>${esc(it?it.p:r[1])}</b></button>`}).join('')}
+function vStudyBook(index,at){const e=G.events[index],pages=studyPages(e);at=Math.max(0,Math.min(at||0,pages.length-1));const p=pages[at],images=e.imgs||[],pic=images[(studyPic[index]||0)%Math.max(images.length,1)];const contents=p.kind==='cost'?`<p class="sr-page-intro">${esc(e.after||e.short)}</p><div class="sr-calcs">${evCost(index).cl.map(r=>`<div><span>${esc(r[0])}</span><b>${esc(r[1])}</b></div>`).join('')}</div><button class="edb shp-cbtn" data-cedit>編輯費用和匯率</button><div class="sr-page-total"><small>${esc(e.sumL)}</small><strong><span>NT$</span> ${esc(evCost(index).tot)}</strong></div>${e.buyer?`<p class="sr-page-note">代購：${esc(e.buyer)}</p>`:''}${index===2?`<p class="sr-page-note">${esc(costNote())}</p>`:''}`:p.kind==='kuji'?`<div class="sr-kuji-number"><b>${esc((e.short.match(/^\d+/)||['—'])[0])}</b><span>項收藏</span></div><p class="sr-page-intro">${esc(e.short)}</p><div class="sr-kuji-dates">${G.kuji.map(s=>`<p>${esc(s)}</p>`).join('')}</div><div class="sr-other-volumes" style="margin-top:12px">${G.prizes.map((q,j)=>`<button onclick="go('prize-${j}')">${esc(q.id)}</button>`).join('')}</div>`:`<div class="sr-items">${studyRows(p.rows,index,p.group,p.part*6)}${shopAll().filter(x=>x.ev==='b'+index&&/^u/.test(x.id)&&x.g===(e.groups[p.group]||{}).t&&p.part===Math.floor((e.groups[p.group].rows.length-1)/6)).map(x=>`<button class="sr-item shp-row-b${S.shopSel===x.id?' on':''}" data-shop="${esc(x.id)}"><span class="sr-item-number">＋</span><div>${esc(x.n)}${x.q?`<small>${esc(x.q)}</small>`:''}<small class="shp-sm">${shSt(x.st)}${x.x?'・有吐槽':''}</small></div><b>${esc(x.p)}</b></button>`).join('')}<button class="tw-next shp-new" data-shnewg="b${index}|${p.group}">＋ 新增一件</button></div>${p.title.includes('另列')?'<p class="sr-page-note">本組另列，不計入本場合計。</p>':''}`;
+const sit=S.shopSel&&shopAll().find(x=>x.id===S.shopSel&&x.ev==='b'+index),cedit=p.kind==='cost'&&S.costEd;
+return studyTop('書房　／　'+STUDY_NAMES[index])+`<section class="sr-reader"><div class="sr-reader-heading"><span>${esc(e.date)}　／　${esc(e.short)}</span><h1>${esc(e.t)}</h1></div><div class="sr-reader-tabs" aria-label="藏冊內容">${pages.map((x,i)=>`<button onclick="go('study-${index}-${i}')" ${i===at?'aria-current="page"':''}>${x.kind==='cost'?'費用紀錄':x.kind==='kuji'?'抽賞紀錄':(e.groups.length>1?['本作收藏','其他作品','另列收藏'][x.group]:'收藏清單')+(x.part?' · 續':'')}</button>`).join('')}</div><div class="sr-book"><section class="sr-leftpage${sit?' shp-left':''}">${sit?(S.shopEd?shEdit(sit):shDetail(sit,false)):`<div class="sr-page-running">${STUDY_NAMES[index]} <span>2026</span></div>${pic?`<button class="sr-photo" onclick="studyZoom(${index})" aria-label="放大${esc(e.t)}收藏圖片"><img src="${pic}" alt="${esc(e.t)}的收藏圖片"></button><div class="sr-photo-nav"><span>收藏留影　${(studyPic[index]||0)+1} / ${images.length}</span>${images.length>1?`<button onclick="studyPhoto(${index},${at},-1)" aria-label="上一張收藏圖片">‹</button><button onclick="studyPhoto(${index},${at},1)" aria-label="下一張收藏圖片">›</button>`:''}<span>點圖放大</span></div>`:`<div class="sr-unpictured"><svg viewBox="0 0 150 150" aria-hidden="true">${lily(75,75,58)}</svg><h2>秋日的收藏</h2><p>Romance Fantasy Festival</p><small>這一篇尚未附上收藏照片</small></div>`}<div class="sr-left-caption"><span>${['一月 · 空島浪漫譚','四月 · ピッコマくじ','十月 · Romance Fantasy Festival'][index]}</span>${spray(110,80,27,'right:-10px;bottom:-15px')}</div>`}</section><section class="sr-rightpage${cedit?' shp-left':''}">${cedit?costEdit(index):`<div class="sr-page-running">${p.kind==='cost'?'支出紀錄':'收藏目錄'}<span>${String(at+1).padStart(2,'0')} / ${String(pages.length).padStart(2,'0')}</span></div><h2>${esc(p.title)}${p.part?' <small>續</small>':''}</h2>${contents}<div class="sr-page-bottom">${pearlMd(false)}<span>${at+1}</span></div>`}</section></div><div class="sr-book-controls"><button onclick="go('study-${index}-${at-1}')" ${at===0?'disabled':''}>‹ 上一頁</button><button onclick="go('study')">收起藏冊</button><button onclick="go('study-${index}-${at+1}')" ${at===pages.length-1?'disabled':''}>下一頁 ›</button></div></section>`}
+function vStudySummary(){return studyTop('書房　／　支出總覽')+`<section class="sr-summary"><div class="sr-heading"><span class="sr-kicker">二〇二六 · 支出紀錄</span><h1 class="logo">收藏總覽</h1><p>每一筆，都是留下來的喜歡。</p>${spray(180,130,41,'right:0;top:10px')}</div><div class="sr-summary-paper"><div class="sr-page-running">收藏紀事<span>2026</span></div>${G.events.map((e,i)=>`<button class="sr-summary-row" onclick="go('study-${i}-${studyPages(e).length-1}')"><span class="sr-summary-month">${e.date.split('.')[1]}<small>月</small></span><span><b>${STUDY_NAMES[i]}</b><small>${esc(e.short)}</small></span><strong><small>NT$</small>${esc(evCost(i).tot)} <i>›</i></strong></button>`).join('')}<div class="sr-summary-total"><span>目前合計</span><strong><small>NT$</small> ${esc(costTotal())}</strong></div><p class="sr-page-note">${esc(costNote())}</p></div><button class="sr-return" onclick="bk('study')">‹ 返回書房</button></section>`}
 /* ---- real-life events (ev-): the 3 study volumes (ids b0..b2, order of G.events, never change) plus the ones she adds.
    E.kinds['@ev:<id>'] = {n:name, d1:'YYYY-MM-DD'|'', d2:'YYYY-MM-DD'|'', x:note, u:https link, s:volume index (only for ones she links), t:time, del:1 when she deletes one she added}.
    No record = defaults from G.events. Saved like wdPut: keep unknown fields, set t, touch(). ---- */
@@ -1978,7 +2037,7 @@ const EVK='@ev:',evPad=v=>String(v).padStart(2,'0');
 const evToday=()=>{const t=new Date();return t.getFullYear()+'-'+evPad(t.getMonth()+1)+'-'+evPad(t.getDate())};
 const evIsB=id=>/^b[0-2]$/.test(id);
 function evAll(){const L=G.events.map((g,i)=>{const id='b'+i,o=E.kinds[EVK+id];
-  return {id,s:i,n:(o&&o.n)||g.t,d1:o?(o.d1||''):(g.d1||''),d2:o?(o.d2||''):(g.d2||''),x:(o&&o.x)||'',u:(o&&o.u)||'',m:'20'+g.date.replace('.','-')}});
+  return {id,s:i,n:(o&&o.n)||g.t,d1:o&&'d1' in o?(o.d1||''):(g.d1||''),d2:o&&'d2' in o?(o.d2||''):(g.d2||''),x:(o&&o.x)||'',u:(o&&o.u)||'',m:'20'+g.date.replace('.','-')}});
  for(const k in E.kinds){if(!k.startsWith(EVK))continue;const id=k.slice(EVK.length),o=E.kinds[k];if(evIsB(id)||!o||typeof o!=='object'||o.del||typeof o.n!=='string'||!o.n||!o.d1)continue;
   L.push({id,n:o.n,d1:o.d1,d2:o.d2||'',x:o.x||'',u:o.u||'',s:Number.isInteger(o.s)&&G.events[o.s]?o.s:undefined,m:o.d1.slice(0,7)})}
  return L.sort((a,b)=>(a.d1||a.m+'-00').localeCompare(b.d1||b.m+'-00')||a.id.localeCompare(b.id))}
@@ -2023,6 +2082,125 @@ function bindEv(){const m=$('#m'),redo=()=>{const y=scrollY;render(true);scrollT
   evPut(id==='new'?'u'+Date.now().toString(36):id,ch);S.evOpen=null;if(d1)S.evM=d1.slice(0,7);redo()}}
 const studyPic={};window.studyPhoto=(i,page,delta)=>{const count=G.events[i].imgs.length;studyPic[i]=((studyPic[i]||0)+delta+count)%count;const y=scrollY;render(true);scrollTo(0,y)};
 window.studyZoom=i=>{const d=document.createElement('dialog');d.className='sr-zoom';d.setAttribute('aria-label','收藏圖片，點擊圖片外圍或按 Escape 關閉');d.tabIndex=-1;d.innerHTML=hy(`<img src="${G.events[i].imgs[studyPic[i]||0]}" alt="收藏圖片放大檢視">`);document.body.append(d);hydrate();d.onclick=e=>{if(e.target===d)d.close()};d.onclose=()=>d.remove();d.showModal()};
+
+/* ---- shop (shp-): the collection shelf (#study-shop), one-item detail / edit (shared by the shelf and the study books), and the cost record editor.
+   E.kinds['@shop:<id>'] = {n:name, p:'¥1,100'|'NT$300', q:count note, sh:shipping text, dt:['YYYY-MM-DD',..] buy days (many, not in a row), ad:'YYYY-MM-DD'|'' arrival day, by:shop/proxy, k:kind,
+     st:'got'|'buy'|'ship'|'want', im:['img/u-..jpg'], x:her remark, ep:[episode numbers], ev:'b0'|'b1'|'b2'|<event id>, g:group name, c:added time (only ones she adds), del:1, t:time}.
+   Ids: book rows 'b<volume>-<group>-<row>' (build15.py events: only ever append rows, never insert), kuji prizes 'b1-k<n>', ones she adds 'u'+time. No record = defaults from G.events / G.prizes.
+   Saved like evPut: keep unknown fields, set t, touch(); deleted ones stay deleted. Cost record: E.kinds['@ev:b0..b2'] gets rt (rate), cl ([[text, NT$],..]), tot ('' = add up cl), and on b2 tn (the note under the total). ---- */
+const SHK='@shop:',SHS=[['got','已到貨'],['buy','代購中'],['ship','運送中'],['want','想買']],SHN=['空島浪漫譚','ピッコマくじ','Romance Fantasy'],SHF=['1月 空島','4月 くじ','10月 RF'];
+const shSt=v=>(SHS.find(x=>x[0]===v)||SHS[0])[1];
+const shEvI=id=>/^b[0-2]$/.test(id)?+id[1]:-1;
+const shEvN=id=>shEvI(id)>=0?SHN[shEvI(id)]:((evAll().find(e=>e.id===id)||{}).n||'其他');
+const shDay=s=>typeof s==='string'&&/^\d{4}-\d{2}(-\d{2})?$/.test(s);
+function shClean(it){const o={};if(typeof it.n==='string'&&it.n.trim())o.n=it.n;['p','q','sh','by','k','g','x'].forEach(f=>{if(typeof it[f]==='string')o[f]=it[f]});
+ if(it.dt!==undefined)o.dt=(Array.isArray(it.dt)?it.dt:[it.dt]).filter(shDay);if(typeof it.ad==='string')o.ad=it.ad;if(SHS.some(s=>s[0]===it.st))o.st=it.st;
+ if(Array.isArray(it.im))o.im=it.im.filter(s=>typeof s==='string'&&s);if(Array.isArray(it.ep))o.ep=it.ep.filter(Number.isInteger);if(typeof it.ev==='string'&&it.ev)o.ev=it.ev;if(typeof it.c==='number')o.c=it.c;return o}
+function shopAll(){const L=[];
+ G.events.forEach((e,i)=>{const ev='b'+i;
+  if(e.kuji)G.prizes.forEach((p,j)=>L.push({id:`b${i}-k${j}`,ev,g:'抽賞',n:`${p.id}　${p.zh}`,p:'',q:p.count||'',sh:'',st:'got',dt:[e.d1,e.d2].filter(Boolean),ad:'',by:'一番賞',k:'',im:p.thumb?[p.thumb]:[],x:(p.thoughts||[])[0]||'',ep:(p.eps||[]).flatMap(g=>g[1]).slice(0,8)}));
+  else e.groups.forEach((g,gi)=>g.rows.forEach((r,ri)=>L.push({id:`b${i}-${gi}-${ri}`,ev,g:g.t,n:r[0],p:r[1],q:r[2]||'',sh:i===2?'':'已含在費用紀錄',st:i===2?'buy':'got',dt:['20'+e.date.replace('.','-')],ad:'',by:e.buyer?'代購 '+e.buyer:'',k:'',im:[],x:'',ep:[]})))});
+ const add=[];
+ for(const k in E.kinds){if(!k.startsWith(SHK))continue;const id=k.slice(SHK.length),o=E.kinds[k],i=L.findIndex(x=>x.id===id);if(!o||typeof o!=='object')continue;
+  if(o.del){if(i>=0)L.splice(i,1);continue}const c=shClean(o);if(i>=0)Object.assign(L[i],c);else if(c.n)add.push({id,ev:'b2',g:'',p:'',q:'',sh:'',st:'got',dt:[],ad:'',by:'',k:'',im:[],x:'',ep:[],...c})}
+ add.sort((a,b)=>(a.c||0)-(b.c||0)||a.id.localeCompare(b.id));
+ for(const a of add){let at=L.length;for(let j=L.length-1;j>=0;j--)if(L[j].ev===a.ev){at=j+1;break}L.splice(at,0,a)}
+ return L}
+function shPut(id,ch){const o=E.kinds[SHK+id]||{};E.kinds[SHK+id]={...o,...ch,t:Date.now()};touch()}
+const shPic=(it,cls)=>it.im&&it.im[0]?`<img class="${cls}" src="${esc(it.im[0])}" alt="${esc(it.n)}的照片">`:`<svg class="${cls} shp-none" viewBox="0 0 150 150" aria-hidden="true">${lily(75,75,46)}</svg>`;
+const shDt=s=>s.length===7?s.slice(0,4)+'年'+(+s.slice(5))+'月':s.replace(/-/g,'/');
+function shDetail(it,shelf){const pi=Math.min(S.shopPic||0,Math.max((it.im||[]).length-1,0)),im=it.im||[];
+ return `<div class="sr-page-running">${esc(shEvN(it.ev))}<span>${shSt(it.st)}</span></div>
+ <div class="shp-pic">${im.length?`<button class="shp-big-b" data-shzoom="${pi}" aria-label="放大這張照片"><img class="shp-big" src="${esc(im[pi])}" alt="${esc(it.n)}的照片"></button>${im.length>1?`<div class="shp-nav"><button data-shpic="-1" aria-label="上一張">‹</button><span>${pi+1} / ${im.length}</span><button data-shpic="1" aria-label="下一張">›</button></div>`:''}`:`${shPic(it,'shp-big')}<small>還沒有照片，按「編輯這件」加</small>`}</div>
+ <h2 class="shp-n">${esc(it.n)}</h2>
+ <dl class="shp-f"><div><dt>價格</dt><dd>${esc(it.p||'—')}</dd></div><div><dt>數量</dt><dd>${esc(it.q||'—')}</dd></div><div><dt>運費</dt><dd>${esc(it.sh||'還沒填')}</dd></div><div><dt>購買日</dt><dd>${esc((it.dt||[]).map(shDt).join('、')||'—')}</dd></div><div><dt>到貨日</dt><dd>${esc(it.ad?shDt(it.ad):(it.st==='got'?'—':'還沒到'))}</dd></div><div><dt>店家／代購</dt><dd>${esc(it.by||'—')}</dd></div>${it.k?`<div><dt>類別</dt><dd>${esc(it.k)}</dd></div>`:''}<div><dt>狀態</dt><dd><span class="chip shp-st">${shSt(it.st)}</span></dd></div></dl>
+ <div class="blk"><h3>我的吐槽</h3>${it.x?`<p class="note2">${esc(it.x)}</p>`:'<p class="shp-hint">還沒寫，按「編輯這件」寫一句</p>'}</div>
+ ${it.ep&&it.ep.length?`<div class="blk"><h3>跟哪幾話有關</h3><div class="chips">${it.ep.map(n=>`<button class="chip" onclick="go('ep-${n}')">${nm(n)}</button>`).join('')}</div></div>`:''}
+ <div class="shp-act">${shelf?'<button class="chip" data-shback>關閉</button>':'<button class="chip" data-shback>‹ 回收藏留影</button>'}<button class="edb" data-shedit>編輯這件</button></div>`}
+function shEdit(it){const f=(k,l,v,ph='',t='text')=>`<label class="tw-f"><span>${l}</span><input class="edi" data-sf="${k}" type="${t}" value="${esc(v||'')}" placeholder="${ph}" autocomplete="off"></label>`,evs=[...G.events.map((e,i)=>['b'+i,SHF[i]]),...evAll().filter(e=>!evIsB(e.id)).map(e=>[e.id,e.n])];
+ return `<div class="sr-page-running">編輯週邊<span>改完一格就自動存</span></div>
+ <div class="shp-ims">${(it.im||[]).map((s,i)=>`<span class="shp-im"><img src="${esc(s)}" alt=""><button class="shp-imx" data-shix="${i}" aria-label="拿掉這張照片">×</button></span>`).join('')}<label class="shp-add" aria-label="加照片">＋<input type="file" accept="image/*" multiple hidden data-shfile></label></div>
+ ${f('n','名稱',it.n)}
+ <div class="shp-row">${f('p','價格',it.p,'¥1,100 或 NT$300')}${f('sh','運費',it.sh,'還沒填')}</div>
+ <div class="tw-f"><span>購買日（可以加好幾天，不用連續）</span><div class="chips shp-dts">${(it.dt||[]).map((d,i)=>`<span class="chip">${esc(shDt(d))}<button class="arc-x" data-shdx="${i}" aria-label="拿掉${esc(shDt(d))}">×</button></span>`).join('')}<label class="chip shp-dadd">＋ 加一天<input type="date" data-shdadd aria-label="加一個購買日"></label></div></div>
+ <div class="shp-row">${f('ad','到貨日',it.ad,'','date')}${f('k','類別',it.k,'例如 壓克力立牌')}</div>
+ ${f('q','數量',it.q,'1份')}
+ ${f('by','店家／代購',it.by)}
+ <div class="tw-f"><span>狀態</span><div class="seg2 shp-seg">${SHS.map(([k,l])=>`<button data-shst="${k}" class="${it.st===k?'on':''}">${l}</button>`).join('')}</div></div>
+ <div class="tw-f"><span>屬於哪一場</span><div class="seg2 shp-seg shp-evseg">${evs.map(([k,l])=>`<button data-shev="${esc(k)}" class="${it.ev===k?'on':''}">${esc(l)}</button>`).join('')}</div></div>
+ <label class="tw-f"><span>吐槽</span><textarea class="edi shp-x" data-sf="x" rows="3" placeholder="想說什麼都可以">${esc(it.x||'')}</textarea></label>
+ ${f('ep','跟哪幾話有關',(it.ep||[]).join('、'),'例如 45、123')}
+ <div class="shp-act"><button class="chip" data-shdel>刪除這件</button><button class="edb" data-shdone>完成</button></div>`}
+function vShop(){const L=shopAll(),fs=S.shFs||'all',fe=S.shFe||'all',V=L.filter(x=>(fs==='all'||x.st===fs)&&(fe==='all'||x.ev===fe)),it=S.shopSel&&L.find(x=>x.id===S.shopSel);
+ const evs=[['all','全部'],...G.events.map((e,i)=>['b'+i,SHF[i]]),...[...new Set(L.map(x=>x.ev))].filter(k=>!evIsB(k)).map(k=>[k,shEvN(k)])],sts=[['all','全部'],...SHS.filter(s=>s[0]==='got'||s[0]==='buy'||L.some(x=>x.st===s[0]))];
+ const seg=(k,cur,opts)=>`<div class="seg2 shp-seg">${opts.map(([v,l])=>`<button class="${cur===v?'on':''}" data-shf="${k}" data-v="${esc(v)}">${esc(l)}</button>`).join('')}</div>`;
+ return studyTop('書房　／　收藏櫃')+`<section class="sr-summary shp-cab"><div class="sr-heading"><span class="sr-kicker">二〇二六 · 週邊</span><h1 class="logo">收藏櫃</h1><p>${L.length} 項，點一項看照片和吐槽</p>${spray(180,130,41,'right:0;top:10px')}</div>
+ <div class="shp-fil">${seg('shFe',fe,evs)}${seg('shFs',fs,sts)}</div>
+ ${it?`<div class="sr-summary-paper shp-one" id="shone">${S.shopEd?shEdit(it):shDetail(it,true)}</div>`:''}
+ <div class="shp-grid">${V.map(x=>`<button class="shp-card${it&&it.id===x.id?' on':''}" data-shop="${esc(x.id)}">${shPic(x,'shp-th')}<b>${esc(x.n)}</b><small>${esc(x.p||'')}${x.p?'・':''}${shSt(x.st)}</small></button>`).join('')}<button class="shp-card shp-plus" data-shnew="${fe==='all'?'b2':esc(fe)}">＋<small>新增一件</small></button></div>
+ <button class="sr-return" onclick="bk('study')">‹ 返回書房</button></section>`}
+/* cost record: cl = [[text, NT$ text],..]; rt = rate; tot '' = add up cl */
+const costNum=s=>+String(s).replace(/[^\d.\-]/g,'')||0,costFmt=n=>Math.round(n).toLocaleString('en-US');
+function evCost(i){const e=G.events[i],o=E.kinds[EVK+'b'+i]||{},has=Array.isArray(o.cl),cl=has?o.cl.filter(r=>Array.isArray(r)).map(r=>[String(r[0]==null?'':r[0]),String(r[1]==null?'':r[1])]):e.calc.map(r=>[r[0],r[1]]),sum=cl.reduce((s,r)=>s+costNum(r[1]),0),auto=typeof o.tot!=='string'||!o.tot.trim();
+ const rt=o.rt!=null&&o.rt!==''?String(o.rt):(has?'':((String(e.calc[0]&&e.calc[0][0]).match(/×\s*([\d.]+)/)||[])[1]||''));
+ return {cl,sum,rt,auto,tot:auto?(has?costFmt(sum):e.c):o.tot.trim()}}
+const costTotal=()=>costFmt(G.events.reduce((s,e,i)=>s+costNum(evCost(i).tot),0));
+function costNote(){const o=E.kinds[EVK+'b2'];if(o&&typeof o.tn==='string')return o.tn;const miss=G.events.map((e,i)=>i).filter(i=>!evCost(i).cl.some(r=>/運費/.test(r[0]))).map(i=>i===2?'Romance Fantasy Festival':SHN[i]),hand=String(G.totalNote).split('；').slice(1).join('；');return [miss.length?miss.join('、')+' 還沒加運費':'',hand].filter(Boolean).join('；')}
+const costYen=i=>shopAll().filter(x=>x.ev==='b'+i&&!/另列/.test(x.g)).reduce((s,x)=>{const m=String(x.p||'').match(/¥([\d,]+)/);return s+(m?+m[1].replace(/,/g,''):0)},0);
+function costPut(i,ch){evPut('b'+i,ch)}
+function costEdit(i){const c=evCost(i),yen=costYen(i),sug=c.rt&&yen?Math.round(yen*c.rt):0,tn=i===2?costNote():'';
+ return `<div class="sr-page-running">編輯費用紀錄<span>改完一格就自動存</span></div>
+ <label class="tw-f"><span>匯率（日圓→台幣）</span><input class="edi" data-cf="rt" value="${esc(c.rt)}" inputmode="decimal" placeholder="例如 0.3" autocomplete="off"></label>
+ <button class="shp-sug" data-csug ${sug?'':'hidden'}><small>建議</small><span class="shp-sugt">${yen?`本場週邊價格合計 ¥${yen.toLocaleString('en-US')} × ${esc(c.rt)} ＝ NT$${costFmt(sug)}`:''}</span><span>點一下帶入第一列</span></button>
+ ${!sug&&yen?'<p class="shp-hint shp-sugh">填了匯率，這裡會幫你算週邊價格合計。</p>':''}
+ <div class="shp-cl">${c.cl.map((r,k)=>`<div class="shp-clr"><input class="edi" data-cl="0" value="${esc(r[0])}" aria-label="說明" autocomplete="off"><input class="edi" data-cl="1" value="${esc(r[1])}" inputmode="numeric" aria-label="台幣" autocomplete="off"><button class="arc-x" data-cdx="${k}" aria-label="刪掉這一列">×</button></div>`).join('')}</div>
+ <button class="tw-next shp-new" data-cadd>＋ 加一列</button>
+ <label class="tw-f"><span>合計（空白＝自動加總，也可以自己填）</span><input class="edi" data-cf="tot" value="${esc(c.auto?'':c.tot)}" placeholder="自動：${costFmt(c.sum)}" inputmode="numeric" autocomplete="off"></label>
+ ${i===2?`<label class="tw-f"><span>書房首頁底下那行備註</span><textarea class="edi shp-x" data-cf="tn" rows="2">${esc(tn)}</textarea></label>${E.kinds[EVK+'b2']&&typeof E.kinds[EVK+'b2'].tn==='string'?'<button class="chip" data-cauto>恢復自動備註</button>':''}`:''}
+ <div class="sr-page-total"><small>${esc(G.events[i].sumL)}</small><strong><span>NT$</span> <b class="shp-tot">${esc(c.tot)}</b></strong></div>
+ <div class="shp-act"><span></span><button class="edb" data-cdone>完成</button></div>`}
+function bindShop(){const m=$('#m'),redo=sc=>{const y=scrollY;render(true);scrollTo(0,y);if(sc){const t=$(sc);if(t){const r=t.getBoundingClientRect();if(r.top<0||r.top>innerHeight*.55)t.scrollIntoView({block:'start'})}}};
+ const cur=()=>shopAll().find(x=>x.id===S.shopSel),one=()=>S.shopSel&&(location.hash==='#study-shop'?'#shone':'.shp-left');
+ m.querySelectorAll('[data-shop]').forEach(b=>b.onclick=()=>{if(b.dataset.shop==='')return;S.shopSel=b.dataset.shop;S.shopEd=0;S.shopPic=0;redo(one())});
+ m.querySelectorAll('[data-shf]').forEach(b=>b.onclick=()=>{S[b.dataset.shf]=b.dataset.v;redo()});
+ m.querySelectorAll('[data-shback]').forEach(b=>b.onclick=()=>{S.shopSel=null;S.shopEd=0;redo()});
+ m.querySelectorAll('[data-shedit]').forEach(b=>b.onclick=()=>{S.shopEd=1;redo()});
+ m.querySelectorAll('[data-shdone]').forEach(b=>b.onclick=()=>{S.shopEd=0;redo()});
+ m.querySelectorAll('[data-shpic]').forEach(b=>b.onclick=()=>{const it=cur();if(!it)return;const n=(it.im||[]).length;S.shopPic=((S.shopPic||0)+ +b.dataset.shpic+n)%n;redo()});
+ m.querySelectorAll('[data-shzoom]').forEach(b=>b.onclick=()=>{const it=cur();if(it)openLB((it.im||[]).slice(),+b.dataset.shzoom)});
+ m.querySelectorAll('[data-shnew]').forEach(b=>b.onclick=()=>{const g=b.dataset.shnew,id='u'+Date.now().toString(36),ev=g||'b2',e=G.events[shEvI(ev)],gp=e&&e.groups&&e.groups.length?(S.shopGrp||0):0;
+  shPut(id,{n:'新的週邊',ev,g:e&&e.groups&&e.groups[gp]?e.groups[gp].t:'',p:'',q:'',sh:'',dt:[],ad:'',by:'',k:'',st:'got',im:[],x:'',ep:[],c:Date.now()});S.shopSel=id;S.shopEd=1;S.shopPic=0;redo(one())});
+ m.querySelectorAll('[data-shnewg]').forEach(b=>b.onclick=()=>{const [ev,gi]=b.dataset.shnewg.split('|'),e=G.events[shEvI(ev)],id='u'+Date.now().toString(36);
+  shPut(id,{n:'新的週邊',ev,g:e.groups[+gi]?e.groups[+gi].t:'',p:'',q:'',sh:'',dt:[],ad:'',by:'',k:'',st:'got',im:[],x:'',ep:[],c:Date.now()});S.shopSel=id;S.shopEd=1;S.shopPic=0;redo(one())});
+ const it=cur();
+ if(it&&S.shopEd){
+  const put=ch=>shPut(it.id,ch);
+  m.querySelectorAll('[data-sf]').forEach(i=>i.addEventListener('input',()=>{const k=i.dataset.sf,v=i.value;if(k==='n'){if(v.trim())put({n:v})}else if(k==='ep')put({ep:(v.match(/\d+/g)||[]).map(Number)});else put({[k]:v})}));
+  m.querySelectorAll('[data-shst]').forEach(b=>b.onclick=()=>{put({st:b.dataset.shst});redo()});
+  m.querySelectorAll('[data-shev]').forEach(b=>b.onclick=()=>{put({ev:b.dataset.shev});redo()});
+  m.querySelectorAll('[data-shdx]').forEach(b=>b.onclick=()=>{put({dt:it.dt.filter((d,i)=>i!==+b.dataset.shdx)});redo()});
+  const da=$('[data-shdadd]');if(da)da.onchange=()=>{const v=da.value;if(!v)return;put({dt:[...new Set([...(it.dt||[]),v])].sort()});redo()};
+  m.querySelectorAll('[data-shix]').forEach(b=>b.onclick=()=>{put({im:it.im.filter((d,i)=>i!==+b.dataset.shix)});S.shopPic=0;redo()});
+  const fl=$('[data-shfile]');if(fl)fl.onchange=async()=>{if(!fl.files.length)return;const fs=await cropSeq([...fl.files].slice(0,4));fl.value='';if(!fs.length)return;let fail=0,sf=0,ps=[];for(const f of fs){try{ps.push(await storeImg(await shrink(f)))}catch(e){e&&e.st?sf++:fail++}}
+   const base=(it.im||[]).filter(p=>/^img\//.test(p));put({im:[...base,...ps.filter(p=>!base.includes(p))].slice(0,8)});persist();if(sf&&!lsFull)sync(IMG_FAIL,true);if(fail)sync(`有 ${fail} 張圖讀不出來，換成 JPG 或 PNG 再試`,true);redo()};
+  const dl=$('[data-shdel]');if(dl)dl.onclick=()=>{if(!confirm('刪掉這件週邊？'))return;E.kinds[SHK+it.id]={...(E.kinds[SHK+it.id]||{}),del:1,t:Date.now()};touch();S.shopSel=null;S.shopEd=0;redo()};
+ }
+ /* cost editor */
+ const ci=(m.querySelector('[data-cdone]')?+((location.hash.match(/^#study-(\d)-/)||[])[1]):-1);
+ const cedit=m.querySelector('[data-cedit]');if(cedit)cedit.onclick=()=>{S.costEd=1;redo()};
+ if(ci>=0){
+  const rd=()=>{const rows=[...m.querySelectorAll('.shp-clr')].map(r=>[r.querySelector('[data-cl="0"]').value,r.querySelector('[data-cl="1"]').value]).filter(r=>r[0].trim()||r[1].trim());return {rt:m.querySelector('[data-cf="rt"]').value.trim(),cl:rows,tot:m.querySelector('[data-cf="tot"]').value.trim()}};
+  const refresh=()=>{const v=rd(),sum=v.cl.reduce((s,r)=>s+costNum(r[1]),0),t=m.querySelector('.shp-tot');t.textContent=v.tot||costFmt(sum);const f=m.querySelector('[data-cf="tot"]');f.placeholder='自動：'+costFmt(sum);
+   const yen=costYen(ci),sug=v.rt&&yen&&+v.rt?Math.round(yen*v.rt):0,b=m.querySelector('[data-csug]');b.hidden=!sug;if(sug)b.querySelector('.shp-sugt').textContent=`本場週邊價格合計 ¥${yen.toLocaleString('en-US')} × ${v.rt} ＝ NT$${costFmt(sug)}`};
+  const save=()=>{const v=rd();const ch={cl:v.cl,tot:v.tot,rt:v.rt===''?'':(isFinite(+v.rt)?+v.rt:v.rt)};costPut(ci,ch);refresh()};
+  m.querySelectorAll('[data-cf="rt"],[data-cf="tot"],[data-cl]').forEach(i=>i.addEventListener('input',save));
+  const tn=m.querySelector('[data-cf="tn"]');if(tn)tn.addEventListener('input',()=>costPut(2,{tn:tn.value}));
+  const au=m.querySelector('[data-cauto]');if(au)au.onclick=()=>{const o={...E.kinds[EVK+'b2']};delete o.tn;E.kinds[EVK+'b2']={...o,t:Date.now()};touch();redo()};
+  m.querySelectorAll('[data-cdx]').forEach(b=>b.onclick=()=>{const v=rd(),cl=evCost(ci).cl.filter((r,k)=>k!==+b.dataset.cdx);costPut(ci,{cl,tot:v.tot});redo()});
+  const ad=m.querySelector('[data-cadd]');if(ad)ad.onclick=()=>{const cl=[...evCost(ci).cl,['','']];costPut(ci,{cl});redo('.shp-cl')};
+  const sg=m.querySelector('[data-csug]');if(sg)sg.onclick=()=>{const v=rd(),yen=costYen(ci),sug=Math.round(yen*v.rt),cl=evCost(ci).cl.map(r=>[...r]);const t=`商品 ¥${yen.toLocaleString('en-US')} × ${v.rt}`;if(cl.length)cl[0]=[t,costFmt(sug)];else cl.push([t,costFmt(sug)]);costPut(ci,{cl,tot:v.tot,rt:+v.rt});redo()};
+  const dn=m.querySelector('[data-cdone]');if(dn)dn.onclick=()=>{S.costEd=0;redo()};
+ }}
 
 /* people */
 /* people and nations pages. wd-: family tree on the people page (roots = the married pair), relation star on a person's page, court chart on a nation's page */
@@ -2313,11 +2491,12 @@ function qvOf(p){const L=[];for(const e of D.eps){if(hidden(e.n))continue;(e.qt|
 function qvPerson(p){const L=qvOf(p);if(!L.length)return '';const sh=(S.qvAll?L:L.slice(-6)).slice().reverse();
  return `<section class="wd-sc qv-set"><h3 class="wd-sh">說過的話<span class="qv-n">${L.length}</span></h3><div class="qv-grid">${sh.map(({e,q})=>{const[z,k]=qvSplit(q.x);return `<button class="eg-note eg-glass qv-c" onclick="go('ep-${e.n}')"><p class="qv-z">${esc(z)}</p>${qvKr(k)}<span class="qv-ep">${nm(e.n)} ›</span></button>`}).join('')}</div>${L.length>6&&!S.qvAll?`<button class="pillb qv-all" id="qvAll">看全部 ${L.length} 句</button>`:''}</section>`}
 function render(keep){rebuild();const h=location.hash.slice(1)||'home',m=$('#m'),[r,a]=h.split('-');const n=+a;let full=false,html;
+ if(S.shh!==h){S.shh=h;S.shopSel=null;S.shopEd=0;S.costEd=0;S.shopPic=0}
  if(r==='ep'&&n===D.eps.length)D.eps.push(blankEp(n));
- if(r==='tea'){cur='goods';html='<iframe class="sr-entry sr-tea" title="溫室茶會"></iframe><div class="sr-tea-floor" aria-hidden="true"><div class="sr-floor">'+srGarden('left:-45px;bottom:-25px')+srGarden('right:-45px;bottom:-25px;transform:scaleX(-1)')+'</div></div>';full=true}else if(r==='study'){cur='goods';html=a==='summary'?vStudySummary():a==='events'?vEvCal():G.events[n]&&a!==undefined?vStudyBook(n,+h.split('-')[2]||0):vStudy();full=true}else if(r==='ep'&&D.eps[n]){html=vEp(n);full=true;cur='eps'}else if(r==='prize'&&G.prizes[n]){html=vPrize(n);full=true;cur='goods'}else if(r==='slides'){html=vSlides();full=true;cur='goods'}else if(r==='settings'){html=vSettings();cur='settings'}else if(r==='person'&&D.ppl[n]){html=vPerson(n);full=true;cur='world'}else if(r==='nation'&&D.nations[n]){html=vNation(n);full=true;cur='world'}
+ if(r==='tea'){cur='goods';html='<iframe class="sr-entry sr-tea" title="溫室茶會"></iframe><div class="sr-tea-floor" aria-hidden="true"><div class="sr-floor">'+srGarden('left:-45px;bottom:-25px')+srGarden('right:-45px;bottom:-25px;transform:scaleX(-1)')+'</div></div>';full=true}else if(r==='study'){cur='goods';html=a==='summary'?vStudySummary():a==='shop'?vShop():a==='events'?vEvCal():G.events[n]&&a!==undefined?vStudyBook(n,+h.split('-')[2]||0):vStudy();full=true}else if(r==='ep'&&D.eps[n]){html=vEp(n);full=true;cur='eps'}else if(r==='prize'&&G.prizes[n]){html=vPrize(n);full=true;cur='goods'}else if(r==='slides'){html=vSlides();full=true;cur='goods'}else if(r==='settings'){html=vSettings();cur='settings'}else if(r==='person'&&D.ppl[n]){html=vPerson(n);full=true;cur='world'}else if(r==='nation'&&D.nations[n]){html=vNation(n);full=true;cur='world'}
  else{cur=TABS.some(t=>t[0]===h)?h:'home';html={home:vHome,search:vSearch,wall:vWall,line:vLine,goods:vGoods,world:vWorld}[cur]()}
  const wide=cur==='home'||r==='ep';m.innerHTML=hy((cur==='home'&&!full?hero():'')+(wide?`<div class="shell"><div class="mainc">${html}</div>${side()}</div>`:html));document.body.classList.toggle('full',full);nav();hydrate();if(!keep)window.scrollTo(0,0);
- if(r==='ep'&&full)bindEp(n);else if(full&&$('#wdE'))bindWd(r,n);else if(r==='study'&&a==='events')bindEv();else if(!full)({home:bindHome,search:bindSearch,wall:bindWall,line:bindLine,settings:bindSettings,world:bindWorld})[cur]?.()}
+ if(r==='ep'&&full)bindEp(n);else if(full&&$('#wdE'))bindWd(r,n);else if(r==='study'&&a==='events')bindEv();else if(r==='study')bindShop();else if(!full)({home:bindHome,search:bindSearch,wall:bindWall,line:bindLine,settings:bindSettings,world:bindWorld})[cur]?.()}
 /* no browser autofill (password / address) pop-ups on any text box; the login password keeps its own. Every box added later is covered by the observer */
 const acFix=r=>{if(r.nodeType!==1)return;(r.matches('input,textarea')?[r]:[]).concat([...r.querySelectorAll('input,textarea')]).forEach(i=>{if(i.id==='gp'||/^(password|checkbox|radio|range|file|button|submit|hidden)$/.test(i.type))return;i.autocomplete='off';if(!i.name)i.name='nf-'+(i.id||i.dataset.f||i.dataset.rf||i.className.split(' ')[0]||'x')})};
 acFix(document.body);new MutationObserver(l=>l.forEach(m=>m.addedNodes.forEach(acFix))).observe(document.body,{childList:true,subtree:true});
