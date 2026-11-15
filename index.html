@@ -1322,7 +1322,7 @@ async function dbGet(k){try{const d=await db();return await new Promise((ok,no)=
 async function dbSet(k,v){try{const d=await db();await new Promise((ok,no)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error||new Error('idb error'));t.onabort=()=>no(t.error||new Error('idb abort'))});return true}catch(e){return false}}
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v);return true}catch(e){return false}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
 /* private repo: this page holds no notes or pictures, they are read with the device's key */
-const BASE='data/base-9493b8ad21a3.json',VER='2026.11.15 19:28 · d307637';
+const BASE='data/base-9493b8ad21a3.json',VER='2026.11.16 01:07 · d04a026';
 let CFG=null,TK=lsGet('tk');
 const api=(p,o={})=>fetch(`${CFG.api??'https://api.github.com'}/repos/${CFG.owner}/${CFG.repo}/contents/${p}`,{cache:'no-store',...o,headers:{Authorization:`Bearer ${TK}`,...o.headers}});
 const rawGet=p=>api(p,{headers:{Accept:'application/vnd.github.raw+json'}});
@@ -1886,12 +1886,13 @@ function irSet(p,r){const k=irKey(p);if(!k)return;E.kinds['@imr:'+k]={r,t:Date.n
 function irOpts(){return [['','自動'],['o','原圖'],...Object.keys(CMPR).map(r=>[r,r])]}
 function irNat(im){return im&&!im.dataset.p&&im.naturalWidth?im.naturalWidth/im.naturalHeight:0}
 /* one picture's shape in a post: her setting first, else the picture itself (too thin or too wide ones are trimmed a little); 3:4 until it has loaded */
-function irAr(c,im,one){const r=c.dataset.ir||'',n=irNat(im)||.75;if(r&&r!=='o')return CMPR[r];if(r==='o')return clampN(n,.2,5);return one?clampN(n,.4,2.5):clampN(n,.5,2.2)}
+function irAr(c,im,one){const r=c.dataset.ir||'',n=irNat(im)||.75;if(r&&r!=='o')return CMPR[r];if(r==='o')return clampN(n,.2,5);return one?clampN(n,.5,2.5):clampN(n,.5,2.2)}
+/* a single picture always fills the post's width (cap 1e5 = no height cap; her shape, or the picture's own, trimmed only past 2.5:1 / 1:2, so a post is at most twice its width tall) */
 /* rows of whole pictures, same height in a row, all rows the same width, her order. Ways to split: 2: 2 / 1+1; 3: 3 / 1+2 / 2+1; 4: 2+2 / 4 / 1+3 / 3+1;
    the first one whose smallest row is at least 120px (and 45% of the width) tall wins, else the one whose smallest row is tallest; a post stays under 2.2 × its width. */
 const IRP={1:[[1]],2:[[2],[1,1]],3:[[3],[1,2],[2,1]],4:[[2,2],[4],[1,3],[3,1]]};
 function irLay(g){const C=[...g.children].filter(x=>x.classList.contains('tw-c'));if(!C.length)return;g.style.width='';const one=C.length===1,W=g.clientWidth;if(W<=0)return;
- const GAP=4,cap=one?Math.min(460,innerHeight*.62):360,A=C.map(c=>irAr(c,c.querySelector('img'),one));
+ const GAP=4,cap=one?1e5:360,A=C.map(c=>irAr(c,c.querySelector('img'),one));
  const plan=sizes=>{let i=0;const rows=sizes.map(n=>{const r=[];for(let k=0;k<n;k++)r.push(i++);return r}),sum=r=>r.reduce((a,k)=>a+A[k],0),Wr=Math.min(W,...rows.map(r=>cap*sum(r)+GAP*(r.length-1))),hs=rows.map(r=>(Wr-GAP*(r.length-1))/sum(r));
   return {rows,Wr,hs,min:Math.min(...hs),tot:hs.reduce((a,h)=>a+h,0)+GAP*(rows.length-1)}};
  const ps=(IRP[C.length]||[[2,2]]).map(plan),ok=ps.filter(p=>p.tot<=2.2*W),L=ok.length?ok:ps,best=L.find(p=>p.min>=Math.max(120,.45*W))||L.reduce((a,p)=>p.min>a.min+1?p:a);
@@ -1900,8 +1901,9 @@ function irLay(g){const C=[...g.children].filter(x=>x.classList.contains('tw-c')
 /* 整話大圖: the whole picture (or her shape), at most 62% of the screen tall */
 function irPh(f){const im=f.querySelector('img');if(!im)return;const r=f.dataset.ir||'',ar=r&&r!=='o'?CMPR[r]:clampN(irNat(im)||1,.2,5);f.style.width='';const cs=getComputedStyle(f),pad=parseFloat(cs.paddingLeft)+parseFloat(cs.paddingRight),avail=f.clientWidth-pad;if(avail<=0)return;
  im.style.setProperty('--imr-ar',ar);f.style.width=Math.round(Math.min(avail,Math.min(460,innerHeight*.62)*ar)+pad)+'px'}
-const IRO=new ResizeObserver(es=>es.forEach(x=>{const t=x.target,w=Math.round(t.parentElement.clientWidth);if(t._irw===w)return;t._irw=w;t.classList.contains('tw-g')?irLay(t):irPh(t)}));
-function irAll(){document.querySelectorAll('.tw-g').forEach(g=>{irLay(g);IRO.observe(g)});document.querySelectorAll('.eg-photo').forEach(f=>{irPh(f);IRO.observe(f)})}
+/* watches the box AROUND each picture grid / big picture (their own width is set in px, so a narrower window never changes it and they would stick out) */
+const IRO=new ResizeObserver(es=>es.forEach(x=>{const t=x.target,w=Math.round(t.clientWidth);if(t._irw===w)return;t._irw=w;[...t.children].forEach(c=>c.classList.contains('tw-g')?irLay(c):c.classList.contains('eg-photo')&&irPh(c))}));
+function irAll(){document.querySelectorAll('.tw-g').forEach(g=>{irLay(g);IRO.observe(g.parentElement)});document.querySelectorAll('.eg-photo').forEach(f=>{irPh(f);IRO.observe(f.parentElement)})}
 document.addEventListener('load',e=>{const t=e.target;if(!t||t.tagName!=='IMG')return;const g=t.closest('.tw-g');if(g)irLay(g);const f=t.closest('.eg-photo');if(f)irPh(f)},true);
 function irMenu(){return `<div class="imr-m" role="group" aria-label="比例" hidden>${irOpts().map(([r,t])=>`<button data-ir="${r}" aria-pressed="false">${t}</button>`).join('')}</div>`}
 /* 放大圖：「比例」晶片開收起的選單（同並排比較的「尺寸」）；選了固定比例，圖上出現一個框＝貼文裡看得到的部分（框在 .lb-tk 裡，換張時跟著滑） */
