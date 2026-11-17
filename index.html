@@ -686,7 +686,7 @@ select.edi[hidden]{display:none}
 .eg-more{margin-left:60px}}
 /* reactions as a thread of posts (read view and editor) */
 /* 貼文圖格（圖片比例 2026-11-15）：每排圖同高、整排同寬，寬高由 irLay() 照圖的原比例算；width 只是 JS 排好前的備用 */
-.tw-g{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;border-radius:14px;overflow:hidden;max-width:520px}
+.tw-g{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;border-radius:14px;overflow:hidden}
 .tw-c{position:relative;min-height:0;flex:none;overflow:hidden;width:calc(50% - 2px)}
 .tw-g.n1 .tw-c{width:100%}
 .tw-g img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 14%}
@@ -1292,6 +1292,72 @@ html:has(dialog.lbx[open],dialog.crx[open]){overflow:hidden}
 .wtool .seg2 button{flex:1;min-height:44px;padding:0 10px;font-family:var(--t);letter-spacing:.06em}
 .wtool .seg2 button.on{background:color-mix(in srgb,var(--gold) 26%,transparent);color:var(--goldt);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--gold) 70%,transparent)}
 @media (min-width:900px){.wtool{grid-template-columns:repeat(3,minmax(0,1fr))}}
+/* wall filter + lightbox "more" menu (wf- / lbw-) and the 單行本 shelf (vol-): 2026-11-17 geng */
+.wf-host{grid-column:1/-1;display:grid;gap:8px}
+.wf-lab{font-family:var(--t);letter-spacing:.06em;font-size:.82rem;color:var(--goldt);margin:2px 0 -2px}
+.wf-pr{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px 2px 6px;margin:0 -2px}
+@media (min-width:600px){.wf-pr{flex-wrap:wrap;overflow:visible}}
+.wf-pc{flex:none;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px 0 7px;border-radius:99px;background:var(--glass);border:1px solid var(--line);color:var(--acc);font-size:.86rem;font-family:inherit}
+.wf-pc.on,.wf-sum .chip.on{background:color-mix(in srgb,var(--gold) 26%,transparent);color:var(--goldt);border-color:color-mix(in srgb,var(--gold) 70%,transparent)}
+.wf-pc .ring{--z:30px}
+.wf-pc.wf-all{padding:0 16px}
+.wf-sel,.wf-jp input{min-height:44px;border-radius:99px;padding:0 14px;background:var(--glass);border:1px solid var(--line);color:var(--fg);font-size:.9rem;font-family:inherit}
+.wf-sel{width:100%;min-width:0}
+.wf-jp{display:flex;flex-wrap:wrap;gap:8px;align-items:center;color:var(--mute);font-size:.86rem}
+.wf-jp input{width:84px;text-align:center}
+.wf-jp .chip{min-height:44px}
+.wf-msg{flex-basis:100%;font-size:.84rem;color:var(--mute)}
+.wf-sum{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 12px;font-size:.84rem;color:var(--mute)}
+.wf-sum b{color:var(--goldt);font-weight:600}
+.wf-sum .chip{min-height:44px;padding:0 12px}
+.wf-note{flex-basis:100%;line-height:1.5}
+.wf-empty{display:grid;gap:10px;justify-items:start;padding:18px 4px;color:var(--mute);line-height:1.6}
+.wf-empty .chip{min-height:44px}
+.tile.wf-hit{outline:2px solid var(--gold);outline-offset:3px}
+.lbw .lb-top{position:relative;gap:12px;min-height:44px;padding:calc(6px + env(safe-area-inset-top,0px)) 10px 2px 18px}
+.lbw .lb-c{font-size:.78rem;opacity:.7}
+.lbw .lb-x{width:36px;height:36px;font-size:1.05rem;position:relative}
+.lbw .lb-x::after,.lbw-pb::after{content:'';position:absolute;inset:-4px}
+.lbw .lb-a{width:34px;height:34px;margin-top:-17px;font-size:1.15rem;opacity:.5;background:rgba(7,5,29,.35)}
+.lbw .lb-a::after{content:'';position:absolute;inset:-5px}
+.lbw .lb-bar{display:none}
+.lbw-pb{position:relative;flex:none;margin-left:auto;width:40px;height:40px;padding:0;border:0;background:none;filter:drop-shadow(0 2px 6px rgba(0,0,0,.5))}
+.lbw-pb svg{width:100%;height:100%;display:block}
+.lbw-m,.lbw-t{position:absolute;z-index:6;background:rgba(7,5,29,.78);border:1px solid rgba(205,214,255,.16);border-radius:14px;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.lbw-m[hidden],.lbw-t[hidden]{display:none}
+.lbw-m{right:58px;top:calc(50px + env(safe-area-inset-top,0px));display:grid;padding:4px 6px;min-width:132px}
+.lbw-m button{min-height:44px;padding:0 14px;text-align:right;font-size:.84rem;color:#aeb6ea;background:none;border:0;font-family:inherit}
+.lbw-m button+button{border-top:1px solid rgba(205,214,255,.14)}
+.lbw-m button.on{color:#fff;font-weight:600}
+.lbw-t{left:10px;right:10px;top:calc(54px + env(safe-area-inset-top,0px));max-width:520px;margin-inline:auto;max-height:52vh;overflow:auto;overscroll-behavior:contain;padding:6px 8px 8px;display:grid;gap:2px}
+.lbw-lab{color:#8f98d0;font-size:.74rem;margin:8px 6px 0;letter-spacing:.08em}
+.lbw-pg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.lbw-pc{display:flex;align-items:center;gap:8px;min-height:44px;min-width:0;padding:0 8px 0 4px;border-radius:10px;background:none;border:0;color:#aeb6ea;font-size:.84rem;font-family:inherit;text-align:left}
+.lbw-pc span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lbw-pc.on{background:rgba(201,216,255,.14);color:#fff;font-weight:600}
+.lbw-pc.on::after{content:'✓';margin-left:auto;font-size:.8rem;color:#c9d8ff}
+.lbw-pc .ring{--z:26px}
+.vol-hd{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;text-align:left;color:inherit}
+.vol-t{font-family:var(--t);font-size:1.02rem;color:var(--goldt);letter-spacing:.06em}
+.vol-hd small,.vol-hd2 small{font-size:.78rem;color:var(--mute)}
+.vol-tg{margin-left:auto}
+.vol-row{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;scroll-snap-type:x proximity;padding:4px 2px 8px;margin:0 -2px}
+.vol-c{flex:none;width:76px;display:flex;flex-direction:column;gap:4px;align-items:stretch;text-align:center;color:inherit;scroll-snap-align:start;min-width:0}
+.vol-i{display:block;width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:8px;border:1px solid var(--line);background:#0002;box-sizing:border-box}
+.vol-i.shp-none{padding:22%}
+.vol-c b{font-weight:400;font-size:.8rem;color:var(--acc);line-height:1.3;overflow-wrap:anywhere}
+.vol-c small{font-size:.72rem;color:var(--mute)}
+.vol-dim .vol-i{filter:grayscale(1);opacity:.42}
+.vol-dim b{color:var(--mute)}
+.vol-c.on .vol-i{border-color:var(--acc)}
+.vol-pi{display:grid;place-items:center;width:100%;aspect-ratio:2/3;border:1px dashed var(--line);border-radius:8px;box-sizing:border-box;font-size:1.6rem;color:var(--goldt)}
+.vol-row.vol-open{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));overflow:visible}
+.vol-open .vol-c{width:auto}
+@media (min-width:600px){.vol-c{width:96px}.vol-row.vol-open{grid-template-columns:repeat(auto-fill,minmax(92px,1fr))}}
+@media (min-width:900px){.vol-c{width:104px}.vol-row.vol-open{grid-template-columns:repeat(auto-fill,minmax(104px,1fr))}}
+.vol-hd2{position:relative;display:flex;align-items:center;gap:10px;min-height:62px;padding-right:76px;margin-top:6px}
+.vol-tool{grid-template-columns:minmax(0,1fr)}
+@media (min-width:900px){.vol-tool{grid-template-columns:minmax(0,1fr)}}
 .wall.v-grid{columns:auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 @media (min-width:900px){.wall.v-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}}
 .wall.v-grid .tile{margin:0;aspect-ratio:3/4;border-radius:12px;overflow:hidden;box-shadow:0 0 0 1px var(--gold)}
@@ -1327,7 +1393,7 @@ async function dbGet(k){try{const d=await db();return await new Promise((ok,no)=
 async function dbSet(k,v){try{const d=await db();await new Promise((ok,no)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error||new Error('idb error'));t.onabort=()=>no(t.error||new Error('idb abort'))});return true}catch(e){return false}}
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v);return true}catch(e){return false}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
 /* private repo: this page holds no notes or pictures, they are read with the device's key */
-const BASE='data/base-9493b8ad21a3.json',VER='2026.11.17 16:13 · eb02e06';
+const BASE='data/base-9493b8ad21a3.json',VER='2026.11.18 01:13 · 02fc066';
 let CFG=null,TK=lsGet('tk');
 const api=(p,o={})=>fetch(`${CFG.api??'https://api.github.com'}/repos/${CFG.owner}/${CFG.repo}/contents/${p}`,{cache:'no-store',...o,headers:{Authorization:`Bearer ${TK}`,...o.headers}});
 const rawGet=p=>api(p,{headers:{Accept:'application/vnd.github.raw+json'}});
@@ -1564,7 +1630,7 @@ function persist(){const a=lsSet('edits',JSON.stringify(E)),b=lsSet('dirty',JSON
 function touch(){dirty=true;gen++;clearTimeout(_ps);_ps=setTimeout(persist,300);sync('存在這台，等待上傳…');clearTimeout(_pt);_pt=setTimeout(push,4000)}
 function setRead(v){if(LOCK)return;S.read=v;E.read={v,t:Date.now()};touch()}
 /* arc, people and nation edits (kinds['@arc:…'], ['@ppl:…'], ['@nat:…']) go by time like episodes; any other field this version doesn't know is kept */
-function merge(r,l){if(!r)return l;const eps={...r.eps};for(const k in l.eps)if(!eps[k]||(l.eps[k].t||0)>=(eps[k].t||0))eps[k]=l.eps[k];const rk=r.kinds||{},lk=l.kinds||{},kinds={...rk,...lk};for(const k in rk)if(/^@(arc|ppl|nat|ev|part|shop|imr):|^@(home|cmp)$/.test(k)&&lk[k]&&((rk[k]&&rk[k].t)||0)>((lk[k]&&lk[k].t)||0))kinds[k]=rk[k];return{...r,...l,eps,kinds,read:!r.read||(l.read&&l.read.t>=r.read.t)?l.read:r.read}}
+function merge(r,l){if(!r)return l;const eps={...r.eps};for(const k in l.eps)if(!eps[k]||(l.eps[k].t||0)>=(eps[k].t||0))eps[k]=l.eps[k];const rk=r.kinds||{},lk=l.kinds||{},kinds={...rk,...lk};for(const k in rk)if(/^@(arc|ppl|nat|ev|part|shop|imr|ipp):|^@(home|cmp)$/.test(k)&&lk[k]&&((rk[k]&&rk[k].t)||0)>((lk[k]&&lk[k].t)||0))kinds[k]=rk[k];return{...r,...l,eps,kinds,read:!r.read||(l.read&&l.read.t>=r.read.t)?l.read:r.read}}
 /* status line */
 function sync(t,sticky){const y=$('#sy');if(!y)return;y.textContent=t;y.classList.toggle('on',!!t);y.classList.toggle('bad',!!sticky);clearTimeout(sync.t);if(t&&t==='已同步')sync.t=setTimeout(()=>y.classList.remove('on'),1800)}
 /* base64 */
@@ -1742,14 +1808,27 @@ function gest(el,h){const P=new Map(),T=()=>performance.now();let g=null,lastTap
    2026-11-15 cmp-swipe: like a phone gallery. Three pictures sit on one strip (previous, this one, next; 16px apart) and the strip follows the finger,
    so the neighbour is already showing while you drag. On release, speed and distance decide: slide on to the neighbour or ease back, one ease-out, no overshoot.
    Arrows and keys use the same slide; a press while a slide runs carries on from where the strip is. */
+/* wall lightbox: the pearl (right of the page count) opens a quiet text menu; 有誰 opens a glass panel to tag who is in this picture (saved at once) */
+function lbwInit(L,q,d){const pb=q('.lbw-pb'),mn=q('.lbw-m'),pn=q('.lbw-t'),cur=()=>L.list[L.i],known=id=>D.ppl.some(p=>p.id===id);
+ const shut=()=>{mn.hidden=pn.hidden=true;pb.setAttribute('aria-expanded','false')};
+ const menu=()=>{const it=cur(),n=ipGet(it.p).filter(known).length,rows=[['go',q('.lb-go').textContent],['cr','裁切'],...(irKey(it.p)?[['who',n?`有誰 ${n}`:'有誰',n>0]]:[]),['cmp','比較']];
+  mn.innerHTML=rows.map(([a,t,on])=>`<button role="menuitem" data-a="${a}"${on?' class="on"':''}>${esc(t)}</button>`).join('');
+  mn.querySelectorAll('button').forEach(b=>b.onclick=()=>{const a=b.dataset.a;shut();if(a==='who'){fillT();pn.hidden=false;pb.setAttribute('aria-expanded','true')}else q('.lb-'+a).click()})};
+ const fillT=()=>{const it=cur(),sel=ipGet(it.p),cast=epCast(it.n),cid=new Set(cast.map(p=>p.id)),rest=D.ppl.filter(p=>!cid.has(p.id)),y=pn.scrollTop,
+  bt=p=>`<button class="lbw-pc${sel.includes(p.id)?' on':''}" data-pid="${esc(p.id)}" aria-pressed="${sel.includes(p.id)}">${wdR(p,26)}<span>${esc(p.name)}</span></button>`;
+  pn.innerHTML=hy(`${cast.length?`<div class="lbw-lab">這一話出場</div><div class="lbw-pg">${cast.map(bt).join('')}</div>`:''}<div class="lbw-lab">${cast.length?'其他人物':'人物'}</div><div class="lbw-pg">${rest.map(bt).join('')}</div>`);hydrate();pn.scrollTop=y;
+  pn.querySelectorAll('[data-pid]').forEach(b=>b.onclick=()=>{const c=cur(),a=ipGet(c.p),id=b.dataset.pid,i=a.indexOf(id);if(i>=0)a.splice(i,1);else a.push(id);ipSet(c.p,a);L.wDirty=1;fillT()})};
+ pb.onclick=()=>{if(!mn.hidden){shut();return}const had=!pn.hidden;shut();if(had)return;menu();mn.hidden=false;pb.setAttribute('aria-expanded','true')};
+ d.addEventListener('pointerdown',e=>{if(!e.target.closest('.lbw-m,.lbw-t,.lbw-pb'))shut()});
+ L.wSync=shut}
 function openLB(list,i,o={}){if(!list.length)return;
  const d=document.createElement('dialog');d.className='lbx';d.setAttribute('aria-label','圖片放大檢視，左右滑換張，按 ✕ 關閉');
- d.innerHTML=`<div class="lb-top"><span class="lb-c" aria-live="polite"></span><button class="lb-x" aria-label="關閉">✕</button></div><div class="lb-st"><div class="lb-tk">${'<img class="lb-im" alt="" draggable="false">'.repeat(3)}${o.crop&&!o.go?'<div class="imr-f" hidden></div><span class="imr-tip" hidden></span>':''}</div><button class="lb-a lb-p" aria-label="上一張">‹</button><button class="lb-a lb-n" aria-label="下一張">›</button></div><div class="lb-bar">${o.crop&&!o.go?irMenu():''}${o.go?'<button class="chip lb-go"></button>':''}${o.crop?'<button class="chip lb-cr">裁切</button>':''}${o.crop&&!o.go?'<button class="chip lb-ir" aria-expanded="false"></button>':''}<button class="chip lb-cmp">拿來比較</button></div>`;
+ if(o.go)d.classList.add('lbw');d.innerHTML=`<div class="lb-top"><span class="lb-c" aria-live="polite"></span>${o.go?`<button class="lbw-pb" aria-label="更多" aria-expanded="false">${pearlMd(false)}</button>`:''}<button class="lb-x" aria-label="關閉">✕</button></div><div class="lb-st"><div class="lb-tk">${'<img class="lb-im" alt="" draggable="false">'.repeat(3)}${o.crop&&!o.go?'<div class="imr-f" hidden></div><span class="imr-tip" hidden></span>':''}</div><button class="lb-a lb-p" aria-label="上一張">‹</button><button class="lb-a lb-n" aria-label="下一張">›</button></div><div class="lb-bar">${o.crop&&!o.go?irMenu():''}${o.go?'<button class="chip lb-go"></button>':''}${o.crop?'<button class="chip lb-cr">裁切</button>':''}${o.crop&&!o.go?'<button class="chip lb-ir" aria-expanded="false"></button>':''}<button class="chip lb-cmp">拿來比較</button></div>${o.go?'<div class="lbw-m" role="menu" hidden></div><div class="lbw-t" role="group" aria-label="這張有誰" hidden></div>':''}`;
  const GAP=16,q=s=>d.querySelector(s),st=q('.lb-st'),tk=q('.lb-tk'),IM=[...d.querySelectorAll('.lb-im')];   // IM: [previous, this one, next]
  const L=LB={d,list,i,s:1,x:0,y:0,T:0,anim:null,tok:0,after:null},W=()=>st.clientWidth+GAP;
  const put=ease=>{IM.forEach((im,k)=>{const c=k===1;im.classList.toggle('on',c);im.classList.toggle('ease',c&&!!ease);im.style.transform=`translate(calc(-50% + ${(k-1)*W()+(c?L.x:0)}px),calc(-50% + ${c?L.y:0}px)) scale(${c?L.s:1})`});if(L.irF)L.irF()};
  const trk=(ms,ez)=>{tk.style.transition=ms?`transform ${ms}ms ${ez||'cubic-bezier(.22,.8,.3,1)'}`:'none';tk.style.transform=`translateX(${L.T}px)`};
- const label=()=>{if(L.irSync)L.irSync();const it=L.list[L.i];q('.lb-c').textContent=`${nm(it.n)}　${L.i+1} / ${L.list.length}`;q('.lb-p').disabled=L.i===0;q('.lb-n').disabled=L.i===L.list.length-1;if(q('.lb-go'))q('.lb-go').textContent=`去${nm(it.n)}`;IM.forEach((im,k)=>{const j=L.i+k-1,z=L.list[j];im.alt=z?`${nm(z.n)}的圖，第 ${j+1} 張`:''})};
+ const label=()=>{if(L.irSync)L.irSync();if(L.wSync)L.wSync();const it=L.list[L.i];q('.lb-c').textContent=`${nm(it.n)}　${L.i+1} / ${L.list.length}`;q('.lb-p').disabled=L.i===0;q('.lb-n').disabled=L.i===L.list.length-1;if(q('.lb-go'))q('.lb-go').textContent=`去${nm(it.n)}`;IM.forEach((im,k)=>{const j=L.i+k-1,z=L.list[j];im.alt=z?`${nm(z.n)}的圖，第 ${j+1} 張`:''})};
  const slot=async k=>{const im=IM[k],it=L.list[L.i+k-1],p=it?it.p:'';if(im._p===p)return;im._p=p;im.removeAttribute('src');im.hidden=!it;if(!it)return;const u=await picURL(p);if(im._p===p&&u)im.src=u};
  const fill=()=>{[1,2,0].forEach(slot);[L.i-2,L.i+2].forEach(j=>L.list[j]&&picURL(L.list[j].p));label()};
  const turn=dv=>{L.i+=dv;if(dv>0)IM.push(IM.shift());else IM.unshift(IM.pop());L.T+=dv*W();L.s=1;L.x=L.y=0;trk(0);put();fill()};
@@ -1759,11 +1838,11 @@ function openLB(list,i,o={}){if(!list.length)return;
   const ms=dist<1?0:Math.round(btn?clampN(360*dist/w,160,360):clampN(4*dist/Math.max(Math.abs(sp||0),1.2),180,420));L.anim=ms?dv:null;trk(ms);
   const done=()=>{if(L.tok!==tok)return;L.anim=null;if(dv)turn(dv)};if(ms)setTimeout(done,ms+20);else done()};
  const step=dv=>{const f=freeze();if(f&&f.dv===dv&&!f.past)turn(dv);if(L.s>1){L.s=1;L.x=L.y=0;put(true)}settle(dv,0,true)};   /* a press while sliding the same way counts the slide as done and goes one more */
- irLB(L,q,IM);q('.lb-x').onclick=ovBack;q('.lb-p').onclick=()=>step(-1);q('.lb-n').onclick=()=>step(1);
+ irLB(L,q,IM);if(o.go)lbwInit(L,q,d);q('.lb-x').onclick=ovBack;q('.lb-p').onclick=()=>step(-1);q('.lb-n').onclick=()=>step(1);
  if(q('.lb-go'))q('.lb-go').onclick=()=>{const n=L.list[L.i].n;L.after=()=>go('ep-'+n);ovBack()};
  q('.lb-cmp').onclick=()=>{const it=L.list[L.i];L.after=()=>cmpStart(it);ovBack()};
  if(q('.lb-cr'))q('.lb-cr').onclick=async()=>{const it=L.list[L.i],u=await picURL(it.p);if(!u)return;const b=await openCrop(u,{title:'裁切這張圖'});if(!b||b==='skip')return;
-  const np=await storeImg(b),x=epEdit(it.n),sw=a=>a&&a.map(p=>p===it.p?np:p);x.im=sw(x.im);x.rx.forEach(r=>{if(r.im)r.im=sw(r.im)});x.t=Date.now();cmpRepath(it.p,np);touch();persist();
+  const np=await storeImg(b),x=epEdit(it.n),sw=a=>a&&a.map(p=>p===it.p?np:p);x.im=sw(x.im);x.rx.forEach(r=>{if(r.im)r.im=sw(r.im)});x.t=Date.now();cmpRepath(it.p,np);irMove(it.p,np);touch();persist();
   L.list.forEach(z=>{if(z.p===it.p)z.p=np});IM.forEach(im=>{if(im._p===it.p)im._p=null});fill();const y=scrollY;render(true);scrollTo(0,y)};
  d.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')step(-1);if(e.key==='ArrowRight')step(1)});
  gest(st,{down:e=>!e.target.closest('button'),
@@ -1777,7 +1856,7 @@ function openLB(list,i,o={}){if(!list.length)return;
   wheel:k=>{L.s=clampN(L.s*k,1,5);if(L.s===1)L.x=L.y=0;put()}});
  const rz=()=>{freeze();if(L.T)settle(0);put()};addEventListener('resize',rz);
  const f0=IM[1];f0.style.opacity=0;f0.addEventListener('load',()=>{f0.style.transition='opacity .22s ease';f0.style.opacity=1;setTimeout(()=>{f0.style.transition=''},260)},{once:true});
- ovOpen(d,()=>{LB=null;removeEventListener('resize',rz);const a=L.after;if(a)setTimeout(a,0)});trk(0);put();fill();q('.lb-x').focus()}
+ ovOpen(d,()=>{LB=null;removeEventListener('resize',rz);const a=L.after;if(a)setTimeout(a,0);else if(L.wDirty&&cur==='wall'&&wfOn())setTimeout(()=>{const y=scrollY;render(true);scrollTo(0,y)},0)});trk(0);put();fill();q('.lb-x').focus()}
 /* ---- compare two pictures (2026-11-15 cmp-swipe) ----
    Pick the first picture in the lightbox (拿來比較), tap the second on the wall. 左右 / 上下 / 滑桿; each picture zooms and moves on its own (滑桿: both together).
    尺寸 menu R: '' = each picture's own shape, 'eq' = own shape at the same height, or a frame ratio (CMPR) that both pictures fill.
@@ -1935,18 +2014,41 @@ function openAvPick(n){const ims=allIm(D.eps[n]),d=document.createElement('dialo
 /* the episode thread: same order as on screen */
 function epPics(n){const e=D.eps[n],r=e.rx;return [...((r[0]&&r[0].im)||[]),...e.im,...r.slice(1).flatMap(x=>x.im||[])].map(p=>({p,n}))}
 /* wall: order, grouping and view are remembered on this device only */
+/* wall filter (2026-11-17): WF lives on this device only (localStorage 'wallf'), cleared when you leave the wall.
+   Picture tags: E.kinds['@ipp:<irKey>']={p:[person id,..],t}. Taking the last person off keeps the key as {p:[],t}: merge() unions keys, so a deleted key would come back from the cloud. */
+const WF={person:'',arc:'',incl:false};try{const z=JSON.parse(lsGet('wallf')||'{}');if(typeof z.person==='string')WF.person=z.person;if(typeof z.arc==='string')WF.arc=z.arc;WF.incl=!!z.incl}catch(e){}
+const wfSave=()=>lsSet('wallf',JSON.stringify(WF)),wfOn=()=>!!(WF.person||WF.arc);
+addEventListener('hashchange',()=>{if(location.hash.slice(1)!=='wall'&&(WF.person||WF.arc||WF.incl)){WF.person=WF.arc='';WF.incl=false;wfSave()}});
+function ipGet(p){const k=irKey(p),o=k&&E.kinds['@ipp:'+k];return o&&Array.isArray(o.p)?o.p.filter(x=>typeof x==='string'&&x):[]}
+function ipSet(p,a){const k=irKey(p);if(!k)return;E.kinds['@ipp:'+k]={p:a,t:Date.now()};touch();persist()}
+/* a cropped picture gets a new path: its tags (@ipp) and its shape (@imr) follow it */
+function irMove(o,n){const a=irKey(o),c=irKey(n);if(!a||!c||a===c)return;const t=Date.now();for(const pre of ['@ipp:','@imr:']){const v=E.kinds[pre+a];if(!v)continue;const ip=pre==='@ipp:';if(!ip||(v.p&&v.p.length))E.kinds[pre+c]={...v,t};E.kinds[pre+a]=ip?{p:[],t}:{r:'',t}}}   /* the old name is emptied, not deleted: a deleted key would come back from the cloud copy */
 const WV={o:'old',v:'fall',g:0};try{Object.assign(WV,JSON.parse(lsGet('wallv')||'{}'))}catch(e){}
 const WNM=matchMedia('(max-width:599px)');WNM.addEventListener('change',()=>{if(cur==='wall'&&!document.querySelector('dialog[open]')){const y=scrollY;render(true);scrollTo(0,y)}});
 const wallBox=t=>{if(WV.v!=='fall')return `<div class="wall v-${WV.v}">${t.join('')}</div>`;const c=WNM.matches?2:3,cols=Array.from({length:c},()=>[]);t.forEach((x,k)=>cols[k%c].push(x));return `<div class="wall v-fall">${cols.map(z=>`<div>${z.join('')}</div>`).join('')}</div>`};
-function wallList(){const all=D.wall.filter(w=>!hidden(w.n));return WV.o==='new'?all.slice().sort((a,b)=>b.n-a.n):all}
-function vWall(){const all=wallList(),seg=(k,opts)=>`<div class="seg2" role="group">${opts.map(([v,t])=>`<button data-wk="${k}" data-wv="${v}" class="${WV[k]===v?'on':''}" aria-pressed="${WV[k]===v}">${t}</button>`).join('')}</div>`,
+function wfChk(){if(WF.person&&!D.ppl.some(p=>p.id===WF.person))WF.person='';if(WF.arc&&!D.arcs.some(a=>a.id===WF.arc))WF.arc='';if(!WF.person)WF.incl=false}
+const wfArcOk=w=>{if(!WF.arc)return true;const e=D.eps[w.n];return !!e&&e.ai.includes(WF.arc)};
+function wallList(){wfChk();let all=D.wall.filter(w=>!hidden(w.n)&&wfArcOk(w));if(WF.person)all=all.filter(w=>{const t=ipGet(w.src);return t.includes(WF.person)||(WF.incl&&!t.some(id=>D.ppl.some(p=>p.id===id)))});return WV.o==='new'?all.slice().sort((a,b)=>b.n-a.n):all}
+function vWall(){const all=wallList(),total=D.wall.filter(w=>!hidden(w.n)).length,seg=(k,opts)=>`<div class="seg2" role="group">${opts.map(([v,t])=>`<button data-wk="${k}" data-wv="${v}" class="${WV[k]===v?'on':''}" aria-pressed="${WV[k]===v}">${t}</button>`).join('')}</div>`,
  tile=(w,k)=>`<button class="tile" data-k="${k}" aria-label="放大${nm(w.n)}的圖"><img src="${w.src}" alt="${nm(w.n)}的圖" loading="lazy"><em>${w.n}</em></button>`;
- let body;if(WV.g){const gs=[];all.forEach((w,k)=>{const l=gs[gs.length-1];if(l&&l.n===w.n)l.t.push(tile(w,k));else gs.push({n:w.n,t:[tile(w,k)]})});body=gs.map(x=>`<section class="wgp"><h3 class="wgh"><button data-go="${x.n}">${nm(x.n)}</button><span>${x.t.length} 張</span></h3>${wallBox(x.t)}</section>`).join('')}
+ let body;if(!all.length&&wfOn())body=`<div class="wf-empty" role="status"><span>${WF.person&&!WF.incl?'還沒有圖標過這個人。點開一張圖，按『有誰』就能標。':'這個條件下沒有圖。'}</span>${WF.person&&!WF.incl?'<button class="chip" data-wfx="i">連沒標的一起看</button>':''}</div>`;else if(WV.g){const gs=[];all.forEach((w,k)=>{const l=gs[gs.length-1];if(l&&l.n===w.n)l.t.push(tile(w,k));else gs.push({n:w.n,t:[tile(w,k)]})});body=gs.map(x=>`<section class="wgp"><h3 class="wgh"><button data-go="${x.n}">${nm(x.n)}</button><span>${x.t.length} 張</span></h3>${wallBox(x.t)}</section>`).join('')}
  else body=wallBox(all.map(tile));
- return `<div class="pg"><div class="hd"><h2 class="logo">圖片牆</h2><span>${all.length} 張・點一張放大</span>${spray(110,70,41,'right:-12px;top:-12px')}<button class="wl-gem" id="wvt" aria-label="排序與瀏覽方式" aria-expanded="${!!S.wtOpen}">${medal('wall',!!S.wtOpen)}</button></div>${cmpBanner()}${S.addOpen?`<div class="addf"><label>選圖<input id="af" type="file" accept="image/*" multiple></label><label>這張是第幾話<input id="an" type="number" min="0" max="${D.eps.length}" inputmode="numeric" value="${lastWritten()}"></label><div class="chips"><button class="chip" id="ag">加到圖片牆</button><button class="chip" id="ac">取消</button></div></div>`:''}${S.wtOpen?`<div class="wtool">${seg('o',[['old','舊話在前'],['new','新話在前']])}${seg('v',[['grid','方格'],['fall','瀑布'],['big','大圖']])}${seg('g',[[0,'不分組'],[1,'按話分組']])}${cmpTool()}</div>`:''}${body}</div><button class="fab wl-pearl" id="add" aria-label="加一張圖" title="加一張圖">${pearlMd(false)}</button>`}
+ return `<div class="pg"><div class="hd"><h2 class="logo">圖片牆</h2><span>${wfOn()?`${all.length} / ${total}`:all.length} 張・點一張放大</span>${spray(110,70,41,'right:-12px;top:-12px')}<button class="wl-gem" id="wvt" aria-label="排序與瀏覽方式" aria-expanded="${!!S.wtOpen}">${medal('wall',!!S.wtOpen)}</button></div>${cmpBanner()}${S.addOpen?`<div class="addf"><label>選圖<input id="af" type="file" accept="image/*" multiple></label><label>這張是第幾話<input id="an" type="number" min="0" max="${D.eps.length}" inputmode="numeric" value="${lastWritten()}"></label><div class="chips"><button class="chip" id="ag">加到圖片牆</button><button class="chip" id="ac">取消</button></div></div>`:''}${S.wtOpen?`<div class="wtool">${seg('o',[['old','舊話在前'],['new','新話在前']])}${seg('v',[['grid','方格'],['fall','瀑布'],['big','大圖']])}${seg('g',[[0,'不分組'],[1,'按話分組']])}${cmpTool()}${wfTool()}</div>`:''}${wfSum(all.length)}${body}</div><button class="fab wl-pearl" id="add" aria-label="${S.addOpen?'收起加圖表單':'加一張圖'}" aria-expanded="${!!S.addOpen}" title="${S.addOpen?'收起加圖表單':'加一張圖'}">${pearlMd(!!S.addOpen)}</button>`}
+function wfTool(){const cnt={};D.wall.forEach(w=>{if(!hidden(w.n))ipGet(w.src).forEach(id=>cnt[id]=(cnt[id]||0)+1)});const ps=D.ppl.map((p,i)=>({p,i})).sort((a,b)=>(cnt[b.p.id]||0)-(cnt[a.p.id]||0)||a.i-b.i).map(x=>x.p),last=D.eps.length-1;
+ return `<div class="wf-host"><div class="wf-lab">只看誰</div><div class="wf-pr"><button class="wf-pc wf-all${WF.person?'':' on'}" data-wfp="" aria-pressed="${!WF.person}">全部人物</button>${ps.map(p=>`<button class="wf-pc${WF.person===p.id?' on':''}" data-wfp="${esc(p.id)}" aria-pressed="${WF.person===p.id}">${wdR(p,30)}<span>${esc(p.name)}</span></button>`).join('')}</div>
+ <div class="wf-lab">劇情線</div><select class="wf-sel" id="wfa" aria-label="只看哪條劇情線"><option value="">全部劇情線</option>${D.arcs.map(a=>`<option value="${esc(a.id)}"${WF.arc===a.id?' selected':''}>${esc(a.name)}</option>`).join('')}</select>
+ <div class="wf-lab">跳到</div><div class="wf-jp">第<input id="wfn" type="number" min="0" max="${last}" inputmode="numeric" placeholder="話" aria-label="跳到第幾話">話<button class="chip" id="wfg">前往</button><span class="wf-msg" id="wfm" role="status"></span></div></div>`}
+function wfSum(n){if(!wfOn())return '';const pn=WF.person&&(D.ppl.find(p=>p.id===WF.person)||{}).name,an=WF.arc&&(arcBy(WF.arc)||{}).name,unt=D.wall.filter(w=>!hidden(w.n)&&wfArcOk(w)&&!ipGet(w.src).some(id=>D.ppl.some(p=>p.id===id))).length;
+ return `<div class="wf-sum"><span>只看</span>${WF.person?`<button class="chip on" data-wfx="p" aria-label="取消只看${esc(pn)}">${esc(pn)}　✕</button>`:''}${WF.arc?`<button class="chip on" data-wfx="a" aria-label="取消只看${esc(an)}">${esc(an)}　✕</button>`:''}<b>${n} 張</b>${WF.person?`<span class="wf-note">還有 ${unt} 張沒標過人物，${WF.incl?'已一起顯示':'沒有列進來'}。<button class="chip" data-wfx="i">${WF.incl?'不看沒標的':'連沒標的一起看'}</button></span>`:''}</div>`}
 function bindWall(){const L=wallList().map(w=>({p:w.src,n:w.n}));$$('.tile').forEach(b=>b.onclick=()=>CMP.a?openCmp(CMP.a,L[+b.dataset.k]):openLB(L,+b.dataset.k,{go:true,crop:true}));cmpBind();$$('[data-go]').forEach(b=>b.onclick=()=>go('ep-'+b.dataset.go));
  $$('[data-wk]').forEach(b=>b.onclick=()=>{const k=b.dataset.wk,v=b.dataset.wv;WV[k]=k==='g'?+v:v;lsSet('wallv',JSON.stringify(WV));const y=scrollY;render(true);scrollTo(0,y)});
- $('#wvt').onclick=()=>{S.wtOpen=!S.wtOpen;const y=scrollY;render(true);scrollTo(0,y)};$('#add').onclick=()=>{S.addOpen=true;render()};const g=$('#ag');if(g){g.onclick=async()=>{const f=await cropSeq([...$('#af').files]);if(!f.length)return;const n=Math.min(+$('#an').value||0,D.eps.length);S.addOpen=false;await addImages(n,f);render(true)};$('#ac').onclick=()=>{S.addOpen=false;render()}}}
+ $('#wvt').onclick=()=>{S.wtOpen=!S.wtOpen;const y=scrollY;render(true);scrollTo(0,y)};$('#add').onclick=()=>{const was=!!S.addOpen;S.addOpen=!was;const y=scrollY;render(true);scrollTo(0,y);if(!was)scrollTo({top:0,behavior:'smooth'})};
+ const wfRe=()=>{wfSave();const r=$('.wf-pr'),x=r?r.scrollLeft:0,y=scrollY;render(true);scrollTo(0,y);const r2=$('.wf-pr');if(r2)r2.scrollLeft=x};
+ $$('[data-wfp]').forEach(b=>b.onclick=()=>{WF.person=b.dataset.wfp;if(!WF.person)WF.incl=false;wfRe()});
+ const wa=$('#wfa');if(wa)wa.onchange=()=>{WF.arc=wa.value;wfRe()};
+ $$('[data-wfx]').forEach(b=>b.onclick=()=>{const a=b.dataset.wfx;if(a==='p'){WF.person='';WF.incl=false}if(a==='a')WF.arc='';if(a==='i')WF.incl=!WF.incl;wfRe()});
+ const wg=$('#wfg');if(wg){const run=()=>{const v=$('#wfn').value,n=v===''?NaN:+v,m=$('#wfm');$$('.tile.wf-hit').forEach(t=>t.classList.remove('wf-hit'));let hit=null,bn=1e9;if(n>=0)L.forEach((z,k)=>{if(z.n>=n&&z.n<bn){bn=z.n;hit=k}});const t=hit==null?null:$(`.tile[data-k="${hit}"]`);if(!t){m.textContent=n>=0?'這一話沒有符合的圖':'請輸入話數';return}m.textContent='';t.classList.add('wf-hit');t.scrollIntoView({block:'center',behavior:'smooth'});setTimeout(()=>t.classList.remove('wf-hit'),2000)};wg.onclick=run;$('#wfn').onkeydown=e=>{if(e.key==='Enter')run()}}
+ const g=$('#ag');if(g){g.onclick=async()=>{const f=await cropSeq([...$('#af').files]);if(!f.length)return;const n=Math.min(+$('#an').value||0,D.eps.length);S.addOpen=false;await addImages(n,f);render(true)};$('#ac').onclick=()=>{S.addOpen=false;render()}}}
 /* timeline */
 function statsBar(){const sel=D.stats.find(t=>t.k===S.stat),say=sel&&!/^第|：/.test(sel.note)?sel.note:'';return `<div class="stb"><div class="stg">${D.stats.map(t=>`<button class="st ${t.k===S.stat?'on':''}" data-st="${t.k}" aria-pressed="${t.k===S.stat}"><b>${t.eps.filter(n=>!hidden(n)).length}</b><span>${t.k}</span></button>`).join('')}</div>${sel?(say?`<p class="stn">${esc(say)}</p>`:''):'<p class="stn">點一個，那幾話會開在藤蔓上。</p>'}</div>`}
 const arcIc=a=>a.kind==='main'?`<svg class="ic" viewBox="0 0 60 60" aria-hidden="true">${lily(30,30,23,a.start_ep*7)}</svg>`:`<svg class="ic wide" viewBox="0 0 92 60" aria-hidden="true"><path d="M30 0C32 22 48 30 66 29" fill="none" stroke="#a6c2ff" stroke-opacity=".75" stroke-width="1.5"/>${blossom(74,29,10,a.start_ep*5)}</svg>`;
@@ -2151,7 +2253,7 @@ window.studyZoom=i=>{const d=document.createElement('dialog');d.className='sr-zo
 const SHK='@shop:',SHS=[['got','已到貨'],['buy','代購中'],['ship','運送中'],['want','想買']],SHN=['空島浪漫譚','ピッコマくじ','Romance Fantasy'],SHF=['1月 空島','4月 くじ','10月 RF'];
 const shSt=v=>(SHS.find(x=>x[0]===v)||SHS[0])[1];
 const shEvI=id=>/^b[0-2]$/.test(id)?+id[1]:-1;
-const shEvN=id=>shEvI(id)>=0?SHN[shEvI(id)]:((evAll().find(e=>e.id===id)||{}).n||'其他');
+const shEvN=id=>id==='vol'?'單行本':shEvI(id)>=0?SHN[shEvI(id)]:((evAll().find(e=>e.id===id)||{}).n||'其他');
 const shDay=s=>typeof s==='string'&&/^\d{4}-\d{2}(-\d{2})?$/.test(s);
 function shClean(it){const o={};if(typeof it.n==='string'&&it.n.trim())o.n=it.n;['p','q','sh','by','k','g','x'].forEach(f=>{if(typeof it[f]==='string')o[f]=it[f]});
  if(it.dt!==undefined)o.dt=(Array.isArray(it.dt)?it.dt:[it.dt]).filter(shDay);if(typeof it.ad==='string')o.ad=it.ad;if(SHS.some(s=>s[0]===it.st))o.st=it.st;
@@ -2191,12 +2293,22 @@ function shEdit(it){const f=(k,l,v,ph='',t='text')=>`<label class="tw-f"><span>$
  <label class="tw-f"><span>吐槽</span><textarea class="edi shp-x" data-sf="x" rows="3" placeholder="想說什麼都可以">${esc(it.x||'')}</textarea></label>
  ${f('ep','跟哪幾話有關',(it.ep||[]).join('、'),'例如 45、123')}
  <div class="shp-act"><button class="chip" data-shdel>刪除這件</button><button class="edb" data-shdone>完成</button></div>`}
-function vShop(){const L=shopAll(),fs=S.shFs||'all',fe=S.shFe||'all',V=L.filter(x=>(fs==='all'||x.st===fs)&&(fe==='all'||x.ev===fe)),it=S.shopSel&&L.find(x=>x.id===S.shopSel);
+/* 單行本 shelf: items are ordinary @shop: items with k:'單行本' and ev:'vol' (no new keys); the shelf grows with however many there are */
+const volN=n=>{const m=/第\s*(\d+)\s*卷/.exec(n||'');return m?+m[1]:null},isVol=x=>x.k==='單行本';
+const volSort=L=>L.filter(isVol).sort((a,b)=>{const x=volN(a.n),y=volN(b.n);return (x==null)-(y==null)||(x==null?0:x-y)||(a.c||0)-(b.c||0)});
+function vShop(){const L0=shopAll(),L=L0.filter(x=>!isVol(x)),VL=volSort(L0),fs=S.shFs||'all',fe=S.shFe||'all',V=L.filter(x=>(fs==='all'||x.st===fs)&&(fe==='all'||x.ev===fe)),it=S.shopSel&&L0.find(x=>x.id===S.shopSel),itv=!!it&&isVol(it);
  const evs=[['all','全部'],...G.events.map((e,i)=>['b'+i,SHF[i]]),...[...new Set(L.map(x=>x.ev))].filter(k=>!evIsB(k)).map(k=>[k,shEvN(k)])],sts=[['all','全部'],...SHS.filter(s=>s[0]==='got'||s[0]==='buy'||L.some(x=>x.st===s[0]))];
  const seg=(k,cur,opts)=>`<div class="seg2 shp-seg">${opts.map(([v,l])=>`<button class="${cur===v?'on':''}" data-shf="${k}" data-v="${esc(v)}">${esc(l)}</button>`).join('')}</div>`;
+ const one=it?`<div class="sr-summary-paper shp-one" id="shone">${S.shopEd?shEdit(it):shDetail(it,true)}</div>`:'',vo=!!S.volOpen,got=VL.filter(x=>x.st==='got').length,
+ flt=[fe!=='all'&&(evs.find(e=>e[0]===fe)||[])[1],fs!=='all'&&(sts.find(e=>e[0]===fs)||[])[1]].filter(Boolean).join('・'),
+ vc=x=>`<button class="vol-c${x.st==='got'?'':' vol-dim'}${it&&it.id===x.id?' on':''}" data-shop="${esc(x.id)}" aria-label="${esc(x.n)}，${shSt(x.st)}">${shPic(x,'vol-i')}<b>${esc(x.n)}</b>${x.st==='got'?'':`<small>${shSt(x.st)}</small>`}</button>`;
  return studyTop('書房　／　收藏櫃')+`<section class="sr-summary shp-cab"><div class="sr-heading"><span class="sr-kicker">二〇二六 · 週邊</span><h1 class="logo">收藏櫃</h1><p>${L.length} 項，點一項看照片和吐槽</p>${spray(180,130,41,'right:0;top:10px')}</div>
- <div class="shp-fil">${seg('shFe',fe,evs)}${seg('shFs',fs,sts)}</div>
- ${it?`<div class="sr-summary-paper shp-one" id="shone">${S.shopEd?shEdit(it):shDetail(it,true)}</div>`:''}
+ <div class="vol-shelf"><button class="vol-hd" data-volt aria-expanded="${vo}"><span class="vol-t">單行本</span><small>已收 ${got} 卷</small><small class="vol-tg">${vo?'收合 ︿':'全部 ﹀'}</small></button>
+ <div class="vol-row${vo?' vol-open':''}">${VL.map(vc).join('')}<button class="vol-c vol-plus" data-volnew aria-label="新增下一卷"><span class="vol-pi" aria-hidden="true">＋</span><b>新增下一卷</b></button></div></div>
+ ${itv?one:''}
+ <div class="vol-hd2"><span class="vol-t">週邊</span><small>${flt?'只看：'+esc(flt):L.length+' 項'}</small><button class="wl-gem" data-shgem aria-label="篩選" aria-expanded="${!!S.shfOpen}">${medal('wall',!!S.shfOpen)}</button></div>
+ ${S.shfOpen?`<div class="wtool vol-tool"><div class="shp-fil">${seg('shFe',fe,evs)}${seg('shFs',fs,sts)}</div></div>`:''}
+ ${it&&!itv?one:''}
  <div class="shp-grid">${V.map(x=>`<button class="shp-card${it&&it.id===x.id?' on':''}" data-shop="${esc(x.id)}">${shPic(x,'shp-th')}<b>${esc(x.n)}</b><small>${esc(x.p||'')}${x.p?'・':''}${shSt(x.st)}</small></button>`).join('')}<button class="shp-card shp-plus" data-shnew="${fe==='all'?'b2':esc(fe)}">＋<small>新增一件</small></button></div>
  <button class="sr-return" onclick="bk('study')">‹ 返回書房</button></section>`}
 /* cost record: cl = [[text, NT$ text],..]; rt = rate; tot '' = add up cl */
@@ -2219,7 +2331,7 @@ function costEdit(i){const c=evCost(i),yen=costYen(i),sug=c.rt&&yen?Math.round(y
  ${i===2?`<label class="tw-f"><span>書房首頁底下那行備註</span><textarea class="edi shp-x" data-cf="tn" rows="2">${esc(tn)}</textarea></label>${E.kinds[EVK+'b2']&&typeof E.kinds[EVK+'b2'].tn==='string'?'<button class="chip" data-cauto>恢復自動備註</button>':''}`:''}
  <div class="sr-page-total"><small>${esc(G.events[i].sumL)}</small><strong><span>NT$</span> <b class="shp-tot">${esc(c.tot)}</b></strong></div>
  <div class="shp-act"><span></span><button class="edb" data-cdone>完成</button></div>`}
-function bindShop(){const m=$('#m'),redo=sc=>{const y=scrollY;render(true);scrollTo(0,y);if(sc){const t=$(sc);if(t){const r=t.getBoundingClientRect();if(r.top<0||r.top>innerHeight*.55)t.scrollIntoView({block:'start'})}}};
+function bindShop(){const m=$('#m'),redo=sc=>{const y=scrollY,vx=(m.querySelector('.vol-row')||{}).scrollLeft||0;render(true);scrollTo(0,y);const vr=$('#m .vol-row');if(vr&&vx)vr.scrollLeft=vx;if(sc){const t=$(sc);if(t){const r=t.getBoundingClientRect();if(r.top<0||r.top>innerHeight*.55)t.scrollIntoView({block:'start'})}}};
  const cur=()=>shopAll().find(x=>x.id===S.shopSel),one=()=>S.shopSel&&(location.hash==='#study-shop'?'#shone':'.shp-left');
  m.querySelectorAll('[data-shop]').forEach(b=>b.onclick=()=>{if(b.dataset.shop==='')return;S.shopSel=b.dataset.shop;S.shopEd=0;S.shopPic=0;redo(one())});
  m.querySelectorAll('[data-shf]').forEach(b=>b.onclick=()=>{S[b.dataset.shf]=b.dataset.v;redo()});
@@ -2230,6 +2342,10 @@ function bindShop(){const m=$('#m'),redo=sc=>{const y=scrollY;render(true);scrol
  m.querySelectorAll('[data-shzoom]').forEach(b=>b.onclick=()=>{const it=cur();if(it)openLB((it.im||[]).slice(),+b.dataset.shzoom)});
  m.querySelectorAll('[data-shnew]').forEach(b=>b.onclick=()=>{const g=b.dataset.shnew,id='u'+Date.now().toString(36),ev=g||'b2',e=G.events[shEvI(ev)],gp=e&&e.groups&&e.groups.length?(S.shopGrp||0):0;
   shPut(id,{n:'新的週邊',ev,g:e&&e.groups&&e.groups[gp]?e.groups[gp].t:'',p:'',q:'',sh:'',dt:[],ad:'',by:'',k:'',st:'got',im:[],x:'',ep:[],c:Date.now()});S.shopSel=id;S.shopEd=1;S.shopPic=0;redo(one())});
+ m.querySelectorAll('[data-volt]').forEach(b=>b.onclick=()=>{S.volOpen=!S.volOpen;redo()});
+ m.querySelectorAll('[data-shgem]').forEach(b=>b.onclick=()=>{S.shfOpen=!S.shfOpen;redo()});
+ m.querySelectorAll('[data-volnew]').forEach(b=>b.onclick=()=>{const mx=shopAll().filter(isVol).reduce((s,x)=>Math.max(s,volN(x.n)||0),0),id='u'+Date.now().toString(36);
+  shPut(id,{n:'第 '+(mx+1)+' 卷',k:'單行本',ev:'vol',g:'',p:'',q:'',sh:'',st:'got',dt:[],ad:'',by:'',im:[],x:'',ep:[],c:Date.now()});S.shopSel=id;S.shopEd=1;S.shopPic=0;redo(one())});
  m.querySelectorAll('[data-shnewg]').forEach(b=>b.onclick=()=>{const [ev,gi]=b.dataset.shnewg.split('|'),e=G.events[shEvI(ev)],id='u'+Date.now().toString(36);
   shPut(id,{n:'新的週邊',ev,g:e.groups[+gi]?e.groups[+gi].t:'',p:'',q:'',sh:'',dt:[],ad:'',by:'',k:'',st:'got',im:[],x:'',ep:[],c:Date.now()});S.shopSel=id;S.shopEd=1;S.shopPic=0;redo(one())});
  const it=cur();
