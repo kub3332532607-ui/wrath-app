@@ -722,7 +722,7 @@ select.edi[hidden]{display:none}
 .fd-sum{margin:6px 6px 0;color:var(--mute);font-size:.88rem}.fd-sum b{color:var(--goldt);font-weight:400;font-family:var(--t)}
 .fd-mb{min-height:44px}
 .fd-hint{margin:10px 6px;color:var(--mute);font-size:.9rem}
-.wtool.fd-wt{margin:0;grid-template-columns:minmax(0,1fr)}.fd-wt .seg2 button{flex:1 1 0;min-width:0;padding:0 2px;letter-spacing:.02em}
+.wtool.fd-wt{margin:0;grid-template-columns:minmax(0,1fr)}.wtool.fd-wt .seg2 button{flex:1 1 auto;min-width:0;padding:0 6px;white-space:nowrap;letter-spacing:.02em}
 .fd-sec{display:grid;gap:14px}
 .fd-sh{display:flex;align-items:center;gap:16px;margin:12px 0 0;font-family:var(--t);font-weight:400;font-size:1rem;letter-spacing:.3em;color:var(--goldt)}
 .fd-sh::before,.fd-sh::after{content:"";flex:1;height:1px;background:color-mix(in srgb,var(--gold) 55%,transparent)}
@@ -1393,7 +1393,7 @@ async function dbGet(k){try{const d=await db();return await new Promise((ok,no)=
 async function dbSet(k,v){try{const d=await db();await new Promise((ok,no)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error||new Error('idb error'));t.onabort=()=>no(t.error||new Error('idb abort'))});return true}catch(e){return false}}
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v);return true}catch(e){return false}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
 /* private repo: this page holds no notes or pictures, they are read with the device's key */
-const BASE='data/base-9493b8ad21a3.json',VER='2026.11.18 01:13 · 02fc066';
+const BASE='data/base-9493b8ad21a3.json',VER='2026.11.18 14:49 · 5ac70ec';
 let CFG=null,TK=lsGet('tk');
 const api=(p,o={})=>fetch(`${CFG.api??'https://api.github.com'}/repos/${CFG.owner}/${CFG.repo}/contents/${p}`,{cache:'no-store',...o,headers:{Authorization:`Bearer ${TK}`,...o.headers}});
 const rawGet=p=>api(p,{headers:{Accept:'application/vnd.github.raw+json'}});
@@ -1512,13 +1512,13 @@ function vEp(n){const e=D.eps[n],hide=hidden(n)&&e.st!=='todo',edit=!hide&&(S.ed
  const ava=hide?fl('ehf'):`<button class="avbtn ehav" id="avb" title="換這話的頭像" aria-label="換這話的頭像">${u?`<img class="ehi" src="${u}" alt="">${fl('ehb')}`:fl('ehf')}</button>`;
  const sub=hide?'':`${e.lb?`<p class="ehlb">${esc(e.lb)}</p>`:''}${edit?`<button type="button" class="se-e se-hs" data-sec="arc" aria-expanded="${S.sec==='arc'}">${e.ar.length?esc(e.ar.join('・')):'劇情線'}</button>`:e.ar.length?`<span class="hn">${esc(e.ar.join('・'))}</span>`:''}${S.av[n]?'<button class="rs" id="avr">改回預設</button>':''}`;
  const head=`<header class="ehd${edit?' se-hd':''}"><div class="ehl"><button class="ib" onclick="bk('home')" aria-label="返回上一頁">←</button><button class="ib" id="ep" aria-label="上一話" ${n?'':'disabled'}>‹</button></div><div class="ehc">${ava}<b class="ehn">${nmM(n)}</b></div><div class="ehr"><button class="ib" id="en" aria-label="下一話" ${n<D.eps.length-1?'':'disabled'}>›</button>${hide?'':`<button class="edb" id="edt">${edit?'完成':'編輯'}</button>`}</div>${sub?`<div class="ehs">${sub}</div>`:''}</header>`;
- if(hide)return `<div class="col">${head}<div class="spo" style="margin-top:20px">防劇透：這話在你的手鐲進度之後。</div></div>`;
+ if(hide)return `<div class="col">${head}<div class="spo" style="margin-top:20px">防劇透：這話超過你的閱讀進度，內容已收起。</div></div>`;
  if(edit)return `<div class="col">${head}${edBody(e,n)}</div>`;
  /* summary card, then the thread: first reaction, the episode's pictures, the rest of the reactions — each hung on the chain */
  const qs=(e.qt||[]).map((q,k)=>({...q,k})),xq=f=>qvItems(qs.filter(q=>f(q.a)),n),ph=pics.map(s=>`<figure class="eg-photo eg-glass" data-ir="${irGet(s)}"><img src="${s}" alt="${nm(n)}的圖"><figcaption>${nm(n)}附圖</figcaption></figure>`),
  items=r.length?[...r.flatMap((x,i)=>[...xq(a=>a===i),egNote(x,rvShow(e,i)),...(i?[]:ph)]),...xq(a=>a>=r.length)]:[...xq(()=>true),...ph];
  return `<div class="col">${head}<article class="eg-summary eg-glass">${EGC}
- ${(()=>{const L=e.su?e.su.split(String.fromCharCode(10)).filter(Boolean):e.pl;return L.length?L.map(x=>`<p class="bd2 full">${lk(x)}</p>`).join(''):'<p class="bd2 full" style="color:var(--mute)">這話還沒寫。</p>'})()}
+ ${(()=>{const L=e.su?e.su.split(String.fromCharCode(10)).filter(Boolean):e.pl;return L.length?L.map(x=>`<p class="bd2 full">${lk(x)}</p>`).join(''):'<p class="bd2 full" style="color:var(--mute)">這話還沒寫摘要。</p>'})()}
  ${castBlock(n)}${EGC2}</article>
  ${items.length?`<section class="eg-thread" id="egth" aria-label="吐槽串">${EGB}<div class="eg-chain" aria-hidden="true"></div>${items.map((c,i)=>egNode(i,c)).join('')}<span class="eg-tail" aria-hidden="true">${medal('mode',false)}</span></section>`:'<p class="spo" style="margin-top:14px">這話還沒有吐槽。</p>'}</div>`}
 /* ---- glass cards on a pearl chain (design v16m) ---- */
@@ -1604,7 +1604,7 @@ function arcJoin(n,v,k){const a=arcByName(v);
 /* take episode n out of an arc: only from either end, since an arc is one stretch of episodes */
 function arcLeave(n,id){const a=arcBy(id);if(!a)return false;const s=a.start_ep,t=a.to,L=`「${a.name}」`;
  if(s===n&&t===n){if(!confirm(`${L}只有這一話，移出就等於刪除這條劇情線。要刪除嗎？`))return false;arcPut(a,{d:1});return true}
- if(n!==s&&n!==t){alert(`${nm(n)}在${L}的中間（${nm(s)}～${nm(t)}），移出會把它切成兩段。\n請到時間線頁改起訖。`);return false}
+ if(n!==s&&n!==t){alert(`${nm(n)}在${L}的中間（${nm(s)}～${nm(t)}），無法單獨移出。\n可到藤蔓劇情線調整涵蓋的話數。`);return false}
  if(n===s){arcPut(a,{s:n+1});return true}
  if(a.end_ep!=null){arcPut(a,{e:n-1});return true}
  const x=epEdit(n);x.ar=x.ar.filter(v=>v!==id);x.t=Date.now();touch();persist();rebuild();return true}
@@ -1689,7 +1689,7 @@ const seRow=(r,i,all,n)=>{const q=r.t==='q',c=S.cur&&S.cur.n===n&&S.cur.i===i,L=
 /* the episode's arcs as chips: × takes it out, the field below adds one; names, from/to and notes are edited on the timeline page */
 const arcField=(e,n)=>`<div class="tw-f"><div class="chips arc-in">${e.ai.map((id,i)=>`<span class="chip arc-c">${esc(e.ar[i])}<button class="arc-x" data-out="${esc(id)}" aria-label="把這話移出「${esc(e.ar[i])}」">×</button></span>`).join('')||'<span class="hn">這話還沒有劇情線</span>'}</div>
  <div class="arc-add"><input class="edi" id="eda" type="text" name="arc-add" autocomplete="off" list="edal" placeholder="加入一條：選現有的或打新名字" aria-label="加入劇情線" enterkeyhint="done"><button class="chip" id="edag">加入</button></div><select class="edi" id="edk" aria-label="新劇情線的種類" hidden><option value="side">新的是支線</option><option value="main">新的是主線</option></select><datalist id="edal">${D.arcs.filter(a=>!e.ai.includes(a.id)).map(x=>`<option value="${esc(x.name)}">`).join('')}</datalist>
- <button class="hn arc-go" id="edgo">到時間線改 ›</button></div>`;
+ <button class="hn arc-go" id="edgo">到藤蔓劇情線編輯 ›</button></div>`;
 /* tick what this episode has (kiss, flower…): the stats above the timeline count from these */
 const sgField=n=>{const on=sgNow(n);return `<div class="tw-f"><span>統計</span><div class="chips sg-in">${BS.map(t=>`<button type="button" class="chip sg-c" data-sg="${esc(t.k)}" aria-pressed="${on.includes(t.k)}">${esc(t.k)}</button>`).join('')}</div></div>`};
 const SESEC=['su','pp','more'];
@@ -1769,7 +1769,7 @@ function bindEdit(n){const t=$('#edt');if(t)t.onclick=()=>{const on=$('.edm');if
   if(!b)return;const a=b.dataset.act;
   if(a==='sp'){commit(rows,cur,!(S.cur&&S.cur.n===n&&S.cur.i===i&&S.cur.sp));return}
   if(a==='up'||a==='dn'){const j=i+(a==='up'?-1:1);if(j<0||j>=rows.length)return;[rows[i],rows[j]]=[rows[j],rows[i]];commit(rows,cur);return}
-  if(a==='typ'){if(cur.t==='r'){if((cur.im||[]).length){alert('這則吐槽有圖，台詞不能放圖。請先移除圖，再改類型。');return}rows[i]={t:'q',x:cur.x,sp:[]}}else rows[i]={t:'r',x:cur.x,l:false,im:[],nw:true};commit(rows,rows[i]);return}
+  if(a==='typ'){if(cur.t==='r'){if((cur.im||[]).length){alert('這則吐槽有附圖。先移除附圖，就能改成台詞。');return}rows[i]={t:'q',x:cur.x,sp:[]}}else rows[i]={t:'r',x:cur.x,l:false,im:[],nw:true};commit(rows,rows[i]);return}
   if(a==='del'){if(seNe(cur)&&!confirm(cur.t==='q'?'刪掉這則台詞？':'刪掉這則吐槽和它的圖？'))return;rows.splice(i,1);commit(rows,rows[Math.max(0,i-1)]);return}});
  r.addEventListener('change',async e=>{const f=e.target;if(f.type!=='file'||!f.files.length)return;const i=idx(f),fs=await cropSeq([...f.files].slice(0,4));f.value='';if(!fs.length)return;let fail=0,sf=0,ps=[];for(const fl of fs){try{ps.push(await storeImg(await shrink(fl)))}catch(e){e&&e.st?sf++:fail++}}
   const rows=seRead(),cur=rows[i];cur.im=[...(cur.im||[]),...ps.filter(p=>!(cur.im||[]).includes(p))].slice(0,4);commit(rows,cur);if(n>S.read)setRead(n);if(sf&&!lsFull)sync(IMG_FAIL,true);if(fail)sync(`有 ${fail} 張圖讀不出來，換成 JPG 或 PNG 再試`,true)})}
@@ -2033,7 +2033,7 @@ function vWall(){const all=wallList(),total=D.wall.filter(w=>!hidden(w.n)).lengt
  tile=(w,k)=>`<button class="tile" data-k="${k}" aria-label="放大${nm(w.n)}的圖"><img src="${w.src}" alt="${nm(w.n)}的圖" loading="lazy"><em>${w.n}</em></button>`;
  let body;if(!all.length&&wfOn())body=`<div class="wf-empty" role="status"><span>${WF.person&&!WF.incl?'還沒有圖標過這個人。點開一張圖，按『有誰』就能標。':'這個條件下沒有圖。'}</span>${WF.person&&!WF.incl?'<button class="chip" data-wfx="i">連沒標的一起看</button>':''}</div>`;else if(WV.g){const gs=[];all.forEach((w,k)=>{const l=gs[gs.length-1];if(l&&l.n===w.n)l.t.push(tile(w,k));else gs.push({n:w.n,t:[tile(w,k)]})});body=gs.map(x=>`<section class="wgp"><h3 class="wgh"><button data-go="${x.n}">${nm(x.n)}</button><span>${x.t.length} 張</span></h3>${wallBox(x.t)}</section>`).join('')}
  else body=wallBox(all.map(tile));
- return `<div class="pg"><div class="hd"><h2 class="logo">圖片牆</h2><span>${wfOn()?`${all.length} / ${total}`:all.length} 張・點一張放大</span>${spray(110,70,41,'right:-12px;top:-12px')}<button class="wl-gem" id="wvt" aria-label="排序與瀏覽方式" aria-expanded="${!!S.wtOpen}">${medal('wall',!!S.wtOpen)}</button></div>${cmpBanner()}${S.addOpen?`<div class="addf"><label>選圖<input id="af" type="file" accept="image/*" multiple></label><label>這張是第幾話<input id="an" type="number" min="0" max="${D.eps.length}" inputmode="numeric" value="${lastWritten()}"></label><div class="chips"><button class="chip" id="ag">加到圖片牆</button><button class="chip" id="ac">取消</button></div></div>`:''}${S.wtOpen?`<div class="wtool">${seg('o',[['old','舊話在前'],['new','新話在前']])}${seg('v',[['grid','方格'],['fall','瀑布'],['big','大圖']])}${seg('g',[[0,'不分組'],[1,'按話分組']])}${cmpTool()}${wfTool()}</div>`:''}${wfSum(all.length)}${body}</div><button class="fab wl-pearl" id="add" aria-label="${S.addOpen?'收起加圖表單':'加一張圖'}" aria-expanded="${!!S.addOpen}" title="${S.addOpen?'收起加圖表單':'加一張圖'}">${pearlMd(!!S.addOpen)}</button>`}
+ return `<div class="pg"><div class="hd"><h2 class="logo">圖片牆</h2><span>${wfOn()?`${all.length} / ${total}`:all.length} 張・點一張放大</span>${spray(110,70,41,'right:-12px;top:-12px')}<button class="wl-gem" id="wvt" aria-label="排序與瀏覽方式" aria-expanded="${!!S.wtOpen}">${medal('wall',!!S.wtOpen)}</button></div>${cmpBanner()}${S.addOpen?`<div class="addf"><label>選圖片（可多選）<input id="af" type="file" accept="image/*" multiple></label><label>加到第幾話<input id="an" type="number" min="0" max="${D.eps.length}" inputmode="numeric" value="${lastWritten()}"></label><div class="chips"><button class="chip" id="ag">加到圖片牆</button><button class="chip" id="ac">取消</button></div></div>`:''}${S.wtOpen?`<div class="wtool">${seg('o',[['old','舊話在前'],['new','新話在前']])}${seg('v',[['grid','方格'],['fall','瀑布'],['big','大圖']])}${seg('g',[[0,'不分組'],[1,'按話分組']])}${cmpTool()}${wfTool()}</div>`:''}${wfSum(all.length)}${body}</div><button class="fab wl-pearl" id="add" aria-label="${S.addOpen?'收起加圖表單':'加圖片'}" aria-expanded="${!!S.addOpen}" title="${S.addOpen?'收起加圖表單':'加圖片'}">${pearlMd(!!S.addOpen)}</button>`}
 function wfTool(){const cnt={};D.wall.forEach(w=>{if(!hidden(w.n))ipGet(w.src).forEach(id=>cnt[id]=(cnt[id]||0)+1)});const ps=D.ppl.map((p,i)=>({p,i})).sort((a,b)=>(cnt[b.p.id]||0)-(cnt[a.p.id]||0)||a.i-b.i).map(x=>x.p),last=D.eps.length-1;
  return `<div class="wf-host"><div class="wf-lab">只看誰</div><div class="wf-pr"><button class="wf-pc wf-all${WF.person?'':' on'}" data-wfp="" aria-pressed="${!WF.person}">全部人物</button>${ps.map(p=>`<button class="wf-pc${WF.person===p.id?' on':''}" data-wfp="${esc(p.id)}" aria-pressed="${WF.person===p.id}">${wdR(p,30)}<span>${esc(p.name)}</span></button>`).join('')}</div>
  <div class="wf-lab">劇情線</div><select class="wf-sel" id="wfa" aria-label="只看哪條劇情線"><option value="">全部劇情線</option>${D.arcs.map(a=>`<option value="${esc(a.id)}"${WF.arc===a.id?' selected':''}>${esc(a.name)}</option>`).join('')}</select>
@@ -2065,7 +2065,7 @@ const partCard=p=>`<div class="tr mn alp" data-pid="${esc(p.id)}"><svg class="ic
  <div class="alr"><label class="tw-f"><span>從第幾話</span><input class="edi" data-pf="s" type="number" inputmode="numeric" min="0" max="${D.eps.length-1}" value="${p.s}" aria-label="部從第幾話"></label><label class="tw-f"><span>到第幾話</span><input class="edi" data-pf="e" type="number" inputmode="numeric" min="0" max="${D.eps.length-1}" value="${p.e??''}" placeholder="還在連載" aria-label="部到第幾話，空白是還在連載"></label></div>
  <label class="tw-f"><span>結尾那行字</span><input class="edi" data-pf="x" value="${esc(p.x)}" placeholder="可空白，例如「第一部完結」" aria-label="部結尾那行字"></label>
  <div class="alf"><span class="hn alc">${partCov(p)}</span><button class="chip alpd">刪除這一部</button></div></div>`;
-function vLineEdit(){return `<div class="pg"><div class="hd"><h2 class="logo">時間線</h2><span id="alsub">改完一格就自動存，序章是 0，幕間從 ${actStart()} 起</span>${spray(110,70,21,'right:-6px;top:-10px')}</div>
+function vLineEdit(){return `<div class="pg"><div class="hd"><h2 class="logo">藤蔓劇情線</h2><span id="alsub">改完一格就自動存。請填全篇話數。序章填 0，幕間第 1 話填 ${actStart()}。</span>${spray(110,70,21,'right:-6px;top:-10px')}</div>
  <div class="lg">${statsBar()}<div class="vn" id="aled"><div class="lnb"><span class="hn">${D.parts.length} 個部・${D.arcs.length} 條劇情線</span><button class="edb" id="lne">完成</button></div>
  <div class="a3-ph"><h3 class="logo">部</h3><span>劇情頁最上層的大標題</span></div>${D.parts.map(partCard).join('')}<button class="tw-next aln" id="ptadd">＋ 新增一部</button>
  <div class="a3-ph"><h3 class="logo">劇情線</h3><span>主線與支線</span></div>${D.arcs.map(arcCard).join('')}<button class="tw-next aln" id="lnadd">＋ 新增劇情線</button></div></div></div>`}
@@ -2084,17 +2084,17 @@ function vLine(){if(S.lnEdit)return vLineEdit();const sel=D.stats.find(t=>t.k===
    tail=(done<R.e?`<div class="tr dim"><span class="tl1"><span>${done+1===R.e?nm(R.e):`${nm(done+1)}～${nm(R.e)}`}的劇情線還沒整理</span></span></div>`:'')+
     (p.e!=null&&p.e<=last?`<div class="tr dim mn"><svg class="ic" viewBox="0 0 60 60" aria-hidden="true">${lily(30,30,18,40)}</svg><span class="tl1"><span>${nm(p.e)}${p.x?'　'+esc(p.x):''}</span></span></div>`:`<div class="tr dim"><span class="tl1"><span>目前到${nm(R.e)}，還在連載</span></span></div>`)}
   return `<div class="a3-ph"><h3 class="logo">${esc(p.n)}</h3><span>${nmM(R.s)}${p.e==null?'起':'～'+nmM(R.e)}・${arcs.length} 條劇情線</span></div><div class="a3-col${arcs.length>3?' a3-two':''}">${rows}${tail}</div>`}).join('');
- return `<div class="pg"><div class="hd"><h2 class="logo">時間線</h2><span>由上往下讀，點一段就到那一話</span>${spray(110,70,21,'right:-6px;top:-10px')}</div>
+ return `<div class="pg"><div class="hd"><h2 class="logo">藤蔓劇情線</h2><span>由上往下讀，點一段就到那一話</span>${spray(110,70,21,'right:-6px;top:-10px')}</div>
  <div class="lg">${statsBar()}<div class="vn a3"><div class="lnb"><span></span><button class="edb" id="lne">編輯劇情線</button></div>${body}</div></div></div>`}
 function bindLine(){const t=$('#lne');if(t)t.onclick=()=>{if(S.lnEdit)document.activeElement?.blur?.();S.lnEdit=!S.lnEdit;const y=scrollY;render(true);scrollTo(0,y)};
  $$('[data-st]').forEach(b=>b.onclick=()=>{S.stat=S.stat===b.dataset.st?null:b.dataset.st;const y=scrollY;render();scrollTo(0,y)});if(S.lnEdit)return bindLineEdit();
  $$('button.tr').forEach(b=>b.onclick=()=>go('ep-'+b.dataset.n))}
 function bindLineEdit(){const box=$('#aled'),len=D.eps.length;
- const arcSync=()=>{$$('.ale').forEach(c=>{const a=arcBy(c.dataset.id),m=c.querySelector('.alc');if(a&&m)m.textContent=arcCov(a)});const t=$('#alsub');if(t)t.textContent=`改完一格就自動存，序章是 0，幕間從 ${actStart()} 起`;$$('.alp').forEach(c=>{const p=D.parts.find(x=>x.id===c.dataset.pid);if(p)c.querySelector('.alc').innerHTML=partCov(p)})};
+ const arcSync=()=>{$$('.ale').forEach(c=>{const a=arcBy(c.dataset.id),m=c.querySelector('.alc');if(a&&m)m.textContent=arcCov(a)});const t=$('#alsub');if(t)t.textContent=`改完一格就自動存。請填全篇話數。序章填 0，幕間第 1 話填 ${actStart()}。`;$$('.alp').forEach(c=>{const p=D.parts.find(x=>x.id===c.dataset.pid);if(p)c.querySelector('.alc').innerHTML=partCov(p)})};
  box.addEventListener('change',ev=>{const el=ev.target,f=el.dataset.pf,c=el.closest('.alp');if(!f||!c)return;const p=D.parts.find(x=>x.id===c.dataset.pid);if(!p)return;const v=el.value.trim(),
   back=t=>{el.value=f==='n'?p.n:f==='s'?p.s:f==='e'?(p.e??''):p.x;say(c,t)};let ch;
   if(f==='n'){if(!v)return back('名字不能空白');if(v!==p.n&&partByName(v))return back(`已經有一部叫「${v}」`);ch={n:v}}
-  else if(f==='s'||f==='e'){if(f==='e'&&v==='')ch={e:null};else{const x=Number(v);if(v===''||!Number.isInteger(x)||x<0||x>=len)return back(`請填 0～${len-1} 的整數`);const s2=f==='s'?x:p.s,e2=f==='e'?x:p.e;if(e2!=null&&e2<s2)return back('結束的話數不能比開始早');ch={[f]:x}}}
+  else if(f==='s'||f==='e'){if(f==='e'&&v==='')ch={e:null};else{const x=Number(v);if(v===''||!Number.isInteger(x)||x<0||x>=len)return back(`請填 0～${len-1} 之間的話數。序章填 0。`);const s2=f==='s'?x:p.s,e2=f==='e'?x:p.e;if(e2!=null&&e2<s2)return back('結束的話數不能比開始早');ch={[f]:x}}}
   else ch={x:v};
   say(c,'');partPut(p,ch);arcSync()});
  box.addEventListener('click',ev=>{const d=ev.target.closest('.alpd');if(!d)return;const c=d.closest('.alp'),p=D.parts.find(x=>x.id===c.dataset.pid);if(!p)return;
@@ -2104,7 +2104,7 @@ function bindLineEdit(){const box=$('#aled'),len=D.eps.length;
  const say=(c,t)=>{let m=c.querySelector('.alm');if(!m){m=document.createElement('p');m.className='alm';m.setAttribute('role','alert');c.append(m)}m.textContent=t;m.hidden=!t};
  box.addEventListener('change',ev=>{const el=ev.target,f=el.dataset.f,c=el.closest('.ale');if(!f||!c)return;const a=arcBy(c.dataset.id);if(!a)return;const v=el.value.trim(),back=t=>{el.value=f==='n'?a.name:f==='s'?a.start_ep:f==='e'?(a.end_ep??''):el.value;say(c,t)};let ch;
   if(f==='n'){if(!v)return back('名字不能空白');if(v!==a.name&&arcByName(v))return back(`已經有一條叫「${v}」`);ch={n:v}}
-  else if(f==='s'||f==='e'){if(f==='e'&&v==='')ch={e:null};else{const x=Number(v);if(v===''||!Number.isInteger(x)||x<0||x>=len)return back(`請填 0～${len-1} 的整數`);const s2=f==='s'?x:a.start_ep,e2=f==='e'?x:a.end_ep;if(e2!=null&&e2<s2)return back('結束的話數不能比開始早');ch={[f]:x}}}
+  else if(f==='s'||f==='e'){if(f==='e'&&v==='')ch={e:null};else{const x=Number(v);if(v===''||!Number.isInteger(x)||x<0||x>=len)return back(`請填 0～${len-1} 之間的話數。序章填 0。`);const s2=f==='s'?x:a.start_ep,e2=f==='e'?x:a.end_ep;if(e2!=null&&e2<s2)return back('結束的話數不能比開始早');ch={[f]:x}}}
   else if(f==='k')ch={k:v==='main'?'main':'side'};else ch={o:v};
   say(c,'');arcPut(a,ch);const b=arcBy(a.id);if(!b)return;
   if(f==='k'){const h=document.createElement('div');h.innerHTML=arcCard(b);c.replaceWith(h.firstElementChild)}else c.querySelector('.alc').textContent=arcCov(b)});
@@ -2573,7 +2573,7 @@ function medal(k,on){if(!GEMS[k])return pearlMd(on);const G=GEMS[k],N=16,pts=(r,
 /* settings: version, reading lock (this device only), notes backup */
 function vSettings(){const pend=dirty||upq.length;return `<div class="pg cfg"><div class="hd"><h2 class="logo">設定</h2>${spray(110,70,43,'right:-6px;top:-10px')}</div>
 <div class="cfg-k"><section class="card cfg-c cfg-r1"><h3>閱讀進度</h3><label class="cfg-l"><span class="cfg-t"><b>固定在最新話</b><small>打開後主頁的手鐲不能拖，每週新話一出就算讀到，不會再誤滑。只影響這台裝置。</small></span><input type="checkbox" id="stLock" role="switch"${LOCK?' checked':''}><i class="cfg-s" aria-hidden="true"></i></label></section>
-<section class="card cfg-c cfg-r2"><h3>搜尋</h3><label class="cfg-l"><span class="cfg-t"><b>人名互通</b><small>打一個名字，寫成其他名字的句子也一起找出來。只影響這台裝置。</small></span><input type="checkbox" id="stFd" role="switch"${fdAliasOn()?' checked':''}><i class="cfg-s" aria-hidden="true"></i></label></section>
+<section class="card cfg-c cfg-r2"><h3>搜尋</h3><label class="cfg-l"><span class="cfg-t"><b>一起搜尋人物別名</b><small>輸入完整人名，也會用這個人物的其他語言名稱和別名找筆記。只影響這台裝置。</small></span><input type="checkbox" id="stFd" role="switch"${fdAliasOn()?' checked':''}><i class="cfg-s" aria-hidden="true"></i></label></section>
 <section class="card cfg-c cfg-r5"><h3>版本</h3><dl class="cfg-v"><dt>程式</dt><dd>${esc(VER)}</dd><dt>資料</dt><dd>${esc(BASE.replace(/^data\/base-|\.json$/g,''))}</dd><dt>這台的筆記</dt><dd>${pend?'有修改等待上傳':'已和雲端一致'}</dd></dl></section></div><div class="cfg-k">${bkCard(pend)}
 <section class="card cfg-c cfg-r4"><h3>主頁封面</h3><p>換成自己的橫幅圖，也可以改回預設。電腦版只顯示中間較窄的一條。</p><img class="cv-pv" src="${D.cover}" alt="目前的封面"><div class="cfg-b"><button class="chip cv-b" id="stCv">換封面</button>${D.cover!==BC?'<button class="chip cv-b" id="stCvR">改回預設</button>':''}</div></section></div></div>`}
 function bindSettings(){bkdSeen();const sc=$('#stCv');if(sc)sc.onclick=openCvPick;const sr=$('#stCvR');if(sr)sr.onclick=()=>setCover(null);
@@ -2595,7 +2595,7 @@ function bkApply(){if(!BK||!BK.imp)return;const f=bkSave('_匯入前'),s=BK.df;E
 function bkCard(pend){const t=+lsGet('lastBk')||0,has=Object.keys(E.eps).length+Object.keys(E.kinds).length>0,day=Math.floor((Date.now()-t)/864e5),old=has&&(!t||day>=14),d=new Date(t),last=t?`${d.getMonth()+1}/${d.getDate()}（${day<1?'今天':day+' 天前'}）`:'還沒備份過';
  let pv='';if(BK&&BK.bad)pv=`<div class="cfg-pv" role="alert"><p>「${esc(BK.bad)}」不是這個 App 的筆記備份檔，沒有動任何資料。</p><div class="cfg-b"><button class="chip" id="bkNo">知道了</button></div></div>`;
  else if(BK){const s=BK.df,none=!s.add&&!s.upd;pv=`<div class="cfg-pv" role="group" aria-label="匯入預覽"><div class="cfg-pt"><b>準備匯入</b><small>${esc(BK.name)}</small></div>${none?'<p>備份裡沒有比這台新、或這台沒有的內容，不用匯入。</p>':`<dl class="cfg-v"><dt>新增</dt><dd><b>${s.add}</b> 筆・這台沒有的</dd><dt>更新</dt><dd><b>${s.upd}</b> 筆・備份比較新</dd><dt>保留</dt><dd><b>${s.keep}</b> 筆・這台比較新，不動</dd></dl><p>兩邊都有的，留時間較新的那份。按下「確定匯入」時，會先自動下載一份目前的資料。</p>`}<div class="cfg-b">${none?'':'<button class="chip pri" id="bkGo">確定匯入</button>'}<button class="chip" id="bkNo">${none?'知道了':'取消'}</button></div></div>`}
- return `<section class="card cfg-c cfg-bk cfg-r3"><h3>備份</h3><p>把這台裝置上的筆記與修改存成一個檔案，放在手機或電腦裡備用，需要時可以匯回來。</p><dl class="cfg-v"><dt>上次備份</dt><dd${old?' class="cfg-w"':''}>${last}</dd></dl>${old?`<p class="cfg-w" role="status">${t?`已經 ${day} 天沒備份了`:'還沒備份過'}，建議現在存一份。</p>`:''}<div class="cfg-b"><button class="chip" id="stBk">下載筆記備份</button><button class="chip" id="stIm">從備份檔匯入</button><input type="file" id="stFile" accept=".json,application/json" hidden><small id="stBm" role="status">${pend?'這台還有修改等待上傳；備份會包含它們。':''}</small></div><small class="bkd-g">備份檔只存文字；圖片另外存在雲端，不在這個檔案裡。</small>${pv}</section>`}
+ return `<section class="card cfg-c cfg-bk cfg-r3"><h3>備份</h3><p>把這台的筆記和修改下載成備份，需要時可以匯入。</p><dl class="cfg-v"><dt>上次備份</dt><dd${old?' class="cfg-w"':''}>${last}</dd></dl>${old?`<p class="cfg-w" role="status">${t?`已經 ${day} 天沒備份了`:'還沒備份過'}，建議現在存一份。</p>`:''}<div class="cfg-b"><button class="chip" id="stBk">下載筆記備份</button><button class="chip" id="stIm">從備份檔匯入</button><input type="file" id="stFile" accept=".json,application/json" hidden><small id="stBm" role="status">${pend?'這台還有修改等待上傳；備份會包含它們。':''}</small></div><small class="bkd-g">備份檔只存文字；圖片另外存在雲端，不在這個檔案裡。還沒上傳的圖，請等同步完成。</small>${pv}</section>`}
 const DM=[['home','主頁'],['search','搜尋'],['line','藤蔓劇情線'],['wall','圖片牆'],['goods','展覽'],['world','人物與王國']];
 function avSmall(){const a=latestAv();return a?`<img src="${a}" alt="">`:`<svg viewBox="-20 -20 40 40" aria-hidden="true">${lily(0,0,18)}</svg>`}
 function reportItem(){let len=D.eps.length;while(len>BE.length&&D.eps[len-1].st==='todo')len--;const t=D.eps.slice(0,len).filter(e=>e.st==='todo');return `<button class="dwr dwrp" aria-expanded="false">${pearlMd(false)}<span>向陛下報告</span></button><div class="dwsub" hidden>${t.length?`<button class="dwj" data-v="ep-${t[0].n}">補${nm(t[0].n)}<small>還有 ${t.length} 話待補</small></button>`:''}<button class="dwj" data-v="ep-${len}">＋ 新增${nm(len)}</button></div>`}
@@ -2621,7 +2621,7 @@ const ordList=a=>ordAsc()?a:[...a].reverse();
 const ordBtn=()=>{const a=ordAsc(),t=a?'舊到新':'新到舊';return `<button class="mode ord-b${a?' on':''}" id="ord" aria-pressed="${a}" aria-label="排序：${t}，按一下改成${a?'新到舊':'舊到新'}" title="排序：${t}（按一下切換）"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${a?'<path d="M7 20V5M3.5 8.5 7 5l3.5 3.5M13 6h4M13 12h6M13 18h8"/>':'<path d="M7 4v15M3.5 15.5 7 19l3.5-3.5M13 6h8M13 12h6M13 18h4"/>'}</svg></button>`};
 function ordFlip(){lsSet('ordAsc',ordAsc()?'0':'1');const y=scrollY;render(true);scrollTo(0,y)}
 /* ---- search page (fd-): menu entry "搜尋" -> #search; the text stays in memory (FD.q) while moving between pages; reads D only, writes nothing ---- */
-const FD={q:'',k:'all',lim:{}},FDL={su:'劇情',ar:'劇情線',lb:'標籤',rx:'吐槽',qt:'台詞'},FDK=[['all','全部'],['su','劇情'],['rx','吐槽'],['qt','台詞'],['wd','人物']],FDS=[['su','劇情'],['rx','吐槽'],['qt','台詞']];
+const FD={q:'',k:'all',lim:{}},FDL={su:'摘要',ar:'劇情線',lb:'註記',rx:'吐槽',qt:'台詞'},FDK=[['all','全部'],['su','單話資料'],['rx','吐槽'],['qt','台詞'],['wd','人物與王國']],FDS=[['su','單話資料'],['rx','吐槽'],['qt','台詞']];
 /* 人名互通 switch lives on this device only (localStorage fdAlias, '0' = off); it is not part of edits.json */
 const fdAliasOn=()=>lsGet('fdAlias')!=='0';
 function fdSnip(t,q,pre=18,post=70){const s=String(t||''),i=s.toLowerCase().indexOf(q);if(i<0)return null;const a=Math.max(0,i-pre),b=Math.min(s.length,i+q.length+post);
@@ -2638,20 +2638,20 @@ function fdFind(q0){const q=q0.trim().toLowerCase();if(!q)return null;const eps=
  const hit=o=>[o.name,o.zh,o.kr,o.ja,o.en,o.role,o.x,...(o.al||[])].some(v=>v&&String(v).toLowerCase().includes(q));
  D.ppl.forEach((p,i)=>{if(hit(p))wd.push({t:'person',i,p})});D.nations.forEach((p,i)=>{if(hit(p))wd.push({t:'nation',i,p})});
  return {eps:eps.reverse(),wd}}
-const fdBox=()=>`<div class="fd-box"><svg class="fd-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.2 15.2 20 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input class="fd-in" id="fdq" type="search" name="fd-search" autocomplete="off" enterkeyhint="search" placeholder="搜尋摘要、劇情、吐槽、台詞、人物" value="${esc(FD.q)}" aria-label="搜尋筆記"></div>`;
+const fdBox=()=>`<div class="fd-box"><svg class="fd-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.2 15.2 20 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><input class="fd-in" id="fdq" type="search" name="fd-search" autocomplete="off" enterkeyhint="search" placeholder="輸入關鍵字" value="${esc(FD.q)}" aria-label="搜尋筆記"></div>`;
 const fdSeg=()=>`<div class="wtool fd-wt"><div class="seg2" role="group" aria-label="只看">${FDK.map(([k,t])=>`<button data-fk="${k}" class="${FD.k===k?'on':''}" aria-pressed="${FD.k===k}">${t}</button>`).join('')}</div></div>`;
 const fdSpk=h=>{const L=(h.sp||[]).map(id=>D.ppl.find(p=>p.id===id)).filter(Boolean);return L.length?`<span class="fd-sp">${L.map(p=>`${wdR(p,26)}<b>${esc(p.name)}</b>`).join('')}</span>`:''};
 const fdWd=w=>`<button class="fd-wdi" data-go="${w.t}-${w.i}">${w.t==='person'?wdR(w.p,40):`<i class="ring mono wd-r" style="--z:40px">${esc([...w.p.name][0])}</i>`}<span><b>${esc(w.p.name)}</b><small>${w.t==='person'?'人物':'王國'}${w.p.role?'・'+esc(w.p.role):''}</small></span></button>`;
 const fdHit=x=>`<div class="eg-glass fd-hit eg-go" data-n="${x.n}" tabindex="0" role="link" aria-label="${nm(x.n)}"><div class="fd-hh">${x.f==='qt'&&fdSpk(x)?fdSpk(x):`<span class="tg">${FDL[x.f]}</span>`}${x.via?`<small class="fd-via">（用 ${esc(x.via)} 找到）</small>`:''}</div><p class="${x.f==='qt'?'fd-qt':''}">${x.s}</p><span class="fd-go">${nm(x.n)} ›</span></div>`;
 const fdSec=(t,n,body)=>`<section class="fd-sec"><h3 class="fd-sh"><span>${t}<b>${n}</b></span></h3>${body}</section>`;
-function fdPage(){const q=FD.q.trim();if(!q)return '<p class="fd-hint">打幾個字，就會從摘要、劇情、吐槽、台詞、人物裡找。</p>';
+function fdPage(){const q=FD.q.trim();if(!q)return '<p class="fd-hint">可找單話筆記、人物和王國。</p>';
  const r=fdFind(q),asc=ordAsc(),eps=asc?[...r.eps].reverse():r.eps,G={su:[],rx:[],qt:[]};
  for(const {e,h} of eps)for(const x of h)G[x.f==='rx'||x.f==='qt'?x.f:'su'].push({...x,n:e.n});
  const wd=FD.k==='all'||FD.k==='wd'?r.wd:[],secs=FDS.filter(([g])=>(FD.k==='all'||FD.k===g)&&G[g].length),total=wd.length+secs.reduce((a,[g])=>a+G[g].length,0);
  return `<p class="fd-sum">共 <b>${total}</b> 筆${asc?'・舊到新':''}</p>${fdSeg()}`
  +(wd.length?fdSec('人物與王國',wd.length,`<div class="fd-wd">${wd.map(fdWd).join('')}</div>`):'')
  +secs.map(([g,t])=>{const L=G[g],lim=FD.lim[g]||30;return fdSec(t,L.length,`<div class="fd-hits">${L.slice(0,lim).map(fdHit).join('')}</div>${L.length>lim?`<button class="pillb more fd-mb" data-fm="${g}">再看 30 筆（還有 ${L.length-lim} 筆）</button>`:''}`)}).join('')
- +(total?'':'<p class="spo">沒有找到。換個字試試，例如人物的另一個名字。</p>')}
+ +(total?'':`<p class="spo">${FD.k==='all'?'沒有找到符合的內容。試試別的關鍵字。':'這一類沒有結果。試試切回「全部」，或換個關鍵字。'}</p>`)}
 const vSearch=()=>`<div class="pg fd-pg">${fdBox()}<div id="fdres">${fdPage()}</div></div>`;
 function fdPaint(){const o=$('#fdres');if(!o)return;o.innerHTML=hy(fdPage());fdWire(o)}
 function fdBind(){const i=$('#fdq');if(!i)return;i.oninput=()=>{if(FD.q!==i.value)FD.lim={};FD.q=i.value;clearTimeout(window._fdt);window._fdt=setTimeout(fdPaint,180)};fdWire($('#fdres'))}
