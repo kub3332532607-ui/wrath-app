@@ -1393,7 +1393,7 @@ async function dbGet(k){try{const d=await db();return await new Promise((ok,no)=
 async function dbSet(k,v){try{const d=await db();await new Promise((ok,no)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error||new Error('idb error'));t.onabort=()=>no(t.error||new Error('idb abort'))});return true}catch(e){return false}}
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v);return true}catch(e){return false}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
 /* private repo: this page holds no notes or pictures, they are read with the device's key */
-const BASE='data/base-9493b8ad21a3.json',VER='2026.11.19 15:30 · eb583da';
+const BASE='data/base-9493b8ad21a3.json',VER='2026.11.19 22:43 · f29ec64';
 let CFG=null,TK=lsGet('tk');
 const api=(p,o={})=>fetch(`${CFG.api??'https://api.github.com'}/repos/${CFG.owner}/${CFG.repo}/contents/${p}`,{cache:'no-store',...o,headers:{Authorization:`Bearer ${TK}`,...o.headers}});
 const rawGet=p=>api(p,{headers:{Accept:'application/vnd.github.raw+json'}});
@@ -2581,20 +2581,129 @@ function bindSettings(){bkdSeen();const sc=$('#stCv');if(sc)sc.onclick=openCvPic
  $('#stFd').onchange=e=>{if(e.target.checked)lsDel('fdAlias');else lsSet('fdAlias','0')};
  $('#stBk').onclick=()=>{const f=bkSave('');BK=null;bkShow(`已下載 ${f}`)};
  $('#stIm').onclick=()=>$('#stFile').click();
- $('#stFile').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;let j=null;try{j=JSON.parse(await f.text())}catch(x){}
-  if(!j||typeof j!=='object'||Array.isArray(j)||typeof j.eps!=='object'||!j.eps||(j.kinds!==undefined&&(typeof j.kinds!=='object'||!j.kinds)))BK={bad:f.name};
-  else{j={...j,kinds:j.kinds||{}};BK={name:f.name,imp:j,df:bkDiff(j)}}bkShow()};
+ $('#stFile').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;
+  if(f.size>BK_MAX){BK={big:f.name};bkShow();return}
+  let j=null;try{j=JSON.parse(await f.text())}catch(x){}
+  const ck=j?bkCheck(j):{fatal:1};
+  if(ck.fatal)BK={bad:f.name};
+  else{j={...j,kinds:j.kinds||{}};BK=ck.bad.length?{ask:f.name,imp:j,ck}:{name:f.name,imp:j,df:bkDiff(j)}}bkShow()};
  if($('#bkGo'))$('#bkGo').onclick=bkApply;if($('#bkNo'))$('#bkNo').onclick=()=>{BK=null;bkShow()};
+ if($('#bkRej'))$('#bkRej').onclick=()=>{BK={none:BK.ask};bkShow()};
+ if($('#bkSk'))$('#bkSk').onclick=()=>{const c=bkClean(BK.imp);BK={name:BK.ask,imp:c.imp,df:bkDiff(c.imp),skip:c.skipped};bkShow()};
 }
 /* backup import: the file goes through merge() itself, the same rule the cloud sync uses (newer 't' wins, unknown fields kept), never replacing E wholesale. */
 let BK=null;
 function bkSave(tag){persist();const d=new Date(),p=x=>String(x).padStart(2,'0'),f=`和皇帝一起墮落_筆記備份${tag}_${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}.json`,u=URL.createObjectURL(new Blob([JSON.stringify(E,null,1)],{type:'application/json'})),a=document.createElement('a');a.href=u;a.download=f;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);lsSet('lastBk',String(Date.now()));bkdPaint();return f}
 function bkShow(msg){const y=scrollY;render(true);scrollTo(0,y);if(msg&&$('#stBm'))$('#stBm').textContent=msg}
+/* backup check (yi-import-impl 11-19): a field that is undefined counts as missing (the event form leaves s:undefined in memory; JSON never has it). Runs in memory before any import. Only types that the app loops over / shows / compares are checked; missing fields are fine, unknown fields and unknown kinds prefixes pass. A bad eps/kinds entry is skipped whole, never half-imported. */
+const {bkCheck,bkClean,bkWhere,MAX_BYTES:BK_MAX}=(function () {
+  const isO = v => v !== null && typeof v === 'object' && !Array.isArray(v);
+  const isS = v => typeof v === 'string';
+  const isN = v => typeof v === 'number' && Number.isFinite(v);
+  const isA = v => Array.isArray(v);
+  const arrOf = f => v => isA(v) && v.every(f);
+  const strs = arrOf(isS), nums = arrOf(isN);
+  const opt = f => v => v === undefined || f(v);
+  const orNull = f => v => v === null || f(v);
+  const objOfStr = v => isO(v) && Object.values(v).every(isS);
+
+  /* 欄位檢查：每個欄位「有的話」才檢查型別。 */
+  const rxItem = v => isO(v) && opt(isS)(v.x) && opt(x => typeof x === 'boolean')(v.l) && opt(strs)(v.im) && opt(isN)(v.d);
+  const qtItem = v => isO(v) && isN(v.a) && v.a >= 0 && isS(v.x);
+  const EP = {
+    n: isN, t: isN, lb: isS, su: isS, sp: isS, st: isS, av: orNull(isS),
+    pl: strs, ar: strs, im: strs, rf: strs, tg: strs, ai: strs, sg: strs, pp: strs,
+    rx: arrOf(rxItem), qt: arrOf(qtItem),
+    qs: v => isO(v) && Object.keys(v).every(k => /^\d{1,4}$/.test(k)) && Object.values(v).every(strs)
+  };
+  const EPL = { lb: '標題', su: '簡介', sp: '備註', st: '狀態', av: '頭像', pl: '劇情重點', ar: '劇情線', im: '附圖', rf: '參考', tg: '標籤', ai: '其他', sg: '標記', pp: '出場人物', rx: '吐槽', qt: '台詞', qs: '台詞說話者', t: '修改時間', n: '話次' };
+
+  const relItem = v => isO(v) && opt(isS)(v.to) && opt(isS)(v.as) && opt(isS)(v.inv);
+  const KIND = {
+    '@ppl:': { n: isS, x: isS, r: isS, px: isS, g: isS, h: isS, sec: isS, av: isS, ja: isS, al: isS, kr: isS, zh: isS, en: isS, rel: arrOf(relItem), c: isN, d: isN, t: isN },
+    '@nat:': { n: isS, x: isS, mg: isS, pr: isS, ja: isS, kr: isS, en: isS, mx: orNull(isN), my: orNull(isN), og: v => objOfStr(v) || strs(v), ol: objOfStr, or: strs, c: isN, d: isN, t: isN },
+    '@arc:': { n: isS, k: isS, s: isN, e: orNull(isN), o: isS, d: isN, t: isN },
+    '@part:': { n: isS, s: isN, e: orNull(isN), x: isS, d: isN, t: isN },
+    '@ev:': { n: isS, d1: isS, d2: isS, x: isS, u: isS, s: isN, rt: v => isN(v) || isS(v), cl: isA, tot: v => isN(v) || isS(v), tn: isS, del: isN, t: isN },
+    '@shop:': { n: isS, p: isS, q: isS, sh: isS, dt: strs, ad: isS, by: isS, k: isS, st: isS, im: strs, x: isS, ep: nums, ev: isS, g: isS, c: isN, del: isN, t: isN },
+    '@imr:': { r: isS, t: isN },
+    '@ipp:': { p: strs, t: isN },
+    '@home': { x: isS, cv: isS, t: isN },
+    '@cmp': { t: isN, g: arrOf(c => isO(c) && opt(isO)(c.a) && opt(isO)(c.b) && opt(isS)(c.v) && opt(isS)(c.nm)) }
+  };
+  const KL = { '@ppl:': '人物', '@nat:': '王國', '@arc:': '劇情線', '@part:': '部', '@ev:': '活動', '@shop:': '收藏櫃', '@imr:': '圖片比例', '@ipp:': '圖片人物標籤', '@home': '主頁', '@cmp': '並排比較' };
+  const prefixOf = k => { for (const p in KIND) if (p.endsWith(':') ? k.startsWith(p) : k === p) return p; return null; };
+
+  const MAX_BYTES = 5 * 1024 * 1024;   /* 她的真實備份 61 KB；手機存放空間約 5 MB，超過就一定有問題 */
+
+  function bkCheck(j) {
+    const bad = [];
+    if (!isO(j) || !isO(j.eps)) return { fatal: 'format', bad };
+    if (j.kinds !== undefined && !isO(j.kinds)) return { fatal: 'format', bad };
+    for (const k in j.eps) {
+      const e = j.eps[k];
+      if (!/^\d{1,3}$/.test(k)) { bad.push({ sec: 'eps', id: k, field: '', why: 'key' }); continue; }
+      if (!isO(e)) { bad.push({ sec: 'eps', id: k, field: '', why: 'shape' }); continue; }
+      let hit = false;
+      for (const f in EP) if (e[f] !== undefined && !EP[f](e[f])) { bad.push({ sec: 'eps', id: k, field: f, why: 'type' }); hit = true; }
+      void hit;
+    }
+    for (const k in (j.kinds || {})) {
+      const v = j.kinds[k], p = prefixOf(k);
+      if (!isO(v)) { bad.push({ sec: 'kinds', id: k, field: '', why: 'shape' }); continue; }
+      if (!p) continue;                         /* 不認得的前綴：照 merge 的作法原樣放行 */
+      if (p.endsWith(':') && k.length === p.length) { bad.push({ sec: 'kinds', id: k, field: '', why: 'key' }); continue; }
+      const R = KIND[p];
+      for (const f in R) if (v[f] !== undefined && !R[f](v[f])) bad.push({ sec: 'kinds', id: k, field: f, why: 'type' });
+    }
+    if (j.read !== undefined && j.read !== null) {
+      const r = j.read;
+      if (!isO(r) || !isN(r.v) || (r.t !== undefined && !isN(r.t))) bad.push({ sec: 'read', id: 'read', field: '', why: 'shape' });
+    }
+    return { fatal: null, bad };
+  }
+
+  function bkClean(j) {
+    const c = bkCheck(j);
+    if (c.fatal) return { fatal: c.fatal, imp: null, skipped: [] };
+    const dropE = new Set(), dropK = new Set();
+    let dropRead = false;
+    for (const b of c.bad) { if (b.sec === 'eps') dropE.add(b.id); else if (b.sec === 'kinds') dropK.add(b.id); else dropRead = true; }
+    const eps = {}, kinds = {};
+    for (const k in j.eps) if (!dropE.has(k)) eps[k] = j.eps[k];
+    for (const k in (j.kinds || {})) if (!dropK.has(k)) kinds[k] = j.kinds[k];
+    const imp = { ...j, eps, kinds };
+    if (dropRead) delete imp.read;
+    return { fatal: null, imp, skipped: c.bad };
+  }
+
+  /* 白話說明：第幾話、哪一類 */
+  function bkWhere(b) {
+    if (b.sec === 'read') return '讀到第幾話的記錄';
+    if (b.sec === 'eps') return b.field ? `第 ${+b.id} 話的「${EPL[b.field] || b.field}」` : (b.why === 'key' ? `話次編號「${b.id}」` : `第 ${+b.id} 話`);
+    const p = prefixOf(b.id);
+    return `${KL[p] || '其他設定'}的一筆資料`;
+  }
+
+  return { bkCheck, bkClean, bkWhere, MAX_BYTES };
+})();
+
+function bkList(a){const u=[...new Set(a.map(bkWhere))],t=u.slice(0,3).join('、');return u.length>3?`${t}…還有 ${u.length-3} 處`:t}
 function bkDiff(imp){const s={add:0,upd:0,keep:0,same:0},cmp=(a,b)=>{if(!a)s.add++;else if(JSON.stringify(a)===JSON.stringify(b))s.same++;else s[((b&&b.t)||0)>=((a&&a.t)||0)?'upd':'keep']++};for(const k in imp.eps)cmp(E.eps[k],imp.eps[k]);for(const k in imp.kinds)cmp(E.kinds[k],imp.kinds[k]);if(imp.read)cmp(E.read,imp.read);return s}
-function bkApply(){if(!BK||!BK.imp)return;const f=bkSave('_匯入前'),s=BK.df;E=merge(E,BK.imp);touch();persist();rebuild();BK=null;bkShow(`匯入完成：新增 ${s.add} 筆、更新 ${s.upd} 筆。匯入前的資料已另存為 ${f}`)}
+/* order: re-check -> save a copy -> trial merge in memory (merge returns a new object) -> check merged -> rebuild; touch()/persist() only after the rebuild worked, so a failure leaves localStorage and the cloud queue as they were. */
+function bkApply(){if(!BK||!BK.imp||!BK.df)return;const nm=BK.name,no=fail=>{BK={none:nm,fail};bkShow()};
+ if(bkCheck(BK.imp).bad.length)return no(false);
+ const f=bkSave('_匯入前'),s=BK.df,sk=BK.skip?BK.skip.length:0,old=E;let m;
+ try{m=merge(E,BK.imp)}catch(x){return no(false)}
+ if(bkCheck(m).bad.length)return no(false);
+ try{E=m;rebuild()}catch(x){E=old;try{rebuild()}catch(y){}return no(true)}
+ touch();persist();BK=null;bkShow(`匯入完成：新增 ${s.add} 筆、更新 ${s.upd} 筆${sk?`，另外跳過 ${sk} 筆壞掉的`:''}。匯入前的資料已另存為 ${f}`)}
 function bkCard(pend){const t=+lsGet('lastBk')||0,has=Object.keys(E.eps).length+Object.keys(E.kinds).length>0,day=Math.floor((Date.now()-t)/864e5),old=has&&(!t||day>=14),d=new Date(t),last=t?`${d.getMonth()+1}/${d.getDate()}（${day<1?'今天':day+' 天前'}）`:'還沒備份過';
  let pv='';if(BK&&BK.bad)pv=`<div class="cfg-pv" role="alert"><p>「${esc(BK.bad)}」不是這個 App 的筆記備份檔，沒有動任何資料。</p><div class="cfg-b"><button class="chip" id="bkNo">知道了</button></div></div>`;
- else if(BK){const s=BK.df,none=!s.add&&!s.upd;pv=`<div class="cfg-pv" role="group" aria-label="匯入預覽"><div class="cfg-pt"><b>準備匯入</b><small>${esc(BK.name)}</small></div>${none?'<p>備份裡沒有比這台新、或這台沒有的內容，不用匯入。</p>':`<dl class="cfg-v"><dt>新增</dt><dd><b>${s.add}</b> 筆・這台沒有的</dd><dt>更新</dt><dd><b>${s.upd}</b> 筆・備份比較新</dd><dt>保留</dt><dd><b>${s.keep}</b> 筆・這台比較新，不動</dd></dl><p>兩邊都有的，留時間較新的那份。按下「確定匯入」時，會先自動下載一份目前的資料。</p>`}<div class="cfg-b">${none?'':'<button class="chip pri" id="bkGo">確定匯入</button>'}<button class="chip" id="bkNo">${none?'知道了':'取消'}</button></div></div>`}
+ else if(BK&&BK.big)pv=`<div class="cfg-pv" role="alert"><p>「${esc(BK.big)}」太大了（超過 5 MB），不像是筆記備份檔，沒有動任何資料。</p><div class="cfg-b"><button class="chip" id="bkNo">知道了</button></div></div>`;
+ else if(BK&&BK.none)pv=`<div class="cfg-pv" role="alert"><p>「${esc(BK.none)}」沒有匯入，這台的筆記沒有動。${BK.fail?'畫面重建失敗，已還原。':''}</p><div class="cfg-b"><button class="chip" id="bkNo">知道了</button></div></div>`;
+ else if(BK&&BK.ask)pv=`<div class="cfg-pv" role="alert"><div class="cfg-pt"><b>備份有壞掉的資料</b><small>${esc(BK.ask)}</small></div><p>有 ${BK.ck.bad.length} 筆壞掉了：${esc(bkList(BK.ck.bad))}。這台的筆記還沒動。</p><div class="cfg-b"><button class="chip pri" id="bkRej">整份不匯入</button><button class="chip" id="bkSk">跳過壞的<br>匯入其餘</button></div></div>`;
+ else if(BK){const s=BK.df,none=!s.add&&!s.upd,sw=BK.skip&&BK.skip.length?`<p class="cfg-w" role="alert">備份裡有 ${BK.skip.length} 筆資料壞掉了（${esc(bkList(BK.skip))}），這幾筆會跳過，其餘照常匯入。</p>`:'';pv=`<div class="cfg-pv" role="group" aria-label="匯入預覽"><div class="cfg-pt"><b>準備匯入</b><small>${esc(BK.name)}</small></div>${sw}${none?'<p>備份裡沒有比這台新、或這台沒有的內容，不用匯入。</p>':`<dl class="cfg-v"><dt>新增</dt><dd><b>${s.add}</b> 筆・這台沒有的</dd><dt>更新</dt><dd><b>${s.upd}</b> 筆・備份比較新</dd><dt>保留</dt><dd><b>${s.keep}</b> 筆・這台比較新，不動</dd></dl><p>兩邊都有的，留時間較新的那份。按下「確定匯入」時，會先自動下載一份目前的資料。</p>`}<div class="cfg-b">${none?'':'<button class="chip pri" id="bkGo">確定匯入</button>'}<button class="chip" id="bkNo">${none?'知道了':'取消'}</button></div></div>`}
  return `<section class="card cfg-c cfg-bk cfg-r3"><h3>備份</h3><p>把這台的筆記和修改下載成備份，需要時可以匯入。</p><dl class="cfg-v"><dt>上次備份</dt><dd${old?' class="cfg-w"':''}>${last}</dd></dl>${old?`<p class="cfg-w" role="status">${t?`已經 ${day} 天沒備份了`:'還沒備份過'}，建議現在存一份。</p>`:''}<div class="cfg-b"><button class="chip" id="stBk">下載筆記備份</button><button class="chip" id="stIm">從備份檔匯入</button><input type="file" id="stFile" accept=".json,application/json" hidden><small id="stBm" role="status">${pend?'這台還有修改等待上傳；備份會包含它們。':''}</small></div><small class="bkd-g">備份檔只存文字；圖片另外存在雲端，不在這個檔案裡。還沒上傳的圖，請等同步完成。</small>${pv}</section>`}
 const DM=[['home','主頁'],['search','搜尋'],['line','藤蔓劇情線'],['wall','圖片牆'],['goods','展覽'],['world','人物與王國']];
 function avSmall(){const a=latestAv();return a?`<img src="${a}" alt="">`:`<svg viewBox="-20 -20 40 40" aria-hidden="true">${lily(0,0,18)}</svg>`}
