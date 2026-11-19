@@ -1393,7 +1393,7 @@ async function dbGet(k){try{const d=await db();return await new Promise((ok,no)=
 async function dbSet(k,v){try{const d=await db();await new Promise((ok,no)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error||new Error('idb error'));t.onabort=()=>no(t.error||new Error('idb abort'))});return true}catch(e){return false}}
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v);return true}catch(e){return false}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
 /* private repo: this page holds no notes or pictures, they are read with the device's key */
-const BASE='data/base-9493b8ad21a3.json',VER='2026.11.18 14:49 · 5ac70ec';
+const BASE='data/base-9493b8ad21a3.json',VER='2026.11.19 15:30 · eb583da';
 let CFG=null,TK=lsGet('tk');
 const api=(p,o={})=>fetch(`${CFG.api??'https://api.github.com'}/repos/${CFG.owner}/${CFG.repo}/contents/${p}`,{cache:'no-store',...o,headers:{Authorization:`Bearer ${TK}`,...o.headers}});
 const rawGet=p=>api(p,{headers:{Accept:'application/vnd.github.raw+json'}});
@@ -1971,12 +1971,12 @@ function irOpts(){return [['','自動'],['o','原圖'],...Object.keys(CMPR).map(
 function irNat(im){return im&&!im.dataset.p&&im.naturalWidth?im.naturalWidth/im.naturalHeight:0}
 /* one picture's shape in a post: her setting first, else the picture itself (too thin or too wide ones are trimmed a little); 3:4 until it has loaded */
 function irAr(c,im,one){const r=c.dataset.ir||'',n=irNat(im)||.75;if(r&&r!=='o')return CMPR[r];if(r==='o')return clampN(n,.2,5);return one?clampN(n,.5,2.5):clampN(n,.5,2.2)}
-/* a single picture always fills the post's width (cap 1e5 = no height cap; her shape, or the picture's own, trimmed only past 2.5:1 / 1:2, so a post is at most twice its width tall) */
+/* every post grid fills the post's width (cap 1e5 = no row-height cap; 11-19 the old 360px row cap left tall pictures narrower than the card; her shape, or the picture's own, trimmed only past 2.5:1 / 1:2, so a post is at most twice its width tall) */
 /* rows of whole pictures, same height in a row, all rows the same width, her order. Ways to split: 2: 2 / 1+1; 3: 3 / 1+2 / 2+1; 4: 2+2 / 4 / 1+3 / 3+1;
    the first one whose smallest row is at least 120px (and 45% of the width) tall wins, else the one whose smallest row is tallest; a post stays under 2.2 × its width. */
 const IRP={1:[[1]],2:[[2],[1,1]],3:[[3],[1,2],[2,1]],4:[[2,2],[4],[1,3],[3,1]]};
 function irLay(g){const C=[...g.children].filter(x=>x.classList.contains('tw-c'));if(!C.length)return;g.style.width='';const one=C.length===1,W=g.clientWidth;if(W<=0)return;
- const GAP=4,cap=one?1e5:360,A=C.map(c=>irAr(c,c.querySelector('img'),one));
+ const GAP=4,cap=1e5,A=C.map(c=>irAr(c,c.querySelector('img'),one));
  const plan=sizes=>{let i=0;const rows=sizes.map(n=>{const r=[];for(let k=0;k<n;k++)r.push(i++);return r}),sum=r=>r.reduce((a,k)=>a+A[k],0),Wr=Math.min(W,...rows.map(r=>cap*sum(r)+GAP*(r.length-1))),hs=rows.map(r=>(Wr-GAP*(r.length-1))/sum(r));
   return {rows,Wr,hs,min:Math.min(...hs),tot:hs.reduce((a,h)=>a+h,0)+GAP*(rows.length-1)}};
  const ps=(IRP[C.length]||[[2,2]]).map(plan),ok=ps.filter(p=>p.tot<=2.2*W),L=ok.length?ok:ps,best=L.find(p=>p.min>=Math.max(120,.45*W))||L.reduce((a,p)=>p.min>a.min+1?p:a);
