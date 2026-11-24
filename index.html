@@ -1393,7 +1393,7 @@ async function dbGet(k){try{const d=await db();return await new Promise((ok,no)=
 async function dbSet(k,v){try{const d=await db();await new Promise((ok,no)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error||new Error('idb error'));t.onabort=()=>no(t.error||new Error('idb abort'))});return true}catch(e){return false}}
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v);return true}catch(e){return false}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
 /* private repo: this page holds no notes or pictures, they are read with the device's key */
-const BASE='data/base-9493b8ad21a3.json',VER='2026.11.24 14:40 · 9f94bd4';
+const BASE='data/base-9493b8ad21a3.json',VER='2026.11.24 19:59 · 558c729';
 let CFG=null,TK=lsGet('tk');
 const api=(p,o={})=>fetch(`${CFG.api??'https://api.github.com'}/repos/${CFG.owner}/${CFG.repo}/contents/${p}`,{cache:'no-store',...o,headers:{Authorization:`Bearer ${TK}`,...o.headers}});
 const rawGet=p=>api(p,{headers:{Accept:'application/vnd.github.raw+json'}});
@@ -2756,14 +2756,19 @@ const fdSpk=h=>{const L=(h.sp||[]).map(id=>D.ppl.find(p=>p.id===id)).filter(Bool
 const fdWd=w=>`<button class="fd-wdi" data-go="${w.t}-${w.i}">${w.t==='person'?wdR(w.p,40):`<i class="ring mono wd-r" style="--z:40px">${esc([...w.p.name][0])}</i>`}<span><b>${esc(w.p.name)}</b><small>${w.t==='person'?'人物':'王國'}${w.p.role?'・'+esc(w.p.role):''}</small></span></button>`;
 const fdHit=x=>`<div class="eg-glass fd-hit eg-go" data-n="${x.n}" tabindex="0" role="link" aria-label="${nm(x.n)}"><div class="fd-hh">${x.f==='qt'&&fdSpk(x)?fdSpk(x):`<span class="tg">${FDL[x.f]}</span>`}${x.via?`<small class="fd-via">（用 ${esc(x.via)} 找到）</small>`:''}</div><p class="${x.f==='qt'?'fd-qt':''}">${x.s}</p><span class="fd-go">${nm(x.n)} ›</span></div>`;
 const fdSec=(t,n,body)=>`<section class="fd-sec"><h3 class="fd-sh"><span>${t}<b>${n}</b></span></h3>${body}</section>`;
+/* typed episode number (208 / 第208話 / 幕間 第3話) -> one extra jump card on top; only for an episode that exists and is not hidden */
+function fdJump(q){const m=q.trim().match(/^(幕間)?\s*第?\s*(\d{1,4})\s*話?$/);if(!m)return 0;let n=+m[2];if(m[1]){if(!n)return 0;n=actStart()+n-1}
+ return D.eps[n]&&!hidden(n)?{n}:0}
+const fdJp=j=>`<div class="eg-glass fd-hit eg-go" data-n="${j.n}" tabindex="0" role="link" aria-label="${nm(j.n)}"><div class="fd-hh"><span class="tg">跳到這一話</span></div><span class="fd-go">${nm(j.n)} ›</span></div>`;
 function fdPage(){const q=FD.q.trim();if(!q)return '<p class="fd-hint">可找單話筆記、人物和王國。</p>';
  const r=fdFind(q),asc=ordAsc(),eps=asc?[...r.eps].reverse():r.eps,G={su:[],rx:[],qt:[]};
  for(const {e,h} of eps)for(const x of h)G[x.f==='rx'||x.f==='qt'?x.f:'su'].push({...x,n:e.n});
  const wd=FD.k==='all'||FD.k==='wd'?r.wd:[],secs=FDS.filter(([g])=>(FD.k==='all'||FD.k===g)&&G[g].length),total=wd.length+secs.reduce((a,[g])=>a+G[g].length,0);
- return `<p class="fd-sum">共 <b>${total}</b> 筆${asc?'・舊到新':''}</p>${fdSeg()}`
+ const jp=fdJump(q);
+ return (jp?`<div class="fd-hits">${fdJp(jp)}</div>`:'')+`<p class="fd-sum">共 <b>${total}</b> 筆${asc?'・舊到新':''}</p>${fdSeg()}`
  +(wd.length?fdSec('人物與王國',wd.length,`<div class="fd-wd">${wd.map(fdWd).join('')}</div>`):'')
  +secs.map(([g,t])=>{const L=G[g],lim=FD.lim[g]||30;return fdSec(t,L.length,`<div class="fd-hits">${L.slice(0,lim).map(fdHit).join('')}</div>${L.length>lim?`<button class="pillb more fd-mb" data-fm="${g}">再看 30 筆（還有 ${L.length-lim} 筆）</button>`:''}`)}).join('')
- +(total?'':`<p class="spo">${FD.k==='all'?'沒有找到符合的內容。試試別的關鍵字。':'這一類沒有結果。試試切回「全部」，或換個關鍵字。'}</p>`)}
+ +(total||jp?'':`<p class="spo">${FD.k==='all'?'沒有找到符合的內容。試試別的關鍵字。':'這一類沒有結果。試試切回「全部」，或換個關鍵字。'}</p>`)}
 const vSearch=()=>`<div class="pg fd-pg">${fdBox()}<div id="fdres">${fdPage()}</div></div>`;
 function fdPaint(){const o=$('#fdres');if(!o)return;o.innerHTML=hy(fdPage());fdWire(o)}
 function fdBind(){const i=$('#fdq');if(!i)return;i.oninput=()=>{if(FD.q!==i.value)FD.lim={};FD.q=i.value;clearTimeout(window._fdt);window._fdt=setTimeout(fdPaint,180)};fdWire($('#fdres'))}
