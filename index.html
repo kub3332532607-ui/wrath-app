@@ -1393,7 +1393,7 @@ async function dbGet(k){try{const d=await db();return await new Promise((ok,no)=
 async function dbSet(k,v){try{const d=await db();await new Promise((ok,no)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=ok;t.onerror=()=>no(t.error||new Error('idb error'));t.onabort=()=>no(t.error||new Error('idb abort'))});return true}catch(e){return false}}
 const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v);return true}catch(e){return false}},lsDel=k=>{try{localStorage.removeItem(k)}catch(e){}};
 /* private repo: this page holds no notes or pictures, they are read with the device's key */
-const BASE='data/base-9493b8ad21a3.json',VER='2026.11.21 13:35 · 046328f';
+const BASE='data/base-9493b8ad21a3.json',VER='2026.11.24 14:40 · 9f94bd4';
 let CFG=null,TK=lsGet('tk');
 const api=(p,o={})=>fetch(`${CFG.api??'https://api.github.com'}/repos/${CFG.owner}/${CFG.repo}/contents/${p}`,{cache:'no-store',...o,headers:{Authorization:`Bearer ${TK}`,...o.headers}});
 const rawGet=p=>api(p,{headers:{Accept:'application/vnd.github.raw+json'}});
@@ -1447,10 +1447,12 @@ const PRL=`<svg class="prl" viewBox="-11 -11 22 22" aria-hidden="true"><circle c
 /* parts ("部"): the top layer of the story page. Base list below, then edits on top (E.kinds['@part:'+id], see partsBuild). nm() counts 幕間 from the start of the open-ended part named 幕間 (205 unless edited). */
 const PTK='@part:',PART0=[{id:'p1',n:'第一部',s:0,e:204,x:'第一部完結'},{id:'p2',n:'幕間',s:205,e:null,x:''}];
 const partsNow=()=>D.parts&&D.parts.length?D.parts:PART0;
-const actStart=()=>{const p=partsNow().find(p=>p.e==null&&p.n.includes('幕間'));return p?p.s:205};
-const nm=n=>n===0?'序章':n>=actStart()?`幕間 第${n-actStart()+1}話（第${n}話）`:`第${n}話`;
-const nmM=n=>n===0?'序章':n>=actStart()?`幕間 第${n-actStart()+1}話`:`第${n}話`;
-const nmS=n=>n>=actStart()?'幕'+(n-actStart()+1):n;
+const actStart=()=>{const p=partsNow().find(p=>p.n.includes('幕間'));return p?p.s:205};
+/* label by the part an episode belongs to: only a part named 幕間 gets 幕間 第N話; later parts continue plain 第N話 */
+const actOf=n=>{const p=partsNow().filter(p=>p.s<=n&&(p.e==null||n<=p.e)).sort((a,b)=>b.s-a.s)[0];return p&&p.n.includes('幕間')?p:null};
+const nm=n=>{const a=n===0?null:actOf(n);return n===0?'序章':a?`幕間 第${n-a.s+1}話（第${n}話）`:`第${n}話`};
+const nmM=n=>{const a=n===0?null:actOf(n);return n===0?'序章':a?`幕間 第${n-a.s+1}話`:`第${n}話`};
+const nmS=n=>{const a=actOf(n);return a?'幕'+(n-a.s+1):n};
 const partOf=n=>{const P=partsNow();return P.find(p=>n>=p.s&&(p.e==null||n<=p.e))||[...P].reverse().find(p=>p.s<=n)||P[0]};
 let LOCK=lsGet('readLock')==='1';
 const rdl=()=>LOCK?'固定在最新話':S.read>=lastWritten()?'全部讀完':S.read?`讀到第${S.read}話`:'讀到序章';
@@ -2073,7 +2075,7 @@ function vLine(){if(S.lnEdit)return vLineEdit();const sel=D.stats.find(t=>t.k===
  const marks=sel?sel.eps.filter(n=>!hidden(n)):[],last=D.eps.length-1,spoil=h=>`<div class="tr dim"><span class="tl1"><span>防劇透：還有 ${h} 段已收起</span></span></div>`;
  const body=partsNow().filter(p=>p.s<=last).map(p=>{
   const R={s:p.s,e:Math.min(p.e==null?last:p.e,last)},all=D.arcs.filter(a=>partOf(a.start_ep)===p),arcs=all.filter(a=>!hidden(a.start_ep)),hid=all.length-arcs.length;
-  if(hidden(p.s))return '';/* she chose: a part that starts after the reading progress is not shown at all */
+  if(hidden(p.s))return '';/* the user chose: a part that starts after the reading progress is not shown at all */
   const mk=marks.filter(n=>partOf(n)===p),items=[...arcs.map(a=>({ep:a.start_ep,o:0,a})),...mk.map(n=>({ep:n,o:1,n}))].sort((x,y)=>x.ep-y.ep||x.o-y.o);
   const rows=items.map(({a,n})=>{if(a){const main=a.kind==='main',ic=arcIc(a);
     return `<button class="tr ${main?'mn':'sd'}" data-n="${a.start_ep}">${ic}<span class="tl1"><b>${esc(a.name)}</b><span>${arcSpan(a)}</span></span>${a.note?`<span class="tn">${esc(a.note)}</span>`:''}</button>`}
@@ -2100,7 +2102,7 @@ function bindLineEdit(){const box=$('#aled'),len=D.eps.length;
  box.addEventListener('click',ev=>{const d=ev.target.closest('.alpd');if(!d)return;const c=d.closest('.alp'),p=D.parts.find(x=>x.id===c.dataset.pid);if(!p)return;
   if(D.parts.length<2)return say(c,'至少要留一部');if(!confirm(`刪除「${p.n}」這一部？\n劇情線和筆記不會受影響，只是少一個大標題。`))return;partPut(p,{d:1});kscRender()});
  $('#ptadd').onclick=()=>{document.activeElement?.blur?.();let v='新的一部',i=2;while(partByName(v))v='新的一部'+i++;const id='u'+Date.now().toString(36);
-  partPut({id,n:v,s:Math.min(D.parts.reduce((m,q)=>Math.max(m,q.e??q.s),0)+1,len-1),e:null,x:''},{});const y=scrollY;render(true);scrollTo(0,y);const c=$(`.alp[data-pid="${id}"]`);if(c){c.scrollIntoView({block:'center'});const f=c.querySelector('[data-pf=n]');f.focus({preventScroll:true});f.select()}};
+  const ended=D.parts.filter(q=>q.e==null&&q.s<=len-1).map(q=>({q,n:q.n}));ended.forEach(o=>partPut(o.q,{e:len-1}));partPut({id,n:v,s:len,e:null,x:''},{});const y=scrollY;render(true);scrollTo(0,y);const c=$(`.alp[data-pid="${id}"]`);if(c){c.scrollIntoView({block:'center'});const f=c.querySelector('[data-pf=n]');f.focus({preventScroll:true});f.select();if(ended.length)say(c,`「${ended.map(o=>o.n).join('」「')}」已自動結束在第${len-1}話，可自己改。`)}};
  const say=(c,t)=>{let m=c.querySelector('.alm');if(!m){m=document.createElement('p');m.className='alm';m.setAttribute('role','alert');c.append(m)}m.textContent=t;m.hidden=!t};
  box.addEventListener('change',ev=>{const el=ev.target,f=el.dataset.f,c=el.closest('.ale');if(!f||!c)return;const a=arcBy(c.dataset.id);if(!a)return;const v=el.value.trim(),back=t=>{el.value=f==='n'?a.name:f==='s'?a.start_ep:f==='e'?(a.end_ep??''):el.value;say(c,t)};let ch;
   if(f==='n'){if(!v)return back('名字不能空白');if(v!==a.name&&arcByName(v))return back(`已經有一條叫「${v}」`);ch={n:v}}
